@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	
 	public void init(){
 		
+		Font f = new Font("Dialog", Font.BOLD, 16);
+		
 		begegnungsPanel.removeAll();
 		setContentPane(new JScrollPane(begegnungsPanel));
 		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
@@ -53,9 +56,20 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		begegnungsPanel.add(sekundär);
 		
 		tische.add(new JLabel("Tisch"));
+		tische.getComponent(0).setFont(f);
+		((JLabel)tische.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		begegnung.add(new JLabel("Begegnung"));
+		begegnung.getComponent(0).setFont(f);
+		((JLabel)begegnung.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		primär.add(new JLabel("Primär"));
+		primär.getComponent(0).setFont(f);
+		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		sekundär.add(new JLabel("Sekundär"));
+		sekundär.getComponent(0).setFont(f);
+		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 		//for(int i=(hf.rundenZaehler-1)*(hf.teilnehmerVector.size()/2);i<hf.begegnungsVector.size();i++){
@@ -64,6 +78,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				JLabel label6 = new JLabel(""+(bg.tisch+1));
 				tische.add(label6);
 				label6.setBorder(BorderFactory.createEtchedBorder());
+				label6.setFont(f);
 				
 				KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
@@ -71,14 +86,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				JLabel label1 = new JLabel(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
 				begegnung.add(label1);
 				label1.setBorder(BorderFactory.createEtchedBorder());
+				label1.setFont(f);
 				
 				JLabel label2 = new JLabel(bg.p1+" : "+bg.p2);
 				primär.add(label2);
 				label2.setBorder(BorderFactory.createEtchedBorder());
+				label2.setFont(f);
 				
 				JLabel label3 = new JLabel(bg.p12+" : "+bg.p22);
 				sekundär.add(label3);
 				label3.setBorder(BorderFactory.createEtchedBorder());
+				label3.setFont(f);
 			}
 		}
 		tische.add(new JLabel(""));

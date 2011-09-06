@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -27,8 +30,7 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 		panel.add(label);
 		panel.add(field);
 		panel.add(cancel);
-		panel.add(ok);
-
+		panel.add(ok);		
 		cancel.addActionListener(this);
 		ok.addActionListener(this);
 		frame.setSize(300,100);
@@ -43,6 +45,7 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 	JButton cancel = new JButton("Abbrechen");
 	KHauptFenster hf;
 	long time;
+	boolean run=true;
 
 	public void run(){
 		if(time>0){
@@ -58,6 +61,15 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 			frame.setResizable(false);
 			frame.setUndecorated(true);
 			frame.addMouseListener(this);
+			
+			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			WindowListener meinListener=new WindowAdapter(){
+				public void windowClosing(WindowEvent ereignis){
+					run=false;
+				}
+			};
+			frame.addWindowListener(meinListener);
+			
 			panel.setBackground(Color.black);
 			label.setForeground(Color.white);
 			if(Toolkit.getDefaultToolkit().getScreenSize().width<=1024){
@@ -68,7 +80,7 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 			label.setFocusable(false);
 			//panel.setAlignmentX(0.5f);
 			frame.setVisible(true);
-			while(true){
+			while(run){
 				long acttime = time-(System.currentTimeMillis()-starttime);
 
 				if(acttime<0){
@@ -92,6 +104,7 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 
 
 			}
+			frame.dispose();
 		}
 	}
 

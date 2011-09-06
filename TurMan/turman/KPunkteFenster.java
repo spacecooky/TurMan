@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,7 +32,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	KHauptFenster hf=null;
 	
 	public void init(){
-		
+		Font f = new Font("Dialog", Font.BOLD, 16);
 		hf.sortieren(ab.isSelected());
 		
 		punktePanel.removeAll();
@@ -41,7 +42,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		
 		JPanel platz = new JPanel();
 		platz.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
-		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,Toolkit.getDefaultToolkit().getScreenSize().height));
+		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 		punktePanel.add(platz);
 		
 		JPanel spieler = new JPanel();
@@ -62,32 +63,51 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		
 		
 		platz.add(new JLabel("Platz"));
+		platz.getComponent(0).setFont(f);
+		((JLabel)platz.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		spieler.add(new JLabel("Spieler"));
+		spieler.getComponent(0).setFont(f);
+		((JLabel)spieler.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		primär.add(new JLabel("Primär(AB)"));
+		primär.getComponent(0).setFont(f);
+		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		sekundär.add(new JLabel("Sekundär"));
+		sekundär.getComponent(0).setFont(f);
+		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		
 		sos.add(new JLabel("SOS"));
+		sos.getComponent(0).setFont(f);
+		((JLabel)sos.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
 			
 			JLabel label6 = new JLabel(""+(hf.teilnehmerVector.size()-i));
 			platz.add(label6);
 			label6.setBorder(BorderFactory.createEtchedBorder());
+			label6.setFont(f);
 			
 			JLabel label1 = new JLabel(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
 			spieler.add(label1);
 			label1.setBorder(BorderFactory.createEtchedBorder());
+			label1.setFont(f);
 			
 			JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
 			primär.add(label2);
 			label2.setBorder(BorderFactory.createEtchedBorder());
+			label2.setFont(f);
 			
 			JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär));
 			sekundär.add(label3);
 			label3.setBorder(BorderFactory.createEtchedBorder());
+			label3.setFont(f);
 			
 			JLabel label4 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sos));
 			sos.add(label4);
 			label4.setBorder(BorderFactory.createEtchedBorder());
+			label4.setFont(f);
 			
 		}
 		platz.add(new JLabel(""));
@@ -96,7 +116,6 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		sekundär.add(punkteSchliessenButton);
 		sos.add(new JLabel(""));
 		setVisible(true);
-		
 	}
 	
 	JPanel punktePanel=new JPanel();
@@ -109,8 +128,5 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		} else if(e.getSource()==ab){
 			init();
 		}
-		
 	}
-	
-	
 }

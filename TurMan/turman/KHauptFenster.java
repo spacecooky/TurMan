@@ -23,8 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
- * TODO TTimer beim schließen des Fensters verbleibende Zeit auf 0 setzen.
- * TODO In der Punkte- und Begengungsübersicht die Schriftgröße erhöhen.
  * TODO Eine saubere Möglichkeit finden Spieler währen des Turniers zu entfernen. Ersetzen durch unsichtbare Dummies, die beim Paaren und Platzieren ignoriert werden?
  * TODO Ergebnisse in der Begegnungssicht eingeben können.
  * TODO Automatische Erstellung der Urkunden-PDF. (AGPL nötig?)
