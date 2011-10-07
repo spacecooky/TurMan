@@ -36,7 +36,7 @@ import javax.swing.JTextField;
  * TODO Druckfunktionen
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
- * TODO Speichern,Laden,Import und Export nur nach Bestätigung des Dialoges
+ * TODO Speichern,Laden,Import und Export nur nach erfolgreicher Bestätigung des Dialoges
  * 
  * @author jk
  *
@@ -118,7 +118,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	static String version=new String("V0.0.1");
+	static String version=new String("V0.0.2");
 
 // Hauptbereich
 	JPanel HauptPanel = new JPanel();

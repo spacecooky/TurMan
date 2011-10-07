@@ -1,0 +1,11 @@
+Version 0.0.2
+- Spieler können während eines laufenden Turniers gelöscht werden.
+  Sie werden dann in der Matrix deaktiviert und nur auf bereits erstellte Paarungen kann noch zugegriffen werden.
+  Die Punkte für bereits gespielte Partien werden den Gegnern weiterhin gutgeschrieben.
+  In allen anderen Bereichen werden gelöschte Spieler nicht mehr angezeigt oder beachtet.
+- Ergebnisse können auch über das Begegnungsfenster eingetragen werden.
+- Verschieben der Armeelistenpunkte in den Sekundärbereich.
+- Erstellung der Bemalpunkte im Primärbereich. 
+
+Version 0.0.1: 
+- Neuerstellung des Programms
