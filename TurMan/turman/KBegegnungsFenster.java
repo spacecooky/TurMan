@@ -83,10 +83,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 				
-				JLabel label1 = new JLabel(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
-				begegnung.add(label1);
-				label1.setBorder(BorderFactory.createEtchedBorder());
-				label1.setFont(f);
+				// Durch begegnungsFensterButton ersetzen.
+				// ((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(bg.yPos+1)).getComponent(bg.xPos+1)).
+				JButton b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsFensterButton;
+				b1.setText(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
+				begegnung.add(b1);
+				b1.setBorder(BorderFactory.createEtchedBorder());
+				b1.setFont(f);
+				//JLabel label1 = new JLabel(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
+				//begegnung.add(label1);
+				//label1.setBorder(BorderFactory.createEtchedBorder());
+				//label1.setFont(f);
 				
 				JLabel label2 = new JLabel(bg.p1+" : "+bg.p2);
 				primär.add(label2);

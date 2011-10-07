@@ -139,7 +139,7 @@ public class KPairings {
 		if(hf.teilnehmerVector.size()%2==1){
 			hf.dialog.getDialog(hf.dialog.errorUngerade);
 		}else{
-			hf.sortieren(hf.punkteFenster.ab.isSelected());
+			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
 			hf.rundenZaehler++;
 			while(!KPairings.createPairings(hf,hf.mode)){};
 			if(hf.mode==KPairings.RANDOM){

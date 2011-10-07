@@ -82,10 +82,8 @@ public class KPort {
 			}
 			hf.fillPanels();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 	}
@@ -103,7 +101,7 @@ public class KPort {
 			
 			fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");
 			fw.write("#TID-"+hf.TID+"||x\r\n");
-			hf.sortieren(hf.punkteFenster.ab.isSelected());
+			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
 			
 			for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 				KTeilnehmer tn = hf.sortierterVector.get(i);
@@ -111,7 +109,6 @@ public class KPort {
 			}
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

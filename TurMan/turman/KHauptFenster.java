@@ -24,19 +24,20 @@ import javax.swing.JTextField;
 
 /**
  * TODO Eine saubere Möglichkeit finden Spieler währen des Turniers zu entfernen. Ersetzen durch unsichtbare Dummies, die beim Paaren und Platzieren ignoriert werden?
- * TODO Ergebnisse in der Begegnungssicht eingeben können.
+ * DONE Ergebnisse in der Begegnungssicht eingeben können.
  * TODO Automatische Erstellung der Urkunden-PDF. (AGPL nötig?)
- * TODO Verschieben der Listenpunkte in den Sekundärbereich.
- * TODO Erstellen der Bemalungspunkte für den Primärbereich.
+ * DONE Verschieben der Listenpunkte in den Sekundärbereich.
+ * DONE Erstellen der Bemalungspunkte für den Primärbereich.
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches.
  * TODO Auswahl der Paarungsparameter in jeder Runde.
- * TODO Siegpunkte-Matix
+ * TODO Siegpunkte-Matrix
  * TODO Teamturniere
  * TODO Konfigurationsfenster
  * TODO Infofenster
  * TODO Druckfunktionen
+ * TODO Multilingualität
  * 
  * @author jk
  *
@@ -297,7 +298,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	}
 	
 	
-	public void sortieren(boolean ab){
+	public void sortieren(boolean ab,boolean bm){
 		KTeilnehmer t;
 		//Primär und Sekundärpunkte für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
@@ -310,14 +311,17 @@ public class KHauptFenster extends JFrame implements ActionListener{
 				t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12;
 			}
 			if(ab){
-				t.primär+=t.armeeliste;
+				t.sekundär+=t.armeeliste;
+			}
+			if(bm){
+				t.primär+=t.bemalwertung;
 			}
 		}
 		//SOS für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
 			for(int j=0;j<t.paarungen.size();j++){
-				t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(ab?-teilnehmerVector.get(t.paarungen.get(j)).armeeliste:0);
+				t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(bm?-teilnehmerVector.get(t.paarungen.get(j)).bemalwertung:0);
 				
 			}
 		}

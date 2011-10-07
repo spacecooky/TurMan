@@ -21,6 +21,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		this.t2=t2;
 		this.khf=khf;
 		addActionListener(this);
+		begegnungsFensterButton.addActionListener(this);
 		addMouseListener(this);
 		setBorder(BorderFactory.createRaisedBevelBorder());
 		setMaximumSize(new Dimension(20,20));
@@ -53,6 +54,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	int sos=0;
 	
 	JButton bestaetigung = new JButton("Bestätigung");
+	JButton begegnungsFensterButton = new JButton("");
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();
 		
@@ -72,11 +74,14 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p12=p22;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p22=p12;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).setBackground(Color.green);
-			khf.sortieren(khf.punkteFenster.ab.isSelected());
+			khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected());
 			khf.begegnungsFrame.removeAll();
 			khf.begegnungsPanel.removeAll();
 			khf.begegnungsFrame.dispose();
-		}else if(quelle== this){
+			if(khf.begegnungsFenster.isVisible()){
+				khf.begegnungsFenster.init();
+			}
+		}else if(quelle== this || quelle==begegnungsFensterButton){
 			try{
 				khf.begegnungsFrame.removeAll();
 				khf.begegnungsPanel.removeAll();
@@ -116,7 +121,6 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -135,7 +139,6 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		if(getBackground().equals(Color.green) || getBackground().equals(Color.orange)){
 			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setBackground(colY);
 			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setForeground(Color.black);
@@ -144,12 +147,10 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 }

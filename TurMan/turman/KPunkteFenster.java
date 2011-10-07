@@ -27,13 +27,14 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
 		ab.addActionListener(this);
+		bm.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
 	
 	public void init(){
 		Font f = new Font("Dialog", Font.BOLD, 16);
-		hf.sortieren(ab.isSelected());
+		hf.sortieren(ab.isSelected(),bm.isSelected());
 		
 		punktePanel.removeAll();
 		setContentPane(new JScrollPane(punktePanel));
@@ -70,11 +71,11 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		spieler.getComponent(0).setFont(f);
 		((JLabel)spieler.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		primär.add(new JLabel("Primär(AB)"));
+		primär.add(new JLabel("Primär(B)"));
 		primär.getComponent(0).setFont(f);
 		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		sekundär.add(new JLabel("Sekundär"));
+		sekundär.add(new JLabel("Sekundär(AL)"));
 		sekundär.getComponent(0).setFont(f);
 		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
@@ -94,12 +95,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			label1.setBorder(BorderFactory.createEtchedBorder());
 			label1.setFont(f);
 			
-			JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
+			JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)"));
 			primär.add(label2);
 			label2.setBorder(BorderFactory.createEtchedBorder());
 			label2.setFont(f);
 			
-			JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär));
+			JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
 			sekundär.add(label3);
 			label3.setBorder(BorderFactory.createEtchedBorder());
 			label3.setFont(f);
@@ -112,20 +113,23 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		}
 		platz.add(new JLabel(""));
 		spieler.add(new JLabel(""));
-		primär.add(ab);
-		sekundär.add(punkteSchliessenButton);
-		sos.add(new JLabel(""));
+		primär.add(bm);
+		sekundär.add(ab);
+		sos.add(punkteSchliessenButton);
 		setVisible(true);
 	}
 	
 	JPanel punktePanel=new JPanel();
-	JCheckBox ab = new JCheckBox("AB/Überweisung");
+	JCheckBox ab = new JCheckBox("Armeeliste");
+	JCheckBox bm = new JCheckBox("Bemalung");
 	JButton punkteSchliessenButton=new JButton("OK");
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
 			setVisible(false);
 		} else if(e.getSource()==ab){
+			init();
+		} else if(e.getSource()==bm){
 			init();
 		}
 	}

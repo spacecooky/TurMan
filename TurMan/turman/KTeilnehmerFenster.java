@@ -29,6 +29,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	JLabel teamLabel = new JLabel("Team");
 	JLabel armeelisteLabel = new JLabel("Armeepunkte");
 	JLabel bezahltLabel = new JLabel("Bezahlpunkte");
+	JLabel bemalLabel = new JLabel("Bemalpunkte");
 	
 	JTextField vornameArea = new JTextField("");
 	JTextField nicknameArea = new JTextField("");
@@ -38,6 +39,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	JTextField teamArea = new JTextField("");
 	JTextField armeelisteArea = new JTextField("");
 	JTextField bezahltArea = new JTextField("");
+	JTextField bemalArea = new JTextField("");
 	
 	JButton cancel = new JButton("Abbrechen");
 	JButton ok = new JButton("Ändern");
@@ -46,7 +48,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	
 	public void init(){
 		setSize(300, 300);
-		mainPanel.setLayout(new GridLayout(8,2));
+		mainPanel.setLayout(new GridLayout(9,2));
 		
 		mainPanel.add(vornameLabel);
 		mainPanel.add(vornameArea);
@@ -72,6 +74,9 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 		//mainPanel.add(bezahltLabel);
 		//mainPanel.add(bezahltArea);
 		
+		mainPanel.add(bemalLabel);
+		mainPanel.add(bemalArea);
+		
 		mainPanel.add(cancel);
 		mainPanel.add(ok);
 		
@@ -93,6 +98,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 		teamArea.setText(teilnehmer.team);
 		armeelisteArea.setText(Integer.toString(teilnehmer.armeeliste));
 		bezahltArea.setText(teilnehmer.bezahlt==1?"2":"0");
+		bemalArea.setText(Integer.toString(teilnehmer.bemalwertung));
 		setVisible(true);
 	}
 	
@@ -113,6 +119,11 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 				
 			}
 			teilnehmer.bezahlt=bezahltArea.getText().equals("2")?1:0;
+			try{
+				teilnehmer.bemalwertung=Integer.parseInt(bemalArea.getText());
+				} catch(Exception e){
+					
+				}
 			setVisible(false);
 		}
 		
