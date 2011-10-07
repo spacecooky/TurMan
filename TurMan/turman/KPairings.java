@@ -136,7 +136,7 @@ public class KPairings {
 
 
 	static void runde(KHauptFenster hf){
-		if(hf.teilnehmerVector.size()%2==1){
+		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getDialog(hf.dialog.errorUngerade);
 		}else{
 			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
@@ -218,24 +218,30 @@ public class KPairings {
 		System.out.println(bV.size());
 		Vector<KTeilnehmer> tVector=(Vector<KTeilnehmer>)tV.clone();
 		for(int i=0;i < tVector.size();i++){
-			System.out.println(""+i+"<"+tVector.size());
-			Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
-			if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){
-				Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
-				if(hf.alleBegegnungenVector.contains((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1))){
-					System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
-					bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
-					tneu.remove(i);
-					tneu.remove(0);
-					if(tneu.size()==0){
-						return bVector;
-					}
-					bVector=swiss(tneu,bVector,hf);
-					if(bVector!=null){
-						return bVector;
+				System.out.println(""+i+"<"+tVector.size());
+				Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
+				if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){
+					Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
+					if(hf.alleBegegnungenVector.contains((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1))){
+						if(tVector.get(0).deleted){
+							tneu.remove(0);
+						}else if(tVector.get(i).deleted){
+							tneu.remove(i);
+						}else{
+							System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
+							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
+							tneu.remove(i);
+							tneu.remove(0);
+						}
+						if(tneu.size()==0){
+							return bVector;
+						}
+						bVector=swiss(tneu,bVector,hf);
+						if(bVector!=null){
+							return bVector;
+						}
 					}
 				}
-			}
 		}
 		return null;
 	}

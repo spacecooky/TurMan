@@ -35,7 +35,9 @@ public class KSpeicherverwaltung {
 				fw.write(tn.unknown+";");
 				fw.write(tn.armeeliste+";");
 				fw.write(tn.bezahlt+";");
+				fw.write(tn.bemalwertung+";");
 				fw.write(tn.ntr+";");
+				fw.write(tn.deleted==true?"true"+";":"false"+";");
 				fw.write("\r\n");
 			}
 			fw.write("||");
@@ -46,7 +48,7 @@ public class KSpeicherverwaltung {
 					try{
 						KBegegnungen bg =(KBegegnungen)tp.getComponent(j);
 						System.out.println(bg.tisch);
-						if(bg.getBackground().equals(Color.darkGray)){
+						if(bg.getBackground().equals(Color.darkGray) || bg.getBackground().equals(Color.black)){
 							fw.write("1;");
 						} else if(bg.getBackground().equals(Color.orange)){
 							fw.write("2,"+bg.p1+","+bg.p12+","+bg.p2+","+bg.p22+","+bg.getText()+","+bg.tisch+";");
@@ -77,7 +79,7 @@ public class KSpeicherverwaltung {
 		File f =new File(fileChooser.getSelectedFile().toString());
 		
 		leeren(hf);
-		
+		hf.gelöschteTeilnehmer=0;
 		System.out.println(f.getName());
 		String s ="";
 		int read;
@@ -133,15 +135,28 @@ public class KSpeicherverwaltung {
 						
 					}
 					
+					int bemalwertung = 0;
+					try{
+						bemalwertung = Integer.parseInt(sBr[10]);
+					}catch(NumberFormatException e){
+						
+					}
+					
 					int ntr = 0;
 					try{
-						ntr = Integer.parseInt(sBr[10]);
+						ntr = Integer.parseInt(sBr[11]);
 					}catch(NumberFormatException e){
 						
 					}
 					
 					hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr));
 				
+					hf.teilnehmerVector.lastElement().bemalwertung=bemalwertung;
+					
+					if(sBr[12].contains("true")){
+						hf.teilnehmerVector.lastElement().deleted=true;
+					}
+			
 			}
 			hf.fillPanels();
 			
@@ -190,6 +205,12 @@ public class KSpeicherverwaltung {
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
 				KPairings.team=false;
+			}
+			
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				if(hf.teilnehmerVector.get(i).deleted==true){
+					hf.entfernenFenster.entfernen(i);
+				}
 			}
 			
 			

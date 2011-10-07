@@ -20,7 +20,7 @@ public class KPort {
 		int returnVal = fileChooser.showOpenDialog(hf);
 		File f =new File(fileChooser.getSelectedFile().toString());
 		KSpeicherverwaltung.leeren(hf);
-		
+		hf.gelöschteTeilnehmer=0;
 		hf.mode=KPairings.RANDOM;
 		KPairings.team=true;
 		hf.rundenZaehler=0;
@@ -102,10 +102,14 @@ public class KPort {
 			fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");
 			fw.write("#TID-"+hf.TID+"||x\r\n");
 			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
-			
+			int deleted=0;
 			for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 				KTeilnehmer tn = hf.sortierterVector.get(i);
-				fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i)+"||"+tn.primär+"||"+(tn.primär-tn.armeeliste)+"||"+tn.sekundär+tn.sos+"||"+tn.armeeliste+"||0||0||0||0||x\r\n");
+				if(tn.deleted==false){
+					fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+(tn.primär-tn.armeeliste)+"||"+tn.sekundär+tn.sos+"||"+tn.armeeliste+"||0||0||0||0||x\r\n");
+				} else {
+					deleted++;
+				}
 			}
 			fw.close();
 		} catch (IOException e) {

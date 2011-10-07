@@ -48,4 +48,6 @@ public class KTeilnehmer {
 	
 	int paired=-1;
 	
+	boolean deleted = false;
+	
 }

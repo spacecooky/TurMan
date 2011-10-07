@@ -82,34 +82,36 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		sos.add(new JLabel("SOS"));
 		sos.getComponent(0).setFont(f);
 		((JLabel)sos.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
-		
+		int deleted=0;
 		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
-			
-			JLabel label6 = new JLabel(""+(hf.teilnehmerVector.size()-i));
-			platz.add(label6);
-			label6.setBorder(BorderFactory.createEtchedBorder());
-			label6.setFont(f);
-			
-			JLabel label1 = new JLabel(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
-			spieler.add(label1);
-			label1.setBorder(BorderFactory.createEtchedBorder());
-			label1.setFont(f);
-			
-			JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)"));
-			primär.add(label2);
-			label2.setBorder(BorderFactory.createEtchedBorder());
-			label2.setFont(f);
-			
-			JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
-			sekundär.add(label3);
-			label3.setBorder(BorderFactory.createEtchedBorder());
-			label3.setFont(f);
-			
-			JLabel label4 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sos));
-			sos.add(label4);
-			label4.setBorder(BorderFactory.createEtchedBorder());
-			label4.setFont(f);
-			
+			if(hf.sortierterVector.get(i).deleted==false){
+				JLabel label6 = new JLabel(""+(hf.teilnehmerVector.size()-i-deleted));
+				platz.add(label6);
+				label6.setBorder(BorderFactory.createEtchedBorder());
+				label6.setFont(f);
+				
+				JLabel label1 = new JLabel(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
+				spieler.add(label1);
+				label1.setBorder(BorderFactory.createEtchedBorder());
+				label1.setFont(f);
+				
+				JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)"));
+				primär.add(label2);
+				label2.setBorder(BorderFactory.createEtchedBorder());
+				label2.setFont(f);
+				
+				JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
+				sekundär.add(label3);
+				label3.setBorder(BorderFactory.createEtchedBorder());
+				label3.setFont(f);
+				
+				JLabel label4 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sos));
+				sos.add(label4);
+				label4.setBorder(BorderFactory.createEtchedBorder());
+				label4.setFont(f);
+			} else {
+				deleted++;
+			}
 		}
 		platz.add(new JLabel(""));
 		spieler.add(new JLabel(""));

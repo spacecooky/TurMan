@@ -23,11 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Eine saubere Möglichkeit finden Spieler währen des Turniers zu entfernen. Ersetzen durch unsichtbare Dummies, die beim Paaren und Platzieren ignoriert werden?
- * DONE Ergebnisse in der Begegnungssicht eingeben können.
+ * DONE Eine saubere Möglichkeit finden Spieler währen des Turniers zu entfernen. Ersetzen durch unsichtbare Dummies, die beim Paaren und Platzieren ignoriert werden?
  * TODO Automatische Erstellung der Urkunden-PDF. (AGPL nötig?)
- * DONE Verschieben der Listenpunkte in den Sekundärbereich.
- * DONE Erstellen der Bemalungspunkte für den Primärbereich.
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches.
@@ -38,6 +35,8 @@ import javax.swing.JTextField;
  * TODO Infofenster
  * TODO Druckfunktionen
  * TODO Multilingualität
+ * TODO Einfügen eines Freilos-Spielers
+ * TODO Speichern,Laden,Import und Export nur nach Bestätigung des Dialoges
  * 
  * @author jk
  *
@@ -170,6 +169,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JTextField p22Field = new JTextField();
 //Variablen
 	int teilnehmer=0;
+	int gelöschteTeilnehmer=0;
 	int runden=0;
 	int rundenZaehler=0;
 	int mode = KPairings.RANDOM;
@@ -203,6 +203,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			neuFrame.setVisible(true);
 			} else if(quelle == neuButton){
 			teilnehmer=Integer.parseInt(neuTeilnehmerField.getText());
+			gelöschteTeilnehmer=0;
 			runden=Integer.parseInt(neuRundenField.getText());
 			neuFrame.setVisible(false);
 			
