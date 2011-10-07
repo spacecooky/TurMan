@@ -23,7 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
- * DONE Eine saubere Möglichkeit finden Spieler währen des Turniers zu entfernen. Ersetzen durch unsichtbare Dummies, die beim Paaren und Platzieren ignoriert werden?
  * TODO Automatische Erstellung der Urkunden-PDF. (AGPL nötig?)
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
@@ -37,6 +36,8 @@ import javax.swing.JTextField;
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
  * TODO Speichern,Laden,Import und Export nur nach erfolgreicher Bestätigung des Dialoges
+ * TODO Mehrere Übersicht-Tabs
+ * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * 
  * @author jk
  *
