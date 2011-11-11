@@ -148,8 +148,9 @@ public class KPairings {
 			}
 		}
 		hf.herausforderungsVector.clear();
-		tische(hf);	
-
+		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0){
+			tische(hf);
+		}
 	}
 
 	static void tische(KHauptFenster hf){

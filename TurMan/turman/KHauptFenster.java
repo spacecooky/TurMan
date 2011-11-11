@@ -93,6 +93,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		runde.addActionListener(this);
 		turnier.add(zeit);
 		zeit.addActionListener(this);
+		turnier.add(urkundenErstellen);
+		urkundenErstellen.addActionListener(this);
 		
 		menubar.add(spieler);
 		spieler.add(entfernen);
@@ -141,10 +143,12 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem runde = new JMenuItem("Nächste Runde");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
+	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
+	
 	
 //neu
 	JFrame neuFrame = new JFrame();
@@ -190,6 +194,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
 	KDialog dialog = new KDialog(this);
 	
+ //Urkunden
+	KUrkunde urkunde = new KUrkunde();
 	/**
 	 * @param args
 	 */
@@ -264,7 +270,9 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			herausforderungsFenster.init();
 		} else if(quelle==zeit){
 			new TTimer(this);
-		} else if(quelle==begegnungen){
+		} else if(quelle==urkundenErstellen){
+			urkunde.urkundeErstellen(teilnehmerVector);
+		}else if(quelle==begegnungen){
 			begegnungsFenster.init();
 		}
 		
