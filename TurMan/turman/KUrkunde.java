@@ -2,7 +2,6 @@ package turman;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
@@ -14,23 +13,13 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.ColumnText;
-import com.lowagie.text.pdf.MultiColumnText;
-import com.lowagie.text.pdf.PdfAnnotation;
-import com.lowagie.text.pdf.PdfAppearance;
 import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfFormField;
 import com.lowagie.text.pdf.PdfImportedPage;
 import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
-import com.lowagie.text.pdf.PdfTable;
-import com.lowagie.text.pdf.PdfTemplate;
 import com.lowagie.text.pdf.PdfWriter;
 
 /**
@@ -65,8 +54,8 @@ public class KUrkunde {
 		
 		System.out.println(tV.size());
 			//Fonts
-			Font name = FontFactory.getFont("Colonna MT", 26);
-			Font armee = FontFactory.getFont("Colonna MT", 26);
+			Font name = FontFactory.getFont("Colonna MT", 32);
+			Font nameKlein = FontFactory.getFont("Colonna MT", 28);
 			Font turnier = FontFactory.getFont("Colonna MT", 36);
 			Font oger = FontFactory.getFont("Colonna MT", 18);
 			
@@ -97,18 +86,22 @@ public class KUrkunde {
 				
 				for (int i = 0; i < tV.size(); i++) {
 					PdfContentByte canvas = stamper.getOverContent(i+1);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 11.2",turnier), reader.getPageSize(i+1).width()/2, 500, 0);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1).width()/2, 460, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 11.2",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
 					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("  .Platz",armee), reader.getPageSize(i+1).width()/2, 380, 0);
-					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).armee,armee), reader.getPageSize(i+1).width()/2, 300, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("  .Platz",turnier), reader.getPageSize(i+1).width()/2, 400, 0);
 					
 					String insertName = tV.get(i).vorname+" \""+tV.get(i).nickname+"\" "+tV.get(i).nachname;
 					insertName = insertName.replace("\"\" ", "");
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(insertName,name), reader.getPageSize(i+1).width()/2, 270, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(insertName,insertName.length()<40?name:nameKlein), reader.getPageSize(i+1).width()/2, 310, 0);
 					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_RIGHT, new Phrase("Turnier-Oger",oger), 50, 50, 0);
+					
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("mit",name), reader.getPageSize(i+1).width()/2, 270, 0);
+					
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).armee,name), reader.getPageSize(i+1).width()/2, 230, 0);
+					
+					
+					ColumnText.showTextAligned(canvas,Element.ALIGN_RIGHT, new Phrase("Turnier-Oger",oger), 185, 70, 0);
 				}
 				stamper.close();
 				

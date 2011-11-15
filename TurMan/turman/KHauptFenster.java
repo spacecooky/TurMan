@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Automatische Erstellung der Urkunden-PDF. (AGPL nötig?)
+ * TODO Variable Einstellung der Urkunden-Infos.
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches.
@@ -121,7 +121,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	static String version=new String("V0.0.2");
+	static String version=new String("V0.0.3");
 
 // Hauptbereich
 	JPanel HauptPanel = new JPanel();
