@@ -40,7 +40,8 @@ import javax.swing.JTextField;
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen.
  * TODO Übersichtliches Eingabefenster für Bemalwertung/Listenpunkte/usw aller Spieler
- * TODO Begegnungsfenster: keine doppelte Anzeige von Feldern beim Laden eines Turniers, wenn bereits eines offen ist.
+ * TODO Punktefenster nach jeder Punkteingabe aktualisieren, falls es offen ist.
+ * TODO Maximalgröße von Elementen im Punkte/Begegnungsfenster, falls zu wenige eingetragen sind
  * 
  * @author jk
  *

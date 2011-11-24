@@ -80,7 +80,6 @@ public class KSpeicherverwaltung {
 		
 		leeren(hf);
 		hf.gelöschteTeilnehmer=0;
-		System.out.println(f.getName());
 		String s ="";
 		int read;
 		FileReader fr;
@@ -226,6 +225,7 @@ public class KSpeicherverwaltung {
 	
 	static void leeren(KHauptFenster hf){
 		hf.teilnehmerVector.removeAllElements();
+		hf.begegnungsVector.removeAllElements();
 		hf.HauptPanel.removeAll();
 	}
 	

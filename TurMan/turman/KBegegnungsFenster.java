@@ -30,7 +30,6 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	KHauptFenster hf=null;
 	
 	public void init(){
-		
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		
 		begegnungsPanel.removeAll();
