@@ -106,7 +106,8 @@ public class KPort {
 			for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 				KTeilnehmer tn = hf.sortierterVector.get(i);
 				if(tn.deleted==false){
-					fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+(tn.primär-tn.armeeliste)+"||"+tn.sekundär+tn.sos+"||"+tn.armeeliste+"||0||0||0||0||x\r\n");
+					//ID||Vorname||Nachname||Nickname||Armee||Ort||Team||Platziereung||TPGesamt||TP||??||AL||Bemalung||Quiz||Fairplay||Sonstige||
+					fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+(tn.primär-tn.armeeliste)+"||0/*"+tn.sekundär+tn.sos+"*/||"+tn.armeeliste+"||0||0||0||0||x\r\n");
 				} else {
 					deleted++;
 				}

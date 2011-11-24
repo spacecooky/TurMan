@@ -1,0 +1,80 @@
+[b]Startgebühr[/b]
+
+Die Startgebühr beträgt 5 Euro.
+
+[b]Armeezusammenstellung[/b]
+
+Teilnehmer, die ihre Liste bis spätestens [b]Freitag, den XX. XXX 2012[/b] an [b]cooky2k@web.de[/b] einsenden, werden mit 2 Sekundärpunkten belohnt. Listen die nach Mittwoch, dem XX. XXX 2012 um 12:00 eingeschickt werden, werden nicht mehr angenommen.
+Als Format bitte Word, Excel oder PDF. Bevorzugt sind Online-Codex-Listen.
+
+Es wird der AOP für Standard-Missionen verwendet bei einer maximalen Punktzahl von 1250.
+Also mindestens eine HQ-Auswahl und 2 Standard-Auswahlen.
+
+Es ist ein weiteres Spektrum an Armeen zugelassen. Da die Auswahl von Forgeworldlisten scheinbar fehlerhaft ist, steht hinter der Armee, mit welcher ihr euch auf T3 anmelden sollt, falls ihr sie spielt. Weiterhin ist auch die Quelle aufgeführt.  Wer mit einer der Fandex-Listen kommen möchte, findet im OnlineCodex-Forum in den entsprechenden Themen die dazugehörigen Links.
+
+Zugelassen sind folgende Listen:
+- aktuelle Standard-Codizes
+
+Forgeworld-Listen:
+-Death Korps of Krieg (PDF-Update von Forgeworld) [Anmeldung mit: Imperiale Armee]
+-Elysian Drop Troops (Imperial Armour 8) [Anmeldung mit: Imperiale Armee]
+-Ork Dread Mob (Imperial Armour 8) [Anmeldung mit: Orks]
+-Armoured Company (PDF-Update von Forgeworld) [Anmeldung mit: Imperiale Armee]
+-Renegades and Heretics (PDF-Update von Forgeworld) [Anmeldung mit: Chaos Space Marines]
+-Tyrants Legion (Imperial Armour 9) [Anmeldung mit: Space Marines]
+
+Fan Codizes: (enthalten in der OnlineCodex Fan-Codex-Version):
+-Adeptus Arbites (Bell of lost Souls) [Anmeldung mit: Imperiale Armee]
+-Bad Moons (The Waaagh) [Anmeldung mit: Orks]
+-Evil Sunz (The Waaagh) [Anmeldung mit: Orks]
+-Rebel Grotz (The Waaagh) [Anmeldung mit: Orks]
+-Snakebites (The Waaagh) [Anmeldung mit: Orks]
+
+Besondere Charaktermodelle und Modelle mit eigenen Namen sind nicht zugelassen.
+Namhafte Truppenanführer sind ebenfalls nicht zugelassen, beispielsweise Käpt'n Bädrukk bei den Orks.
+Sonderregelung: 
+-Der Avatar des Khaine und der Champion des Imperators werden nicht als solche Charaktermodelle angesehen und dürfen verwendet werden.
+
+Die besonderen Charaktermodelle der Dark Angels sind ebenfalls verboten. Stattdessen gelten für Dark Angels folgende 3 Punkte:
+
+- Sollte ein HQ-Model auf Bike sitzen, so hat die Armee Zugriff auf Bikes im Standard.
+
+- Sollte ein HQ-Model eine Termi-Rüstung tragen, so hat die Armee Zugriff auf
+Terminatoren im Standard.
+
+- Die Auswahl des HQ-Modells erlaubt dann auch den Einsatz der entsprechenden Kompaniestandarte und des Apothecarius.
+
+Keine Alliierten.
+FKR sind nicht zugelassen.
+Keine Forgeworld-Regeln (außer in den reinen Forgeworldlisten).
+Keine Einheiten mit Strukturpunkten und/oder Fliegerregeln, falls solche in den reinen FW-Listen enthalten sein sollten.
+
+[b]WYSIWYG[/b]
+Ist zu einem gewissen Maß einzuhalten. Natürlich keine Proxy-Modelle. Für imperiale Soldaten dürfen z.B. keine Orks verwendet werden. Bewaffnungen sollten, soweit möglich, auch das sein, wonach sie aussehen. Bei Abweichungen muss der Gegner auf die korrekte Bewaffnung hingewiesen werden.
+
+Nicht-GW Modelle sind zugelassen, sofern man problemlos erkennen kann um was für eine Einheit es sich handelt. Für umgebaute Fahrzeuge bzw. Eigenbauten gilt das selbe. Eigenbauten müssen aber einen gewissen Gütegrad aufweisen. Pappkartons mit einem aufgeklebtem Ultramarines-Symbol oder Ähnliches sind deswegen nicht zugelassen. 
+
+[b]Gelände[/b]
+Es gelten folgende Modifikationen:
+
+- [u]Wälder[/u]: Fahrzeuge/Monströse Kreaturen, die sich komplett in einem Wald befinden, zählen als in Deckung befindlich. Wenn sie sich aus Richtung des Schützen (oder des Schablonenmittelpunktes, wenn das zutrifft) zu mehr als 50% hinter dem Wald befinden, zählen sie ebenfalls als in Deckung. Wälder sind so hoch, wie der höchste Baum darin. Ansonsten gelten Wälder wie jede andere Geländezone.
+
+[b]Was muss der Spieler mitbringen?[/b]
+Die Teilnehmer sind selbst dafür verantwortlich Codizes, FAQs, Regelbücher, Würfel, Schablonen und Maßbänder und Marker mitzubringen [b]und mindestens ein ausgedrucktes Exemplar ihrer Armeeliste[/b](und Ähnliches, falls ich was vergessen hab ;-) ).
+
+
+[b]Besondere Regelungen/Klarstellungen[/b]
+
+[u]Imperiale Armee[/u]:
+
+Der Manticore folgt NIE den Regeln für Mehrfachsperrfeuer.
+
+Für Vendettas und Walküren gelten ergänzend zu Grundregeln und dem FAQ folgende Regeln:
+
+- Einheiten dürfen unterhalb einer V/W platziert werden.
+- Bei einer schockenden Schwadron von V/Ws müssen sich die Rümpfe statt der Bases berühren.
+-Nahkämpfe gehen gegen das Base.
+
+-lahmgelegte V/Ws bleiben auch auf dem Base.
+-für Wracks bleibt das Base liegen. Alle Modelle hinter dem Base haben Deckung. Monströse Kreaturen und Fahrzeuge haben Deckung, wenn sie sich mehr als 50% hinter dem Base befinden. Auf dem Wrack-Base haben nur Modelle Deckung, die keine Fahrzeuge oder monströse Kreaturen sind.
+-solange es kein Wrack ist, kann das Base einer V/W nicht von anderen Modellen betreten werden.

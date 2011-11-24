@@ -1,3 +1,6 @@
+Version 0.0.3
+- Urkunden auf Basis einer Vorlage können erstellt werden (V-Con-Urkunden-Vorlage)
+
 Version 0.0.2
 - Spieler können während eines laufenden Turniers gelöscht werden.
   Sie werden dann in der Matrix deaktiviert und nur auf bereits erstellte Paarungen kann noch zugegriffen werden.

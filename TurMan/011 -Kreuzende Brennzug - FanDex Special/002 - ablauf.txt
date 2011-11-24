@@ -1,0 +1,105 @@
+[b]Anfahrt[/b]
+
+Wer eine Anfahrtsbeschreibung zum Jugendhaus sucht, wird unter folgendem Link fündig:
+[url=http://www.vs-mc.de/vs-music-contest/kontakt/anfahrt.php]Link[/url]
+Falls der Link mal wieder nicht erreichbar sind, bitte Internet oder Navi konsultieren. Nicht dass noch wer verloren geht.
+
+[b]Parkmöglichkeiten[/b]
+
+Da in der Kalkofenstraße direkt vor dem Jugendhaus die Parkmöglichkeiten eher rar sind, hab ich [url=http://i23.photobucket.com/albums/b398/spacecooky/v-con/parkpltze.jpg]hier[/url] die Straßen blau markiert, in denen um das Jugendhaus (grün umkringelt) freie Parkplätze zu finden sein sollten.
+
+[b]Verköstigung[/b]
+
+An der Theke des Jugenhauses wird es ein vielfältiges Nahrungs- und Getränkeangebot geben.
+
+[b]Turnierablauf[/b]
+
+09:00 - 10:00 Ankunft und Registration
+10:00 - 10:15 Hinweise auf Turniersonderregeln und Bekanntgabe der ersten Paarungen
+10:15 - 12:00 Turnierrunde 1
+12:00 - 12:15 Aufbau für die Bemalwertung
+12:15 - 13:00 Mittagspause
+13:00 - 14:45 Turnierrunde 2
+15:00 - 16:45 Turnierrunde 3
+17:00 Siegerehrung
+
+[b]Turnierrunden[/b]
+
+Für jede Turnierrunde wird eine Spielzeit von 105 Minuten berechnet.
+Es wird ein Timer laufen, damit jeder Spieler sehen kann, wie viel Zeit ihm noch bleibt.
+Sollte ein Spiel nach Ablauf der Zeit noch laufen, darf der aktive Spieler seine aktuelle Phase (Schuss, Bewegung oder Nahkampf) noch beenden.
+Jede Turnierrunde besteht aus [b]genau 6 Spielzügen[/b]. Löscht ein Spieler einen anderen vor Ablauf der Spielzüge aus, kann er sich in den verbleibenden Zügen noch bewegen, um Missionsziele einzunehmen. 
+Bei Missachtung der oben genannten Phasenregelung, behält dich die Orga vor, die Spieler mit einem Punktabzug zu belegen.
+
+[b]Aufgabe[/b]
+
+Ein Spiel darf nicht aufgegeben werden, sondern muss bis zum (bitteren) Ende durchgestanden werden. Eine Aufgabe sorgt dafür, dass der Gegenspieler mehr Punkte erhält, als ihm eigentlich zustünden. Eine Aufgabe ist also unfair gegenüber allen anderen Spielern, die sich ihre Turnierpunkte hart erkämpfen als auch dem Gegenspieler, dem ein Spiel verweigert wird und die Chance zu zeigen, dass er auch mit fairen Mitteln gewinnen kann.
+
+[b]Bemalwertung[/b]
+
+Dieses Jahr wird es eine prozentuale Bemalwertung geben. Die folgendermaßen gestaffelt ist:
+
+50% der Armee bemalt : 1 Primärpunkt
+100% der Armee bemalt : 2 Primärpunkte
+
+Um als bemalt zu gelten, muss das Modell mindestens in 3 Farben bemalt sein, wobei die Grundierung nicht zählt. Und die Bases müssen gestaltet sein.
+Fahrzeuge und Monströse Kreaturen zählen als 5 Modelle.
+Für die Wertung muss die Armee nach dem ersten Spiel aufgebaut werden. 
+
+[b]Missionen[/b]
+
+[u]# Mission 1: Vernichtung[/u]
+
+Aufstellung : Schlacht im Morgengrauen
+
+Missionspunkte:
+
+Man bekommt einen Missionspunkt für jeden Killpunkt.
+Angeschlossene Transportfahrzeuge und Gefolge zählen als eigene Killpunkte.
+
+[u]# Mission 2: Suchen und Sichern[/u]
+
+Aufstellung: Schlagabtausch
+
+Missionspunkte: 
+
+Es gibt 3 Missionsmarker, die jeweils einen Missionspunkt wert sind. Diese werden wie im Regelbuch beschrieben platziert.
+
+[u]# Mission 3: Spielfeldviertel[/u]
+
+Aufstellung: Speerspitze
+
+Missionspunkte:
+
+Jedes Spielfeldviertel, außer dem eigenen, ist einen Missionspunkt wert. Viertel können von punktenden Einheiten eingenommen werden und von allen andern verweigert werden. Befindet sich eine Einheit in zwei Vierteln, zählt sie für das Viertel in dem sich die Mehrheit der Einheit befindet, bei Gleichverteilung entscheidet das ein Würfelwurf.
+
+[b]Wertung[/b] 
+
+Als Primärwertung für ein Spiel zählen die Missionpunkte. Anhand der Differenz zu seinem Gegenspieler erhält jeder Spieler in jeder Turnierrunde eine bestimmte Anzahl an Primärpunkten. Diese legen die Platzierung des Spielers fest.
+
+[u]Missionspunkte-Differenz-Matrix:[/u]
+0 --> 3 : 3
+1 --> 4 : 2
+2 --> 5 : 1
+3 --> 6 : 0
+
+Zusätzlich gibt es als Nebenwertung Sekundärmissionsziele. Diese können in jeder Turnierrunde gewonnen werden. Mit diesen werden Spieler mit gleichen Primärpunkten untereinander platziert. Bei zwei Spielern mit gleicher Primärpunktzahl, wird der mit der höheren Sekundärpunktzahl besser platziert.
+
+Folgende Sekundärmissionsziele können gewonnen werden:
+
+-Es befindest sich noch mehr als die Hälfte (in Siegpunkten) der eigenen Armee auf dem Spielfeld.
+-Die teuerste eigene HQ-Einheit hat das Spiel überlebt (Bei gleich teuren Einheiten vor dem Spiel eines markieren). 
+-Die teuerste eigene nicht-HQ-Einheit hat das Spiel überlebt (Bei gleich teuren Einheiten vor dem Spiel eines markieren). 
+
+Befinden sich dann immer noch Spieler an der selben Position, wird als 3 Wertung die Spielstärke der Gegner eingerechnet. Diese wird durch die Summe der aller Turnierpunkte dargestellt, welche die Gegenspieler der vorigen Runden gesammelt haben.
+
+Ingesamt können folgende Punkte gesammelt werden:
+
+Missionen: 18 Primärpunkte
+Bemalung: 2 Primärpunkte
+Überweisung: 2 Primärpunkte
+
+Missionen: 9 Sekundärpunkte
+Listenabgabe: 2 Sekundärpunkte
+
+Die Punkte für Bemalung, Überweisung und Listenabgabe werden erst am Ende des Turniers hinzugefügt und haben  keine Auswirkung auf die Paarungen.

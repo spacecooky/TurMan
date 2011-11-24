@@ -38,6 +38,9 @@ import javax.swing.JTextField;
  * TODO Speichern,Laden,Import und Export nur nach erfolgreicher Bestätigung des Dialoges
  * TODO Mehrere Übersicht-Tabs
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
+ * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen.
+ * TODO Übersichtliches Eingabefenster für Bemalwertung/Listenpunkte/usw aller Spieler
+ * TODO Begegnungsfenster: keine doppelte Anzeige von Feldern beim Laden eines Turniers, wenn bereits eines offen ist.
  * 
  * @author jk
  *
