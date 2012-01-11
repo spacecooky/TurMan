@@ -12,9 +12,15 @@ public class KPairings {
 
 	static int RANDOM=0;
 	static int SWISS=1;
-	static boolean team=true;
+	//static boolean team=true; //Ersetzt durch das Optionenfenster
+	
+	//TODO Paarungsalgorithmus ersetzen
+	//TODO Funktionen für optionale Paarungsoptionen erstellen (oder als Funktion in KBegegnungen?)
 	
 	static boolean createPairings(KHauptFenster hf, int mode){
+		int teamFailures=0;
+		boolean teamFailureBool=false;
+		
 		System.out.println("NEW ROUND. MODE="+(mode==0?"RANDOM":"SWISS"));
 		Vector<KTeilnehmer> v;
 		if(mode == RANDOM){
@@ -39,29 +45,34 @@ public class KPairings {
 					int gegner=i;//v.size();
 					while(true){
 						gegner = randomGenerator.nextInt(v.size());
-						if(v.get(gegner).paired==-1){
-							if(team && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
+						if(v.get(gegner).paired==-1){ //Der ausgewählte Gegner hat noch keine Paarung
+							
+							//Prüfung, falls Teams beachtet werden sollen
+							if(hf.optionenFeld.teams.isSelected() && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
+								teamFailureBool=true;
+							}
+							//Auswertung ob die Paarung legal ist
+							int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
+							if(!v.get(i).paarungen.contains(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
+									!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())){ // Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+								int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
+								int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
+								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1)));
+								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(ggNmbr+1)).getComponent(tnNmbr+1)));
+								v.get(gegner).paired=tnNmbr;
+								v.get(i).paired=ggNmbr;
+								
+								if(teamFailureBool){
+									teamFailures++;
+									teamFailureBool=false;
+								}
+								break;
+							}else{
 								if(fails==v.size()-1){
 									return false;
 								} else{
 									fails++;
-								}
-							}else{
-								int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
-								if(v.get(i).paarungen.contains(gegnerNmbr)){
-									if(fails==v.size()-1){
-										return false;
-									} else{
-										fails++;
-									}
-								}else{
-									int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
-									int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
-									buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1)));
-									buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(ggNmbr+1)).getComponent(tnNmbr+1)));
-									v.get(gegner).paired=tnNmbr;
-									v.get(i).paired=ggNmbr;
-									break;
+									teamFailureBool=false;
 								}
 							}
 						}else{
@@ -133,8 +144,8 @@ public class KPairings {
 
 		return true;
 	}
-
-
+	
+	
 	static void runde(KHauptFenster hf){
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getDialog(hf.dialog.errorUngerade);
@@ -144,7 +155,7 @@ public class KPairings {
 			while(!KPairings.createPairings(hf,hf.mode)){};
 			if(hf.mode==KPairings.RANDOM){
 				hf.mode=KPairings.SWISS;
-				KPairings.team=false;
+				//KPairings.team=false; //Haken muss dann manuell entfernt werden.
 			}
 		}
 		hf.herausforderungsVector.clear();
@@ -214,7 +225,16 @@ public class KPairings {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	
+	/**
+	 * Rekursive Berechnung der Paarungen
+	 * TODO Durchreichen der Counter für Verstöße gegen optionale Regeln 
+	 * 
+	 * @param tV
+	 * @param bV
+	 * @param hf
+	 * @return
+	 */
 	static Vector<KBegegnungen> swiss(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,KHauptFenster hf){
 		System.out.println(bV.size());
 		Vector<KTeilnehmer> tVector=(Vector<KTeilnehmer>)tV.clone();

@@ -55,6 +55,11 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
+	
+	public boolean team(){
+		return t1.team.equals(t2.team);
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();
 		

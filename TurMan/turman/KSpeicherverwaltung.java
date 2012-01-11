@@ -203,7 +203,7 @@ public class KSpeicherverwaltung {
 			}
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
-				KPairings.team=false;
+				//KPairings.team=false; //Haken muss manuell entfernt werden 
 			}
 			
 			for(int i=0;i<hf.teilnehmerVector.size();i++){

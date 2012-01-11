@@ -22,7 +22,7 @@ public class KPort {
 		KSpeicherverwaltung.leeren(hf);
 		hf.gelöschteTeilnehmer=0;
 		hf.mode=KPairings.RANDOM;
-		KPairings.team=true;
+		//KPairings.team=true; //Haken muss manuell entfernt werden
 		hf.rundenZaehler=0;
 		hf.alleBegegnungenVector.clear();
 		
@@ -107,7 +107,7 @@ public class KPort {
 				KTeilnehmer tn = hf.sortierterVector.get(i);
 				if(tn.deleted==false){
 					//ID||Vorname||Nachname||Nickname||Armee||Ort||Team||Platziereung||TPGesamt||TP||??||AL||Bemalung||Quiz||Fairplay||Sonstige||
-					fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+(tn.primär-tn.armeeliste)+"||0/*"+tn.sekundär+tn.sos+"*/||"+tn.armeeliste+"||0||0||0||0||x\r\n");
+					fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+(tn.primär-tn.bemalwertung)+"||0/*"+tn.sekundär+tn.sos+"*/||"+tn.armeeliste+"||0||0||0||0||x\r\n");
 				} else {
 					deleted++;
 				}

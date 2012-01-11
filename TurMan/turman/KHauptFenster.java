@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 /**
  * TODO Variable Einstellung der Urkunden-Infos.
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
+ * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches.
  * TODO Auswahl der Paarungsparameter in jeder Runde.
@@ -99,6 +100,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		zeit.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
+		turnier.add(optionen);
+		optionen.addActionListener(this);
 		
 		menubar.add(spieler);
 		spieler.add(entfernen);
@@ -148,6 +151,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem runde = new JMenuItem("Nächste Runde");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
+	JMenuItem optionen = new JMenuItem("Optionen einstellen");
 	
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
@@ -197,6 +201,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	KHerausforderungsFenster herausforderungsFenster = new KHerausforderungsFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
 	KDialog dialog = new KDialog(this);
+	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	
  //Urkunden
 	KUrkunde urkunde = new KUrkunde();
@@ -240,7 +245,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		} else if(quelle == teilnehmerButton){
 			KSpeicherverwaltung.leeren(this);
 			mode=KPairings.RANDOM;
-			KPairings.team=true;
+			//KPairings.team=true; Haken muss manuell entfernt werden
 			rundenZaehler=0;
 			alleBegegnungenVector.clear();
 			for(int i=4;i<3+teilnehmer*3;i+=3){
@@ -278,6 +283,9 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			urkunde.urkundeErstellen(teilnehmerVector);
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init();
+		}else if(quelle==optionen){
+			setContentPane(optionenFeld);
+			validate();
 		}
 		
 	}
