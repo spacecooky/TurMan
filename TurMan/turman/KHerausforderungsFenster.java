@@ -64,8 +64,8 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex()+1)).getComponent(combo1.getSelectedIndex()+1)).setEnabled(true);
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex()+1)).getComponent(combo2.getSelectedIndex()+1)).setBackground(Color.orange);
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex()+1)).getComponent(combo1.getSelectedIndex()+1)).setBackground(Color.orange);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex()+1)).getComponent(combo2.getSelectedIndex()+1)).setText(""+hf.rundenZaehler+1);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex()+1)).getComponent(combo1.getSelectedIndex()+1)).setText(""+hf.rundenZaehler+1);
+			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex()+1)).getComponent(combo2.getSelectedIndex()+1)).setText(""+(hf.rundenZaehler+1));
+			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex()+1)).getComponent(combo1.getSelectedIndex()+1)).setText(""+(hf.rundenZaehler+1));
 			
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex()+1)).getComponent(combo2.getSelectedIndex()+1)).runde=hf.rundenZaehler+1;
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex()+1)).getComponent(combo1.getSelectedIndex()+1)).runde=hf.rundenZaehler+1;

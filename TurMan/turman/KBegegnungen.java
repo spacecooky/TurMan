@@ -56,9 +56,35 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
 	
+	/**
+	 * @return true, wenn Teilnehmer 1 und 2 im selben Team sind
+	 */
 	public boolean team(){
 		return t1.team.equals(t2.team);
 	}
+	
+	/**
+	 * @return true, wenn Teilnehmer 1 und 2 aus dem selben Ort sind
+	 */
+	public boolean ort(){
+		return t1.ort.equals(t2.ort);
+	}
+	
+	/**
+	 * @return true, wenn t1 oder t2 bereits gegen die selbe Armee gespielt haben
+	 */
+	public boolean armee(){
+		//TODO nicht mehrmals gegen die selbe Armee spielen.
+		return false;
+	}
+	
+	/**
+	 * @return true, wenn Teilnehmer 1 und 2 die gleiche Armee spielen
+	 */
+	public boolean mirror(){
+		return t1.armee.equals(t2.armee);
+	}
+	
 	
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();

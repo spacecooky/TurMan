@@ -16,6 +16,7 @@ public class KPairings {
 	
 	//TODO Paarungsalgorithmus ersetzen
 	//TODO Funktionen für optionale Paarungsoptionen erstellen (oder als Funktion in KBegegnungen?)
+	//TODO Manuelle Paarung für Runden > 1
 	
 	static boolean createPairings(KHauptFenster hf, int mode){
 		int teamFailures=0;
@@ -104,9 +105,15 @@ public class KPairings {
 				System.out.println(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
 				tVector.add(hf.sortierterVector.get(i));
 			}
+			
+			//Herausforderungen aus tVector entfernen, Herausforderung ist schon komplett als Begegnung eingetragen
+			for(int i=0;i<hf.herausforderungsVector.size();i++){
+				tVector.remove(hf.herausforderungsVector.get(i));
+			}
+			
+			//Paaren
 			Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf);
 			System.out.println(bVector.size());
-
 
 			for(int i=0;i<bVector.size();i++){
 

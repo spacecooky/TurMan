@@ -86,8 +86,10 @@ public class KUrkunde {
 				
 				for (int i = 0; i < tV.size(); i++) {
 					PdfContentByte canvas = stamper.getOverContent(i+1);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 11.2",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+					//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 11.2",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+					//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
 					
 					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("  .Platz",turnier), reader.getPageSize(i+1).width()/2, 400, 0);
 					
