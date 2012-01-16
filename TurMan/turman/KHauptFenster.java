@@ -43,6 +43,8 @@ import javax.swing.JTextField;
  * TODO Übersichtliches Eingabefenster für Bemalwertung/Listenpunkte/usw aller Spieler
  * TODO Punktefenster nach jeder Punkteingabe aktualisieren, falls es offen ist.
  * TODO Maximalgröße von Elementen im Punkte/Begegnungsfenster, falls zu wenige eingetragen sind
+ * TODO Funktion zum Rückgängig machen einer Paarungsrunde
+ * TODO Urkunden dürfen entfernte Spieler nicht mehr entalten
  * 
  * @author jk
  *
