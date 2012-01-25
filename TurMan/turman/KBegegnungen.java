@@ -75,6 +75,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 */
 	public boolean armee(){
 		//TODO nicht mehrmals gegen die selbe Armee spielen.
+		//runde ermitteln
+		//spiele vor der runde bei beiden spielern ermitteln
+		//vergleich
 		return false;
 	}
 	

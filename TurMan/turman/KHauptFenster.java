@@ -27,7 +27,7 @@ import javax.swing.JTextField;
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
- * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches.
+ * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches. Teilweise erledigt für Zufallsrunde
  * TODO Auswahl der Paarungsparameter in jeder Runde.
  * TODO Siegpunkte-Matrix
  * TODO Teamturniere
@@ -44,7 +44,6 @@ import javax.swing.JTextField;
  * TODO Punktefenster nach jeder Punkteingabe aktualisieren, falls es offen ist.
  * TODO Maximalgröße von Elementen im Punkte/Begegnungsfenster, falls zu wenige eingetragen sind
  * TODO Funktion zum Rückgängig machen einer Paarungsrunde
- * TODO Urkunden dürfen entfernte Spieler nicht mehr entalten
  * 
  * @author jk
  *

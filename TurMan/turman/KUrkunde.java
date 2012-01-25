@@ -70,40 +70,47 @@ public class KUrkunde {
 				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File("Urkunden.pdf")));
 				document.open();
 				
-				
+				// In das Urkunden-PDF werden so viele Kopien der einzelnen Urkunde eingefügt, wie es Teilnehmer gibt.
+				// Wurde ein Teilnehmer gelöscht, wird für jeden gelöschten eine Seite weniger eingefügt.
 				PdfImportedPage page;
 				for (int i = 0; i < tV.size(); i++) {
-					page = writer.getImportedPage(reader, 1);
-					document.add(Image.getInstance(page));
+					if(!tV.get(i).deleted){
+						page = writer.getImportedPage(reader, 1);
+						document.add(Image.getInstance(page));
+					}
 				}
 				
 				document.close();
 				
-				
+				//Auf jede Urkundenseite werden die Daten für einen Spieler eingetragen.
+				//Gelöschte Spieler werden übersprungen und der Zähler del inkrementiert und bei späteren Seiten eingerechnet.
 				reader = new PdfReader("Urkunden.pdf");
 				PdfStamper stamper;
 				stamper = new PdfStamper(reader, new FileOutputStream(new File("UrkundenFertig.pdf")));
-				
+				int del=0;
 				for (int i = 0; i < tV.size(); i++) {
-					PdfContentByte canvas = stamper.getOverContent(i+1);
-					//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 11.2",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
-					//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
-					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("  .Platz",turnier), reader.getPageSize(i+1).width()/2, 400, 0);
-					
-					String insertName = tV.get(i).vorname+" \""+tV.get(i).nickname+"\" "+tV.get(i).nachname;
-					insertName = insertName.replace("\"\" ", "");
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(insertName,insertName.length()<40?name:nameKlein), reader.getPageSize(i+1).width()/2, 310, 0);
-					
-					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("mit",name), reader.getPageSize(i+1).width()/2, 270, 0);
-					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).armee,name), reader.getPageSize(i+1).width()/2, 230, 0);
-					
-					
-					ColumnText.showTextAligned(canvas,Element.ALIGN_RIGHT, new Phrase("Turnier-Oger",oger), 185, 70, 0);
+					if(!tV.get(i).deleted){
+						PdfContentByte canvas = stamper.getOverContent(i+1-del);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 12.1",turnier), reader.getPageSize(i+1-del).width()/2, 525, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1-del).width()/2, 485, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+						
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("  .Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
+						
+						String insertName = tV.get(i).vorname+" \""+tV.get(i).nickname+"\" "+tV.get(i).nachname;
+						insertName = insertName.replace("\"\" ", "");
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(insertName,insertName.length()<40?name:nameKlein), reader.getPageSize(i+1-del).width()/2, 310, 0);
+						
+						
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("mit",name), reader.getPageSize(i+1-del).width()/2, 270, 0);
+						
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).armee,name), reader.getPageSize(i+1-del).width()/2, 230, 0);
+						
+						ColumnText.showTextAligned(canvas,Element.ALIGN_RIGHT, new Phrase("Turnier-Oger",oger), 185, 70, 0);
+					} else {
+						del++;
+					}
 				}
 				stamper.close();
 				
