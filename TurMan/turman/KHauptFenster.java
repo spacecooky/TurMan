@@ -263,7 +263,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		}else if(quelle == oeffnen){
 			KSpeicherverwaltung.laden(this);
 		} else if(quelle == punkte){
-			punkteFenster.init();
+			punkteFenster.init(null);
 		} else if(quelle == runde){
 			KPairings.runde(this);
 		}else if(quelle==beenden){
@@ -281,9 +281,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		} else if(quelle==zeit){
 			new TTimer(this);
 		} else if(quelle==urkundenErstellen){
-			urkunde.urkundeErstellen(teilnehmerVector);
+			sortieren(true, true);
+			urkunde.urkundeErstellen(sortierterVector);
 		}else if(quelle==begegnungen){
-			begegnungsFenster.init();
+			begegnungsFenster.init(null);
 		}else if(quelle==optionen){
 			setContentPane(optionenFeld);
 			validate();

@@ -29,13 +29,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	
 	KHauptFenster hf=null;
 	
-	public void init(){
+	public void init(Dimension d){
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		
 		begegnungsPanel.removeAll();
 		setContentPane(new JScrollPane(begegnungsPanel));
 		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		if(d==null){
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else{
+			setSize(d);
+		}
 		
 		JPanel tische = new JPanel();
 		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));

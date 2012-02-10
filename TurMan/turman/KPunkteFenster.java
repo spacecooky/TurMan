@@ -32,14 +32,18 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	
 	KHauptFenster hf=null;
 	
-	public void init(){
+	public void init(Dimension d){
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		hf.sortieren(ab.isSelected(),bm.isSelected());
 		
 		punktePanel.removeAll();
 		setContentPane(new JScrollPane(punktePanel));
 		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		if(d==null){
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else{
+			setSize(d);
+		}
 		
 		JPanel platz = new JPanel();
 		platz.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
@@ -130,9 +134,9 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		if(e.getSource()==punkteSchliessenButton){
 			setVisible(false);
 		} else if(e.getSource()==ab){
-			init();
+			init(getSize());
 		} else if(e.getSource()==bm){
-			init();
+			init(getSize());
 		}
 	}
 }

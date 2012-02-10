@@ -113,7 +113,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			khf.begegnungsPanel.removeAll();
 			khf.begegnungsFrame.dispose();
 			if(khf.begegnungsFenster.isVisible()){
-				khf.begegnungsFenster.init();
+				if(begegnungsFensterButton.getParent()!=null){
+				//begegnungsFensterButton.getParent().validate();
+				khf.begegnungsFenster.init(khf.begegnungsFenster.getSize());
+				}
+			}
+			if(khf.punkteFenster.isVisible()){
+				khf.punkteFenster.init(khf.punkteFenster.getSize());
 			}
 		}else if(quelle== this || quelle==begegnungsFensterButton){
 			try{
