@@ -27,23 +27,20 @@ import javax.swing.JTextField;
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
- * TODO Hinzufügen von Paarungsparametern: Teamkollegen, Tische, Armeen, Orte, Mirrormatches. Teilweise erledigt für Zufallsrunde
- * TODO Auswahl der Paarungsparameter in jeder Runde.
+ * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen, bei Abwahl des Hakens nicht durchführen.
  * TODO Siegpunkte-Matrix
  * TODO Teamturniere
- * TODO Konfigurationsfenster
  * TODO Infofenster
  * TODO Druckfunktionen
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
- * TODO Speichern,Laden,Import und Export nur nach erfolgreicher Bestätigung des Dialoges
  * TODO Mehrere Übersicht-Tabs
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen.
- * TODO Übersichtliches Eingabefenster für Bemalwertung/Listenpunkte/usw aller Spieler
- * TODO Punktefenster nach jeder Punkteingabe aktualisieren, falls es offen ist.
- * TODO Maximalgröße von Elementen im Punkte/Begegnungsfenster, falls zu wenige eingetragen sind
- * TODO Funktion zum Rückgängig machen einer Paarungsrunde
+ * TODO Maximalgröße von Elementen im Punkte-/Extrapunkte-/Begegnungsfenster, falls zu wenige eingetragen sind
+ * TODO Funktion zum rückgängig machen einer Paarungsrunde
+ * TODO Anzeige von Fehlerdialogen, z.B beim Speichern und Laden
+ * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
  * 
  * @author jk
  *
@@ -109,6 +106,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		entfernen.addActionListener(this);
 		spieler.add(erweitern);
 		erweitern.addActionListener(this);
+		spieler.add(extraPunkte);
+		extraPunkte.addActionListener(this);
 		
 		// neues Turnier
 		neuFrame.setContentPane(neuPanel);
@@ -157,6 +156,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
+	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
 	
 	
 //neu
@@ -201,6 +201,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
 	KHerausforderungsFenster herausforderungsFenster = new KHerausforderungsFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
+	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	
@@ -288,6 +289,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		}else if(quelle==optionen){
 			setContentPane(optionenFeld);
 			validate();
+		} else if(quelle==extraPunkte){
+			extraPunkteFenster.init(null);
 		}
 		
 	}

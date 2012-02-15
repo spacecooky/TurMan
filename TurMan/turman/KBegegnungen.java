@@ -74,10 +74,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 * @return true, wenn t1 oder t2 bereits gegen die selbe Armee gespielt haben
 	 */
 	public boolean armee(){
-		//TODO nicht mehrmals gegen die selbe Armee spielen.
-		//runde ermitteln
-		//spiele vor der runde bei beiden spielern ermitteln
-		//vergleich
+		int runde=khf.rundenZaehler;
+		for(int i=0;i<runde-1;i++){
+			if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee) ||
+					khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
+				return true;
+			}
+		}
 		return false;
 	}
 	

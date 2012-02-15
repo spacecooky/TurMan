@@ -12,16 +12,20 @@ public class KPairings {
 
 	static int RANDOM=0;
 	static int SWISS=1;
-	//static boolean team=true; //Ersetzt durch das Optionenfenster
-	
+
 	//TODO Paarungsalgorithmus ersetzen
-	//TODO Funktionen für optionale Paarungsoptionen erstellen (oder als Funktion in KBegegnungen?)
-	//TODO Manuelle Paarung für Runden > 1
-	
+	//TODO Funktionen für optionale Paarungsoptionen komplettieren. SWISS
+
 	static boolean createPairings(KHauptFenster hf, int mode){
 		int teamFailures=0;
 		boolean teamFailureBool=false;
-		
+		int mirrorFailures=0;
+		boolean mirrorFailureBool=false;
+		int ortFailures=0;
+		boolean ortFailureBool=false;
+		int armeeFailures=0;
+		boolean armeeFailureBool=false;
+
 		System.out.println("NEW ROUND. MODE="+(mode==0?"RANDOM":"SWISS"));
 		Vector<KTeilnehmer> v;
 		if(mode == RANDOM){
@@ -38,7 +42,6 @@ public class KPairings {
 				v.get(tnNmbr).paired=ggNmbr;
 			}
 			Random randomGenerator = new Random();
-			//for(int i=0;i<b.length;i++){
 			for(int i=v.size()-1;i>=0;i--){
 				if (v.get(i).paired==-1){
 					v.get(i).paired=1;
@@ -47,25 +50,63 @@ public class KPairings {
 					while(true){
 						gegner = randomGenerator.nextInt(v.size());
 						if(v.get(gegner).paired==-1){ //Der ausgewählte Gegner hat noch keine Paarung
-							
+
 							//Prüfung, falls Teams beachtet werden sollen
 							if(hf.optionenFeld.teams.isSelected() && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
 								teamFailureBool=true;
 							}
+							//Prüfung, falls Mirrormatches beachtet werden sollen
+							if(hf.optionenFeld.mirror.isSelected() && v.get(i).armee.equals(v.get(gegner).armee)){
+								mirrorFailureBool=true;
+							}
+							//Prüfung, falls Orte beachtet werden sollen
+							if(hf.optionenFeld.orte.isSelected() && v.get(i).ort.equals(v.get(gegner).ort)){
+								ortFailureBool=true;
+							}
+							//Prüfung, falls Armeen beachtet werden sollen
+							if(hf.optionenFeld.armeen.isSelected()){
+								int runde=hf.rundenZaehler;
+								for(int j=0;j<runde-1;j++){
+									if(hf.teilnehmerVector.get(v.get(i).paarungen.get(j)).armee.equals(v.get(gegner).armee) ||
+											hf.teilnehmerVector.get(v.get(gegner).paarungen.get(j)).armee.equals(v.get(i).armee)){
+										armeeFailureBool=true;
+									}
+								}
+							}
 							//Auswertung ob die Paarung legal ist
 							int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
 							if(!v.get(i).paarungen.contains(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
-									!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())){ // Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+									!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText()) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+									!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText()) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
+									!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText()) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
+									!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText()) // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
+									){ 
 								int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
 								int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
 								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1)));
 								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(ggNmbr+1)).getComponent(tnNmbr+1)));
 								v.get(gegner).paired=tnNmbr;
 								v.get(i).paired=ggNmbr;
-								
+
 								if(teamFailureBool){
+									System.out.println("TeamFailure");
 									teamFailures++;
 									teamFailureBool=false;
+								}
+								if(mirrorFailureBool){
+									System.out.println("MirrorFailure");
+									mirrorFailures++;
+									mirrorFailureBool=false;
+								}
+								if(ortFailureBool){
+									System.out.println("OrteFailure");
+									ortFailures++;
+									ortFailureBool=false;
+								}
+								if(armeeFailureBool){
+									System.out.println("ArmeeFailure");
+									armeeFailures++;
+									armeeFailureBool=false;
 								}
 								break;
 							}else{
@@ -74,6 +115,9 @@ public class KPairings {
 								} else{
 									fails++;
 									teamFailureBool=false;
+									mirrorFailureBool=false;
+									ortFailureBool=false;
+									armeeFailureBool=false;
 								}
 							}
 						}else{
@@ -105,14 +149,17 @@ public class KPairings {
 				System.out.println(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
 				tVector.add(hf.sortierterVector.get(i));
 			}
-			
+
 			//Herausforderungen aus tVector entfernen, Herausforderung ist schon komplett als Begegnung eingetragen
 			for(int i=0;i<hf.herausforderungsVector.size();i++){
 				tVector.remove(hf.herausforderungsVector.get(i));
 			}
-			
+
 			//Paaren
-			Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf);
+			Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf,0,0,0,0);
+			if(bVector==null){
+				return false;
+			}
 			System.out.println(bVector.size());
 
 			for(int i=0;i<bVector.size();i++){
@@ -145,24 +192,29 @@ public class KPairings {
 				}
 				hf.alleBegegnungenVector.remove(b);
 			}
-			//System.out.println(sortiert.size());
 			System.out.println(hf.begegnungsVector.size());
 		} 
 
 		return true;
 	}
-	
-	
+
+
 	static void runde(KHauptFenster hf){
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getDialog(hf.dialog.errorUngerade);
 		}else{
 			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
 			hf.rundenZaehler++;
-			while(!KPairings.createPairings(hf,hf.mode)){};
+			while(!KPairings.createPairings(hf,hf.mode)){
+				if(hf.mode==KPairings.SWISS){
+					System.out.println("SWISS-ERR");
+					hf.rundenZaehler--;
+					//TODO Fehlerdialog
+					break;
+				}
+			};
 			if(hf.mode==KPairings.RANDOM){
 				hf.mode=KPairings.SWISS;
-				//KPairings.team=false; //Haken muss dann manuell entfernt werden.
 			}
 		}
 		hf.herausforderungsVector.clear();
@@ -220,7 +272,7 @@ public class KPairings {
 								tischlos.get(0).tisch=hf.begegnungsVector.get(j).tisch;
 								hf.begegnungsVector.get(j).tisch=i;
 								((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(j).yPos+1)).getComponent(hf.begegnungsVector.get(j).xPos+1)).tisch=i;
-								
+
 								tischlos.remove(0);
 								break;
 							}
@@ -232,44 +284,88 @@ public class KPairings {
 
 	}
 
-	
+
 	/**
 	 * Rekursive Berechnung der Paarungen
-	 * TODO Durchreichen der Counter für Verstöße gegen optionale Regeln 
 	 * 
 	 * @param tV
 	 * @param bV
 	 * @param hf
 	 * @return
 	 */
-	static Vector<KBegegnungen> swiss(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,KHauptFenster hf){
+	static Vector<KBegegnungen> swiss(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,KHauptFenster hf,int teamFailures, int mirrorFailures,int ortFailures, int armeeFailures){
+		boolean teamFailureBool=false;
+		boolean mirrorFailureBool=false;
+		boolean ortFailureBool=false;
+		boolean armeeFailureBool=false;
+
 		System.out.println(bV.size());
 		Vector<KTeilnehmer> tVector=(Vector<KTeilnehmer>)tV.clone();
 		for(int i=0;i < tVector.size();i++){
-				System.out.println(""+i+"<"+tVector.size());
-				Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
-				if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){
-					Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
-					if(hf.alleBegegnungenVector.contains((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1))){
-						if(tVector.get(0).deleted){
-							tneu.remove(0);
-						}else if(tVector.get(i).deleted){
-							tneu.remove(i);
-						}else{
+			System.out.println(""+i+"<"+tVector.size());
+			Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
+			if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){//Falls beide Teilnehmer nicht identisch sind 
+				Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
+				KBegegnungen b=(KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1);
+				
+				//Prüfung, falls Teams beachtet werden sollen
+				if(hf.optionenFeld.teams.isSelected() && !tVector.get(0).team.equals("") && b.team()){
+					teamFailureBool=true;
+				}
+				//Prüfung, falls Mirrormatches beachtet werden sollen
+				if(hf.optionenFeld.mirror.isSelected() && b.mirror()){
+					mirrorFailureBool=true;
+				}
+				//Prüfung, falls Orte beachtet werden sollen
+				if(hf.optionenFeld.orte.isSelected() && b.ort()){
+					ortFailureBool=true;
+				}
+				//Prüfung, falls Armeen beachtet werden sollen
+				if(hf.optionenFeld.armeen.isSelected() && b.armee()){
+					armeeFailureBool=true;
+				}
+				if(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText()) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+						!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText()) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
+						!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText()) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
+						!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText()) && // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
+						hf.alleBegegnungenVector.contains(b)){//Falls sich die Begegnung noch im Pool aller möglichen Begegnungen befindet
+					if(tVector.get(0).deleted){
+						tneu.remove(0);
+					}else if(tVector.get(i).deleted){
+						tneu.remove(i);
+					}else{
 							System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
 							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
 							tneu.remove(i);
 							tneu.remove(0);
-						}
-						if(tneu.size()==0){
-							return bVector;
-						}
-						bVector=swiss(tneu,bVector,hf);
-						if(bVector!=null){
-							return bVector;
-						}
+
+							if(teamFailureBool){
+								System.out.println("TeamFailure");
+								teamFailures++;
+							}
+							if(mirrorFailureBool){
+								System.out.println("MirrorFailure");
+								mirrorFailures++;
+							}
+							if(ortFailureBool){
+								System.out.println("OrteFailure");
+								ortFailures++;
+							}
+							if(armeeFailureBool){
+								System.out.println("ArmeeFailure");
+								armeeFailures++;
+							}
+						
+					}
+					if(tneu.size()==0){
+						return bVector;
+					}
+					bVector=swiss(tneu,bVector,hf,teamFailures,mirrorFailures,ortFailures,armeeFailures);
+					if(bVector!=null){
+						return bVector;
 					}
 				}
+			}
 		}
 		return null;
 	}

@@ -87,12 +87,12 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		tisch.setSelected(true);
 		paarungsZurueck.addActionListener(this);
 		
-		orte.setEnabled(false);
+		/*orte.setEnabled(false);
 		armeen.setEnabled(false);
 		mirror.setEnabled(false);
 		orteField.setEnabled(false);
 		armeenField.setEnabled(false);
-		mirrorField.setEnabled(false);
+		mirrorField.setEnabled(false);*/
 	}
 
 	@Override
