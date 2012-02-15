@@ -1,3 +1,8 @@
+Version 0.0.4
+- Paarungsoptionen eingefügt.
+- Automatischer Platzeintrag und Sortierung der Urkunden.
+- Fenster zum übersichtlichen Eintragen von Zusatzpunkten.
+
 Version 0.0.3
 - Urkunden auf Basis einer Vorlage können erstellt werden (V-Con-Urkunden-Vorlage)
 

@@ -128,7 +128,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	static String version=new String("V0.0.3");
+	static String version=new String("V0.0.4");
 
 // Hauptbereich
 	JPanel HauptPanel = new JPanel();
