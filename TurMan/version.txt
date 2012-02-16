@@ -1,3 +1,8 @@
+Version 0.0.5
+- Schweizer System Paarungen: Fehler behoben.
+- "Runde zurücknehmen" eingefügt.
+- "Runde erneut paaren" eingefügt 
+
 Version 0.0.4
 - Paarungsoptionen eingefügt.
 - Automatischer Platzeintrag und Sortierung der Urkunden.

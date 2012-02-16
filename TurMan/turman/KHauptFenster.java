@@ -28,6 +28,7 @@ import javax.swing.JTextField;
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen, bei Abwahl des Hakens nicht durchführen.
+ * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen. Algorithmus überarbeiten.
  * TODO Siegpunkte-Matrix
  * TODO Teamturniere
  * TODO Infofenster
@@ -38,7 +39,6 @@ import javax.swing.JTextField;
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen.
  * TODO Maximalgröße von Elementen im Punkte-/Extrapunkte-/Begegnungsfenster, falls zu wenige eingetragen sind
- * TODO Funktion zum rückgängig machen einer Paarungsrunde
  * TODO Anzeige von Fehlerdialogen, z.B beim Speichern und Laden
  * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
  * 
@@ -90,16 +90,22 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		punkte.addActionListener(this);
 		turnier.add(begegnungen);
 		begegnungen.addActionListener(this);
-		turnier.add(herausforderung);
-		herausforderung.addActionListener(this);
-		turnier.add(runde);
-		runde.addActionListener(this);
 		turnier.add(zeit);
 		zeit.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
 		turnier.add(optionen);
 		optionen.addActionListener(this);
+		
+		menubar.add(turnierRunde);
+		turnierRunde.add(herausforderung);
+		herausforderung.addActionListener(this);
+		turnierRunde.add(runde);
+		runde.addActionListener(this);
+		turnierRunde.add(rundeWdh);
+		rundeWdh.addActionListener(this);
+		turnierRunde.add(rundeReset);
+		rundeReset.addActionListener(this);
 		
 		menubar.add(spieler);
 		spieler.add(entfernen);
@@ -128,7 +134,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	static String version=new String("V0.0.4");
+	static String version=new String("V0.0.5");
 
 // Hauptbereich
 	JPanel HauptPanel = new JPanel();
@@ -147,11 +153,15 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenu turnier = new JMenu("Turnier");
 	JMenuItem punkte = new JMenuItem("Punkte");
 	JMenuItem begegnungen = new JMenuItem("Begegnungen");
-	JMenuItem herausforderung = new JMenuItem("Herausforderung");
-	JMenuItem runde = new JMenuItem("Nächste Runde");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	JMenuItem optionen = new JMenuItem("Optionen einstellen");
+	
+	JMenu turnierRunde = new JMenu("Turnierrunde");
+	JMenuItem herausforderung = new JMenuItem("Herausforderung");
+	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
+	JMenuItem rundeWdh = new JMenuItem("Runde erneut paaren");
+	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
 	
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
@@ -267,6 +277,11 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			punkteFenster.init(null);
 		} else if(quelle == runde){
 			KPairings.runde(this);
+		}else if(quelle == rundeWdh){
+			KPairings.rundeReset(this);
+			KPairings.runde(this);
+		}else if(quelle == rundeReset){
+			KPairings.rundeReset(this);
 		}else if(quelle==beenden){
 			beenden();
 		}else if(quelle==gImport){

@@ -14,8 +14,13 @@ public class KPairings {
 	static int SWISS=1;
 
 	//TODO Paarungsalgorithmus ersetzen
-	//TODO Funktionen für optionale Paarungsoptionen komplettieren. SWISS
 
+	/**
+	 * Berechnet die Paarungen je nach Turniertyp
+	 * @param hf
+	 * @param mode
+	 * @return
+	 */
 	static boolean createPairings(KHauptFenster hf, int mode){
 		int teamFailures=0;
 		boolean teamFailureBool=false;
@@ -28,6 +33,7 @@ public class KPairings {
 
 		System.out.println("NEW ROUND. MODE="+(mode==0?"RANDOM":"SWISS"));
 		Vector<KTeilnehmer> v;
+		
 		if(mode == RANDOM){
 			v=hf.teilnehmerVector;
 			Vector<KBegegnungen> buttons = new Vector<KBegegnungen>();
@@ -199,7 +205,12 @@ public class KPairings {
 	}
 
 
+	/**
+	 * Berechnet die Paarungen einer Runde je nach Turniertyp
+	 * @param hf
+	 */
 	static void runde(KHauptFenster hf){
+		boolean swissErr=false;
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getDialog(hf.dialog.errorUngerade);
 		}else{
@@ -209,6 +220,7 @@ public class KPairings {
 				if(hf.mode==KPairings.SWISS){
 					System.out.println("SWISS-ERR");
 					hf.rundenZaehler--;
+					swissErr=true;
 					//TODO Fehlerdialog
 					break;
 				}
@@ -218,11 +230,19 @@ public class KPairings {
 			}
 		}
 		hf.herausforderungsVector.clear();
-		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0){
+		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0 && swissErr==false){
 			tische(hf);
+			System.out.println("Tische");
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				System.out.println(hf.teilnehmerVector.get(i).tische.size());
+			}
 		}
 	}
 
+	/**
+	 * Verteilt die Spieler möglichst so an den Tischen, dass sie nicht mehrmals am selben Tisch spielen müssen
+	 * @param hf
+	 */
 	static void tische(KHauptFenster hf){
 		int tische[] = new int[hf.teilnehmerVector.size()/2];
 		int bgCount=hf.teilnehmerVector.size()/2;
@@ -324,10 +344,10 @@ public class KPairings {
 				if(hf.optionenFeld.armeen.isSelected() && b.armee()){
 					armeeFailureBool=true;
 				}
-				if(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText()) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
-						!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText()) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
-						!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText()) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
-						!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText()) && // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
+				if((!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+						(!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText())) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
+						(!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText())) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
+						(!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText())) && // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
 						hf.alleBegegnungenVector.contains(b)){//Falls sich die Begegnung noch im Pool aller möglichen Begegnungen befindet
 					if(tVector.get(0).deleted){
 						tneu.remove(0);
@@ -370,4 +390,44 @@ public class KPairings {
 		return null;
 	}
 
+	static void rundeReset(KHauptFenster hf){
+		if(hf.rundenZaehler>0){
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				KTeilnehmer t=hf.teilnehmerVector.get(i);
+				int tnNmbr=i;
+				int ggNmbr=t.paarungen.get(hf.rundenZaehler-1);
+				KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1));
+				hf.alleBegegnungenVector.add(b);
+				if(hf.begegnungsVector.contains(b)){
+					hf.begegnungsVector.remove(b);
+				}
+				b.setEnabled(false);
+				b.setBackground(Color.darkGray);
+				b.runde=0;
+				b.tisch=0;
+				b.setText("");
+				b.p1=0;
+				b.p12=0;
+				b.p2=0;
+				b.p22=0;
+				t.tische.remove(hf.rundenZaehler-1);
+				t.paarungen.remove(hf.rundenZaehler-1);
+			}
+			hf.rundenZaehler--;
+			if(hf.begegnungsFenster.isVisible()){
+				hf.begegnungsFenster.init(hf.begegnungsFenster.getSize());
+			}
+			if(hf.punkteFenster.isVisible()){
+				hf.punkteFenster.init(hf.punkteFenster.getSize());
+			}
+			
+			if(hf.rundenZaehler==0){
+				hf.mode=KPairings.RANDOM;
+			}
+		}
+		System.out.println("Tische");
+		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			System.out.println(hf.teilnehmerVector.get(i).tische.size());
+		}
+	}
 }

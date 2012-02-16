@@ -44,7 +44,6 @@ public class KTeilnehmer {
 	
 	Vector<Integer> paarungen= new Vector<Integer>();
 	Vector<Integer> tische= new Vector<Integer>();
-	Vector<KBegegnungen> sortiert= new Vector<KBegegnungen>();
 	
 	int paired=-1;
 	
