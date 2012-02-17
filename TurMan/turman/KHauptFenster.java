@@ -29,6 +29,7 @@ import javax.swing.JTextField;
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen, bei Abwahl des Hakens nicht durchführen.
  * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen. Algorithmus überarbeiten.
+ * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen. Tischdreher im Tischvektor verhindern, wenn Tische getauscht werden
  * TODO Siegpunkte-Matrix
  * TODO Teamturniere
  * TODO Infofenster

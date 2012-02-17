@@ -91,6 +91,26 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		return t1.armee.equals(t2.armee);
 	}
 	
+	/**
+	 * Berechnung, ob mit dem angegebenen Tisch i ein tischfehler möglich ist
+	 * @param i 
+	 * @return
+	 */
+	public boolean tischfehler(int i){
+			int tn1Cnt=0;
+			int tn2Cnt=0;
+			for(int j=0;j<t1.tische.size()-1;j++){
+				if(t1.tische.get(j)==i){
+					tn1Cnt++;
+				}
+			}
+			for(int j=0;j<t2.tische.size()-1;j++){
+				if(t2.tische.get(j)==i){
+					tn2Cnt++;
+				}
+			}
+			return (tn1Cnt>0 || tn2Cnt>0);
+	}
 	
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();

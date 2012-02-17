@@ -31,7 +31,7 @@ public class KPairings {
 		int armeeFailures=0;
 		boolean armeeFailureBool=false;
 
-		System.out.println("NEW ROUND. MODE="+(mode==0?"RANDOM":"SWISS"));
+		//System.out.println("NEW ROUND. MODE="+(mode==0?"RANDOM":"SWISS"));
 		Vector<KTeilnehmer> v;
 		
 		if(mode == RANDOM){
@@ -152,7 +152,7 @@ public class KPairings {
 		} else if(mode== SWISS){
 			Vector<KTeilnehmer> tVector = new Vector<KTeilnehmer>();
 			for(int i=hf.sortierterVector.size()-1;i>=0;i--){
-				System.out.println(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
+				//System.out.println(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
 				tVector.add(hf.sortierterVector.get(i));
 			}
 
@@ -166,14 +166,14 @@ public class KPairings {
 			if(bVector==null){
 				return false;
 			}
-			System.out.println(bVector.size());
+			//System.out.println(bVector.size());
 
 			for(int i=0;i<bVector.size();i++){
 
 				KBegegnungen b = bVector.get(i);
 				KTeilnehmer tn1 = b.t1;
 				KTeilnehmer tn2 = b.t2;
-				System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname+" : "+b.primär+" : "+b.sekundär+" : "+b.sos);
+				//System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname+" : "+b.primär+" : "+b.sekundär+" : "+b.sos);
 				b.setEnabled(true);
 				b.setBackground(Color.orange);
 				b.runde=hf.rundenZaehler;
@@ -198,7 +198,7 @@ public class KPairings {
 				}
 				hf.alleBegegnungenVector.remove(b);
 			}
-			System.out.println(hf.begegnungsVector.size());
+			//System.out.println(hf.begegnungsVector.size());
 		} 
 
 		return true;
@@ -232,78 +232,99 @@ public class KPairings {
 		hf.herausforderungsVector.clear();
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0 && swissErr==false){
 			tische(hf);
-			System.out.println("Tische");
+			/*System.out.println("Tische");
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				System.out.println(hf.teilnehmerVector.get(i).tische.size());
-			}
+			}*/
 		}
 	}
 
+	
 	/**
 	 * Verteilt die Spieler möglichst so an den Tischen, dass sie nicht mehrmals am selben Tisch spielen müssen
 	 * @param hf
 	 */
 	static void tische(KHauptFenster hf){
-		int tische[] = new int[hf.teilnehmerVector.size()/2];
 		int bgCount=hf.teilnehmerVector.size()/2;
-		Vector<KBegegnungen> tischlos= new Vector<KBegegnungen>();
 		for(int i=(hf.rundenZaehler-1)*((bgCount));i<hf.begegnungsVector.size();i++){
+			int tisch=i-(hf.rundenZaehler-1)*((bgCount));
 			KTeilnehmer tn1 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).xPos);
 			KTeilnehmer tn2 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).yPos);
-			for(int j=0;j<tische.length;j++){
-				if(tische[j]!=1 && !tn1.tische.contains(j) && !tn2.tische.contains(j)){
-					//System.out.println("Tisch "+(j+1)+": "+tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname);
-					tn1.tische.add(j);
-					tn2.tische.add(j);
-					hf.begegnungsVector.get(i).tisch=j;
-					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos+1)).getComponent(hf.begegnungsVector.get(i).xPos+1)).tisch=j;
-					tische[j]=1;
-					break;
+			tn1.tische.add(tisch);
+			tn2.tische.add(tisch);
+			hf.begegnungsVector.get(i).tisch=tisch;
+			((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos+1)).getComponent(hf.begegnungsVector.get(i).xPos+1)).tisch=tisch;
+		}
+		
+		//Prüfung, falls gleiche Tische beachtet werden sollen
+		if(hf.optionenFeld.tisch.isSelected()){
+			//if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
+				
+			for(int i=0;i<((bgCount+1)*bgCount/2) && getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText());i++ ){
+				System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
+				repairTischFehler(hf);
+			//}
+			}
+			if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
+				//TODO Fehlerdialog, falls noch Tischfehler vorhanden. 
+			}
+			System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));
+			for(int i=0;i<hf.teilnehmerVector.size();i++ ){
+				String s="";
+				KTeilnehmer t = hf.teilnehmerVector.get(i);
+				s+=t.vorname+" "+t.nachname+": ";
+				for(int j=0;j<t.tische.size();j++){
+					s+=t.tische.get(j)+" ";
+				}
+				int rest=(56-s.length())/8;
+				rest+=(40-s.length())%8==0?0:1;
+				for(int j=0;j<rest;j++){
+					s+="\t";
+				}
+				System.out.print(s);
+			}
+			System.out.println();
+			
+		}
+	}
+	
+	static int getTischFehlerSize(KHauptFenster hf){
+		int tischfehler=0;
+		for(int i=(hf.rundenZaehler-1)*((hf.teilnehmerVector.size()/2));i<hf.begegnungsVector.size();i++){
+			KBegegnungen b =hf.begegnungsVector.get(i);
+			if(b.tischfehler(b.tisch)){
+				tischfehler++;
+			}
+		}
+		return tischfehler;
+	}
+	
+	static void repairTischFehler(KHauptFenster hf){
+		for(int i=(hf.rundenZaehler-1)*((hf.teilnehmerVector.size()/2));i<hf.begegnungsVector.size();i++){
+			KBegegnungen b =hf.begegnungsVector.get(i);
+			if(b.tischfehler(b.tisch)){
+				for(int j=(hf.rundenZaehler-1)*((hf.teilnehmerVector.size()/2));j<hf.begegnungsVector.size();j++){
+					KBegegnungen b2 =hf.begegnungsVector.get(j);
+					if(!b2.tischfehler(b.tisch) && !b.tischfehler(b2.tisch)){
+						int b1tempTisch=b.tisch;
+						b.tisch=b2.tisch;
+						b2.tisch=b1tempTisch;
+						b.t1.tische.remove(b.t1.tische.lastElement());
+						b.t1.tische.add(b.tisch);
+						b.t2.tische.remove(b.t2.tische.lastElement());
+						b.t2.tische.add(b.tisch);
+						b2.t1.tische.remove(b2.t1.tische.lastElement());
+						b2.t1.tische.add(b2.tisch);
+						b2.t2.tische.remove(b2.t2.tische.lastElement());
+						b2.t2.tische.add(b2.tisch);
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos+1)).getComponent(b.xPos+1)).tisch=b.tisch;
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos+1)).getComponent(b2.xPos+1)).tisch=b2.tisch;
+						break;
+					}
 				}
 			}
-			if(tn1.tische.size()<hf.rundenZaehler){
-				tischlos.add(hf.begegnungsVector.get(i));
-			}
 		}
-		//System.out.println(tischlos.size());
-		if(tischlos.size()>0){
-			for(int i=0;i<tische.length && tischlos.size()>0;i++){
-				if(tische[i]!=1){
-					for(int j=hf.begegnungsVector.size()-1;j>hf.begegnungsVector.size()-bgCount;j--){
-						KTeilnehmer tn1 = hf.teilnehmerVector.get(tischlos.get(0).xPos);
-						KTeilnehmer tn2 = hf.teilnehmerVector.get(tischlos.get(0).yPos);
-						KTeilnehmer tn3 = hf.teilnehmerVector.get(hf.begegnungsVector.get(j).xPos);
-						KTeilnehmer tn4 = hf.teilnehmerVector.get(hf.begegnungsVector.get(j).yPos);
-						if(tn1.tische.size()==hf.rundenZaehler){
-							tn1.tische.remove(tn1.tische.lastElement());
-							tn2.tische.remove(tn2.tische.lastElement());
-						}
-						if(!tn1.equals(tn3)){
-							if(!tn1.tische.contains(hf.begegnungsVector.get(j).tisch) && 
-									!tn2.tische.contains(hf.begegnungsVector.get(j).tisch) &&
-									!tn3.tische.contains(i) &&
-									!tn4.tische.contains(i)){
-								tn3.tische.remove(tn3.tische.lastElement());
-								tn4.tische.remove(tn4.tische.lastElement());
-								tn1.tische.add(hf.begegnungsVector.get(j).tisch);
-								tn2.tische.add(hf.begegnungsVector.get(j).tisch);
-								tn3.tische.add(i);
-								tn4.tische.add(i);
-								tischlos.get(0).tisch=hf.begegnungsVector.get(j).tisch;
-								hf.begegnungsVector.get(j).tisch=i;
-								((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(j).yPos+1)).getComponent(hf.begegnungsVector.get(j).xPos+1)).tisch=i;
-
-								tischlos.remove(0);
-								break;
-							}
-						}
-					}
-				} 
-			}
-		}
-
 	}
-
 
 	/**
 	 * Rekursive Berechnung der Paarungen
@@ -319,10 +340,10 @@ public class KPairings {
 		boolean ortFailureBool=false;
 		boolean armeeFailureBool=false;
 
-		System.out.println(bV.size());
+		//System.out.println(bV.size());
 		Vector<KTeilnehmer> tVector=(Vector<KTeilnehmer>)tV.clone();
 		for(int i=0;i < tVector.size();i++){
-			System.out.println(""+i+"<"+tVector.size());
+			//System.out.println(""+i+"<"+tVector.size());
 			Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
 			if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){//Falls beide Teilnehmer nicht identisch sind 
 				Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
@@ -354,7 +375,7 @@ public class KPairings {
 					}else if(tVector.get(i).deleted){
 						tneu.remove(i);
 					}else{
-							System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
+							//System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
 							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
 							tneu.remove(i);
 							tneu.remove(0);
@@ -426,8 +447,8 @@ public class KPairings {
 			}
 		}
 		System.out.println("Tische");
-		for(int i=0;i<hf.teilnehmerVector.size();i++){
+		/*for(int i=0;i<hf.teilnehmerVector.size();i++){
 			System.out.println(hf.teilnehmerVector.get(i).tische.size());
-		}
+		}*/
 	}
 }
