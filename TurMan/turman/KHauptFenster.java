@@ -27,9 +27,6 @@ import javax.swing.JTextField;
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
- * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen, bei Abwahl des Hakens nicht durchführen.
- * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen. Algorithmus überarbeiten.
- * TODO Paarungsoptionen: Nicht mehrmals an gleichen Tischen. Tischdreher im Tischvektor verhindern, wenn Tische getauscht werden
  * TODO Siegpunkte-Matrix
  * TODO Teamturniere
  * TODO Infofenster
@@ -135,7 +132,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	static String version=new String("V0.0.5");
+	static String version=new String("V0.0.6");
 
 // Hauptbereich
 	JPanel HauptPanel = new JPanel();

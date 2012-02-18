@@ -306,7 +306,19 @@ public class KPairings {
 				for(int j=(hf.rundenZaehler-1)*((hf.teilnehmerVector.size()/2));j<hf.begegnungsVector.size();j++){
 					KBegegnungen b2 =hf.begegnungsVector.get(j);
 					if(!b2.tischfehler(b.tisch) && !b.tischfehler(b2.tisch)){
+						b.t1.tische.remove(b.t1.tische.lastIndexOf(b.tisch));
+						b.t2.tische.remove(b.t2.tische.lastIndexOf(b.tisch));
+						b2.t1.tische.remove(b2.t1.tische.lastIndexOf(b2.tisch));
+						b2.t2.tische.remove(b2.t2.tische.lastIndexOf(b2.tisch));
+						
 						int b1tempTisch=b.tisch;
+						b.tisch=b2.tisch;
+						b2.tisch=b1tempTisch;
+						b.t1.tische.add(b.tisch);
+						b.t2.tische.add(b.tisch);
+						b2.t1.tische.add(b2.tisch);
+						b2.t2.tische.add(b2.tisch);
+/*						int b1tempTisch=b.tisch;
 						b.tisch=b2.tisch;
 						b2.tisch=b1tempTisch;
 						b.t1.tische.remove(b.t1.tische.lastElement());
@@ -316,7 +328,7 @@ public class KPairings {
 						b2.t1.tische.remove(b2.t1.tische.lastElement());
 						b2.t1.tische.add(b2.tisch);
 						b2.t2.tische.remove(b2.t2.tische.lastElement());
-						b2.t2.tische.add(b2.tisch);
+						b2.t2.tische.add(b2.tisch);*/
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos+1)).getComponent(b.xPos+1)).tisch=b.tisch;
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos+1)).getComponent(b2.xPos+1)).tisch=b2.tisch;
 						break;

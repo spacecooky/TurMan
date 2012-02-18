@@ -1,3 +1,7 @@
+Version 0.0.6
+- Tischverteilung überarbeitet
+- Tische werden jetzt erst bei Auswahl der Option beachtet.
+
 Version 0.0.5
 - Schweizer System Paarungen: Fehler behoben.
 - "Runde zurücknehmen" eingefügt.
