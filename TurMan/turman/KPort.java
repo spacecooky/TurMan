@@ -78,6 +78,10 @@ public class KPort {
 							}
 
 							hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr));
+							
+							if(!hf.teamVector.contains(team)){
+								hf.teamVector.add(team);
+							}
 						}
 					}
 					hf.fillPanels();

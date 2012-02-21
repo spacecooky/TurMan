@@ -53,7 +53,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-				
+
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
 			public void windowClosing(WindowEvent ereignis){
@@ -61,8 +61,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			}
 		};
 		this.addWindowListener(meinListener);
-		
-		
+
+
 		//Hauptbereich
 		sp=new JScrollPane(HauptPanel);
 		setContentPane(sp);
@@ -82,7 +82,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		speichern.addActionListener(this);
 		datei.add(beenden);
 		beenden.addActionListener(this);
-		
+
 		menubar.add(turnier);
 		turnier.add(punkte);
 		punkte.addActionListener(this);
@@ -94,7 +94,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		urkundenErstellen.addActionListener(this);
 		turnier.add(optionen);
 		optionen.addActionListener(this);
-		
+
 		menubar.add(turnierRunde);
 		turnierRunde.add(herausforderung);
 		herausforderung.addActionListener(this);
@@ -104,7 +104,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		rundeWdh.addActionListener(this);
 		turnierRunde.add(rundeReset);
 		rundeReset.addActionListener(this);
-		
+
 		menubar.add(spieler);
 		spieler.add(entfernen);
 		entfernen.addActionListener(this);
@@ -112,7 +112,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		erweitern.addActionListener(this);
 		spieler.add(extraPunkte);
 		extraPunkte.addActionListener(this);
-		
+
 		// neues Turnier
 		neuFrame.setContentPane(neuPanel);
 		neuFrame.setSize(300,100);
@@ -127,18 +127,18 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		neuPanel.add(new JLabel());
 		neuPanel.add(neuButton);
 		neuButton.addActionListener(this);
-		
+
 		teilnehmerButton.addActionListener(this);
 		setVisible(true);
 	}
-	
+
 	static String version=new String("V0.0.6");
 
-// Hauptbereich
+	// Hauptbereich
 	JPanel HauptPanel = new JPanel();
 	JScrollPane sp;
-	
-//	Menue
+
+	//	Menue
 	JMenuBar menubar = new JMenuBar();
 	JMenu datei = new JMenu("Datei");
 	JMenuItem neu = new JMenuItem("Neues Turnier - Manuell");
@@ -147,27 +147,27 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem oeffnen = new JMenuItem("Turnier Öffnen");
 	JMenuItem speichern = new JMenuItem("Turnier Speichern");
 	JMenuItem beenden = new JMenuItem("Beenden");
-	
+
 	JMenu turnier = new JMenu("Turnier");
-	JMenuItem punkte = new JMenuItem("Punkte");
-	JMenuItem begegnungen = new JMenuItem("Begegnungen");
+	JMenuItem punkte = new JMenuItem("Punkte anzeigen");
+	JMenuItem begegnungen = new JMenuItem("Begegnungen anzeigen");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	JMenuItem optionen = new JMenuItem("Optionen einstellen");
-	
+
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
 	JMenuItem rundeWdh = new JMenuItem("Runde erneut paaren");
 	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
-	
+
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
-	
-	
-//neu
+
+
+	//neu
 	JFrame neuFrame = new JFrame();
 	JPanel neuPanel = new JPanel();
 	JLabel neuTeilnehmerLabel = new JLabel("Anzahl der Teilnehmer:");
@@ -175,12 +175,12 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JLabel neuRundenLabel = new JLabel("Anzahl der Runden:");
 	JTextField neuRundenField = new JTextField();
 	JButton neuButton = new JButton("Anlegen");
-	
+
 	JFrame teilnehmerFrame;
 	JPanel teilnehmerPanel;
 	JButton teilnehmerButton= new JButton("Weiter");
-	
-//Begegnungs Frame
+
+	//Begegnungs Frame
 	JFrame begegnungsFrame;
 	JPanel begegnungsPanel = new JPanel();
 	JLabel t1Label = new JLabel();
@@ -189,20 +189,22 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JTextField p2Field = new JTextField();
 	JTextField p12Field = new JTextField();
 	JTextField p22Field = new JTextField();
-//Variablen
+	//Variablen
 	int teilnehmer=0;
+	int teams=0;
 	int gelöschteTeilnehmer=0;
 	int runden=0;
 	int rundenZaehler=0;
 	int mode = KPairings.RANDOM;
 	String TID="0";
 	Vector<KTeilnehmer> teilnehmerVector= new Vector<KTeilnehmer>();
+	Vector<String> teamVector= new Vector<String>();
 	Vector<KTeilnehmer> sortierterVector= new Vector<KTeilnehmer>();
 	Vector<KTeilnehmer> herausforderungsVector= new Vector<KTeilnehmer>();
 	Vector<KBegegnungen> begegnungsVector= new Vector<KBegegnungen>();
 	Vector<KBegegnungen> alleBegegnungenVector= new Vector<KBegegnungen>();
-	
-//Fenster
+
+	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster();
 	KPunkteFenster punkteFenster = new KPunkteFenster(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
@@ -212,8 +214,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
-	
- //Urkunden
+
+	//Urkunden
 	KUrkunde urkunde = new KUrkunde();
 	/**
 	 * @param args
@@ -221,18 +223,18 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	public static void main(String[] args) {
 		new KHauptFenster();
 	}
-	
+
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle= arg0.getSource();
-		
+
 		if(quelle == neu){
 			neuFrame.setVisible(true);
-			} else if(quelle == neuButton){
+		} else if(quelle == neuButton){
 			teilnehmer=Integer.parseInt(neuTeilnehmerField.getText());
 			gelöschteTeilnehmer=0;
 			runden=Integer.parseInt(neuRundenField.getText());
 			neuFrame.setVisible(false);
-			
+
 			teilnehmerFrame=new JFrame();
 			teilnehmerPanel=new JPanel();
 			teilnehmerFrame.setContentPane(new JScrollPane(teilnehmerPanel));
@@ -251,11 +253,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			teilnehmerPanel.add(teilnehmerButton);
 			teilnehmerFrame.setSize(500,(teilnehmer+2)*30);
 			teilnehmerFrame.setVisible(true);
-			
+
 		} else if(quelle == teilnehmerButton){
 			KSpeicherverwaltung.leeren(this);
 			mode=KPairings.RANDOM;
-			//KPairings.team=true; Haken muss manuell entfernt werden
 			rundenZaehler=0;
 			alleBegegnungenVector.clear();
 			for(int i=4;i<3+teilnehmer*3;i+=3){
@@ -263,10 +264,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			}
 			teilnehmerFrame.setVisible(false);
 			System.out.println(teilnehmerVector.size());
-			
+
 			fillPanels();
-			
-			
+
+
 		}else if(quelle == speichern){
 			KSpeicherverwaltung.speichern(this);
 		}else if(quelle == oeffnen){
@@ -305,39 +306,71 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		} else if(quelle==extraPunkte){
 			extraPunkteFenster.init(null);
 		}
-		
+
 	}
 
 	public void fillPanels(){
-		teilnehmer=teilnehmerVector.size();
+		HauptPanel.removeAll();
+		if(optionenFeld.einzel.isSelected()){
+			teilnehmer=teilnehmerVector.size();
+			JPanel header= new JPanel();
+			header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
+			JLabel jL= new JLabel("");
+			jL.setMaximumSize(new Dimension(150,150));
+			jL.setMinimumSize(new Dimension(150,150));
+			jL.setPreferredSize(new Dimension(150,150));
+			jL.setBorder(BorderFactory.createRaisedBevelBorder());
+			header.add(jL);
+
+			for(int i=0;i<teilnehmerVector.size();i++){
+				JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
+				jp.setMaximumSize(new Dimension(20,150));
+				jp.setMinimumSize(new Dimension(20,150));
+				jp.setPreferredSize(new Dimension(20,150));
+				jp.setUI( new VerticalLabelUI(false));
+				jp.setBorder(BorderFactory.createRaisedBevelBorder());
+				header.add(jp);
+			}
+			HauptPanel.add(header);
+
+			for(int i=0;i<teilnehmerVector.size();i++){
+				HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
+			}
+
+		}else if(optionenFeld.team.isSelected()){
+			fillTeamPanels();
+		}
+		setVisible(true);
+	}
+
+	public void fillTeamPanels(){
+		teams=teamVector.size();
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
 		JLabel jL= new JLabel("");
-		jL.setMaximumSize(new Dimension(150,150));
-		jL.setMinimumSize(new Dimension(150,150));
-		jL.setPreferredSize(new Dimension(150,150));
+		jL.setMaximumSize(new Dimension(250,250));
+		jL.setMinimumSize(new Dimension(250,250));
+		jL.setPreferredSize(new Dimension(250,250));
 		jL.setBorder(BorderFactory.createRaisedBevelBorder());
 		header.add(jL);
-		
-		for(int i=0;i<teilnehmerVector.size();i++){
-			JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
-			jp.setMaximumSize(new Dimension(20,150));
-			jp.setMinimumSize(new Dimension(20,150));
-			jp.setPreferredSize(new Dimension(20,150));
+
+		for(int i=0;i<teamVector.size();i++){
+			JLabel jp= new JLabel(teamVector.get(i));
+			jp.setMaximumSize(new Dimension(20,250));
+			jp.setMinimumSize(new Dimension(20,250));
+			jp.setPreferredSize(new Dimension(20,250));
 			jp.setUI( new VerticalLabelUI(false));
 			jp.setBorder(BorderFactory.createRaisedBevelBorder());
 			header.add(jp);
 		}
 		HauptPanel.add(header);
-		
-		for(int i=0;i<teilnehmerVector.size();i++){
-			HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
+
+		for(int i=0;i<teamVector.size();i++){
+			HauptPanel.add(new KTeamPanel(teamVector.get(i),teamVector.size(),i,this));
 		}
-		
-		setVisible(true);
 	}
-	
-	
+
+
 	public void sortieren(boolean ab,boolean bm){
 		KTeilnehmer t;
 		//Primär und Sekundärpunkte für alle berechnen
@@ -362,10 +395,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			t=teilnehmerVector.get(i);
 			for(int j=0;j<t.paarungen.size();j++){
 				t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(bm?-teilnehmerVector.get(t.paarungen.get(j)).bemalwertung:0);
-				
+
 			}
 		}
-		
+
 		//Sortiern nach primär
 		sortierterVector.clear();
 		for(int i=0;i<teilnehmer;i++){
@@ -385,12 +418,12 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			sortierterVector.insertElementAt(t,j);	
 		}
 	}
-	
+
 	/**
 	 * Beendet das Programm
 	 */
 	protected void beenden(){
 		System.exit(0);
 	}
-	
+
 }
