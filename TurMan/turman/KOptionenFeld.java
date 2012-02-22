@@ -64,8 +64,12 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	
 	JButton paarungsZurueck= new JButton("Zurück zur Matrix");
 	
-	//TODO WertungsOptionen
-	//...
+	//WertungsOptionen
+	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
+	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
+	ButtonGroup wertung = new ButtonGroup();
+	
+	JButton wertungZurueck= new JButton("Zurück zur Matrix");
 	
 	public void initPaarungsPanel(){
 		//TurnierOptionen
@@ -138,17 +142,26 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		tisch.setSelected(true);
 		paarungsZurueck.addActionListener(this);
 		
-		/*orte.setEnabled(false);
-		armeen.setEnabled(false);
-		mirror.setEnabled(false);
-		orteField.setEnabled(false);
-		armeenField.setEnabled(false);
-		mirrorField.setEnabled(false);*/
+		//WertungsOptionen
+		wertungsPanel.setLayout(new BoxLayout(wertungsPanel, BoxLayout.Y_AXIS));
+		
+		JPanel p6 = new JPanel();
+		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
+		p6.setLayout(new GridLayout(40,1));
+		p6.add(PSS);
+		p6.add(TS);
+		wertung.add(PSS);
+		wertung.add(TS);
+		p6.add(wertungZurueck);
+		wertungZurueck.addActionListener(this);
+		PSS.setSelected(true);
+		
+		wertungsPanel.add(p6);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource()==paarungsZurueck || arg0.getSource()==turnierZurueck){
+		if(arg0.getSource()==paarungsZurueck || arg0.getSource()==turnierZurueck || arg0.getSource()==wertungZurueck){
 			hf.setContentPane(hf.sp);
 			hf.validate();
 		}

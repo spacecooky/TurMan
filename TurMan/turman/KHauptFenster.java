@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 /**
  * TODO Variable Einstellung der Urkunden-Infos.
  * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
+ * TODO Zusätzliche Punkte-Arten hinzufügen.
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Siegpunkte-Matrix
@@ -381,21 +382,31 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			t.sos=0;
 			for(int j=0;j<t.paarungen.size();j++){
 				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p1;
-				t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12;
+				if(optionenFeld.PSS.isSelected()){
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12;
+				} else if(optionenFeld.TS.isSelected()){
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p22;
+				}
 			}
 			if(ab){
-				t.sekundär+=t.armeeliste;
+				if(optionenFeld.PSS.isSelected()){
+					t.sekundär+=t.armeeliste;
+				} else if(optionenFeld.TS.isSelected()){
+					t.primär+=t.armeeliste;
+				}
 			}
 			if(bm){
 				t.primär+=t.bemalwertung;
 			}
 		}
 		//SOS für alle berechnen
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			for(int j=0;j<t.paarungen.size();j++){
-				t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(bm?-teilnehmerVector.get(t.paarungen.get(j)).bemalwertung:0);
-
+		if(optionenFeld.PSS.isSelected()){
+			for(int i=0;i<teilnehmer;i++){
+				t=teilnehmerVector.get(i);
+				for(int j=0;j<t.paarungen.size();j++){
+					t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(bm?-teilnehmerVector.get(t.paarungen.get(j)).bemalwertung:0);
+	
+				}
 			}
 		}
 
@@ -412,8 +423,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 				j++;
 			}
 			//Sortieren nach sos
-			while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
-				j++;
+			if(optionenFeld.PSS.isSelected()){
+				while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+					j++;
+				}
 			}
 			sortierterVector.insertElementAt(t,j);	
 		}

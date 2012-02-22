@@ -156,8 +156,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 				khf.begegnungsPanel.setLayout(new GridLayout(4,3));
 				
 				khf.begegnungsPanel.add(new JLabel(""));
-				khf.begegnungsPanel.add(new JLabel("Primär"));
-				khf.begegnungsPanel.add(new JLabel("Sekundär"));
+				if(khf.optionenFeld.PSS.isSelected()){
+					khf.begegnungsPanel.add(new JLabel("Primär"));
+					khf.begegnungsPanel.add(new JLabel("Sekundär"));
+				} else if(khf.optionenFeld.TS.isSelected()){
+					khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
+					khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
+				}
 				
 				khf.begegnungsPanel.add(khf.t1Label);
 				khf.t1Label.setText(t1.vorname+" "+t1.nachname);

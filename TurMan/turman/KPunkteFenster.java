@@ -62,9 +62,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		sekundär.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
 		punktePanel.add(sekundär);
 		
-		JPanel sos = new JPanel();
-		sos.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
-		punktePanel.add(sos);
+		
+			JPanel sos = new JPanel();
+			sos.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
+		if(hf.optionenFeld.PSS.isSelected()){
+			punktePanel.add(sos);
+		}
 		
 		
 		platz.add(new JLabel("Platz"));
@@ -75,11 +78,19 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		spieler.getComponent(0).setFont(f);
 		((JLabel)spieler.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		primär.add(new JLabel("Primär(B)"));
+		if(hf.optionenFeld.PSS.isSelected()){
+			primär.add(new JLabel("Primär(B)"));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			primär.add(new JLabel("Turnierpunkte(B)(AL)"));
+		}
 		primär.getComponent(0).setFont(f);
 		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		sekundär.add(new JLabel("Sekundär(AL)"));
+		if(hf.optionenFeld.PSS.isSelected()){
+			sekundär.add(new JLabel("Sekundär(AL)"));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			sekundär.add(new JLabel("Siegespunktedifferenz"));
+		}
 		sekundär.getComponent(0).setFont(f);
 		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
@@ -99,12 +110,22 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 				label1.setBorder(BorderFactory.createEtchedBorder());
 				label1.setFont(f);
 				
-				JLabel label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)"));
+				JLabel label2 = new JLabel("");
+				if(hf.optionenFeld.PSS.isSelected()){
+					label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)"));
+				} else if(hf.optionenFeld.TS.isSelected()){
+					label2 = new JLabel(Integer.toString(hf.sortierterVector.get(i).primär)+(bm.isSelected()?"("+hf.sortierterVector.get(i).bemalwertung+")":"(0)")+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
+				}
 				primär.add(label2);
 				label2.setBorder(BorderFactory.createEtchedBorder());
 				label2.setFont(f);
 				
-				JLabel label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
+				JLabel label3 = new JLabel("");
+				if(hf.optionenFeld.PSS.isSelected()){
+					label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär)+(ab.isSelected()?"("+hf.sortierterVector.get(i).armeeliste+")":"(0)"));
+				} else if(hf.optionenFeld.TS.isSelected()){
+					label3 = new JLabel(Integer.toString(hf.sortierterVector.get(i).sekundär));	
+				}
 				sekundär.add(label3);
 				label3.setBorder(BorderFactory.createEtchedBorder());
 				label3.setFont(f);

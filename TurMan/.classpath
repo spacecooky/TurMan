@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Jan Koch/workspace/TurMan/itext-1.4.7.jar"/>
+	<classpathentry kind="lib" path="C:/Dokumente und Einstellungen/jk/workspace/TurMan/itext-1.4.7.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

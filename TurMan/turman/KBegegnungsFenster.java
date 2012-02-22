@@ -66,16 +66,23 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		begegnung.getComponent(0).setFont(f);
 		((JLabel)begegnung.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		primär.add(new JLabel("Primär"));
+		if(hf.optionenFeld.PSS.isSelected()){	
+			primär.add(new JLabel("Primär"));
+		} else if(hf.optionenFeld.TS.isSelected()){	
+			primär.add(new JLabel("Turnierpunkte"));
+		}
 		primär.getComponent(0).setFont(f);
 		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
-		sekundär.add(new JLabel("Sekundär"));
+		if(hf.optionenFeld.PSS.isSelected()){
+			sekundär.add(new JLabel("Sekundär"));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			sekundär.add(new JLabel("Siegespunkte"));
+		}
 		sekundär.getComponent(0).setFont(f);
 		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
-		//for(int i=(hf.rundenZaehler-1)*(hf.teilnehmerVector.size()/2);i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
 			if(bg.runde==hf.rundenZaehler){
 				JLabel label6 = new JLabel(""+(bg.tisch+1));
@@ -87,16 +94,11 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 				
 				// Durch begegnungsFensterButton ersetzen.
-				// ((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(bg.yPos+1)).getComponent(bg.xPos+1)).
 				JButton b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsFensterButton;
 				b1.setText(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
 				begegnung.add(b1);
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);
-				//JLabel label1 = new JLabel(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
-				//begegnung.add(label1);
-				//label1.setBorder(BorderFactory.createEtchedBorder());
-				//label1.setFont(f);
 				
 				JLabel label2 = new JLabel(bg.p1+" : "+bg.p2);
 				primär.add(label2);
