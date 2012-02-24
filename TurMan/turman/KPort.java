@@ -85,6 +85,8 @@ public class KPort {
 						}
 					}
 					hf.fillPanels();
+					hf.fillTeamPanels();
+					hf.updatePanels();
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

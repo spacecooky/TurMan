@@ -52,10 +52,9 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 			hf.teilnehmerVector.add(new KTeilnehmer(vn.getText(),nn.getText()));
 			hf.HauptPanel.removeAll();
 			hf.fillPanels();
-			hf.repaint();
-			hf.setVisible(true);
+			hf.fillTeamPanels();
+			hf.updatePanels();
 			setVisible(false);
-			
 		}
 		
 	}

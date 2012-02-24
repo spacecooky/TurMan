@@ -28,22 +28,33 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		punkteSchliessenButton.addActionListener(this);
 		ab.addActionListener(this);
 		bm.addActionListener(this);
+		abTab.addActionListener(this);
+		bmTab.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
 	
 	public void init(Dimension d){
-		Font f = new Font("Dialog", Font.BOLD, 16);
-		hf.sortieren(ab.isSelected(),bm.isSelected());
 		
-		punktePanel.removeAll();
+		updatePanel(punktePanel);
+		updatePanel(punktePanelTab);
 		setContentPane(new JScrollPane(punktePanel));
-		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
 		if(d==null){
 			setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		} else{
 			setSize(d);
 		}
+		setVisible(true);
+	}
+	
+	public void updatePanel(JPanel punktePanel){
+		hf.sortieren(ab.isSelected(),bm.isSelected());
+		Font f = new Font("Dialog", Font.BOLD, 16);
+		hf.sortieren(ab.isSelected(),bm.isSelected());
+		
+		punktePanel.removeAll();
+		
+		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
 		
 		JPanel platz = new JPanel();
 		platz.setLayout(new GridLayout(hf.teilnehmerVector.size()+2,1));
@@ -140,24 +151,41 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		}
 		platz.add(new JLabel(""));
 		spieler.add(new JLabel(""));
-		primär.add(bm);
-		sekundär.add(ab);
-		sos.add(punkteSchliessenButton);
-		setVisible(true);
+		
+		if(punktePanel.equals(this.punktePanel)){
+			primär.add(bm);
+			sekundär.add(ab);
+			sos.add(punkteSchliessenButton);
+		}else{
+			primär.add(bmTab);
+			sekundär.add(abTab);
+		}
+		punktePanel.validate();
 	}
 	
 	JPanel punktePanel=new JPanel();
+	JPanel punktePanelTab=new JPanel();
 	JCheckBox ab = new JCheckBox("Armeeliste");
 	JCheckBox bm = new JCheckBox("Bemalung");
+	JCheckBox abTab = new JCheckBox("Armeeliste");
+	JCheckBox bmTab = new JCheckBox("Bemalung");
 	JButton punkteSchliessenButton=new JButton("OK");
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
 			setVisible(false);
 		} else if(e.getSource()==ab){
+			abTab.setSelected(ab.isSelected());
 			init(getSize());
 		} else if(e.getSource()==bm){
+			bmTab.setSelected(bm.isSelected());
 			init(getSize());
+		} else if(e.getSource()==abTab){
+			ab.setSelected(abTab.isSelected());
+			updatePanel(punktePanelTab);
+		} else if(e.getSource()==bmTab){
+			bm.setSelected(bmTab.isSelected());
+			updatePanel(punktePanelTab);
 		}
 	}
 }

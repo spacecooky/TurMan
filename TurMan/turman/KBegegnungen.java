@@ -22,6 +22,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		this.khf=khf;
 		addActionListener(this);
 		begegnungsFensterButton.addActionListener(this);
+		begegnungsTabButton.addActionListener(this);
 		addMouseListener(this);
 		setBorder(BorderFactory.createRaisedBevelBorder());
 		setMaximumSize(new Dimension(20,20));
@@ -55,6 +56,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
+	JButton begegnungsTabButton = new JButton("");
 	
 	/**
 	 * @return true, wenn Teilnehmer 1 und 2 im selben Team sind
@@ -135,16 +137,8 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			khf.begegnungsFrame.removeAll();
 			khf.begegnungsPanel.removeAll();
 			khf.begegnungsFrame.dispose();
-			if(khf.begegnungsFenster.isVisible()){
-				if(begegnungsFensterButton.getParent()!=null){
-				//begegnungsFensterButton.getParent().validate();
-				khf.begegnungsFenster.init(khf.begegnungsFenster.getSize());
-				}
-			}
-			if(khf.punkteFenster.isVisible()){
-				khf.punkteFenster.init(khf.punkteFenster.getSize());
-			}
-		}else if(quelle== this || quelle==begegnungsFensterButton){
+			khf.updatePanels();
+		}else if(quelle== this || quelle==begegnungsFensterButton || quelle==begegnungsTabButton){
 			try{
 				khf.begegnungsFrame.removeAll();
 				khf.begegnungsPanel.removeAll();

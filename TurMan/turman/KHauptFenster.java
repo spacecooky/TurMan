@@ -2,6 +2,7 @@ package turman;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
@@ -29,14 +31,16 @@ import javax.swing.JTextField;
  * TODO Erkennung der Variablen Punkte für den Export.
  * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
  * TODO Siegpunkte-Matrix
- * TODO Teamturniere
+ * TODO Teamturniere:
+ * TODO Teamturniere Sortier-Algorithmus
+ * TODO Teamturniere Einzelpaarungsfenster
  * TODO Infofenster
  * TODO Druckfunktionen
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
- * TODO Mehrere Übersicht-Tabs
+ * TODO Mehrere Übersicht-Tabs, Punkte und Paarungen auch in Tabs
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
- * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen.
+ * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen. Bzw. keine neuen Spieler nach der ersten runde zulassen.
  * TODO Maximalgröße von Elementen im Punkte-/Extrapunkte-/Begegnungsfenster, falls zu wenige eingetragen sind
  * TODO Anzeige von Fehlerdialogen, z.B beim Speichern und Laden
  * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
@@ -64,10 +68,18 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		this.addWindowListener(meinListener);
 
 
-		//Hauptbereich
+		//Hauptbereich Einzel
 		sp=new JScrollPane(HauptPanel);
-		setContentPane(sp);
 		HauptPanel.setLayout(new BoxLayout(HauptPanel,BoxLayout.Y_AXIS));
+		//Hauptbereich Team
+		spTeam=new JScrollPane(HauptPanelTeam);
+		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
+		//Hauptbereich
+		tab.addTab("Matrix",null,sp);
+		tab.addTab("Punkte",null,new JScrollPane(punkteFenster.punktePanelTab));
+		tab.addTab("Begegnungen",null,new JScrollPane(begegnungsFenster.begegnungsPanelTab));
+		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		setContentPane(tab);
 		//Menue
 		setJMenuBar(menubar);
 		menubar.add(datei);
@@ -136,8 +148,15 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	static String version=new String("V0.0.6");
 
 	// Hauptbereich
+	JTabbedPane tab = new JTabbedPane();
+	
+	// Hauptbereich Einzelspieler
 	JPanel HauptPanel = new JPanel();
 	JScrollPane sp;
+	
+	// Hauptbereich Teams
+	JPanel HauptPanelTeam = new JPanel();
+	JScrollPane spTeam;
 
 	//	Menue
 	JMenuBar menubar = new JMenuBar();
@@ -267,6 +286,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			System.out.println(teilnehmerVector.size());
 
 			fillPanels();
+			fillTeamPanels();
 
 
 		}else if(quelle == speichern){
@@ -312,39 +332,39 @@ public class KHauptFenster extends JFrame implements ActionListener{
 
 	public void fillPanels(){
 		HauptPanel.removeAll();
-		if(optionenFeld.einzel.isSelected()){
-			teilnehmer=teilnehmerVector.size();
-			JPanel header= new JPanel();
-			header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
-			JLabel jL= new JLabel("");
-			jL.setMaximumSize(new Dimension(150,150));
-			jL.setMinimumSize(new Dimension(150,150));
-			jL.setPreferredSize(new Dimension(150,150));
-			jL.setBorder(BorderFactory.createRaisedBevelBorder());
-			header.add(jL);
+		
+		teilnehmer=teilnehmerVector.size();
+		JPanel header= new JPanel();
+		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
+		JLabel jL= new JLabel("");
+		jL.setMaximumSize(new Dimension(150,150));
+		jL.setMinimumSize(new Dimension(150,150));
+		jL.setPreferredSize(new Dimension(150,150));
+		jL.setBorder(BorderFactory.createRaisedBevelBorder());
+		header.add(jL);
 
-			for(int i=0;i<teilnehmerVector.size();i++){
-				JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
-				jp.setMaximumSize(new Dimension(20,150));
-				jp.setMinimumSize(new Dimension(20,150));
-				jp.setPreferredSize(new Dimension(20,150));
-				jp.setUI( new VerticalLabelUI(false));
-				jp.setBorder(BorderFactory.createRaisedBevelBorder());
-				header.add(jp);
-			}
-			HauptPanel.add(header);
-
-			for(int i=0;i<teilnehmerVector.size();i++){
-				HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
-			}
-
-		}else if(optionenFeld.team.isSelected()){
-			fillTeamPanels();
+		for(int i=0;i<teilnehmerVector.size();i++){
+			JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
+			jp.setMaximumSize(new Dimension(20,150));
+			jp.setMinimumSize(new Dimension(20,150));
+			jp.setPreferredSize(new Dimension(20,150));
+			jp.setUI( new VerticalLabelUI(false));
+			jp.setBorder(BorderFactory.createRaisedBevelBorder());
+			header.add(jp);
 		}
+		HauptPanel.add(header);
+
+		for(int i=0;i<teilnehmerVector.size();i++){
+			HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
+		}
+
+		
 		setVisible(true);
 	}
 
 	public void fillTeamPanels(){
+		HauptPanelTeam.removeAll();
+		
 		teams=teamVector.size();
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
@@ -364,10 +384,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			jp.setBorder(BorderFactory.createRaisedBevelBorder());
 			header.add(jp);
 		}
-		HauptPanel.add(header);
+		HauptPanelTeam.add(header);
 
 		for(int i=0;i<teamVector.size();i++){
-			HauptPanel.add(new KTeamPanel(teamVector.get(i),teamVector.size(),i,this));
+			HauptPanelTeam.add(new KTeamPanel(teamVector.get(i),teamVector.size(),i,this));
 		}
 	}
 
@@ -432,6 +452,22 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		}
 	}
 
+	public void updatePanels(){
+		validate();
+		
+		if(punkteFenster.isVisible()){
+			punkteFenster.init(punkteFenster.getSize());
+		} else{
+			punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		}
+		
+		if(begegnungsFenster.isVisible()){
+			begegnungsFenster.init(begegnungsFenster.getSize());
+		} else{
+			begegnungsFenster.updatePanel(begegnungsFenster.begegnungsPanelTab);	
+		}
+	}
+	
 	/**
 	 * Beendet das Programm
 	 */

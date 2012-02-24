@@ -158,6 +158,7 @@ public class KSpeicherverwaltung {
 
 					}
 					hf.fillPanels();
+					hf.fillTeamPanels();
 
 					//Begegnungsdaten
 					String[] sCr=begegnungsDaten.split("\r\n");
@@ -212,7 +213,7 @@ public class KSpeicherverwaltung {
 						}
 					}
 
-
+					hf.updatePanels();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e) {

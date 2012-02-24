@@ -83,7 +83,6 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		typ.add(einzel);
 		typ.add(team);
 		einzel.setSelected(true);
-		team.setEnabled(false);
 		
 		turnierPanel.add(p4);
 		
@@ -162,7 +161,16 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource()==paarungsZurueck || arg0.getSource()==turnierZurueck || arg0.getSource()==wertungZurueck){
-			hf.setContentPane(hf.sp);
+			if(einzel.isSelected()){
+				//hf.setContentPane(hf.sp);
+				hf.tab.remove(0);
+				hf.tab.insertTab("Matrix", null, hf.sp, null, 0);
+			} else if(team.isSelected()){
+				//hf.setContentPane(hf.spTeam);
+				hf.tab.remove(0);
+				hf.tab.insertTab("Matrix", null, hf.spTeam, null, 0);
+			}
+			hf.setContentPane(hf.tab);
 			hf.validate();
 		}
 		

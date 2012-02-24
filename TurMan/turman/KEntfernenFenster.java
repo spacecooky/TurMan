@@ -57,14 +57,14 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 				hf.teilnehmerVector.remove(combo.getSelectedIndex());
 				hf.HauptPanel.removeAll();
 				hf.fillPanels();
+				hf.fillTeamPanels();
 			} else {
 				
 				entfernen(combo.getSelectedIndex());
 				
 				
 			}
-			hf.repaint();
-			hf.setVisible(true);
+			hf.updatePanels();
 			setVisible(false);
 		}
 	}

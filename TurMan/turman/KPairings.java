@@ -237,6 +237,7 @@ public class KPairings {
 				System.out.println(hf.teilnehmerVector.get(i).tische.size());
 			}*/
 		}
+		hf.updatePanels();
 	}
 
 	
@@ -447,12 +448,7 @@ public class KPairings {
 				t.paarungen.remove(hf.rundenZaehler-1);
 			}
 			hf.rundenZaehler--;
-			if(hf.begegnungsFenster.isVisible()){
-				hf.begegnungsFenster.init(hf.begegnungsFenster.getSize());
-			}
-			if(hf.punkteFenster.isVisible()){
-				hf.punkteFenster.init(hf.punkteFenster.getSize());
-			}
+			hf.updatePanels();
 			
 			if(hf.rundenZaehler==0){
 				hf.mode=KPairings.RANDOM;
@@ -462,5 +458,6 @@ public class KPairings {
 		/*for(int i=0;i<hf.teilnehmerVector.size();i++){
 			System.out.println(hf.teilnehmerVector.get(i).tische.size());
 		}*/
+		
 	}
 }

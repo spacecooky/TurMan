@@ -30,9 +30,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	KHauptFenster hf=null;
 	
 	public void init(Dimension d){
-		Font f = new Font("Dialog", Font.BOLD, 16);
-		
-		begegnungsPanel.removeAll();
+		updatePanel(begegnungsPanel);
+		updatePanel(begegnungsPanelTab);
 		setContentPane(new JScrollPane(begegnungsPanel));
 		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
 		if(d==null){
@@ -40,6 +39,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		} else{
 			setSize(d);
 		}
+		
+		
+		setVisible(true);
+		
+	}
+	
+	public void updatePanel(JPanel begegnungsPanel){
+		Font f = new Font("Dialog", Font.BOLD, 16);
+		
+		begegnungsPanel.removeAll();
+		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
 		
 		JPanel tische = new JPanel();
 		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
@@ -94,7 +104,12 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 				
 				// Durch begegnungsFensterButton ersetzen.
-				JButton b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsFensterButton;
+				JButton b1 = new JButton();
+				if(begegnungsPanel.equals(this.begegnungsPanel)){
+					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsFensterButton;
+				} else {
+					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsTabButton;
+				}
 				b1.setText(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
 				begegnung.add(b1);
 				b1.setBorder(BorderFactory.createEtchedBorder());
@@ -114,12 +129,14 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		tische.add(new JLabel(""));
 		begegnung.add(new JLabel(""));
 		primär.add(new JLabel(""));
-		sekundär.add(punkteSchliessenButton);
-		setVisible(true);
-		
+		if(begegnungsPanel.equals(this.begegnungsPanel)){
+			sekundär.add(punkteSchliessenButton);
+		}
+		begegnungsPanel.validate();
 	}
 	
 	JPanel begegnungsPanel=new JPanel();
+	JPanel begegnungsPanelTab=new JPanel();
 	JButton punkteSchliessenButton=new JButton("OK");
 	@Override
 	public void actionPerformed(ActionEvent e) {
