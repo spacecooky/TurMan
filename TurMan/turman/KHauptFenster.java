@@ -145,7 +145,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
-	static String version=new String("V0.0.6");
+	static String version=new String("V0.0.7");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
