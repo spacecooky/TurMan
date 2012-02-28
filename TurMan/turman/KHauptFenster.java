@@ -2,7 +2,6 @@ package turman;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,8 +41,8 @@ import javax.swing.JTextField;
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen. Bzw. keine neuen Spieler nach der ersten runde zulassen.
  * TODO Maximalgröße von Elementen im Punkte-/Extrapunkte-/Begegnungsfenster, falls zu wenige eingetragen sind
- * TODO Anzeige von Fehlerdialogen, z.B beim Speichern und Laden
  * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
+ * TODO Anzeige von Platzabständen der gepaarten Spieler, falls die Differenz >1
  * 
  * @author jk
  *
@@ -145,7 +144,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
-	static String version=new String("V0.0.7");
+	static String version=new String("V0.0.8");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();

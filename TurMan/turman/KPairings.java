@@ -166,13 +166,12 @@ public class KPairings {
 			if(bVector==null){
 				return false;
 			}
-			//System.out.println(bVector.size());
-
+			
 			for(int i=0;i<bVector.size();i++){
 
 				KBegegnungen b = bVector.get(i);
-				KTeilnehmer tn1 = b.t1;
-				KTeilnehmer tn2 = b.t2;
+				//KTeilnehmer tn1 = b.t1;
+				//KTeilnehmer tn2 = b.t2;
 				//System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname+" : "+b.primär+" : "+b.sekundär+" : "+b.sos);
 				b.setEnabled(true);
 				b.setBackground(Color.orange);
@@ -212,7 +211,7 @@ public class KPairings {
 	static void runde(KHauptFenster hf){
 		boolean swissErr=false;
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
-			hf.dialog.getDialog(hf.dialog.errorUngerade);
+			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
 			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
 			hf.rundenZaehler++;
@@ -221,7 +220,7 @@ public class KPairings {
 					System.out.println("SWISS-ERR");
 					hf.rundenZaehler--;
 					swissErr=true;
-					//TODO Fehlerdialog
+					hf.dialog.getErrorDialog(hf.dialog.errorSwiss);
 					break;
 				}
 			};
@@ -267,7 +266,7 @@ public class KPairings {
 			//}
 			}
 			if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
-				//TODO Fehlerdialog, falls noch Tischfehler vorhanden. 
+				hf.dialog.getInfoDialog(hf.dialog.infoTische);
 			}
 			System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));
 			for(int i=0;i<hf.teilnehmerVector.size();i++ ){
@@ -347,6 +346,7 @@ public class KPairings {
 	 * @param hf
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	static Vector<KBegegnungen> swiss(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,KHauptFenster hf,int teamFailures, int mirrorFailures,int ortFailures, int armeeFailures){
 		boolean teamFailureBool=false;
 		boolean mirrorFailureBool=false;

@@ -42,8 +42,41 @@ public class KDialog extends JDialog implements ActionListener{
 			"Die Spielerzahl ist ungerade",
 		    JOptionPane.ERROR_MESSAGE);
 	
+	public JOptionPane errorDateiFehler = new JOptionPane(
+			"Fehler beim Öffnen der Datei",
+		    JOptionPane.ERROR_MESSAGE);
 	
-	public void getDialog(JOptionPane jop){
+	public JOptionPane errorNummerEingabe = new JOptionPane(
+			"Es können nur natürliche Zahlen eingegeben werden.",
+		    JOptionPane.ERROR_MESSAGE);
+	
+	public JOptionPane errorSwiss = new JOptionPane(
+			"Es konnten keine Paarungen generiert werden.\n" +
+			"Die Paarungsoptionen sollten gelockert werden.",
+		    JOptionPane.ERROR_MESSAGE);
+	
+	public JOptionPane infoTische = new JOptionPane(
+			"Es müssen Spieler erneut am selben Tisch spielen.",
+		    JOptionPane.INFORMATION_MESSAGE);
+	
+	
+	public void getErrorDialog(JOptionPane jop){
+		setContentPane(jop);
+		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).removeActionListener(this);
+		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).addActionListener(this);
+		jop.setBorder(BorderFactory.createRaisedBevelBorder());
+		setVisible(true);
+	}
+	
+	public void getInfoDialog(JOptionPane jop){
+		setContentPane(jop);
+		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).removeActionListener(this);
+		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).addActionListener(this);
+		jop.setBorder(BorderFactory.createRaisedBevelBorder());
+		setVisible(true);
+	}
+	
+	public void getQuestionDialog(JOptionPane jop){
 		setContentPane(jop);
 		setVisible(true);
 	}
@@ -55,12 +88,6 @@ public void init(){
 	((JButton)((JPanel)yesno.getComponent(1)).getComponent(0)).addActionListener(this);
 	((JButton)((JPanel)yesno.getComponent(1)).getComponent(1)).addActionListener(this);
 	yesno.setBorder(BorderFactory.createRaisedBevelBorder());
-	
-	((JButton)((JPanel)info.getComponent(1)).getComponent(0)).addActionListener(this);
-	info.setBorder(BorderFactory.createRaisedBevelBorder());
-	
-	((JButton)((JPanel)errorUngerade.getComponent(1)).getComponent(0)).addActionListener(this);
-	errorUngerade.setBorder(BorderFactory.createRaisedBevelBorder());
 	
 	setVisible(false);
 	setSize(400,140);

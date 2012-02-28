@@ -17,6 +17,11 @@ import javax.swing.JTextField;
 
 public class KOptionenFeld extends JTabbedPane implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public KOptionenFeld(KHauptFenster hf){
 		this.hf=hf;
 		init();

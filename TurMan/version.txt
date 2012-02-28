@@ -1,3 +1,6 @@
+Version 0.0.8
+- Fehler-/Infodialoge eingefügt für Tischverteilungen, Paarungen, Werteingaben im Übersichtsfenster
+
 Version 0.0.7
 - Grundstruktur für mehr Optionen und Teamturniere eingebaut
 - Punkte und Paarungen können jetzt auch als Tab neben der Matrix angesehen werden

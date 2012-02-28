@@ -106,15 +106,15 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==SchliessenButton){
-			for(int i=0; i<hf.teilnehmerVector.size();i++){
-				try{
-					hf.teilnehmerVector.get(i).bemalwertung=Integer.parseInt(((JTextField)bm.getComponent(i+1)).getText());
-					hf.teilnehmerVector.get(i).armeeliste=Integer.parseInt(((JTextField)ab.getComponent(i+1)).getText());
-				} catch(NumberFormatException e1){
-					//TODO Fehlerdialog
+			try{
+				for(int i=0; i<hf.teilnehmerVector.size();i++){
+						hf.teilnehmerVector.get(i).bemalwertung=Integer.parseInt(((JTextField)bm.getComponent(i+1)).getText());
+						hf.teilnehmerVector.get(i).armeeliste=Integer.parseInt(((JTextField)ab.getComponent(i+1)).getText());
 				}
+				setVisible(false);
+			} catch(NumberFormatException e1){
+				hf.dialog.getErrorDialog(hf.dialog.errorNummerEingabe);
 			}
-			setVisible(false);
 		} else if(e.getSource()==AbbrechenButton){
 			setVisible(false);
 		}
