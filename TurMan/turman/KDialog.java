@@ -3,6 +3,7 @@ package turman;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ public class KDialog extends JDialog implements ActionListener{
 	}
 	
 	KHauptFenster s;
+	
 	
 	public JOptionPane yesno = new JOptionPane(
 			"Das Programm wird beendet\n" +
@@ -59,6 +61,10 @@ public class KDialog extends JDialog implements ActionListener{
 			"Es müssen Spieler erneut am selben Tisch spielen.",
 		    JOptionPane.INFORMATION_MESSAGE);
 	
+	public JOptionPane infoDifferenz = new JOptionPane(
+			"",
+		    JOptionPane.INFORMATION_MESSAGE);
+	
 	
 	public void getErrorDialog(JOptionPane jop){
 		setContentPane(jop);
@@ -73,12 +79,28 @@ public class KDialog extends JDialog implements ActionListener{
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).removeActionListener(this);
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).addActionListener(this);
 		jop.setBorder(BorderFactory.createRaisedBevelBorder());
+		if(differenz.size()>0){
+			setSize(400,340);
+		}
 		setVisible(true);
 	}
 	
 	public void getQuestionDialog(JOptionPane jop){
 		setContentPane(jop);
 		setVisible(true);
+	}
+	
+	Vector<String> differenz = new Vector<String>();
+	
+	public void setPaarungsDialog(){
+		String s = "Durch die Paarungsoptionen bzw. Paarungsart\n" +
+				"haben sich folgende Paarungsabstände >1 ergeben:\n";
+		
+		for(int i=0;i<differenz.size();i++){
+			s+=differenz.get(i)+"\n";
+		}
+		
+		infoDifferenz = new JOptionPane(s,JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 public void init(){
@@ -103,6 +125,9 @@ public void actionPerformed(ActionEvent arg0) {
 	else if(quelle==((JButton)((JPanel)yesno.getComponent(1)).getComponent(1))){
 	}
 	
+	if(differenz.size()>0){
+		setSize(400,140);
+	}
 	setVisible(false);
 	
 }

@@ -1,3 +1,9 @@
+Version 0.0.9
+- Dialog, falls es Paarungen mit Platzabstand >1 gibt.
+- Punkte-, Begegnungs- und Extrapunktefenster werden jetzt mit leeren Elementen vorgefüllt, solange noch keine Teilnehmer/Begegnungen  eingetragen sind.
+- Automatische Speicherung, beim Verlassen des Programms und automatisches Laden dieser Speicherung beim Starten des Programms.
+- Automatische Speicherung vor und nach dem Berechnen einer neuen Runde.
+
 Version 0.0.8
 - Fehler-/Infodialoge eingefügt für Tischverteilungen, Paarungen, Werteingaben im Übersichtsfenster
 

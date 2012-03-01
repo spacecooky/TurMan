@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -15,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 
 public class KPunkteFenster extends JFrame implements ActionListener{
 
@@ -30,6 +34,8 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		bm.addActionListener(this);
 		abTab.addActionListener(this);
 		bmTab.addActionListener(this);
+		druckenButton.addActionListener(this);
+		druckenButtonTab.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
@@ -149,7 +155,44 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 				deleted++;
 			}
 		}
-		platz.add(new JLabel(""));
+		
+		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
+		if(hf.teilnehmerVector.size()==0){
+			
+			
+			platz.setLayout(new GridLayout(32,1));
+			spieler.setLayout(new GridLayout(32,1));
+			primär.setLayout(new GridLayout(32,1));
+			sekundär.setLayout(new GridLayout(32,1));
+			sos.setLayout(new GridLayout(32,1));
+			
+			for(int i=30;i>0;i--){
+					JLabel label6 = new JLabel(" ");
+					platz.add(label6);
+					label6.setBorder(BorderFactory.createEtchedBorder());
+					
+					JLabel label1 = new JLabel(" ");
+					spieler.add(label1);
+					label1.setBorder(BorderFactory.createEtchedBorder());
+					
+					JLabel label2 = new JLabel(" ");
+					primär.add(label2);
+					label2.setBorder(BorderFactory.createEtchedBorder());
+					
+					JLabel label3 = new JLabel(" ");
+					sekundär.add(label3);
+					label3.setBorder(BorderFactory.createEtchedBorder());
+					
+					JLabel label4 = new JLabel(" ");
+					sos.add(label4);
+					label4.setBorder(BorderFactory.createEtchedBorder());
+			}
+		}
+		if(punktePanel.equals(this.punktePanel)){
+			platz.add(druckenButton);
+		} else{
+			platz.add(druckenButtonTab);
+		}
 		spieler.add(new JLabel(""));
 		
 		if(punktePanel.equals(this.punktePanel)){
@@ -170,6 +213,8 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	JCheckBox abTab = new JCheckBox("Armeeliste");
 	JCheckBox bmTab = new JCheckBox("Bemalung");
 	JButton punkteSchliessenButton=new JButton("OK");
+	JButton druckenButton=new JButton("Drucken");
+	JButton druckenButtonTab=new JButton("Drucken");
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
@@ -186,6 +231,30 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		} else if(e.getSource()==bmTab){
 			bm.setSelected(bmTab.isSelected());
 			updatePanel(punktePanelTab);
+		} else if(e.getSource()==druckenButton){
+			/*PrinterJob pj = PrinterJob.getPrinterJob();
+			KImagePrintable tp = new KImagePrintable();
+			tp.df=punktePanel;
+			pj.setPrintable(tp);
+			//PageFormat pf = pj.pageDialog(pj.defaultPage());
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		         }
+		     }*/
+		} else if(e.getSource()==druckenButtonTab){
+			/*PrinterJob pj = PrinterJob.getPrinterJob();
+			KImagePrintable tp = new KImagePrintable();
+			tp.df=punktePanelTab;
+			pj.setPrintable(tp);
+			//PageFormat pf = pj.pageDialog(pj.defaultPage());
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		         }
+		     }*/
 		}
 	}
 }

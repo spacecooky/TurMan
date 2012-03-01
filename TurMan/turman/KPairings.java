@@ -231,10 +231,9 @@ public class KPairings {
 		hf.herausforderungsVector.clear();
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0 && swissErr==false){
 			tische(hf);
-			/*System.out.println("Tische");
-			for(int i=0;i<hf.teilnehmerVector.size();i++){
-				System.out.println(hf.teilnehmerVector.get(i).tische.size());
-			}*/
+			if(hf.rundenZaehler>1){
+				differenz(hf);
+			}
 		}
 		hf.updatePanels();
 	}
@@ -285,6 +284,34 @@ public class KPairings {
 			}
 			System.out.println();
 			
+		}
+	}
+	
+	/**
+	 * Überprüft, wie weit bestimmte Paarungen auseinander liegen
+	 * @param hf
+	 */
+	static void differenz(KHauptFenster hf){
+		hf.dialog.differenz.clear();
+		int bgCount=hf.teilnehmerVector.size()/2;
+		for(int i=(hf.rundenZaehler-1)*((bgCount));i<hf.begegnungsVector.size();i++){
+			KTeilnehmer tn1 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).xPos);
+			KTeilnehmer tn2 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).yPos);
+			
+			int t1pos = hf.sortierterVector.indexOf(tn1);
+			int t2pos = hf.sortierterVector.indexOf(tn2);
+			
+			if(t1pos-t2pos >1){
+				hf.dialog.differenz.add("Platz "+t1pos+"gegen Platz "+t2pos);
+			}
+				
+			if(t2pos-t1pos >1){
+				hf.dialog.differenz.add("Platz "+(t2pos+1)+"gegen Platz "+(t1pos+1));
+			}
+		}
+		if(hf.dialog.differenz.size()>0){
+			hf.dialog.setPaarungsDialog();
+			hf.dialog.getInfoDialog(hf.dialog.infoDifferenz);
 		}
 	}
 	

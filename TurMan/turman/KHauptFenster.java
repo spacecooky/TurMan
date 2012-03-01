@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -35,15 +36,15 @@ import javax.swing.JTextField;
  * TODO Teamturniere Einzelpaarungsfenster
  * TODO Infofenster
  * TODO Druckfunktionen
+ * TODO Druckfunktion für Eingabeliste der Zusatzpunkte
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
- * TODO Mehrere Übersicht-Tabs, Punkte und Paarungen auch in Tabs
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen. Bzw. keine neuen Spieler nach der ersten runde zulassen.
- * TODO Maximalgröße von Elementen im Punkte-/Extrapunkte-/Begegnungsfenster, falls zu wenige eingetragen sind
  * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
- * TODO Anzeige von Platzabständen der gepaarten Spieler, falls die Differenz >1
- * 
+ * TODO Anzeige von Platzabständen der gepaarten Spieler: Scrollbar einfügen falls die Anzahl zu groß ist
+ * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
+ * TODO Speicherung von Agenda-Schablonen.
  * @author jk
  *
  */
@@ -142,9 +143,14 @@ public class KHauptFenster extends JFrame implements ActionListener{
 
 		teilnehmerButton.addActionListener(this);
 		setVisible(true);
+		
+		File f = new File(System.getProperty("user.dir")+"/autosaveQuit.sav");
+		if(f.exists()){
+			KSpeicherverwaltung.laden(this,f);
+		}
 	}
 
-	static String version=new String("V0.0.8");
+	static String version=new String("V0.0.9");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -289,16 +295,22 @@ public class KHauptFenster extends JFrame implements ActionListener{
 
 
 		}else if(quelle == speichern){
-			KSpeicherverwaltung.speichern(this);
+			KSpeicherverwaltung.speichernWrap(this);
 		}else if(quelle == oeffnen){
-			KSpeicherverwaltung.laden(this);
+			KSpeicherverwaltung.ladenWrap(this);
 		} else if(quelle == punkte){
 			punkteFenster.init(null);
 		} else if(quelle == runde){
+			File f = new File(System.getProperty("user.dir")+"/autosaveRunde"+rundenZaehler+"Ende.sav");
+			KSpeicherverwaltung.speichern(this,f);
 			KPairings.runde(this);
+			f = new File(System.getProperty("user.dir")+"/autosaveRunde"+rundenZaehler+"Start.sav");
+			KSpeicherverwaltung.speichern(this,f);
 		}else if(quelle == rundeWdh){
 			KPairings.rundeReset(this);
 			KPairings.runde(this);
+			File f = new File(System.getProperty("user.dir")+"/autosaveRunde"+rundenZaehler+"Start.sav");
+			KSpeicherverwaltung.speichern(this,f);
 		}else if(quelle == rundeReset){
 			KPairings.rundeReset(this);
 		}else if(quelle==beenden){
@@ -471,6 +483,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	 * Beendet das Programm
 	 */
 	protected void beenden(){
+		File f = new File(System.getProperty("user.dir")+"/autosaveQuit.sav");
+		KSpeicherverwaltung.speichern(this,f);
 		System.exit(0);
 	}
 

@@ -126,6 +126,34 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				label3.setFont(f);
 			}
 		}
+		
+		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
+				if(hf.begegnungsVector.size()==0){
+					
+					tische.setLayout(new GridLayout(17,1));
+					begegnung.setLayout(new GridLayout(17,1));
+					primär.setLayout(new GridLayout(17,1));
+					sekundär.setLayout(new GridLayout(17,1));
+					
+					for(int i=15;i>0;i--){
+						JLabel label6 = new JLabel("");
+						tische.add(label6);
+						label6.setBorder(BorderFactory.createEtchedBorder());
+						
+						JLabel label1 = new JLabel("");
+						begegnung.add(label1);
+						label1.setBorder(BorderFactory.createEtchedBorder());
+						
+						JLabel label2 = new JLabel("");
+						primär.add(label2);
+						label2.setBorder(BorderFactory.createEtchedBorder());
+						
+						JLabel label3 = new JLabel("");
+						sekundär.add(label3);
+						label3.setBorder(BorderFactory.createEtchedBorder());
+					}
+				}
+		
 		tische.add(new JLabel(""));
 		begegnung.add(new JLabel(""));
 		primär.add(new JLabel(""));

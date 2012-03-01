@@ -90,6 +90,30 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 				bm.setVisible(false);
 			} 
 		}
+		
+		//Falls noch keine Teilnehmer eingetragen sind
+		if(hf.teilnehmerVector.size()==0){
+			
+			spieler.setLayout(new GridLayout(32,1));
+			bm.setLayout(new GridLayout(32,1));
+			ab.setLayout(new GridLayout(32,1));
+			
+			for(int i=0; i<30;i++){
+				JLabel label1 = new JLabel("");
+				spieler.add(label1);
+				label1.setBorder(BorderFactory.createEtchedBorder());
+				
+				JLabel bmField = new JLabel("");
+				bm.add(bmField);
+				bmField.setBorder(BorderFactory.createEtchedBorder());
+				
+				JLabel abField = new JLabel("");
+				ab.add(abField);
+				abField.setBorder(BorderFactory.createEtchedBorder());
+			}
+			
+		}
+		
 		spieler.add(new JLabel(""));
 		bm.add(AbbrechenButton);
 		ab.add(SchliessenButton);
