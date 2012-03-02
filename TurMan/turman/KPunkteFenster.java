@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -232,9 +231,10 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			bm.setSelected(bmTab.isSelected());
 			updatePanel(punktePanelTab);
 		} else if(e.getSource()==druckenButton){
-			/*PrinterJob pj = PrinterJob.getPrinterJob();
-			KImagePrintable tp = new KImagePrintable();
-			tp.df=punktePanel;
+			PrinterJob pj = PrinterJob.getPrinterJob();
+			KTextPrintable tp = new KTextPrintable();
+			tp.hf=hf;
+			tp.sicht=KTextPrintable.PUNKTE;
 			pj.setPrintable(tp);
 			//PageFormat pf = pj.pageDialog(pj.defaultPage());
 		    if (pj.printDialog()) {
@@ -242,11 +242,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		        catch (PrinterException exc) {
 		            System.out.println(exc);
 		         }
-		     }*/
+		     }
 		} else if(e.getSource()==druckenButtonTab){
-			/*PrinterJob pj = PrinterJob.getPrinterJob();
-			KImagePrintable tp = new KImagePrintable();
-			tp.df=punktePanelTab;
+			PrinterJob pj = PrinterJob.getPrinterJob();
+			KTextPrintable tp = new KTextPrintable();
+			tp.hf=hf;
+			tp.sicht=KTextPrintable.PUNKTE;
 			pj.setPrintable(tp);
 			//PageFormat pf = pj.pageDialog(pj.defaultPage());
 		    if (pj.printDialog()) {
@@ -254,7 +255,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		        catch (PrinterException exc) {
 		            System.out.println(exc);
 		         }
-		     }*/
+		     }
 		}
 	}
 }

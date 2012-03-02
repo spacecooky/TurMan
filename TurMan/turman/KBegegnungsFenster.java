@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,6 +27,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	public KBegegnungsFenster(KHauptFenster hf) {
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
+		druckenButton.addActionListener(this);
+		druckenButtonTab.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
@@ -154,7 +158,11 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 					}
 				}
 		
-		tische.add(new JLabel(""));
+		if(begegnungsPanel.equals(this.begegnungsPanel)){
+			tische.add(druckenButton);
+		} else{
+			tische.add(druckenButtonTab);
+		}
 		begegnung.add(new JLabel(""));
 		primär.add(new JLabel(""));
 		if(begegnungsPanel.equals(this.begegnungsPanel)){
@@ -166,10 +174,38 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	JPanel begegnungsPanel=new JPanel();
 	JPanel begegnungsPanelTab=new JPanel();
 	JButton punkteSchliessenButton=new JButton("OK");
+	JButton druckenButton=new JButton("Drucken");
+	JButton druckenButtonTab=new JButton("Drucken");
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
 			setVisible(false);
-		} 
+		} else if(e.getSource()==druckenButton){
+			PrinterJob pj = PrinterJob.getPrinterJob();
+			KTextPrintable tp = new KTextPrintable();
+			tp.hf=hf;
+			tp.sicht=KTextPrintable.BEGEGNUNG;
+			pj.setPrintable(tp);
+			//PageFormat pf = pj.pageDialog(pj.defaultPage());
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		         }
+		     }
+		} else if(e.getSource()==druckenButtonTab){
+			PrinterJob pj = PrinterJob.getPrinterJob();
+			KTextPrintable tp = new KTextPrintable();
+			tp.hf=hf;
+			tp.sicht=KTextPrintable.BEGEGNUNG;
+			pj.setPrintable(tp);
+			//PageFormat pf = pj.pageDialog(pj.defaultPage());
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		         }
+		     }
+		}
 	}
 }

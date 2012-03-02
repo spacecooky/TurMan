@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -27,6 +29,7 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 		this.hf=hf;
 		SchliessenButton.addActionListener(this);
 		AbbrechenButton.addActionListener(this);
+		druckenButton.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
@@ -114,7 +117,7 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 			
 		}
 		
-		spieler.add(new JLabel(""));
+		spieler.add(druckenButton);
 		bm.add(AbbrechenButton);
 		ab.add(SchliessenButton);
 		setVisible(true);
@@ -126,6 +129,7 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 	JPanel ab = new JPanel();
 	JButton AbbrechenButton=new JButton("Abbrechen");
 	JButton SchliessenButton=new JButton("Speichern");
+	JButton druckenButton=new JButton("Drucken");
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -141,6 +145,19 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 			}
 		} else if(e.getSource()==AbbrechenButton){
 			setVisible(false);
+		} else if(e.getSource()==druckenButton){
+			PrinterJob pj = PrinterJob.getPrinterJob();
+			KTextPrintable tp = new KTextPrintable();
+			tp.hf=hf;
+			tp.sicht=KTextPrintable.ZUSPUNKTE;
+			pj.setPrintable(tp);
+			//PageFormat pf = pj.pageDialog(pj.defaultPage());
+		    if (pj.printDialog()) {
+		        try {pj.print();}
+		        catch (PrinterException exc) {
+		            System.out.println(exc);
+		         }
+		     }
 		}
 	}
 }

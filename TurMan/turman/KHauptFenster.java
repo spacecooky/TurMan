@@ -35,8 +35,6 @@ import javax.swing.JTextField;
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
  * TODO Infofenster
- * TODO Druckfunktionen
- * TODO Druckfunktion für Eingabeliste der Zusatzpunkte
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
@@ -150,7 +148,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		}
 	}
 
-	static String version=new String("V0.0.9");
+	static String version=new String("V0.0.10");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -288,7 +286,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 				teilnehmerVector.add(new KTeilnehmer(((JTextField)teilnehmerPanel.getComponent(i)).getText(),((JTextField)teilnehmerPanel.getComponent(i+1)).getText()));
 			}
 			teilnehmerFrame.setVisible(false);
-			System.out.println(teilnehmerVector.size());
+			//System.out.println(teilnehmerVector.size());
 
 			fillPanels();
 			fillTeamPanels();

@@ -18,7 +18,7 @@ public class KSpeicherverwaltung {
 		if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
 			File f =new File(fileChooser.getSelectedFile().toString());
 			if(f !=null){
-				System.out.println(f.getName());
+				//System.out.println(f.getName());
 				speichern(hf,f);	
 			}
 		}
@@ -209,7 +209,7 @@ public class KSpeicherverwaltung {
 				for(int j=1;j<tp.getComponentCount();j++){
 					try{
 						KBegegnungen bg =(KBegegnungen)tp.getComponent(j);
-						System.out.println(bg.tisch);
+						//System.out.println(bg.tisch);
 						if(bg.getBackground().equals(Color.darkGray) || bg.getBackground().equals(Color.black)){
 							fw.write("1;");
 						} else if(bg.getBackground().equals(Color.orange)){

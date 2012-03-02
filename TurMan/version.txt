@@ -1,3 +1,6 @@
+Version 0.0.10
+- Druckfunktionen für Punkte-, Begegnungs-, Zusatzpunktefenster
+
 Version 0.0.9
 - Dialog, falls es Paarungen mit Platzabstand >1 gibt.
 - Punkte-, Begegnungs- und Extrapunktefenster werden jetzt mit leeren Elementen vorgefüllt, solange noch keine Teilnehmer/Begegnungen  eingetragen sind.

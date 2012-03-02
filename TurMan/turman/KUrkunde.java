@@ -52,7 +52,7 @@ public class KUrkunde {
 	public void urkundeErstellen(Vector<KTeilnehmer> tV){
 
 		
-		System.out.println(tV.size());
+		//System.out.println(tV.size());
 			//Fonts
 			Font name = FontFactory.getFont("Colonna MT", 32);
 			Font nameKlein = FontFactory.getFont("Colonna MT", 28);

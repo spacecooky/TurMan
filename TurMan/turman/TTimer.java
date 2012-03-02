@@ -93,7 +93,7 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 					Date actDate = new Date(acttime);
 
 					label.setText(sdf.format(actDate));
-					System.out.println(sdf.format(actDate));
+					//System.out.println(sdf.format(actDate));
 				}
 				try {
 					sleep(1000);
