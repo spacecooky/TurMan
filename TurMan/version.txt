@@ -1,3 +1,6 @@
+WIP Version 0.0.11
+- Funktion Runde zurücksetzen/Runde neu berechnen geändert, damit sie auch in geladenen Turnieren die korrekten Begegnungen entfernen.
+
 Version 0.0.10
 - Druckfunktionen für Punkte-, Begegnungs-, Zusatzpunktefenster
 

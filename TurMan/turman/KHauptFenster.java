@@ -43,6 +43,10 @@ import javax.swing.JTextField;
  * TODO Anzeige von Platzabständen der gepaarten Spieler: Scrollbar einfügen falls die Anzahl zu groß ist
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
+ * TODO Falls Spieler genau punktgleich sind, müssen diese für die Paarung in einen Spielerpool zusammengefasst werden, der für diesen Platz steht. Aus diesm wird für die Paaruung dann immer zufällig einer ausgewählt.
+ * TODO Falls Spieler genau punktgleich sind, müssen sie auf dem gleichen Platz eingetragen werden.
+ * TODO Matrix nach Laden/Import korrekt neu zeichnen.
+ *  
  * @author jk
  *
  */
@@ -226,6 +230,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	Vector<KTeilnehmer> herausforderungsVector= new Vector<KTeilnehmer>();
 	Vector<KBegegnungen> begegnungsVector= new Vector<KBegegnungen>();
 	Vector<KBegegnungen> alleBegegnungenVector= new Vector<KBegegnungen>();
+	Vector<Vector<KTeilnehmer>> platzGruppen= new Vector<Vector<KTeilnehmer>>();
 
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster();
@@ -459,6 +464,9 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			}
 			sortierterVector.insertElementAt(t,j);	
 		}
+		
+		//TODO Platzgruppen berechnen
+		platzGruppen.clear();
 	}
 
 	public void updatePanels(){

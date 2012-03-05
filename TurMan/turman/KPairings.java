@@ -456,23 +456,27 @@ public class KPairings {
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				KTeilnehmer t=hf.teilnehmerVector.get(i);
 				int tnNmbr=i;
-				int ggNmbr=t.paarungen.get(hf.rundenZaehler-1);
-				KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1));
-				hf.alleBegegnungenVector.add(b);
-				if(hf.begegnungsVector.contains(b)){
-					hf.begegnungsVector.remove(b);
+				for(int j=0;j<t.paarungen.size();j++){
+					int ggNmbr=t.paarungen.get(j);
+					KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1));
+					if(b.runde==hf.rundenZaehler){
+						hf.alleBegegnungenVector.add(b);
+						if(hf.begegnungsVector.contains(b)){
+							hf.begegnungsVector.remove(b);
+						}
+						b.setEnabled(false);
+						b.setBackground(Color.darkGray);
+						b.runde=0;
+						b.tisch=0;
+						b.setText("");
+						b.p1=0;
+						b.p12=0;
+						b.p2=0;
+						b.p22=0;
+						t.tische.remove(j);
+						t.paarungen.remove(j);
+					}
 				}
-				b.setEnabled(false);
-				b.setBackground(Color.darkGray);
-				b.runde=0;
-				b.tisch=0;
-				b.setText("");
-				b.p1=0;
-				b.p12=0;
-				b.p2=0;
-				b.p22=0;
-				t.tische.remove(hf.rundenZaehler-1);
-				t.paarungen.remove(hf.rundenZaehler-1);
 			}
 			hf.rundenZaehler--;
 			hf.updatePanels();
@@ -481,10 +485,6 @@ public class KPairings {
 				hf.mode=KPairings.RANDOM;
 			}
 		}
-		System.out.println("Tische");
-		/*for(int i=0;i<hf.teilnehmerVector.size();i++){
-			System.out.println(hf.teilnehmerVector.get(i).tische.size());
-		}*/
 		
 	}
 }

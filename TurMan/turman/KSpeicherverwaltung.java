@@ -161,6 +161,28 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
+			//Sortieren der Begegnungen
+			/*for(int i=0; i<hf.begegnungsVector.size();i++){
+				if(i!=hf.begegnungsVector.size()-1){
+					if(hf.begegnungsVector.get(i).runde>hf.begegnungsVector.get(i+1).runde){
+						KBegegnungen b = hf.begegnungsVector.get(i);
+						KBegegnungen b2 = hf.begegnungsVector.get(i+1);
+						hf.begegnungsVector.set(i,b2);
+						hf.begegnungsVector.set(i+1,b);
+						i=0;
+					}
+				}
+				if(i!=0){
+					if(hf.begegnungsVector.get(i).runde<hf.begegnungsVector.get(i-1).runde){
+						KBegegnungen b = hf.begegnungsVector.get(i);
+						KBegegnungen b2 = hf.begegnungsVector.get(i-1);
+						hf.begegnungsVector.set(i,b2);
+						hf.begegnungsVector.set(i-1,b);
+						i=0;
+					}
+				}
+			}*/
+			
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
 				//KPairings.team=false; //Haken muss manuell entfernt werden 
@@ -221,7 +243,9 @@ public class KSpeicherverwaltung {
 						fw.write("0;");
 					}
 				}
-				fw.write("\r\n");
+				if(i!=hf.HauptPanel.getComponentCount()-1){
+					fw.write("\r\n");
+				}
 			}
 			fw.close();
 
