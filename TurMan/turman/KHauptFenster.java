@@ -230,7 +230,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	Vector<KTeilnehmer> herausforderungsVector= new Vector<KTeilnehmer>();
 	Vector<KBegegnungen> begegnungsVector= new Vector<KBegegnungen>();
 	Vector<KBegegnungen> alleBegegnungenVector= new Vector<KBegegnungen>();
-	Vector<Vector<KTeilnehmer>> platzGruppen= new Vector<Vector<KTeilnehmer>>();
+	Vector<Vector<KTeilnehmer>> platzGruppe= new Vector<Vector<KTeilnehmer>>();
+	int platzgruppe=-1;
 
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster();
@@ -414,6 +415,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			t.primär=0;
 			t.sekundär=0;
 			t.sos=0;
+			t.platzGruppe=-1;
+			t.platz=0;
 			for(int j=0;j<t.paarungen.size();j++){
 				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p1;
 				if(optionenFeld.PSS.isSelected()){
@@ -465,8 +468,25 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			sortierterVector.insertElementAt(t,j);	
 		}
 		
-		//TODO Platzgruppen berechnen
-		platzGruppen.clear();
+		//Platzgruppen berechnen
+		platzgruppe=-1;
+		for(int i=1;i<sortierterVector.size();i++){
+			KTeilnehmer t1=sortierterVector.get(i);
+			KTeilnehmer t2=sortierterVector.get(i-1);
+			if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
+				if(t2.platzGruppe==-1){
+					platzgruppe++;
+					t2.platzGruppe=platzgruppe;
+					t1.platzGruppe=platzgruppe;
+					platzGruppe.add(new Vector<KTeilnehmer>());
+					platzGruppe.get(platzgruppe).add(t2);
+					platzGruppe.get(platzgruppe).add(t1);
+				} else{
+					t1.platzGruppe=t2.platzGruppe;
+					platzGruppe.get(platzgruppe).add(t1);
+				}
+			} 
+		}
 	}
 
 	public void updatePanels(){

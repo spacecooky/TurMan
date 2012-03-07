@@ -116,7 +116,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		int deleted=0;
 		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
 			if(hf.sortierterVector.get(i).deleted==false){
-				JLabel label6 = new JLabel(""+(hf.teilnehmerVector.size()-i-deleted));
+				if(i<hf.teilnehmerVector.size()-1 && hf.sortierterVector.get(i).platzGruppe>-1 && hf.sortierterVector.get(i).platzGruppe==hf.sortierterVector.get(i+1).platzGruppe){
+					hf.sortierterVector.get(i).platz=hf.sortierterVector.get(i+1).platz;
+				} else{
+					hf.sortierterVector.get(i).platz=hf.teilnehmerVector.size()-i-deleted;
+				}
+				JLabel label6 = new JLabel(""+hf.sortierterVector.get(i).platz);
 				platz.add(label6);
 				label6.setBorder(BorderFactory.createEtchedBorder());
 				label6.setFont(f);

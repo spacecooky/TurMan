@@ -42,6 +42,9 @@ public class KTeilnehmer {
 	int sos=0;
 	int bemalwertung=0;
 	
+	int platzGruppe=-1;
+	int platz=0;
+	
 	Vector<Integer> paarungen= new Vector<Integer>();
 	Vector<Integer> tische= new Vector<Integer>();
 	
