@@ -23,6 +23,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		addActionListener(this);
 		begegnungsFensterButton.addActionListener(this);
 		begegnungsTabButton.addActionListener(this);
+		normalButtonColor=begegnungsFensterButton.getBackground();
 		addMouseListener(this);
 		setBorder(BorderFactory.createRaisedBevelBorder());
 		setMaximumSize(new Dimension(20,20));
@@ -57,6 +58,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
 	JButton begegnungsTabButton = new JButton("");
+	Color normalButtonColor;
 	
 	/**
 	 * @return true, wenn Teilnehmer 1 und 2 im selben Team sind
@@ -114,6 +116,12 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			return (tn1Cnt>0 || tn2Cnt>0);
 	}
 	
+	public void setUnpairedColor(){
+		setBackground(Color.darkGray);
+		begegnungsFensterButton.setBackground(normalButtonColor);
+		begegnungsTabButton.setBackground(normalButtonColor);
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();
 		
@@ -125,6 +133,8 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			p12=Integer.parseInt(khf.p12Field.getText());
 			p22=Integer.parseInt(khf.p22Field.getText());
 			setBackground(Color.green);
+			begegnungsFensterButton.setBackground(Color.gray);
+			begegnungsTabButton.setBackground(Color.gray);
 			}catch(NumberFormatException e){}
 			
 			
@@ -133,6 +143,8 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p12=p22;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p22=p12;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).setBackground(Color.green);
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).begegnungsFensterButton.setBackground(Color.gray);
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).begegnungsTabButton.setBackground(Color.gray);
 			khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected());
 			khf.begegnungsFrame.removeAll();
 			khf.begegnungsPanel.removeAll();

@@ -9,6 +9,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -43,9 +44,8 @@ import javax.swing.JTextField;
  * TODO Anzeige von Platzabständen der gepaarten Spieler: Scrollbar einfügen falls die Anzahl zu groß ist
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
- * TODO Falls Spieler genau punktgleich sind, müssen diese für die Paarung in einen Spielerpool zusammengefasst werden, der für diesen Platz steht. Aus diesm wird für die Paaruung dann immer zufällig einer ausgewählt.
- * TODO Falls Spieler genau punktgleich sind, müssen sie auf dem gleichen Platz eingetragen werden.
- * TODO Matrix nach Laden/Import korrekt neu zeichnen.
+ * TODO Matrix nach Laden/Import korrekt neu zeichnen (Hintergrundpanel neu zeichnen)
+ * TODO Verschiedene Spalten für zusätzliche Primär/Sekundärpunkte 
  *  
  * @author jk
  *
@@ -152,7 +152,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		}
 	}
 
-	static String version=new String("V0.0.10");
+	static String version=new String("V0.0.11");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -470,6 +470,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		
 		//Platzgruppen berechnen
 		platzgruppe=-1;
+		platzGruppe.clear();
 		for(int i=1;i<sortierterVector.size();i++){
 			KTeilnehmer t1=sortierterVector.get(i);
 			KTeilnehmer t2=sortierterVector.get(i-1);
@@ -487,6 +488,44 @@ public class KHauptFenster extends JFrame implements ActionListener{
 				}
 			} 
 		}
+		
+		//Plätze eintragen
+		int deleted=0;
+		for(int i=teilnehmerVector.size()-1;i>=0;i--){
+			if(sortierterVector.get(i).deleted==false){
+				if(i<teilnehmerVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
+					sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
+				} else{
+					sortierterVector.get(i).platz=teilnehmerVector.size()-i-deleted;
+				}
+			} else{ 
+				deleted++;
+			}
+		}
+	}
+	
+	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
+		System.out.println("Alt");
+		for(int i=0;i<tVector.size();i++){
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+		}
+		Random randomGenerator = new Random();
+		for(int i=0;i<platzGruppe.size();i++){
+			int startpos= tVector.indexOf(platzGruppe.get(i).get(0));
+			for(int j=0; j<platzGruppe.get(i).size();j++){
+				tVector.remove(platzGruppe.get(i).get(j));
+			}
+			while(platzGruppe.get(i).size()>0){
+				int rand =randomGenerator.nextInt(platzGruppe.get(i).size());
+				tVector.add(startpos,platzGruppe.get(i).get(rand));
+				platzGruppe.get(i).remove(rand);
+			}
+		}
+		System.out.println("Neu");
+		for(int i=0;i<tVector.size();i++){
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+		}
+		
 	}
 
 	public void updatePanels(){

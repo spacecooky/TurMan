@@ -150,9 +150,11 @@ public class KPairings {
 				hf.teilnehmerVector.get(i).paarungen.add(hf.teilnehmerVector.get(i).paired);
 			}
 		} else if(mode== SWISS){
+			//Platzgruppen mischen
+			hf.platzGruppenMischen(hf.sortierterVector);
+			
 			Vector<KTeilnehmer> tVector = new Vector<KTeilnehmer>();
 			for(int i=hf.sortierterVector.size()-1;i>=0;i--){
-				//System.out.println(hf.sortierterVector.get(i).vorname+" "+hf.sortierterVector.get(i).nachname);
 				tVector.add(hf.sortierterVector.get(i));
 			}
 
@@ -160,7 +162,8 @@ public class KPairings {
 			for(int i=0;i<hf.herausforderungsVector.size();i++){
 				tVector.remove(hf.herausforderungsVector.get(i));
 			}
-
+			
+			
 			//Paaren
 			Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf,0,0,0,0);
 			if(bVector==null){
@@ -298,15 +301,15 @@ public class KPairings {
 			KTeilnehmer tn1 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).xPos);
 			KTeilnehmer tn2 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).yPos);
 			
-			int t1pos = hf.sortierterVector.indexOf(tn1);
-			int t2pos = hf.sortierterVector.indexOf(tn2);
+			int t1pos = hf.sortierterVector.indexOf(tn1)+1;
+			int t2pos = hf.sortierterVector.indexOf(tn2)+1;
 			
 			if(t1pos-t2pos >1){
-				hf.dialog.differenz.add("Platz "+t1pos+"gegen Platz "+t2pos);
+				hf.dialog.differenz.add("Position "+t1pos+" gegen Position "+t2pos);
 			}
 				
 			if(t2pos-t1pos >1){
-				hf.dialog.differenz.add("Platz "+(t2pos+1)+"gegen Platz "+(t1pos+1));
+				hf.dialog.differenz.add("Position "+t2pos+" gegen Position "+t1pos);
 			}
 		}
 		if(hf.dialog.differenz.size()>0){
@@ -465,7 +468,7 @@ public class KPairings {
 							hf.begegnungsVector.remove(b);
 						}
 						b.setEnabled(false);
-						b.setBackground(Color.darkGray);
+						b.setUnpairedColor();
 						b.runde=0;
 						b.tisch=0;
 						b.setText("");

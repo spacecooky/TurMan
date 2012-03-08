@@ -1,5 +1,9 @@
-WIP Version 0.0.11
+Version 0.0.11
 - Funktion Runde zurücksetzen/Runde neu berechnen geändert, damit sie auch in geladenen Turnieren die korrekten Begegnungen entfernen.
+- Spieler werden mit dem gleichen Platz angezeigt, wenn sie genau Punktgleich sind
+- Platzgleiche Spieler werden vor der Paarung zufällig gemischt
+- bestätigte Paarungen im Begegnungsfenster werden grau hinterlegt
+- Grundstruktur für variable Zusatzpunkte eingefügt
 
 Version 0.0.10
 - Druckfunktionen für Punkte-, Begegnungs-, Zusatzpunktefenster

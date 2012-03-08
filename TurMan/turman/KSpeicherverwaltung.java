@@ -140,6 +140,8 @@ public class KSpeicherverwaltung {
 							bg.setBackground(Color.orange);
 						} else if(sEr[0].equals("3")){
 							bg.setBackground(Color.green);
+							bg.begegnungsFensterButton.setBackground(Color.gray);
+							bg.begegnungsTabButton.setBackground(Color.gray);
 						}
 						bg.setText(sEr[5]);
 						bg.runde=Integer.parseInt(sEr[5]);
@@ -161,31 +163,9 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
-			//Sortieren der Begegnungen
-			/*for(int i=0; i<hf.begegnungsVector.size();i++){
-				if(i!=hf.begegnungsVector.size()-1){
-					if(hf.begegnungsVector.get(i).runde>hf.begegnungsVector.get(i+1).runde){
-						KBegegnungen b = hf.begegnungsVector.get(i);
-						KBegegnungen b2 = hf.begegnungsVector.get(i+1);
-						hf.begegnungsVector.set(i,b2);
-						hf.begegnungsVector.set(i+1,b);
-						i=0;
-					}
-				}
-				if(i!=0){
-					if(hf.begegnungsVector.get(i).runde<hf.begegnungsVector.get(i-1).runde){
-						KBegegnungen b = hf.begegnungsVector.get(i);
-						KBegegnungen b2 = hf.begegnungsVector.get(i-1);
-						hf.begegnungsVector.set(i,b2);
-						hf.begegnungsVector.set(i-1,b);
-						i=0;
-					}
-				}
-			}*/
 			
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
-				//KPairings.team=false; //Haken muss manuell entfernt werden 
 			}
 
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
