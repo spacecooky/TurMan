@@ -183,6 +183,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		wertung.add(PSS);
 		wertung.add(TS);
 		PSS.setSelected(true);
+		PSS.addActionListener(this);
+		TS.addActionListener(this);
 		
 		wertungsPanel.add(p6);
 		
@@ -223,12 +225,12 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		wertungsPanel.add(p7);
 		
-		bemalNo.setEnabled(false);
+		/*bemalNo.setEnabled(false);
 		armeeNo.setEnabled(false);
 		bemalPri.setEnabled(false);
 		armeePri.setEnabled(false);
 		bemalSek.setEnabled(false);
-		armeeSek.setEnabled(false);
+		armeeSek.setEnabled(false);*/
 		
 		JPanel p8 = new JPanel();
 		p8.setLayout(new GridLayout(40,1));
@@ -252,6 +254,22 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 			}
 			hf.setContentPane(hf.tab);
 			hf.validate();
+		} else if(arg0.getSource()==PSS || arg0.getSource()==TS){
+			if(PSS.isSelected()){
+				bemalSek.setEnabled(true);
+				armeeSek.setEnabled(true);
+			} else if(TS.isSelected()){
+				bemalSek.setEnabled(false);
+				armeeSek.setEnabled(false);
+				if(bemalSek.isSelected()){
+					bemalSek.setSelected(false);
+					bemalNo.setSelected(true);
+				}
+				if(armeeSek.isSelected()){
+					armeeSek.setSelected(false);
+					armeeNo.setSelected(true);
+				}
+			}
 		}
 		
 	}

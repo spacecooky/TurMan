@@ -425,27 +425,35 @@ public class KHauptFenster extends JFrame implements ActionListener{
 					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p22;
 				}
 			}
+			
+			//SOS berechnen
+			if(optionenFeld.PSS.isSelected()){
+					t=teilnehmerVector.get(i);
+					for(int j=0;j<t.paarungen.size();j++){
+						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär;
+					}
+			}
+			t.primärEinzel=t.primär;
+			t.sekundärEinzel=t.sekundär;
+			
 			if(ab){
-				if(optionenFeld.PSS.isSelected()){
-					t.sekundär+=t.armeeliste;
-				} else if(optionenFeld.TS.isSelected()){
+				if(optionenFeld.armeePri.isSelected()){
 					t.primär+=t.armeeliste;
+				}
+				if(optionenFeld.armeeSek.isSelected()){
+					t.sekundär+=t.armeeliste;
 				}
 			}
 			if(bm){
-				t.primär+=t.bemalwertung;
-			}
-		}
-		//SOS für alle berechnen
-		if(optionenFeld.PSS.isSelected()){
-			for(int i=0;i<teilnehmer;i++){
-				t=teilnehmerVector.get(i);
-				for(int j=0;j<t.paarungen.size();j++){
-					t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär+(bm?-teilnehmerVector.get(t.paarungen.get(j)).bemalwertung:0);
-	
+				if(optionenFeld.bemalPri.isSelected()){
+					t.primär+=t.bemalwertung;
+				}
+				if(optionenFeld.bemalSek.isSelected()){
+					t.sekundär+=t.bemalwertung;
 				}
 			}
 		}
+		
 
 		//Sortiern nach primär
 		sortierterVector.clear();

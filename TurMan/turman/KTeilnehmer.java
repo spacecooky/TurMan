@@ -38,7 +38,9 @@ public class KTeilnehmer {
 	int ntr;
 	
 	int primär=0;
+	int primärEinzel=0;
 	int sekundär=0;
+	int sekundärEinzel=0;
 	int sos=0;
 	int bemalwertung=0;
 	

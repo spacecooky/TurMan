@@ -35,7 +35,7 @@ public class KSpeicherverwaltung {
 			}
 		}
 	}
-	
+
 	static void laden(KHauptFenster hf, File f){
 		leeren(hf);
 		hf.gelöschteTeilnehmer=0;
@@ -163,7 +163,7 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
-			
+
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
 			}
@@ -181,7 +181,7 @@ public class KSpeicherverwaltung {
 			e.printStackTrace();
 		}
 	}
-	
+
 	static void speichern(KHauptFenster hf, File f){
 		try {
 			FileWriter fw = new FileWriter(f);
@@ -229,6 +229,154 @@ public class KSpeicherverwaltung {
 			}
 			fw.close();
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	static void speichernKonfig(KHauptFenster hf, File f){
+		try {
+			FileWriter fw = new FileWriter(f);
+
+			if(hf.optionenFeld.einzel.isSelected()){
+				fw.write("turniertyp=einzel\r\n");
+			} else if(hf.optionenFeld.team.isSelected()){
+				fw.write("turniertyp=team\r\n");
+			}
+
+			if(hf.optionenFeld.schweizer.isSelected()){
+				fw.write("modus=schweizer\r\n");
+			} else if(hf.optionenFeld.zufall.isSelected()){
+				fw.write("modus=zufall\r\n");
+			} else if(hf.optionenFeld.ko.isSelected()){
+				fw.write("modus=ko\r\n");
+			}
+
+			if(hf.optionenFeld.teams.isSelected()){
+				fw.write("teams="+hf.optionenFeld.teamsField.getText()+"\r\n");
+			}
+			if(hf.optionenFeld.orte.isSelected()){
+				fw.write("orte="+hf.optionenFeld.orteField.getText()+"\r\n");
+			}
+			if(hf.optionenFeld.armeen.isSelected()){
+				fw.write("armeen="+hf.optionenFeld.armeenField.getText()+"\r\n");
+			}
+			if(hf.optionenFeld.mirror.isSelected()){
+				fw.write("mirror="+hf.optionenFeld.mirrorField.getText()+"\r\n");
+			}
+			if(hf.optionenFeld.tisch.isSelected()){
+				fw.write("tisch="+hf.optionenFeld.tischField.getText()+"\r\n");
+			}
+
+			if(hf.optionenFeld.PSS.isSelected()){
+				fw.write("punktetyp=pss\r\n");
+			} else if(hf.optionenFeld.TS.isSelected()){
+				fw.write("punktetyp=ts\r\n");
+			}
+
+			if(hf.optionenFeld.bemalNo.isSelected()){
+				fw.write("bemalwertung=keine\r\n");
+			} else if(hf.optionenFeld.bemalPri.isSelected()){
+				fw.write("bemalwertung=pri\r\n");
+			} else if(hf.optionenFeld.bemalSek.isSelected()){
+				fw.write("bemalwertung=sek\r\n");
+			}
+
+			if(hf.optionenFeld.armeeNo.isSelected()){
+				fw.write("armeewertung=keine\r\n");
+			} else if(hf.optionenFeld.armeePri.isSelected()){
+				fw.write("armeewertung=pri\r\n");
+			} else if(hf.optionenFeld.armeeSek.isSelected()){
+				fw.write("armeewertung=sek\r\n");
+			}
+
+			fw.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	static void ladenKonfig(KHauptFenster hf, File f){
+
+		String s ="";
+		int read;
+		FileReader fr;
+
+		try {
+			fr = new FileReader(f);
+
+			while(true){
+				read=fr.read();
+				if(read==-1){
+					break;
+				}else{
+					s+=(char)read;
+				}
+			}
+			fr.close();
+
+			//Splitten in Optionen
+			String[] optionen=s.split("\r\n");
+
+			for(int i=0;i<optionen.length;i++){
+				if(!optionen[i].equals("")){
+					String optname= optionen[i].split("=")[0];
+					String optval= optionen[i].split("=")[1];
+
+					if(optname.equals("turniertyp")){
+						if(optval.equals("einzel")){
+							hf.optionenFeld.einzel.setSelected(true);
+						} else if(optval.equals("team")){
+							hf.optionenFeld.team.setSelected(true);
+						}
+					} else if(optname.equals("modus")){
+						if(optval.equals("schweizer")){
+							hf.optionenFeld.schweizer.setSelected(true);
+						} else if(optval.equals("zufall")){
+							hf.optionenFeld.zufall.setSelected(true);
+						} else if(optval.equals("ko")){
+							hf.optionenFeld.ko.setSelected(true);
+						}
+					} else if(optname.equals("punktetyp")){
+						if(optval.equals("pss")){
+							hf.optionenFeld.PSS.setSelected(true);
+						} else if(optval.equals("TS")){
+							hf.optionenFeld.TS.setSelected(true);
+						} 
+					} else if(optname.equals("bemalwertung")){
+						if(optval.equals("keine")){
+							hf.optionenFeld.bemalNo.setSelected(true);
+						} else if(optval.equals("pri")){
+							hf.optionenFeld.bemalPri.setSelected(true);
+						} else if(optval.equals("sek")){
+							hf.optionenFeld.bemalSek.setSelected(true);
+						} 
+					} else if(optname.equals("armeewerung")){
+						if(optval.equals("keine")){
+							hf.optionenFeld.armeeNo.setSelected(true);
+						} else if(optval.equals("pri")){
+							hf.optionenFeld.armeePri.setSelected(true);
+						} else if(optval.equals("sek")){
+							hf.optionenFeld.armeeSek.setSelected(true);
+						} 
+					}else if(optname.equals("teams")){
+						hf.optionenFeld.teamsField.setText(optval);
+					} else if(optname.equals("orte")){
+						hf.optionenFeld.orteField.setText(optval);
+					} else if(optname.equals("armeen")){
+						hf.optionenFeld.armeenField.setText(optval);
+					} else if(optname.equals("mirror")){
+						hf.optionenFeld.mirrorField.setText(optval);
+					} else if(optname.equals("tisch")){
+						hf.optionenFeld.tischField.setText(optval);
+					}
+
+				}
+			}
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
