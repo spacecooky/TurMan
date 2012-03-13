@@ -274,4 +274,36 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 	}
 	
+	public void clear(){
+		 einzel.setSelected(false);
+		 team.setSelected(false);
+		
+		 schweizer.setSelected(false);
+		 zufall.setSelected(false);
+		 ko.setSelected(false);
+		
+		 teams.setSelected(false);
+		 orte.setSelected(false);
+		 armeen.setSelected(false);
+		 mirror.setSelected(false);
+		 tisch.setSelected(false);
+		
+		 teamsField.setText("0");
+		 orteField.setText("0");
+		 armeenField.setText("0");
+		 mirrorField.setText("0");
+		 tischField.setText("0");
+		
+		 PSS.setSelected(false);
+		 TS.setSelected(false);
+		
+		 bemalPri.setSelected(false);
+		 bemalSek.setSelected(false);
+		 bemalNo.setSelected(false);
+		
+		 armeePri.setSelected(false);
+		 armeeSek.setSelected(false);
+		 armeeNo.setSelected(false);
+	}
+	
 }

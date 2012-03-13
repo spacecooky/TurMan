@@ -1,7 +1,10 @@
-WIP Version 0.0.12
+Version 0.0.12
 - Optionale Punkte reimplementiert
 - übersichlichere Anzeige von Zusatzpunkten
 - Funktion zum laden/speichern der aktuellen Konfiguration
+- Automatisches Speichern der aktuell benutzten Konfiguration beim Schließen des Programms + Laden der automatischen Speicherung beim Start
+- Info-Fenster hinzugefügt
+- Hauptfenster wird nach Änderung der Matrix neu gezeichnet
 
 Version 0.0.11
 - Funktion Runde zurücksetzen/Runde neu berechnen geändert, damit sie auch in geladenen Turnieren die korrekten Begegnungen entfernen.

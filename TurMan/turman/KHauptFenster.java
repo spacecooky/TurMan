@@ -26,26 +26,22 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Variable Einstellung der Urkunden-Infos.
- * TODO Variable Festlegung der Primär-, Sekundär- und SOS-Punkte.
+ * TODO Variable Einstellung der Urkunden-Infos (nur V-Con-Turniere).
+ * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Zusätzliche Punkte-Arten hinzufügen.
- * TODO Erkennung der Variablen Punkte für den Export.
- * TODO Turniermodus: Schweizer System, Komplett zufällige Paarungen, KO-System
- * TODO Siegpunkte-Matrix
+ * TODO Zusätzliche Turniermodi: Komplett zufällige Paarungen, KO-System
+ * TODO Siegpunkte-Matrix für den Turnierpunkte-Siegpunkte-Modus
  * TODO Teamturniere:
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
- * TODO Infofenster
  * TODO Multilingualität
  * TODO Einfügen eines Freilos-Spielers
  * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
  * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen. Bzw. keine neuen Spieler nach der ersten runde zulassen.
- * TODO Konfigurationsschablonen mit Einstellungen für jede Runde
+ * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
  * TODO Anzeige von Platzabständen der gepaarten Spieler: Scrollbar einfügen falls die Anzahl zu groß ist
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
- * TODO Matrix nach Laden/Import korrekt neu zeichnen (Hintergrundpanel neu zeichnen)
- * TODO Verschiedene Spalten für zusätzliche Primär/Sekundärpunkte 
  *  
  * @author jk
  *
@@ -107,8 +103,6 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		zeit.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
-		turnier.add(optionen);
-		optionen.addActionListener(this);
 
 		menubar.add(turnierRunde);
 		turnierRunde.add(herausforderung);
@@ -127,6 +121,18 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		erweitern.addActionListener(this);
 		spieler.add(extraPunkte);
 		extraPunkte.addActionListener(this);
+		
+		menubar.add(optionen);
+		optionen.add(optionenAnzeigen);
+		optionenAnzeigen.addActionListener(this);
+		optionen.add(optionenSpeichern);
+		optionenSpeichern.addActionListener(this);
+		optionen.add(optionenLaden);
+		optionenLaden.addActionListener(this);
+		
+		menubar.add(hilfe);
+		hilfe.add(info);
+		info.addActionListener(this);
 
 		// neues Turnier
 		neuFrame.setContentPane(neuPanel);
@@ -150,9 +156,15 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		if(f.exists()){
 			KSpeicherverwaltung.laden(this,f);
 		}
+		
+		File f2 = new File(System.getProperty("user.dir")+"/auto.cfg");
+		if(f2.exists()){
+			KSpeicherverwaltung.ladenKonfig(this,f2);
+		}
+		
 	}
 
-	static String version=new String("V0.0.11");
+	static String version=new String("V0.0.12");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -180,8 +192,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem begegnungen = new JMenuItem("Begegnungen anzeigen");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
-	JMenuItem optionen = new JMenuItem("Optionen einstellen");
-
+	
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
@@ -192,6 +203,14 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
+	
+	JMenu optionen = new JMenu("Optionen");
+	JMenuItem optionenAnzeigen = new JMenuItem("Konfiguration");
+	JMenuItem optionenSpeichern = new JMenuItem("Konfiguration speichern");
+	JMenuItem optionenLaden = new JMenuItem("Konfiguration laden");
+	
+	JMenu hilfe = new JMenu("Hilfe");
+	JMenuItem info = new JMenuItem("Info");
 
 
 	//neu
@@ -243,6 +262,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
+	KInfoFenster infoFenster = new KInfoFenster();
 
 	//Urkunden
 	KUrkunde urkunde = new KUrkunde();
@@ -336,11 +356,17 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			urkunde.urkundeErstellen(sortierterVector);
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
-		}else if(quelle==optionen){
+		}else if(quelle==optionenAnzeigen){
 			setContentPane(optionenFeld);
 			validate();
 		} else if(quelle==extraPunkte){
 			extraPunkteFenster.init(null);
+		}else if(quelle==optionenSpeichern){
+			KSpeicherverwaltung.speichernKonfigWrap(this);
+		}else if(quelle==optionenLaden){
+			KSpeicherverwaltung.ladenKonfigWrap(this);
+		}else if(quelle==info){
+			infoFenster.setVisible(true);
 		}
 
 	}
@@ -373,8 +399,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
 		}
 
-		
-		setVisible(true);
+		this.repaint();
 	}
 
 	public void fillTeamPanels(){
@@ -404,6 +429,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		for(int i=0;i<teamVector.size();i++){
 			HauptPanelTeam.add(new KTeamPanel(teamVector.get(i),teamVector.size(),i,this));
 		}
+		
+		this.repaint();
 	}
 
 
@@ -558,6 +585,10 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	protected void beenden(){
 		File f = new File(System.getProperty("user.dir")+"/autosaveQuit.sav");
 		KSpeicherverwaltung.speichern(this,f);
+		
+		File f2 = new File(System.getProperty("user.dir")+"/auto.cfg");
+		KSpeicherverwaltung.speichernKonfig(this,f2);
+		
 		System.exit(0);
 	}
 

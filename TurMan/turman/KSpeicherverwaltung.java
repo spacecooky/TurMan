@@ -234,6 +234,31 @@ public class KSpeicherverwaltung {
 		}
 	}
 
+	static void speichernKonfigWrap(KHauptFenster hf){
+		JFileChooser fileChooser=new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+		if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
+			File f =new File(fileChooser.getSelectedFile().toString());
+			if(f !=null){
+				//System.out.println(f.getName());
+				speichernKonfig(hf,f);	
+			}
+		}
+	}
+
+	static void ladenKonfigWrap(KHauptFenster hf){
+		JFileChooser fileChooser=new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+		if(fileChooser.showOpenDialog(hf)==JFileChooser.APPROVE_OPTION){
+			File f =new File(fileChooser.getSelectedFile().toString());
+			if(f!=null){
+				ladenKonfig(hf,f);
+			}
+		}
+	}
+	
 	static void speichernKonfig(KHauptFenster hf, File f){
 		try {
 			FileWriter fw = new FileWriter(f);
@@ -269,9 +294,9 @@ public class KSpeicherverwaltung {
 			}
 
 			if(hf.optionenFeld.PSS.isSelected()){
-				fw.write("punktetyp=pss\r\n");
+				fw.write("punktetyp=PSS\r\n");
 			} else if(hf.optionenFeld.TS.isSelected()){
-				fw.write("punktetyp=ts\r\n");
+				fw.write("punktetyp=TS\r\n");
 			}
 
 			if(hf.optionenFeld.bemalNo.isSelected()){
@@ -299,6 +324,8 @@ public class KSpeicherverwaltung {
 
 	static void ladenKonfig(KHauptFenster hf, File f){
 
+		hf.optionenFeld.clear();
+		
 		String s ="";
 		int read;
 		FileReader fr;
@@ -352,7 +379,7 @@ public class KSpeicherverwaltung {
 						} else if(optval.equals("sek")){
 							hf.optionenFeld.bemalSek.setSelected(true);
 						} 
-					} else if(optname.equals("armeewerung")){
+					} else if(optname.equals("armeewertung")){
 						if(optval.equals("keine")){
 							hf.optionenFeld.armeeNo.setSelected(true);
 						} else if(optval.equals("pri")){
@@ -361,17 +388,21 @@ public class KSpeicherverwaltung {
 							hf.optionenFeld.armeeSek.setSelected(true);
 						} 
 					}else if(optname.equals("teams")){
+						hf.optionenFeld.teams.setSelected(true);
 						hf.optionenFeld.teamsField.setText(optval);
 					} else if(optname.equals("orte")){
+						hf.optionenFeld.orte.setSelected(true);
 						hf.optionenFeld.orteField.setText(optval);
 					} else if(optname.equals("armeen")){
+						hf.optionenFeld.armeen.setSelected(true);
 						hf.optionenFeld.armeenField.setText(optval);
 					} else if(optname.equals("mirror")){
+						hf.optionenFeld.mirror.setSelected(true);
 						hf.optionenFeld.mirrorField.setText(optval);
 					} else if(optname.equals("tisch")){
+						hf.optionenFeld.tisch.setSelected(true);
 						hf.optionenFeld.tischField.setText(optval);
 					}
-
 				}
 			}
 
