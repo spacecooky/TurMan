@@ -1,3 +1,12 @@
+WIP Version 0.0.13
+- Hinzufügen neuer Spieler während des Turniers möglich
+- Speicherdatei enthält jetzt den Rundenzähler
+- Änderung des Datenaufbaus beim Laden/Importieren/Spieler hinzufügen
+- Scrollbar im Dialog
+- Freilosspieler eingefügt
+- Gelöschte Spieler müssen momentan noch in der Lösch-Auswahlliste stehen bleiben, damit die richtigen Spieler gelöscht werden können.
+- Layout der Matrix angepasst
+
 Version 0.0.12
 - Optionale Punkte reimplementiert
 - übersichlichere Anzeige von Zusatzpunkten

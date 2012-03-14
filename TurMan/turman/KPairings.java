@@ -89,8 +89,8 @@ public class KPairings {
 									){ 
 								int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
 								int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
-								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1)));
-								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(ggNmbr+1)).getComponent(tnNmbr+1)));
+								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr)).getComponent(ggNmbr)));
+								buttons.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(ggNmbr)).getComponent(tnNmbr)));
 								v.get(gegner).paired=tnNmbr;
 								v.get(i).paired=ggNmbr;
 
@@ -238,6 +238,49 @@ public class KPairings {
 				differenz(hf);
 			}
 		}
+		
+		//Freilos anzeigen
+		for(int i=0; i<hf.begegnungsVector.size();i++){
+			KBegegnungen b=hf.begegnungsVector.get(i);
+			if(b.runde==hf.rundenZaehler){
+				KTeilnehmer t =b.t1;
+				if(t.vorname.equals("Freilos") && t.nachname.equals("Freilos") && t.nickname.equals("Freilos") && t.armee.equals("Freilos") && t.ort.equals("Freilos")){
+					b.p2=hf.freilosPrim;
+					b.p22=hf.freilosSek;
+					b.setBackground(Color.green);
+					b.begegnungsFensterButton.setBackground(Color.gray);
+					b.begegnungsTabButton.setBackground(Color.gray);
+					
+					KBegegnungen b2 = ((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
+					b2.p1=hf.freilosPrim;
+					b2.p12=hf.freilosPrim;
+					b2.setBackground(Color.green);
+					b2.begegnungsFensterButton.setBackground(Color.gray);
+					b2.begegnungsTabButton.setBackground(Color.gray);
+					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+					break;
+				}
+				
+				t =b.t2;
+				if(t.vorname.equals("Freilos") && t.nachname.equals("Freilos") && t.nickname.equals("Freilos") && t.armee.equals("Freilos") && t.ort.equals("Freilos")){
+					b.p1=hf.freilosPrim;
+					b.p12=hf.freilosSek;
+					b.setBackground(Color.green);
+					b.begegnungsFensterButton.setBackground(Color.gray);
+					b.begegnungsTabButton.setBackground(Color.gray);
+					
+					KBegegnungen b2 = ((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
+					b2.p2=hf.freilosPrim;
+					b2.p22=hf.freilosPrim;
+					b2.setBackground(Color.green);
+					b2.begegnungsFensterButton.setBackground(Color.gray);
+					b2.begegnungsTabButton.setBackground(Color.gray);
+					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+					break;
+				}
+			}
+		}
+		
 		hf.updatePanels();
 	}
 
@@ -255,7 +298,7 @@ public class KPairings {
 			tn1.tische.add(tisch);
 			tn2.tische.add(tisch);
 			hf.begegnungsVector.get(i).tisch=tisch;
-			((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos+1)).getComponent(hf.begegnungsVector.get(i).xPos+1)).tisch=tisch;
+			((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos)).getComponent(hf.begegnungsVector.get(i).xPos)).tisch=tisch;
 		}
 		
 		//Prüfung, falls gleiche Tische beachtet werden sollen
@@ -359,8 +402,8 @@ public class KPairings {
 						b2.t1.tische.add(b2.tisch);
 						b2.t2.tische.remove(b2.t2.tische.lastElement());
 						b2.t2.tische.add(b2.tisch);*/
-						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos+1)).getComponent(b.xPos+1)).tisch=b.tisch;
-						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos+1)).getComponent(b2.xPos+1)).tisch=b2.tisch;
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos)).tisch=b.tisch;
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos)).getComponent(b2.xPos)).tisch=b2.tisch;
 						break;
 					}
 				}
@@ -390,7 +433,7 @@ public class KPairings {
 			Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
 			if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){//Falls beide Teilnehmer nicht identisch sind 
 				Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
-				KBegegnungen b=(KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1);
+				KBegegnungen b=(KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0)))).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i)));
 				
 				//Prüfung, falls Teams beachtet werden sollen
 				if(hf.optionenFeld.teams.isSelected() && !tVector.get(0).team.equals("") && b.team()){
@@ -419,7 +462,7 @@ public class KPairings {
 						tneu.remove(i);
 					}else{
 							//System.out.println((hf.teilnehmerVector.indexOf(tneu.get(0))+1)+","+(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
-							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0))+1)).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))+1));
+							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0)))).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))));
 							tneu.remove(i);
 							tneu.remove(0);
 
@@ -461,7 +504,7 @@ public class KPairings {
 				int tnNmbr=i;
 				for(int j=0;j<t.paarungen.size();j++){
 					int ggNmbr=t.paarungen.get(j);
-					KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr+1)).getComponent(ggNmbr+1));
+					KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr)).getComponent(ggNmbr));
 					if(b.runde==hf.rundenZaehler){
 						hf.alleBegegnungenVector.add(b);
 						if(hf.begegnungsVector.contains(b)){

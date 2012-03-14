@@ -56,8 +56,9 @@ public class KSpeicherverwaltung {
 			}
 			fr.close();
 			//Splitten in Teilnehmerdaten und Begegnungsdaten
-			String teilnehmerDaten=s.split("\\|\\|")[0];
-			String begegnungsDaten=s.split("\\|\\|")[1];
+			String rundenzähler=s.split("\\|\\|")[0];
+			String teilnehmerDaten=s.split("\\|\\|")[1];
+			String begegnungsDaten=s.split("\\|\\|")[2];
 
 			//Teilnehmerdaten
 			String[] sAr=teilnehmerDaten.split("\r\n");
@@ -122,14 +123,13 @@ public class KSpeicherverwaltung {
 			//Begegnungsdaten
 			String[] sCr=begegnungsDaten.split("\r\n");
 			for(int i=0;i<sCr.length;i++){
-				hf.rundenZaehler=0;
 				String[] sDr = sCr[i].split(";");
-				KTeilnehmerPanel tnp=(KTeilnehmerPanel)hf.HauptPanel.getComponent(i+1);
+				KTeilnehmerPanel tnp=(KTeilnehmerPanel)hf.HauptPanel.getComponent(i);
 				for(int j=0;j<sDr.length;j++){
 					if(sDr[j].contains(",")){
-						hf.rundenZaehler++;
+						
 
-						KBegegnungen bg = (KBegegnungen) tnp.getComponent(j+1);
+						KBegegnungen bg = (KBegegnungen) tnp.getComponent(j);
 						String[] sEr = sDr[j].split(",");
 						bg.p1=Integer.parseInt(sEr[1]);
 						bg.p12=Integer.parseInt(sEr[2]);
@@ -164,6 +164,12 @@ public class KSpeicherverwaltung {
 				}
 			}
 
+			try{
+			hf.rundenZaehler=Integer.parseInt(rundenzähler);
+			}catch (NumberFormatException e) {
+				// TODO Fehlerdialog
+				System.err.println("rundenzähler nicht auslesbar");
+			}
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;
 			}
@@ -186,6 +192,8 @@ public class KSpeicherverwaltung {
 		try {
 			FileWriter fw = new FileWriter(f);
 
+			fw.write(hf.rundenZaehler+"");
+			fw.write("||");
 			//Teilnehmer
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				KTeilnehmer tn = hf.teilnehmerVector.get(i);
@@ -206,9 +214,9 @@ public class KSpeicherverwaltung {
 			}
 			fw.write("||");
 			//Begegnungen
-			for(int i=1;i<hf.HauptPanel.getComponentCount();i++){
+			for(int i=0;i<hf.HauptPanel.getComponentCount();i++){
 				KTeilnehmerPanel tp = (KTeilnehmerPanel)hf.HauptPanel.getComponent(i);
-				for(int j=1;j<tp.getComponentCount();j++){
+				for(int j=0;j<tp.getComponentCount();j++){
 					try{
 						KBegegnungen bg =(KBegegnungen)tp.getComponent(j);
 						//System.out.println(bg.tisch);

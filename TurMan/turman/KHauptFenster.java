@@ -1,10 +1,13 @@
 package turman;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -35,18 +38,16 @@ import javax.swing.JTextField;
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
  * TODO Multilingualität
- * TODO Einfügen eines Freilos-Spielers
- * TODO Scrollbars in der Matrix so anpassen, dass die linke Namesleiste scrollt, wenn man hoch und runter scrollt und die obere, wenn man nach links und rechts scrollt.
- * TODO Beim Hinzufügen neuer Spieler bereits gelöschte Spieler ausgegraut lassen. Bzw. keine neuen Spieler nach der ersten runde zulassen.
  * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
- * TODO Anzeige von Platzabständen der gepaarten Spieler: Scrollbar einfügen falls die Anzahl zu groß ist
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
+ * TODO Hilfe-Datei.
+ * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
  *  
  * @author jk
  *
  */
-public class KHauptFenster extends JFrame implements ActionListener{
+public class KHauptFenster extends JFrame implements ActionListener,ComponentListener{
 
 	/**
 	 * 
@@ -64,11 +65,11 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			}
 		};
 		this.addWindowListener(meinListener);
-
+		
+		this.addComponentListener(this);
 
 		//Hauptbereich Einzel
 		sp=new JScrollPane(HauptPanel);
-		HauptPanel.setLayout(new BoxLayout(HauptPanel,BoxLayout.Y_AXIS));
 		//Hauptbereich Team
 		spTeam=new JScrollPane(HauptPanelTeam);
 		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
@@ -121,6 +122,8 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		erweitern.addActionListener(this);
 		spieler.add(extraPunkte);
 		extraPunkte.addActionListener(this);
+		spieler.add(freilos);
+		freilos.addActionListener(this);
 		
 		menubar.add(optionen);
 		optionen.add(optionenAnzeigen);
@@ -203,6 +206,7 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
+	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfügen");
 	
 	JMenu optionen = new JMenu("Optionen");
 	JMenuItem optionenAnzeigen = new JMenuItem("Konfiguration");
@@ -251,11 +255,14 @@ public class KHauptFenster extends JFrame implements ActionListener{
 	Vector<KBegegnungen> alleBegegnungenVector= new Vector<KBegegnungen>();
 	Vector<Vector<KTeilnehmer>> platzGruppe= new Vector<Vector<KTeilnehmer>>();
 	int platzgruppe=-1;
+	int freilosPrim=0;
+	int freilosSek=0;
 
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster();
 	KPunkteFenster punkteFenster = new KPunkteFenster(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
+	KFreilosFenster freilosFenster = new KFreilosFenster(this);
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
 	KHerausforderungsFenster herausforderungsFenster = new KHerausforderungsFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
@@ -367,22 +374,26 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			KSpeicherverwaltung.ladenKonfigWrap(this);
 		}else if(quelle==info){
 			infoFenster.setVisible(true);
+		} else if(quelle==freilos){
+			freilosFenster.init();
 		}
 
 	}
 
 	public void fillPanels(){
 		HauptPanel.removeAll();
-		
+		alleBegegnungenVector.clear();
 		teilnehmer=teilnehmerVector.size();
+		int restHeight=this.getHeight()/25-teilnehmer;
+		if(restHeight<0){
+			restHeight=0;
+		}
+		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
-		JLabel jL= new JLabel("");
-		jL.setMaximumSize(new Dimension(150,150));
-		jL.setMinimumSize(new Dimension(150,150));
-		jL.setPreferredSize(new Dimension(150,150));
-		jL.setBorder(BorderFactory.createRaisedBevelBorder());
-		header.add(jL);
+		
+		JPanel sider= new JPanel();
+		sider.setLayout(new BoxLayout(sider,BoxLayout.Y_AXIS));
 
 		for(int i=0;i<teilnehmerVector.size();i++){
 			JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
@@ -393,13 +404,77 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			jp.setBorder(BorderFactory.createRaisedBevelBorder());
 			header.add(jp);
 		}
-		HauptPanel.add(header);
-
+		//HauptPanel.add(header);
+		
 		for(int i=0;i<teilnehmerVector.size();i++){
-			HauptPanel.add(new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this));
+			KTeilnehmerPanel tp=new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this);
+			HauptPanel.add(tp);
+			sider.add(tp.nameLabel);
 		}
 
+		JLabel jL= new JLabel("");
+		jL.setMaximumSize(new Dimension(150,150));
+		jL.setMinimumSize(new Dimension(150,150));
+		jL.setPreferredSize(new Dimension(150,150));
+		jL.setBorder(BorderFactory.createRaisedBevelBorder());
+		
+		sp.setColumnHeaderView(header);
+		sp.setRowHeaderView(sider);
+		sp.setCorner(JScrollPane.UPPER_LEFT_CORNER,
+                jL);
+
+		
 		this.repaint();
+	}
+	
+	public void refillPanels(){
+		for(int i=0;i<begegnungsVector.size();i++){
+			KBegegnungen b = begegnungsVector.get(i);
+			((JPanel)HauptPanel.getComponent(b.xPos)).remove(b.yPos);
+			((JPanel)HauptPanel.getComponent(b.xPos)).add(b,b.yPos);
+			alleBegegnungenVector.remove(((KBegegnungen)((JPanel)HauptPanel.getComponent(b.xPos)).getComponent(b.yPos)));
+			alleBegegnungenVector.remove(((KBegegnungen)((JPanel)HauptPanel.getComponent(b.yPos)).getComponent(b.xPos)));
+			KBegegnungen b2 = ((KBegegnungen)((JPanel)HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
+			
+			b2.p1=b.p2;
+			b2.p2=b.p1;
+			b2.p12=b.p22;
+			b2.p22=b.p12;
+			b2.runde=b.runde;
+			b2.tisch=b.tisch;
+			b2.xPos=b.yPos;
+			b2.yPos=b.xPos;
+			
+			b.setEnabled(true);
+			b2.setEnabled(true);
+			b.setText(""+b.runde);
+			b2.setText(""+b2.runde);
+			
+			if(b.p1>0 || b.p2>0){
+				b.setBackground(Color.green);
+				b2.setBackground(Color.green);
+			} else{
+				b.setBackground(Color.orange);
+				b2.setBackground(Color.orange);
+			}	
+		}
+		
+		gelöschteTeilnehmer=0;
+		for(int i=0;i<teilnehmerVector.size();i++){
+			if(teilnehmerVector.get(i).deleted==true){
+				entfernenFenster.entfernen(i);
+			}
+		}
+		
+	}
+	
+	public void adaptPanel(){
+		teilnehmer=teilnehmerVector.size();
+		int restHeight=this.getHeight()/25-teilnehmer;
+		if(restHeight<0){
+			restHeight=0;
+		}
+		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
 	}
 
 	public void fillTeamPanels(){
@@ -445,11 +520,11 @@ public class KHauptFenster extends JFrame implements ActionListener{
 			t.platzGruppe=-1;
 			t.platz=0;
 			for(int j=0;j<t.paarungen.size();j++){
-				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p1;
+				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
 				if(optionenFeld.PSS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12;
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
 				} else if(optionenFeld.TS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i+1)).getComponent(t.paarungen.get(j)+1)).p22;
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
 				}
 			}
 			
@@ -591,5 +666,30 @@ public class KHauptFenster extends JFrame implements ActionListener{
 		
 		System.exit(0);
 	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		adaptPanel();
+		repaint();
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		adaptPanel();
+		repaint();
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		adaptPanel();
+		repaint();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		adaptPanel();
+		repaint();
+	}
+	
 
 }

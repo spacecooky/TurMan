@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class KDialog extends JDialog implements ActionListener{
 	
@@ -67,7 +68,7 @@ public class KDialog extends JDialog implements ActionListener{
 	
 	
 	public void getErrorDialog(JOptionPane jop){
-		setContentPane(jop);
+		setContentPane(new JScrollPane(jop));
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).removeActionListener(this);
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).addActionListener(this);
 		jop.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -75,7 +76,7 @@ public class KDialog extends JDialog implements ActionListener{
 	}
 	
 	public void getInfoDialog(JOptionPane jop){
-		setContentPane(jop);
+		setContentPane(new JScrollPane(jop));
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).removeActionListener(this);
 		((JButton)((JPanel)jop.getComponent(1)).getComponent(0)).addActionListener(this);
 		jop.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -86,7 +87,7 @@ public class KDialog extends JDialog implements ActionListener{
 	}
 	
 	public void getQuestionDialog(JOptionPane jop){
-		setContentPane(jop);
+		setContentPane(new JScrollPane(jop));
 		setVisible(true);
 	}
 	

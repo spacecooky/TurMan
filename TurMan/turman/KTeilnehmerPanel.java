@@ -25,19 +25,19 @@ public class KTeilnehmerPanel extends JPanel implements ActionListener{
 		nameLabel.setMinimumSize(new Dimension(150,20));
 		nameLabel.setPreferredSize(new Dimension(150,20));
 		nameLabel.setBorder(BorderFactory.createRaisedBevelBorder());
-		this.add(nameLabel);
+		//this.add(nameLabel);
 		nameLabel.addActionListener(this);
 		
 		for(int i=0;i<teilnehmerZahl;i++){
 
 			if(i==nummer){
-				JPanel p = new JPanel();
-				p.setBorder(BorderFactory.createRaisedBevelBorder());
-				p.setMaximumSize(new Dimension(20,20));
-				p.setMinimumSize(new Dimension(20,20));
-				p.setPreferredSize(new Dimension(20,20));
-				p.setBackground(Color.black);
-				add(p);
+				JPanel body= new JPanel();
+				body.setBorder(BorderFactory.createRaisedBevelBorder());
+				body.setMaximumSize(new Dimension(20,20));
+				body.setMinimumSize(new Dimension(20,20));
+				body.setPreferredSize(new Dimension(20,20));
+				body.setBackground(Color.black);
+				add(body);
 			}
 			else{
 			this.nummer=nummer;
@@ -49,7 +49,10 @@ public class KTeilnehmerPanel extends JPanel implements ActionListener{
 		}
 		
 	}
+	
+	
 	JButton nameLabel;
+	
 	int nummer=0;
 	KHauptFenster hf = null;
 	@Override

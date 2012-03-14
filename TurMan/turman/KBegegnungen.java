@@ -50,10 +50,10 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	int tisch=0;
 	int runde=0;
 	
-	int position=0;
-	int primär=0;
-	int sekundär=0;
-	int sos=0;
+	//int position=0;
+	//int primär=0;
+	//int sekundär=0;
+	//int sos=0;
 	
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
@@ -78,13 +78,17 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 * @return true, wenn t1 oder t2 bereits gegen die selbe Armee gespielt haben
 	 */
 	public boolean armee(){
-		int runde=khf.rundenZaehler;
-		for(int i=0;i<runde-1;i++){
-			if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee) ||
-					khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
+		for(int i=0;i<t1.paarungen.size();i++){
+			if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee)){
 				return true;
 			}
 		}
+		for(int i=0;i<t2.paarungen.size();i++){
+			if(khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
+				return true;
+			}
+	}
+		
 		return false;
 	}
 	
@@ -138,13 +142,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			}catch(NumberFormatException e){}
 			
 			
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p1=p2;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p2=p1;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p12=p22;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).p22=p12;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).setBackground(Color.green);
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).begegnungsFensterButton.setBackground(Color.gray);
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos+1)).getComponent(xPos+1)).begegnungsTabButton.setBackground(Color.gray);
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1=p2;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2=p1;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p12=p22;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p22=p12;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).setBackground(Color.green);
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsFensterButton.setBackground(Color.gray);
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsTabButton.setBackground(Color.gray);
 			khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected());
 			khf.begegnungsFrame.removeAll();
 			khf.begegnungsPanel.removeAll();
@@ -203,20 +207,20 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		if(getBackground().equals(Color.green) || getBackground().equals(Color.orange)){
-			colY=((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).getBackground();
-			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setBackground(Color.green);
-			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setForeground(Color.green);
-			colY=((JButton)((JPanel)khf.HauptPanel.getComponent(xPos+1)).getComponent(0)).getBackground();
-			((JButton)((JPanel)khf.HauptPanel.getComponent(xPos+1)).getComponent(0)).setBackground(Color.green);
+			colY=((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).getBackground();
+			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setBackground(Color.green);
+			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.green);
+			colX=((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).getBackground();
+			((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).setBackground(Color.green);
 		}
 		
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		if(getBackground().equals(Color.green) || getBackground().equals(Color.orange)){
-			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setBackground(colY);
-			((JLabel)((JPanel)khf.HauptPanel.getComponent(0)).getComponent(yPos+1)).setForeground(Color.black);
-			((JButton)((JPanel)khf.HauptPanel.getComponent(xPos+1)).getComponent(0)).setBackground(colX);
+			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setBackground(colY);
+			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.black);
+			((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).setBackground(colX);
 		}
 	}
 	@Override

@@ -110,9 +110,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				// Durch begegnungsFensterButton ersetzen.
 				JButton b1 = new JButton();
 				if(begegnungsPanel.equals(this.begegnungsPanel)){
-					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsFensterButton;
+					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos)).getComponent(bg.yPos)).begegnungsFensterButton;
 				} else {
-					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos+1)).getComponent(bg.yPos+1)).begegnungsTabButton;
+					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos)).getComponent(bg.yPos)).begegnungsTabButton;
 				}
 				b1.setText(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
 				begegnung.add(b1);
