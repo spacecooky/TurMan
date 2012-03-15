@@ -43,6 +43,7 @@ import javax.swing.JTextField;
  * TODO Speicherung von Agenda-Schablonen.
  * TODO Hilfe-Datei.
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
+ * TODO Zusatzpunkte fließen falsch ins SOS ein.
  *  
  * @author jk
  *
