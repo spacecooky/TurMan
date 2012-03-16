@@ -43,7 +43,6 @@ import javax.swing.JTextField;
  * TODO Speicherung von Agenda-Schablonen.
  * TODO Hilfe-Datei.
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
- * TODO Zusatzpunkte fließen falsch ins SOS ein.
  *  
  * @author jk
  *
@@ -58,6 +57,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -517,6 +517,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t=teilnehmerVector.get(i);
 			t.primär=0;
 			t.sekundär=0;
+			t.primärEinzel=0;
+			t.sekundärEinzel=0;
 			t.sos=0;
 			t.platzGruppe=-1;
 			t.platz=0;
@@ -529,15 +531,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				}
 			}
 			
+			t.primärEinzel=t.primär;
+			t.sekundärEinzel=t.sekundär;
+			
 			//SOS berechnen
 			if(optionenFeld.PSS.isSelected()){
 					t=teilnehmerVector.get(i);
 					for(int j=0;j<t.paarungen.size();j++){
-						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primär;
+						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
 					}
 			}
-			t.primärEinzel=t.primär;
-			t.sekundärEinzel=t.sekundär;
 			
 			if(ab){
 				if(optionenFeld.armeePri.isSelected()){

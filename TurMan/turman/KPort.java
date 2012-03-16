@@ -113,11 +113,12 @@ public class KPort {
 					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 						KTeilnehmer tn = hf.sortierterVector.get(i);
 						if(tn.deleted==false){
-							//ID||Vorname||Nachname||Nickname||Armee||Ort||Team||Platziereung||TPGesamt||TP||??||AL||Bemalung||Quiz||Fairplay||Sonstige||
 							int primeinzel=tn.primärEinzel;
 							int armee=(hf.optionenFeld.armeePri.isSelected()?tn.armeeliste:0);
 							int bemalung=(hf.optionenFeld.bemalPri.isSelected()?tn.bemalwertung:0);
-							fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+tn.primär+"||"+primeinzel+"||0||"+armee+"||"+bemalung+"||0||0||0||x\r\n");
+							int primkomp=primeinzel+armee+bemalung;
+							//ID||Vorname||Nachname||Nickname||Armee||Ort||Team||Platziereung||TPGesamt||TP||??||AL||Bemalung||Quiz||Fairplay||Sonstige||
+							fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+primkomp+"||"+primeinzel+"||0||"+armee+"||"+bemalung+"||0||0||0||x\r\n");
 						} else {
 							deleted++;
 						}

@@ -57,7 +57,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		hf.sortieren(ab.isSelected(),bm.isSelected());
-		
+		boolean color=false;
 		punktePanel.removeAll();
 		
 		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
@@ -79,22 +79,23 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		primärEinzel.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()){
 		punktePanel.add(primärEinzel);
-		primär.setBackground(Color.green);
-		primärEinzel.setBackground(Color.green);
+		//primär.setBackground(Color.green);
+		//primärEinzel.setBackground(Color.green);
+		color=true;
 		}
 		
 		JPanel bemalung = new JPanel();
 		bemalung.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
 		punktePanel.add(bemalung);
-		bemalung.setBackground(Color.green);
+		//bemalung.setBackground(Color.green);
 		}
 		
 		JPanel armee = new JPanel();
 		armee.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
 		punktePanel.add(armee);
-		armee.setBackground(Color.green);
+		//armee.setBackground(Color.green);
 		}
 		
 		JPanel sekundär = new JPanel();
@@ -105,18 +106,19 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		sekundärEinzel.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
 		if((hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
 			punktePanel.add(sekundärEinzel);
-			sekundär.setBackground(Color.orange);
-			sekundärEinzel.setBackground(Color.orange);
+			//sekundär.setBackground(Color.orange);
+			//sekundärEinzel.setBackground(Color.orange);
+			color=true;
 		}
 		
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
 			punktePanel.add(bemalung);
-			bemalung.setBackground(Color.orange);
+			//bemalung.setBackground(Color.orange);
 			}
 		
 		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
 			punktePanel.add(armee);
-			armee.setBackground(Color.orange);
+			//armee.setBackground(Color.orange);
 			}
 		
 			JPanel sos = new JPanel();
@@ -125,6 +127,14 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			punktePanel.add(sos);
 		}
 		
+		if(color){
+			//primär.setBackground(Color.green);
+			//sekundär.setBackground(Color.orange);
+			//sos.setBackground(Color.cyan);
+			primär.setBackground(Color.lightGray);
+			sekundär.setBackground(Color.lightGray);
+			sos.setBackground(Color.lightGray);
+		}
 		
 		platz.add(createHeader("Platz",f));
 		
