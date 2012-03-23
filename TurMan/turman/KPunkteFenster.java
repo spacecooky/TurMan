@@ -158,7 +158,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		bemalung.add(createHeader("Bemalwertung",f));
 		armee.add(createHeader("Armeeliste",f));
 		
-		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
+		for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 			if(hf.sortierterVector.get(i).deleted==false){
 				KTeilnehmer tn=hf.sortierterVector.get(i);
 				
@@ -179,32 +179,26 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
 		if(hf.teilnehmerVector.size()==0){
 			
-			platz.setLayout(new GridLayout(32,1));
-			spieler.setLayout(new GridLayout(32,1));
-			primär.setLayout(new GridLayout(32,1));
-			sekundär.setLayout(new GridLayout(32,1));
-			sos.setLayout(new GridLayout(32,1));
+			platz.setLayout(new GridLayout(33,1));
+			spieler.setLayout(new GridLayout(33,1));
+			primär.setLayout(new GridLayout(33,1));
+			primärEinzel.setLayout(new GridLayout(33,1));
+			sekundär.setLayout(new GridLayout(33,1));
+			sekundärEinzel.setLayout(new GridLayout(33,1));
+			bemalung.setLayout(new GridLayout(33,1));
+			armee.setLayout(new GridLayout(33,1));
+			sos.setLayout(new GridLayout(33,1));
 			
 			for(int i=30;i>0;i--){
-					JLabel label6 = new JLabel(" ");
-					platz.add(label6);
-					label6.setBorder(BorderFactory.createEtchedBorder());
-					
-					JLabel label1 = new JLabel(" ");
-					spieler.add(label1);
-					label1.setBorder(BorderFactory.createEtchedBorder());
-					
-					JLabel label2 = new JLabel(" ");
-					primär.add(label2);
-					label2.setBorder(BorderFactory.createEtchedBorder());
-					
-					JLabel label3 = new JLabel(" ");
-					sekundär.add(label3);
-					label3.setBorder(BorderFactory.createEtchedBorder());
-					
-					JLabel label4 = new JLabel(" ");
-					sos.add(label4);
-					label4.setBorder(BorderFactory.createEtchedBorder());
+					platz.add(createLabel("", f));
+					spieler.add(createLabel("", f));
+					primär.add(createLabel("", f));
+					primärEinzel.add(createLabel("", f));
+					sekundär.add(createLabel("", f));
+					sekundärEinzel.add(createLabel("", f));
+					bemalung.add(createLabel("", f));
+					armee.add(createLabel("", f));
+					sos.add(createLabel("", f));
 			}
 		}
 		if(punktePanel.equals(this.punktePanel)){

@@ -109,19 +109,15 @@ public class KPort {
 					fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");
 					fw.write("#TID-"+hf.TID+"||x\r\n");
 					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
-					int deleted=0;
 					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 						KTeilnehmer tn = hf.sortierterVector.get(i);
-						if(tn.deleted==false){
 							int primeinzel=tn.primärEinzel;
 							int armee=(hf.optionenFeld.armeePri.isSelected()?tn.armeeliste:0);
 							int bemalung=(hf.optionenFeld.bemalPri.isSelected()?tn.bemalwertung:0);
 							int primkomp=primeinzel+armee+bemalung;
+							int platz=tn.platz;
 							//ID||Vorname||Nachname||Nickname||Armee||Ort||Team||Platziereung||TPGesamt||TP||??||AL||Bemalung||Quiz||Fairplay||Sonstige||
-							fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+(hf.sortierterVector.size()-i-deleted)+"||"+primkomp+"||"+primeinzel+"||0||"+armee+"||"+bemalung+"||0||0||0||x\r\n");
-						} else {
-							deleted++;
-						}
+							fw.write(tn.id+"||"+tn.vorname+"||"+tn.nachname+"||"+tn.nickname+"||"+tn.armee+"||"+tn.ort+"||"+tn.team+"||"+platz+"||"+primkomp+"||"+primeinzel+"||0||"+armee+"||"+bemalung+"||0||0||0||x\r\n");
 					}
 					fw.close();
 				} catch (IOException e) {

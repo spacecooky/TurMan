@@ -62,30 +62,38 @@ public class KPairings {
 								teamFailureBool=true;
 							}
 							//Prüfung, falls Mirrormatches beachtet werden sollen
-							if(hf.optionenFeld.mirror.isSelected() && v.get(i).armee.equals(v.get(gegner).armee)){
+							if(hf.optionenFeld.mirror.isSelected() &&! v.get(i).armee.equals("") && v.get(i).armee.equals(v.get(gegner).armee)){
 								mirrorFailureBool=true;
 							}
 							//Prüfung, falls Orte beachtet werden sollen
-							if(hf.optionenFeld.orte.isSelected() && v.get(i).ort.equals(v.get(gegner).ort)){
+							if(hf.optionenFeld.orte.isSelected() &&! v.get(i).ort.equals("") && v.get(i).ort.equals(v.get(gegner).ort)){
 								ortFailureBool=true;
 							}
 							//Prüfung, falls Armeen beachtet werden sollen
 							if(hf.optionenFeld.armeen.isSelected()){
-								int runde=hf.rundenZaehler;
-								for(int j=0;j<runde-1;j++){
-									if(hf.teilnehmerVector.get(v.get(i).paarungen.get(j)).armee.equals(v.get(gegner).armee) ||
-											hf.teilnehmerVector.get(v.get(gegner).paarungen.get(j)).armee.equals(v.get(i).armee)){
-										armeeFailureBool=true;
+								if(!v.get(gegner).armee.equals("")){
+									for(int j=0;j<v.get(i).paarungen.size();j++){
+										if(hf.teilnehmerVector.get(v.get(i).paarungen.get(j)).armee.equals(v.get(gegner).armee)){
+											armeeFailureBool=true;
+										}
+									}
+								}
+								if(!v.get(i).armee.equals("")){
+									for(int j=0;j<v.get(gegner).paarungen.size();j++){
+										if(hf.teilnehmerVector.get(v.get(gegner).paarungen.get(j)).armee.equals(v.get(i).armee)){
+											armeeFailureBool=true;
+										}
 									}
 								}
 							}
 							//Auswertung ob die Paarung legal ist
 							int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
+							
 							if(!v.get(i).paarungen.contains(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
-									!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText()) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
-									!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText()) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
-									!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText()) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
-									!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText()) // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
+									(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+									(!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText())) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
+									(!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText())) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
+									(!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText())) // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
 									){ 
 								int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
 								int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
@@ -391,17 +399,6 @@ public class KPairings {
 						b.t2.tische.add(b.tisch);
 						b2.t1.tische.add(b2.tisch);
 						b2.t2.tische.add(b2.tisch);
-/*						int b1tempTisch=b.tisch;
-						b.tisch=b2.tisch;
-						b2.tisch=b1tempTisch;
-						b.t1.tische.remove(b.t1.tische.lastElement());
-						b.t1.tische.add(b.tisch);
-						b.t2.tische.remove(b.t2.tische.lastElement());
-						b.t2.tische.add(b.tisch);
-						b2.t1.tische.remove(b2.t1.tische.lastElement());
-						b2.t1.tische.add(b2.tisch);
-						b2.t2.tische.remove(b2.t2.tische.lastElement());
-						b2.t2.tische.add(b2.tisch);*/
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos)).tisch=b.tisch;
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos)).getComponent(b2.xPos)).tisch=b2.tisch;
 						break;

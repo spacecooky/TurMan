@@ -1,3 +1,11 @@
+Version 0.0.14
+- Berechnung der SOS korrigiert
+- Hilfe-Datei erstellt
+- Paarungsoption korrigiert
+- Anzeige der Plätze in der Druckausgabe korrigiert
+- Gelöschte Spieler komplett aus dem sortierten Vektor entfernt, nur noch im Teilnehmervektor vorhanden
+
+
 Version 0.0.13
 - Hinzufügen neuer Spieler während des Turniers möglich
 - Speicherdatei enthält jetzt den Rundenzähler

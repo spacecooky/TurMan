@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -41,8 +42,11 @@ import javax.swing.JTextField;
  * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
- * TODO Hilfe-Datei.
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
+ * TODO Maximalföhen der Zeilen in den verschiedenen Sichten.
+ * TODO Anzeige der Druckausgabe korrigieren, wenn Namen zu lang sind
+ * TODO Freilos-Spieler: neu hinzufügen überarbeiten
+ * TODO Freilos-Spieler: Punktwerte speichern. 
  *  
  * @author jk
  *
@@ -137,6 +141,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		menubar.add(hilfe);
 		hilfe.add(info);
 		info.addActionListener(this);
+		hilfe.add(hilfeDatei);
+		hilfeDatei.addActionListener(this);
 
 		// neues Turnier
 		neuFrame.setContentPane(neuPanel);
@@ -168,7 +174,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.13");
+	static String version=new String("V0.0.14");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -216,6 +222,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	
 	JMenu hilfe = new JMenu("Hilfe");
 	JMenuItem info = new JMenuItem("Info");
+	JMenuItem hilfeDatei = new JMenuItem("Hilfe-Datei");
 
 
 	//neu
@@ -375,10 +382,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenKonfigWrap(this);
 		}else if(quelle==info){
 			infoFenster.setVisible(true);
-		} else if(quelle==freilos){
+		} else if(quelle==hilfeDatei){
+			try{ 
+				Desktop d = java.awt.Desktop.getDesktop();
+				d.open(new java.io.File("TurMan-Hilfe.pdf")); 
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}else if(quelle==freilos){
 			freilosFenster.init();
 		}
-
 	}
 
 	public void fillPanels(){
@@ -565,6 +578,111 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		sortierterVector.clear();
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
+			if(t.deleted==false){
+				int j=0;
+				while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
+					j++;
+				}
+				//Sortieren nach Sekundär
+				while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
+					j++;
+				}
+				//Sortieren nach sos
+				if(optionenFeld.PSS.isSelected()){
+					while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+						j++;
+					}
+				}
+				sortierterVector.insertElementAt(t,j);	
+			}
+		}
+		
+		//Platzgruppen berechnen
+		platzgruppe=-1;
+		platzGruppe.clear();
+		for(int i=1;i<sortierterVector.size();i++){
+			KTeilnehmer t1=sortierterVector.get(i);
+			KTeilnehmer t2=sortierterVector.get(i-1);
+			if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
+				if(t2.platzGruppe==-1){
+					platzgruppe++;
+					t2.platzGruppe=platzgruppe;
+					t1.platzGruppe=platzgruppe;
+					platzGruppe.add(new Vector<KTeilnehmer>());
+					platzGruppe.get(platzgruppe).add(t2);
+					platzGruppe.get(platzgruppe).add(t1);
+				} else{
+					t1.platzGruppe=t2.platzGruppe;
+					platzGruppe.get(platzgruppe).add(t1);
+				}
+			} 
+		}
+		//Plätze eintragen
+				
+				for(int i=sortierterVector.size()-1;i>=0;i--){
+						if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
+							sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
+						} else{
+							sortierterVector.get(i).platz=sortierterVector.size()-i;
+						}
+				}
+			}
+	
+	/*public void sortieren(boolean ab,boolean bm){
+		KTeilnehmer t;
+		//Primär und Sekundärpunkte für alle berechnen
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			t.primär=0;
+			t.sekundär=0;
+			t.primärEinzel=0;
+			t.sekundärEinzel=0;
+			t.sos=0;
+			t.platzGruppe=-1;
+			t.platz=0;
+			for(int j=0;j<t.paarungen.size();j++){
+				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
+				if(optionenFeld.PSS.isSelected()){
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
+				} else if(optionenFeld.TS.isSelected()){
+					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+				}
+			}
+			
+			t.primärEinzel=t.primär;
+			t.sekundärEinzel=t.sekundär;
+			
+			//SOS berechnen
+			if(optionenFeld.PSS.isSelected()){
+					t=teilnehmerVector.get(i);
+					for(int j=0;j<t.paarungen.size();j++){
+						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
+					}
+			}
+			
+			if(ab){
+				if(optionenFeld.armeePri.isSelected()){
+					t.primär+=t.armeeliste;
+				}
+				if(optionenFeld.armeeSek.isSelected()){
+					t.sekundär+=t.armeeliste;
+				}
+			}
+			if(bm){
+				if(optionenFeld.bemalPri.isSelected()){
+					t.primär+=t.bemalwertung;
+				}
+				if(optionenFeld.bemalSek.isSelected()){
+					t.sekundär+=t.bemalwertung;
+				}
+			}
+		}
+		
+
+		//Sortiern nach primär
+		sortierterVector.clear();
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
 			int j=0;
 			while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
 				j++;
@@ -616,7 +734,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				deleted++;
 			}
 		}
-	}
+	}*/
 	
 	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
 		System.out.println("Alt");

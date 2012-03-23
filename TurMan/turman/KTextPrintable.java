@@ -46,7 +46,7 @@ public class KTextPrintable implements Printable{
 			for (int i=0;i<50;i++){
 				if((hf.sortierterVector.size()-(i+1)-(pageIndex*50))>=0){
 					KTeilnehmer t=hf.sortierterVector.get(hf.sortierterVector.size()-(i+1)-(pageIndex*50));
-					nachricht =laengeAnpassenVorne(Integer.toString(pageIndex*50+i+1), 6);
+					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
 					nachricht +=laengeAnpassenHinten("   "+t.vorname+" "+t.nachname, 53);
 					nachricht +=laengeAnpassenHinten(""+t.primär,9);
 					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);

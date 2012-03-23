@@ -71,23 +71,27 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 * @return true, wenn Teilnehmer 1 und 2 aus dem selben Ort sind
 	 */
 	public boolean ort(){
-		return t1.ort.equals(t2.ort);
+		return !t1.ort.equals("") && !t2.ort.equals("") && t1.ort.equals(t2.ort);
 	}
 	
 	/**
 	 * @return true, wenn t1 oder t2 bereits gegen die selbe Armee gespielt haben
 	 */
 	public boolean armee(){
-		for(int i=0;i<t1.paarungen.size();i++){
-			if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee)){
-				return true;
+		if(!t2.armee.equals("")){
+			for(int i=0;i<t1.paarungen.size();i++){
+				if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee)){
+					return true;
+				}
 			}
 		}
-		for(int i=0;i<t2.paarungen.size();i++){
-			if(khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
-				return true;
+		if(!t1.armee.equals("")){
+			for(int i=0;i<t2.paarungen.size();i++){
+				if(khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
+					return true;
+				}
 			}
-	}
+		}
 		
 		return false;
 	}
@@ -96,7 +100,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 * @return true, wenn Teilnehmer 1 und 2 die gleiche Armee spielen
 	 */
 	public boolean mirror(){
-		return t1.armee.equals(t2.armee);
+		return !t1.armee.equals("") && !t2.armee.equals("") && t1.armee.equals(t2.armee);
 	}
 	
 	/**

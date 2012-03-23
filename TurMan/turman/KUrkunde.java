@@ -59,7 +59,6 @@ public class KUrkunde {
 			Font turnier = FontFactory.getFont("Colonna MT", 36);
 			Font oger = FontFactory.getFont("Colonna MT", 18);
 			
-			int delPlaces=0;
 			
 			PdfReader reader;
 			Document document = new Document();
@@ -69,17 +68,12 @@ public class KUrkunde {
 				reader = new PdfReader("Urkunde_Einzel.pdf");
 				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File("Urkunden.pdf")));
 				document.open();
-				
 				// In das Urkunden-PDF werden so viele Kopien der einzelnen Urkunde eingefügt, wie es Teilnehmer gibt.
 				// Wurde ein Teilnehmer gelöscht, wird für jeden gelöschten eine Seite weniger eingefügt.
 				PdfImportedPage page;
 				for (int i = 0; i < tV.size(); i++) {
-					if(!tV.get(i).deleted){
 						page = writer.getImportedPage(reader, 1);
 						document.add(Image.getInstance(page));
-					}else{
-						delPlaces++;
-					}
 				}
 				
 				document.close();
@@ -91,14 +85,14 @@ public class KUrkunde {
 				stamper = new PdfStamper(reader, new FileOutputStream(new File("UrkundenFertig.pdf")));
 				int del=0;
 				for (int i = 0; i < tV.size(); i++) {
-					if(!tV.get(i).deleted){
 						PdfContentByte canvas = stamper.getOverContent(i+1-del);
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 12.1",turnier), reader.getPageSize(i+1-del).width()/2, 525, 0);
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1-del).width()/2, 485, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
 						
-						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase((tV.size()-i-delPlaces)+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase((tV.size()-i-delPlaces)+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).platz+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
 						
 						String insertName = tV.get(i).vorname+" \""+tV.get(i).nickname+"\" "+tV.get(i).nachname;
 						insertName = insertName.replace("\"\" ", "");
@@ -110,10 +104,6 @@ public class KUrkunde {
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).armee,name), reader.getPageSize(i+1-del).width()/2, 230, 0);
 						
 						ColumnText.showTextAligned(canvas,Element.ALIGN_RIGHT, new Phrase("Turnier-Oger",oger), 185, 70, 0);
-					} else {
-						del++;
-						delPlaces--;
-					}
 				}
 				stamper.close();
 				
