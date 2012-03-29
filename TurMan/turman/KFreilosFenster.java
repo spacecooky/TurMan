@@ -57,7 +57,14 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				KTeilnehmer t = hf.teilnehmerVector.get(i);
 				if(t.vorname.equals("Freilos") && t.nachname.equals("Freilos") && t.nickname.equals("Freilos") && t.armee.equals("Freilos") && t.ort.equals("Freilos")){
-					//TODO Fehlerdialog
+					hf.freilosPrim=Integer.parseInt(prim.getText());
+					hf.freilosSek=Integer.parseInt(sek.getText());
+					t.deleted=false;
+					hf.fillPanels();
+					hf.fillTeamPanels();
+					hf.updatePanels();
+					hf.refillPanels();
+					setVisible(false);
 					return;
 				}
 			}

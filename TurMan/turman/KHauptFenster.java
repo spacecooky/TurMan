@@ -45,8 +45,9 @@ import javax.swing.JTextField;
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
  * TODO Maximalföhen der Zeilen in den verschiedenen Sichten.
  * TODO Anzeige der Druckausgabe korrigieren, wenn Namen zu lang sind
- * TODO Freilos-Spieler: neu hinzufügen überarbeiten
- * TODO Freilos-Spieler: Punktwerte speichern. 
+ * TODO Freilos-Spieler: Punktwerte speichern.
+ * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
+ * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  *  
  * @author jk
  *
