@@ -53,8 +53,8 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 			hf.HauptPanel.removeAll();
 			hf.fillPanels();
 			hf.fillTeamPanels();
-			hf.updatePanels();
 			hf.refillPanels();
+			hf.updatePanels();
 			setVisible(false);
 		}
 		

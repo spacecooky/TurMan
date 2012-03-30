@@ -57,7 +57,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		
 		JPanel tische = new JPanel();
 		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
-		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,Toolkit.getDefaultToolkit().getScreenSize().height));
+		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,20000));
 		begegnungsPanel.add(tische);
 		
 		JPanel begegnung = new JPanel();

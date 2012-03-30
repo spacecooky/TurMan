@@ -43,9 +43,10 @@ import javax.swing.JTextField;
  * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
- * TODO Maximalföhen der Zeilen in den verschiedenen Sichten.
- * TODO Anzeige der Druckausgabe korrigieren, wenn Namen zu lang sind
+ * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
+ * TODO Buttons/Überschriften in Kopf-/ Fußzeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
+ * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  *  
@@ -175,7 +176,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.14");
+	static String version=new String("V0.0.15");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();

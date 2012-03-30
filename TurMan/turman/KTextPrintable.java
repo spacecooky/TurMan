@@ -12,8 +12,10 @@ import java.awt.print.PrinterException;
  *
  */
 public class KTextPrintable implements Printable{
-	static Font font = new Font("Bitstream Vera Sans Mono",Font.PLAIN,8);
-	static Font font2 = new Font("Bitstream Vera Sans Mono",Font.BOLD,8);
+	static Font font = new Font("Courier",Font.PLAIN,8);
+	static Font font2 = new Font("Courier",Font.BOLD,8);
+	//static Font font = new Font("Bitstream Vera Sans Mono",Font.PLAIN,8);
+	//static Font font2 = new Font("Bitstream Vera Sans Mono",Font.BOLD,8);
 
 	public int print(Graphics g, PageFormat pageFormat, int pageIndex) throws PrinterException {
 		
@@ -47,7 +49,8 @@ public class KTextPrintable implements Printable{
 				if((hf.sortierterVector.size()-(i+1)-(pageIndex*50))>=0){
 					KTeilnehmer t=hf.sortierterVector.get(hf.sortierterVector.size()-(i+1)-(pageIndex*50));
 					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
-					nachricht +=laengeAnpassenHinten("   "+t.vorname+" "+t.nachname, 53);
+					nachricht+="   ";
+					nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
 					nachricht +=laengeAnpassenHinten(""+t.primär,9);
 					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
 					nachricht +=laengeAnpassenHinten(""+t.sos,9);

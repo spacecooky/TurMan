@@ -1,6 +1,9 @@
-WIP Version 0.0.15
+Version 0.0.15
 - Freilos-Spieler hinzufügen überarbeitet. Wenn der Freilosspieler bereits vorhanden ist, wird er aktualisisert und auf nicht gelöscht gesetzt, falls er gelöscht war.
-
+- Reihenfolge der Aktualisiserung beim Einfügen von Spieler/Freilos geändert. Tabellen werden jetzt erst neu gezeichnet, wenn die Punkte neu berechnet wurden.
+- Höhe der Tischnummern verschiebt sich nicht mehr im Vergleich zur Höhe der Begegnungen im Begegnungsfenster
+- Als Schriftart der Ausdrucke díe Monotype-Schriftaret Courier ausgewählt
+ 
 Version 0.0.14
 - Berechnung der SOS korrigiert
 - Hilfe-Datei erstellt
