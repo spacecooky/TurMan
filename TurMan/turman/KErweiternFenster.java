@@ -49,7 +49,7 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 		if(arg0.getSource()==cancel){
 			setVisible(false);
 		} else if(arg0.getSource()==ok){
-			hf.teilnehmerVector.add(new KTeilnehmer(vn.getText(),nn.getText()));
+			hf.teilnehmerVector.add(new KTeilnehmer(vn.getText(),nn.getText(),hf));
 			hf.HauptPanel.removeAll();
 			hf.fillPanels();
 			hf.fillTeamPanels();

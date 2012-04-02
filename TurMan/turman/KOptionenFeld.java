@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,8 +50,6 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JRadioButton ko = new JRadioButton("K.O.");
 	ButtonGroup modus = new ButtonGroup();
 	
-	JButton turnierZurueck= new JButton("Zurück zur Matrix");
-	
 	//PaarungsOptionen
 	
 	JCheckBox teams = new JCheckBox("Keine Mitglieder des selben Teams paaren");
@@ -66,8 +63,6 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JTextField armeenField = new JTextField("0");
 	JTextField mirrorField = new JTextField("0");
 	JTextField tischField = new JTextField("0");
-	
-	JButton paarungsZurueck= new JButton("Zurück zur Matrix");
 	
 	//WertungsOptionen
 	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
@@ -83,8 +78,6 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JRadioButton armeeSek = new JRadioButton("Armeebewertung");
 	JRadioButton armeeNo = new JRadioButton("Armeebewertung");
 	ButtonGroup armeeGroup = new ButtonGroup();
-	
-	JButton wertungZurueck= new JButton("Zurück zur Matrix");
 	
 	public void initPaarungsPanel(){
 		//TurnierOptionen
@@ -112,7 +105,6 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		modus.add(zufall);
 		modus.add(ko);
 		
-		turnierZurueck.addActionListener(this);
 		schweizer.setSelected(true);
 		zufall.setEnabled(false);
 		ko.setEnabled(false);
@@ -121,7 +113,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p11 = new JPanel();
 		p11.setLayout(new GridLayout(40,1));
-		p11.add(turnierZurueck);
+		p11.add(new JLabel("a"));
+		p11.getComponent(0).setForeground(p11.getBackground());
 		
 		turnierPanel.add(p11);
 		
@@ -163,14 +156,14 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p10 = new JPanel();
 		p10.setLayout(new GridLayout(40,1));
-		p10.add(paarungsZurueck);
+		p10.add(new JLabel("a"));
+		p10.getComponent(0).setForeground(p10.getBackground());
 		
 		paarungsPanel.add(p9);
 		paarungsPanel.add(p10);
 		
 		teams.setSelected(true);
 		tisch.setSelected(true);
-		paarungsZurueck.addActionListener(this);
 		
 		//WertungsOptionen
 		wertungsPanel.setLayout(new BoxLayout(wertungsPanel, BoxLayout.Y_AXIS));
@@ -225,36 +218,17 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		wertungsPanel.add(p7);
 		
-		/*bemalNo.setEnabled(false);
-		armeeNo.setEnabled(false);
-		bemalPri.setEnabled(false);
-		armeePri.setEnabled(false);
-		bemalSek.setEnabled(false);
-		armeeSek.setEnabled(false);*/
-		
 		JPanel p8 = new JPanel();
 		p8.setLayout(new GridLayout(40,1));
-		p8.add(wertungZurueck);
-		wertungZurueck.addActionListener(this);
+		p8.add(new JLabel("a"));
+		p8.getComponent(0).setForeground(p8.getBackground());
 		
 		wertungsPanel.add(p8);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource()==paarungsZurueck || arg0.getSource()==turnierZurueck || arg0.getSource()==wertungZurueck){
-			if(einzel.isSelected()){
-				//hf.setContentPane(hf.sp);
-				hf.tab.remove(0);
-				hf.tab.insertTab("Matrix", null, hf.sp, null, 0);
-			} else if(team.isSelected()){
-				//hf.setContentPane(hf.spTeam);
-				hf.tab.remove(0);
-				hf.tab.insertTab("Matrix", null, hf.spTeam, null, 0);
-			}
-			hf.setContentPane(hf.tab);
-			hf.validate();
-		} else if(arg0.getSource()==PSS || arg0.getSource()==TS){
+		if(arg0.getSource()==PSS || arg0.getSource()==TS){
 			if(PSS.isSelected()){
 				bemalSek.setEnabled(true);
 				armeeSek.setEnabled(true);
@@ -270,6 +244,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 					armeeNo.setSelected(true);
 				}
 			}
+			hf.updatePanels();
 		}
 		
 	}

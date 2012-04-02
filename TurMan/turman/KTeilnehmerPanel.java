@@ -2,15 +2,13 @@ package turman;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class KTeilnehmerPanel extends JPanel implements ActionListener{
+public class KTeilnehmerPanel extends JPanel{
 	
 	/**
 	 * 
@@ -20,13 +18,12 @@ public class KTeilnehmerPanel extends JPanel implements ActionListener{
 		
 		setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		
-		nameLabel= new JButton(teilnehmer);
+		hf.teilnehmerVector.get(nummer).matrixButton.setText(teilnehmer);
+		nameLabel= hf.teilnehmerVector.get(nummer).matrixButton;
 		nameLabel.setMaximumSize(new Dimension(150,20));
 		nameLabel.setMinimumSize(new Dimension(150,20));
 		nameLabel.setPreferredSize(new Dimension(150,20));
 		nameLabel.setBorder(BorderFactory.createRaisedBevelBorder());
-		//this.add(nameLabel);
-		nameLabel.addActionListener(this);
 		
 		for(int i=0;i<teilnehmerZahl;i++){
 
@@ -55,11 +52,4 @@ public class KTeilnehmerPanel extends JPanel implements ActionListener{
 	
 	int nummer=0;
 	KHauptFenster hf = null;
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource().equals(nameLabel)){
-			hf.spielerFenster.anzeigen(hf.teilnehmerVector.get(nummer));
-		}
-		
-	}
 }

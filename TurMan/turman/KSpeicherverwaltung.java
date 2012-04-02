@@ -108,7 +108,7 @@ public class KSpeicherverwaltung {
 
 				}
 
-				hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr));
+				hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr,hf));
 
 				hf.teilnehmerVector.lastElement().bemalwertung=bemalwertung;
 
@@ -180,6 +180,8 @@ public class KSpeicherverwaltung {
 				}
 			}
 
+			hf.begegnungsFenster.runde=hf.rundenZaehler;
+			
 			hf.updatePanels();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

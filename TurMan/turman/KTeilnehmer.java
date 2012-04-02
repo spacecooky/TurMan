@@ -1,16 +1,24 @@
 package turman;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
-public class KTeilnehmer {
+import javax.swing.JButton;
+
+public class KTeilnehmer implements ActionListener {
 	
-	public KTeilnehmer(String vorname,String nachname){
+	public KTeilnehmer(String vorname,String nachname,KHauptFenster hf){
 		this.vorname=vorname;
 		this.nachname=nachname;
+		matrixButton.addActionListener(this);
+		punkteFensterButton.addActionListener(this);
+		punkteTabButton.addActionListener(this);
+		this.hf=hf;
 	}
 	
 	public KTeilnehmer(int id,String vorname,String nachname,String nickname, String armee,
-			String ort, String team, int unknown, int armeeliste, int bezahlt, int ntr){
+			String ort, String team, int unknown, int armeeliste, int bezahlt, int ntr,KHauptFenster hf){
 		
 		this.id=id;
 		this.vorname=vorname;
@@ -23,6 +31,10 @@ public class KTeilnehmer {
 		this.armeeliste=armeeliste;
 		this.bezahlt=bezahlt;
 		this.ntr=ntr;
+		matrixButton.addActionListener(this);
+		punkteFensterButton.addActionListener(this);
+		punkteTabButton.addActionListener(this);
+		this.hf=hf;
 	}
 	
 	int id=0;
@@ -53,5 +65,16 @@ public class KTeilnehmer {
 	int paired=-1;
 	
 	boolean deleted = false;
+	
+	KHauptFenster hf;
+	JButton matrixButton = new JButton();
+	JButton punkteFensterButton = new JButton();
+	JButton punkteTabButton = new JButton();
+	@Override
+	
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		hf.spielerFenster.anzeigen(this);
+	}
 	
 }

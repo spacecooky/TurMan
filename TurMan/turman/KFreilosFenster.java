@@ -72,7 +72,7 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 			try{
 			hf.freilosPrim=Integer.parseInt(prim.getText());
 			hf.freilosSek=Integer.parseInt(sek.getText());
-			KTeilnehmer t =new KTeilnehmer("Freilos","Freilos");
+			KTeilnehmer t =new KTeilnehmer("Freilos","Freilos",hf);
 			t.armee="Freilos";
 			t.nickname="Freilos";
 			t.ort="Freilos";

@@ -49,13 +49,14 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Die Möglichkeit in der Tabelle Namen auszuwählen, um Bemalwertung usw. zu ändern.
  * TODO Die Möglichkeit die Tabelle und Paarungen von vorherigen Spieltagen aufzurufen.
  * TODO Das Abspeichern der Tabelle als pdf oder so (ganz hilfreich wenn man ein Zwischenergebniss in Foren usw. posten möchte)
  * TODO Bei uns ist ja der Fehler aufgetaucht, dass kein Teamschutz mehr in Runde 3 möglich war, also evntl. eine möglichkeit das zu umgehen... also dass es möglich ist.
+ * TODO Verschiebung der Paarung korrigieren, die nach den dem hin und her mit Herausforderungen und Teamschutz entstanden sind.
  * TODO in der Tabelle Spielerzahlen einfügen, bzw. Nummerierungen um festzustellen wieviele spieler da sind.
  * TODO Dann was ich mir noch so überlegt hab, weis halt nicht in wie weit es ein Aufwand ist sowas zu programmieren: evntl. die Möglichkeit eine virtuelle Anmeldeliste zu haben. also halt die Tablle mit allen Spielern.. und dann ein Kästchen das einen Haken bekommen muss... wenn man dann auf paaren drückt, werden alle die kein haken haben automatisch entfernt. ---> würde Papierkram reduzieren.
- *  
+ * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
+ * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereit gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
  * @author jk
  *
  */
@@ -89,8 +90,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		//Hauptbereich
 		tab.addTab("Matrix",null,sp);
 		tab.addTab("Punkte",null,new JScrollPane(punkteFenster.punktePanelTab));
-		tab.addTab("Begegnungen",null,new JScrollPane(begegnungsFenster.begegnungsPanelTab));
+		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
 		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		tab.setBackground(Color.white);
+		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeld));
 		setContentPane(tab);
 		//Menue
 		setJMenuBar(menubar);
@@ -139,8 +142,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		freilos.addActionListener(this);
 		
 		menubar.add(optionen);
-		optionen.add(optionenAnzeigen);
-		optionenAnzeigen.addActionListener(this);
 		optionen.add(optionenSpeichern);
 		optionenSpeichern.addActionListener(this);
 		optionen.add(optionenLaden);
@@ -224,7 +225,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfügen");
 	
 	JMenu optionen = new JMenu("Optionen");
-	JMenuItem optionenAnzeigen = new JMenuItem("Konfiguration");
 	JMenuItem optionenSpeichern = new JMenuItem("Konfiguration speichern");
 	JMenuItem optionenLaden = new JMenuItem("Konfiguration laden");
 	
@@ -332,7 +332,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			rundenZaehler=0;
 			alleBegegnungenVector.clear();
 			for(int i=4;i<3+teilnehmer*3;i+=3){
-				teilnehmerVector.add(new KTeilnehmer(((JTextField)teilnehmerPanel.getComponent(i)).getText(),((JTextField)teilnehmerPanel.getComponent(i+1)).getText()));
+				teilnehmerVector.add(new KTeilnehmer(((JTextField)teilnehmerPanel.getComponent(i)).getText(),((JTextField)teilnehmerPanel.getComponent(i+1)).getText(),this));
 			}
 			teilnehmerFrame.setVisible(false);
 			//System.out.println(teilnehmerVector.size());
@@ -379,10 +379,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			urkunde.urkundeErstellen(sortierterVector);
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
-		}else if(quelle==optionenAnzeigen){
-			setContentPane(optionenFeld);
-			validate();
-		} else if(quelle==extraPunkte){
+		}else if(quelle==extraPunkte){
 			extraPunkteFenster.init(null);
 		}else if(quelle==optionenSpeichern){
 			KSpeicherverwaltung.speichernKonfigWrap(this);
@@ -390,7 +387,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenKonfigWrap(this);
 		}else if(quelle==info){
 			infoFenster.setVisible(true);
-		} else if(quelle==hilfeDatei){
+		}else if(quelle==hilfeDatei){
 			try{ 
 				Desktop d = java.awt.Desktop.getDesktop();
 				d.open(new java.io.File("TurMan-Hilfe.pdf")); 

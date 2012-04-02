@@ -77,7 +77,7 @@ public class KPort {
 							}catch(NumberFormatException e){
 							}
 
-							hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr));
+							hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr,hf));
 							
 							if(!hf.teamVector.contains(team)){
 								hf.teamVector.add(team);

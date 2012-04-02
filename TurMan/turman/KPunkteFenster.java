@@ -57,80 +57,45 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		hf.sortieren(ab.isSelected(),bm.isSelected());
-		boolean color=false;
+		color=false;
 		punktePanel.removeAll();
 		
 		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
+		punktePanel.setBackground(Color.white);
+		ab.setBackground(Color.white);
+		bm.setBackground(Color.white);
+		abTab.setBackground(Color.white);
+		bmTab.setBackground(Color.white);
 		
-		JPanel platz = new JPanel();
-		platz.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
+		JPanel platz = createPanel(punktePanel,true);
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
-		punktePanel.add(platz);
 		
-		JPanel spieler = new JPanel();
-		spieler.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		punktePanel.add(spieler);
-		
-		JPanel primär = new JPanel();
-		primär.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		punktePanel.add(primär);
-		
-		JPanel primärEinzel = new JPanel();
-		primärEinzel.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()){
-		punktePanel.add(primärEinzel);
-		//primär.setBackground(Color.green);
-		//primärEinzel.setBackground(Color.green);
-		color=true;
-		}
-		
-		JPanel bemalung = new JPanel();
-		bemalung.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
+		JPanel spieler = createPanel(punktePanel,true);
+		JPanel primär = createPanel(punktePanel,true);
+		JPanel primärEinzel = createPanel(punktePanel,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
+		JPanel bemalung= createPanel(punktePanel,false);
+		JPanel armee= createPanel(punktePanel,false);
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
-		punktePanel.add(bemalung);
-		//bemalung.setBackground(Color.green);
+			punktePanel.add(bemalung);
 		}
-		
-		JPanel armee = new JPanel();
-		armee.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
-		punktePanel.add(armee);
-		//armee.setBackground(Color.green);
+			punktePanel.add(armee);
 		}
-		
-		JPanel sekundär = new JPanel();
-		sekundär.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		punktePanel.add(sekundär);
-		
-		JPanel sekundärEinzel = new JPanel();
-		sekundärEinzel.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		if((hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
-			punktePanel.add(sekundärEinzel);
-			//sekundär.setBackground(Color.orange);
-			//sekundärEinzel.setBackground(Color.orange);
-			color=true;
-		}
-		
+		JPanel sekundär = createPanel(punktePanel,true);
+		JPanel sekundärEinzel = createPanel(punktePanel,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
 			punktePanel.add(bemalung);
-			//bemalung.setBackground(Color.orange);
-			}
-		
+		}
 		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
 			punktePanel.add(armee);
-			//armee.setBackground(Color.orange);
-			}
-		
-			JPanel sos = new JPanel();
-			sos.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
-		if(hf.optionenFeld.PSS.isSelected()){
-			punktePanel.add(sos);
 		}
 		
-		if(color){
-			//primär.setBackground(Color.green);
-			//sekundär.setBackground(Color.orange);
-			//sos.setBackground(Color.cyan);
+		JPanel sos = createPanel(punktePanel,true);
+		if(!hf.optionenFeld.PSS.isSelected()){
+			sos.setVisible(false);
+		}
+		
+		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
 			primär.setBackground(Color.lightGray);
 			sekundär.setBackground(Color.lightGray);
 			sos.setBackground(Color.lightGray);
@@ -161,10 +126,8 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 			if(hf.sortierterVector.get(i).deleted==false){
 				KTeilnehmer tn=hf.sortierterVector.get(i);
-				
-				
 				platz.add(createLabel(""+hf.sortierterVector.get(i).platz, f));
-				spieler.add(createLabel(tn.vorname+" "+tn.nachname, f));
+				spieler.add(createButton(punktePanel,tn, f));
 				primär.add(createLabel(""+tn.primär, f));
 				primärEinzel.add(createLabel(""+tn.primärEinzel, f));
 				sekundär.add(createLabel(""+hf.sortierterVector.get(i).sekundär, f));
@@ -172,7 +135,6 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 				bemalung.add(createLabel(""+tn.bemalwertung, f));
 				armee.add(createLabel(""+tn.armeeliste, f));
 				sos.add(createLabel(""+hf.sortierterVector.get(i).sos, f));
-				
 			} 
 		}
 		
@@ -203,34 +165,34 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		}
 		if(punktePanel.equals(this.punktePanel)){
 			platz.add(druckenButton);
-			platz.add(new JPanel());
+			platz.add(createEmptyPanel());
 		} else{
 			platz.add(druckenButtonTab);
-			platz.add(new JPanel());
+			platz.add(createEmptyPanel());
 		}
-		primär.add(new JPanel());
-		primär.add(new JPanel());
-		sekundär.add(new JPanel());
-		sekundär.add(new JPanel());
-		primärEinzel.add(new JPanel());
-		primärEinzel.add(new JPanel());
-		sekundärEinzel.add(new JPanel());
-		sekundärEinzel.add(new JPanel());
-		bemalung.add(new JPanel());
-		bemalung.add(new JPanel());
-		armee.add(new JPanel());
-		armee.add(new JPanel());
+		primär.add(createEmptyPanel());
+		primär.add(createEmptyPanel());
+		sekundär.add(createEmptyPanel());
+		sekundär.add(createEmptyPanel());
+		primärEinzel.add(createEmptyPanel());
+		primärEinzel.add(createEmptyPanel());
+		sekundärEinzel.add(createEmptyPanel());
+		sekundärEinzel.add(createEmptyPanel());
+		bemalung.add(createEmptyPanel());
+		bemalung.add(createEmptyPanel());
+		armee.add(createEmptyPanel());
+		armee.add(createEmptyPanel());
 		
 		if(punktePanel.equals(this.punktePanel)){
 			spieler.add(bm);
 			spieler.add(ab);
 			sos.add(punkteSchliessenButton);
-			sos.add(new JPanel());
+			sos.add(createEmptyPanel());
 		}else{
 			spieler.add(bmTab);
 			spieler.add(abTab);
-			sos.add(new JPanel());
-			sos.add(new JPanel());
+			sos.add(createEmptyPanel());
+			sos.add(createEmptyPanel());
 		}
 		punktePanel.validate();
 	}
@@ -244,6 +206,8 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	JButton punkteSchliessenButton=new JButton("OK");
 	JButton druckenButton=new JButton("Drucken");
 	JButton druckenButtonTab=new JButton("Drucken");
+	boolean color=false;
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
@@ -301,6 +265,37 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		l.setBorder(BorderFactory.createEtchedBorder());
 		l.setFont(f);
 		return l;
+	}
+	
+	public JButton createButton(JPanel punktePanel,KTeilnehmer tn, Font f){
+		JButton b;
+		if(punktePanel.equals(this.punktePanel)){
+			b=tn.punkteFensterButton;
+		} else{
+			b=tn.punkteTabButton;
+		}
+		
+		b.setText(tn.vorname+" "+tn.nachname);
+		b.setBorder(BorderFactory.createEtchedBorder());
+		b.setFont(f);
+		b.setBackground(Color.white);
+		return b;
+	}
+	
+	public JPanel createPanel(JPanel punktePanel, boolean b){
+		JPanel p = new JPanel() ;
+		p.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
+		if(b){
+			punktePanel.add(p);
+		}
+		p.setBackground(Color.white);
+		return p;
+	}
+
+	public JPanel createEmptyPanel(){
+		JPanel p = new JPanel() ;
+		p.setBackground(Color.white);
+		return p;
 	}
 	
 }

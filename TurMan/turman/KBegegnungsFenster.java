@@ -1,5 +1,6 @@
 package turman;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -12,6 +13,7 @@ import java.awt.print.PrinterJob;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +31,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		punkteSchliessenButton.addActionListener(this);
 		druckenButton.addActionListener(this);
 		druckenButtonTab.addActionListener(this);
+		anzeigenButton.addActionListener(this);
+		anzeigenButtonTab.addActionListener(this);
 	}
 	
 	KHauptFenster hf=null;
@@ -36,8 +40,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	public void init(Dimension d){
 		updatePanel(begegnungsPanel);
 		updatePanel(begegnungsPanelTab);
-		setContentPane(new JScrollPane(begegnungsPanel));
-		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
+		setContentPane(begegnungsPanel);
 		if(d==null){
 			setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		} else{
@@ -48,29 +51,66 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		setVisible(true);
 		
 	}
-	
+
 	public void updatePanel(JPanel begegnungsPanel){
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		
 		begegnungsPanel.removeAll();
-		begegnungsPanel.setLayout(new BoxLayout(begegnungsPanel,BoxLayout.X_AXIS));
+		begegnungsPanel.setLayout(new BorderLayout());
+
+		JPanel head = new JPanel();
+		JPanel body = new JPanel();
+		JPanel foot = new JPanel();
+		
+		head.setLayout(new GridLayout(1, 18));
+		head.add(new JLabel("Runde: "));
+		head.add(begegnungsPanel==this.begegnungsPanel?combo:comboTab);
+		head.add(begegnungsPanel==this.begegnungsPanel?anzeigenButton:anzeigenButtonTab);
+		for(int i=0;i<15;i++){
+			head.add(new JLabel(""));
+		}
+		
+		body.setLayout(new BoxLayout(body,BoxLayout.X_AXIS));
+		begegnungsPanel.add(new JScrollPane(body));
+		
+		foot.setLayout(new GridLayout(1, 8));
+		foot.add(begegnungsPanel==this.begegnungsPanel?druckenButton:druckenButtonTab);
+		for(int i=0;i<6;i++){
+			foot.add(new JLabel(""));
+		}
+		foot.add(begegnungsPanel==this.begegnungsPanel?punkteSchliessenButton:new JLabel(""));
+		
+		begegnungsPanel.add(head,BorderLayout.NORTH);
+		begegnungsPanel.add(new JScrollPane(body),BorderLayout.CENTER);
+		begegnungsPanel.add(foot,BorderLayout.SOUTH);
+		
+		combo.removeAllItems();
+		comboTab.removeAllItems();
+		
+		for(int i=0;i<=hf.rundenZaehler;i++){
+			combo.addItem(i);
+			comboTab.addItem(i);
+		}
+		
+		combo.setSelectedItem(runde);
+		comboTab.setSelectedItem(runde);
 		
 		JPanel tische = new JPanel();
-		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
+		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
 		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,20000));
-		begegnungsPanel.add(tische);
+		body.add(tische);
 		
 		JPanel begegnung = new JPanel();
-		begegnung.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
-		begegnungsPanel.add(begegnung);
+		begegnung.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		body.add(begegnung);
 		
 		JPanel primär = new JPanel();
-		primär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
-		begegnungsPanel.add(primär);
+		primär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		body.add(primär);
 		
 		JPanel sekundär = new JPanel();
-		sekundär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+2,1));
-		begegnungsPanel.add(sekundär);
+		sekundär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		body.add(sekundär);
 		
 		tische.add(new JLabel("Tisch"));
 		tische.getComponent(0).setFont(f);
@@ -98,7 +138,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
-			if(bg.runde==hf.rundenZaehler){
+			if(bg.runde==runde){
 				JLabel label6 = new JLabel(""+(bg.tisch+1));
 				tische.add(label6);
 				label6.setBorder(BorderFactory.createEtchedBorder());
@@ -134,10 +174,10 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
 				if(hf.begegnungsVector.size()==0){
 					
-					tische.setLayout(new GridLayout(17,1));
-					begegnung.setLayout(new GridLayout(17,1));
-					primär.setLayout(new GridLayout(17,1));
-					sekundär.setLayout(new GridLayout(17,1));
+					tische.setLayout(new GridLayout(16,1));
+					begegnung.setLayout(new GridLayout(16,1));
+					primär.setLayout(new GridLayout(16,1));
+					sekundär.setLayout(new GridLayout(16,1));
 					
 					for(int i=15;i>0;i--){
 						JLabel label6 = new JLabel("");
@@ -157,17 +197,6 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 						label3.setBorder(BorderFactory.createEtchedBorder());
 					}
 				}
-		
-		if(begegnungsPanel.equals(this.begegnungsPanel)){
-			tische.add(druckenButton);
-		} else{
-			tische.add(druckenButtonTab);
-		}
-		begegnung.add(new JLabel(""));
-		primär.add(new JLabel(""));
-		if(begegnungsPanel.equals(this.begegnungsPanel)){
-			sekundär.add(punkteSchliessenButton);
-		}
 		begegnungsPanel.validate();
 	}
 	
@@ -176,11 +205,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	JButton punkteSchliessenButton=new JButton("OK");
 	JButton druckenButton=new JButton("Drucken");
 	JButton druckenButtonTab=new JButton("Drucken");
+	JComboBox combo = new JComboBox();
+	JComboBox comboTab = new JComboBox();
+	JButton anzeigenButton= new JButton("Anzeigen");
+	JButton anzeigenButtonTab= new JButton("Anzeigen");
+	int runde=0;
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
 			setVisible(false);
-		} else if(e.getSource()==druckenButton){
+		} else if(e.getSource()==druckenButton || e.getSource()==druckenButtonTab){
 			PrinterJob pj = PrinterJob.getPrinterJob();
 			KTextPrintable tp = new KTextPrintable();
 			tp.hf=hf;
@@ -193,19 +228,14 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		            System.out.println(exc);
 		         }
 		     }
-		} else if(e.getSource()==druckenButtonTab){
-			PrinterJob pj = PrinterJob.getPrinterJob();
-			KTextPrintable tp = new KTextPrintable();
-			tp.hf=hf;
-			tp.sicht=KTextPrintable.BEGEGNUNG;
-			pj.setPrintable(tp);
-			//PageFormat pf = pj.pageDialog(pj.defaultPage());
-		    if (pj.printDialog()) {
-		        try {pj.print();}
-		        catch (PrinterException exc) {
-		            System.out.println(exc);
-		         }
-		     }
+		} else if(e.getSource()==anzeigenButton ){
+			runde= combo.getSelectedIndex();
+			hf.updatePanels();
+		} else if(e.getSource()==anzeigenButtonTab){
+			runde= comboTab.getSelectedIndex();
+			hf.updatePanels();
 		}
 	}
+
+	
 }
