@@ -49,6 +49,12 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
+ * TODO Die Möglichkeit in der Tabelle Namen auszuwählen, um Bemalwertung usw. zu ändern.
+ * TODO Die Möglichkeit die Tabelle und Paarungen von vorherigen Spieltagen aufzurufen.
+ * TODO Das Abspeichern der Tabelle als pdf oder so (ganz hilfreich wenn man ein Zwischenergebniss in Foren usw. posten möchte)
+ * TODO Bei uns ist ja der Fehler aufgetaucht, dass kein Teamschutz mehr in Runde 3 möglich war, also evntl. eine möglichkeit das zu umgehen... also dass es möglich ist.
+ * TODO in der Tabelle Spielerzahlen einfügen, bzw. Nummerierungen um festzustellen wieviele spieler da sind.
+ * TODO Dann was ich mir noch so überlegt hab, weis halt nicht in wie weit es ein Aufwand ist sowas zu programmieren: evntl. die Möglichkeit eine virtuelle Anmeldeliste zu haben. also halt die Tablle mit allen Spielern.. und dann ein Kästchen das einen Haken bekommen muss... wenn man dann auf paaren drückt, werden alle die kein haken haben automatisch entfernt. ---> würde Papierkram reduzieren.
  *  
  * @author jk
  *
