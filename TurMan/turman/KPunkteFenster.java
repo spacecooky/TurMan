@@ -1,5 +1,6 @@
 package turman;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,10 +15,12 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 
 public class KPunkteFenster extends JFrame implements ActionListener{
@@ -36,15 +39,17 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		bmTab.addActionListener(this);
 		druckenButton.addActionListener(this);
 		druckenButtonTab.addActionListener(this);
+		anzeigenButton.addActionListener(this);
+		anzeigenButtonTab.addActionListener(this);
 	}
-	
+
 	KHauptFenster hf=null;
-	
+
 	public void init(Dimension d){
-		
+
 		updatePanel(punktePanel);
 		updatePanel(punktePanelTab);
-		setContentPane(new JScrollPane(punktePanel));
+		setContentPane(punktePanel);
 		if(d==null){
 			setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		} else{
@@ -52,95 +57,116 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		}
 		setVisible(true);
 	}
-	
+
 	public void updatePanel(JPanel punktePanel){
 		hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		hf.sortieren(ab.isSelected(),bm.isSelected());
 		color=false;
 		punktePanel.removeAll();
-		
-		punktePanel.setLayout(new BoxLayout(punktePanel,BoxLayout.X_AXIS));
+		punktePanel.setLayout(new BorderLayout());
 		punktePanel.setBackground(Color.white);
 		ab.setBackground(Color.white);
 		bm.setBackground(Color.white);
 		abTab.setBackground(Color.white);
 		bmTab.setBackground(Color.white);
-		
-		JPanel platz = createPanel(punktePanel,true);
+
+		JPanel head = new JPanel();
+		JPanel body = new JPanel();
+		JPanel foot = new JPanel();
+		head.setBackground(Color.white);
+		body.setBackground(Color.white);
+		foot.setBackground(Color.white);
+
+		head.setLayout(new BoxLayout(head,BoxLayout.X_AXIS));
+		head.add(new JLabel("Runde: "));
+		head.add(punktePanel==this.punktePanel?combo:comboTab);
+		head.add(punktePanel==this.punktePanel?anzeigenButton:anzeigenButtonTab);
+		for(int i=0;i<15;i++){
+			JPanel p = new JPanel();
+			p.setBackground(Color.white);
+			head.add(p);
+		}
+
+		body.setLayout(new BoxLayout(body,BoxLayout.X_AXIS));
+		JScrollPane sp = new JScrollPane(body);
+
+		foot.setLayout(new GridLayout(1, 8));
+		foot.add(punktePanel==this.punktePanel?druckenButton:druckenButtonTab);
+		foot.add(punktePanel==this.punktePanel?bm:bmTab);
+		foot.add(punktePanel==this.punktePanel?ab:abTab);
+		for(int i=0;i<4;i++){
+			foot.add(new JLabel(""));
+		}
+		foot.add(punktePanel==this.punktePanel?punkteSchliessenButton:new JLabel(""));
+
+		punktePanel.add(head,BorderLayout.NORTH);
+		punktePanel.add(sp,BorderLayout.CENTER);
+		punktePanel.add(foot,BorderLayout.SOUTH);
+
+		combo.removeAllItems();
+		comboTab.removeAllItems();
+
+		for(int i=0;i<=hf.rundenZaehler;i++){
+			combo.addItem(i);
+			comboTab.addItem(i);
+		}
+
+		combo.setSelectedItem(hf.rundenAnzeige);
+		comboTab.setSelectedItem(hf.rundenAnzeige);
+
+		JPanel platz = createPanel(body,true);
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
-		
-		JPanel spieler = createPanel(punktePanel,true);
-		JPanel primär = createPanel(punktePanel,true);
-		JPanel primärEinzel = createPanel(punktePanel,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
-		JPanel bemalung= createPanel(punktePanel,false);
-		JPanel armee= createPanel(punktePanel,false);
+
+		JPanel spieler = createPanel(body,true);
+		JPanel primär = createPanel(body,true);
+		JPanel primärEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
+		JPanel bemalung= createPanel(body,false);
+		JPanel armee= createPanel(body,false);
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
-			punktePanel.add(bemalung);
+			body.add(bemalung);
 		}
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
-			punktePanel.add(armee);
+			body.add(armee);
 		}
-		JPanel sekundär = createPanel(punktePanel,true);
-		JPanel sekundärEinzel = createPanel(punktePanel,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
+		JPanel sekundär = createPanel(body,true);
+		JPanel sekundärEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
-			punktePanel.add(bemalung);
+			body.add(bemalung);
 		}
 		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
-			punktePanel.add(armee);
+			body.add(armee);
 		}
-		
-		JPanel sos = createPanel(punktePanel,true);
+
+		JPanel sos = createPanel(body,true);
 		if(!hf.optionenFeld.PSS.isSelected()){
 			sos.setVisible(false);
 		}
-		
+
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
 			primär.setBackground(Color.lightGray);
 			sekundär.setBackground(Color.lightGray);
 			sos.setBackground(Color.lightGray);
 		}
-		
-		platz.add(createHeader("Platz",f));
-		
-		spieler.add(createHeader("Spieler",f));
-		
-		if(hf.optionenFeld.PSS.isSelected()){
-			primär.add(createHeader("Primär(komplett)",f));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			primär.add(createHeader("Turnierpunkte(komplett)",f));
-		}
-		
-		if(hf.optionenFeld.PSS.isSelected()){
-			sekundär.add(createHeader("Sekundär(komplett)",f));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			sekundär.add(createHeader("Siegespunktedifferenz",f));
-		}
-		
-		sos.add(createHeader("SOS",f));
-		primärEinzel.add(createHeader("Primär(einzel)",f));
-		sekundärEinzel.add(createHeader("Sekundär(einzel)",f));
-		bemalung.add(createHeader("Bemalwertung",f));
-		armee.add(createHeader("Armeeliste",f));
-		
+
 		for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 			if(hf.sortierterVector.get(i).deleted==false){
 				KTeilnehmer tn=hf.sortierterVector.get(i);
-				platz.add(createLabel(""+hf.sortierterVector.get(i).platz, f));
+				platz.add(createLabel(laengeAnpassenVorne(""+hf.sortierterVector.get(i).platz+" ",10), f));
 				spieler.add(createButton(punktePanel,tn, f));
-				primär.add(createLabel(""+tn.primär, f));
-				primärEinzel.add(createLabel(""+tn.primärEinzel, f));
-				sekundär.add(createLabel(""+hf.sortierterVector.get(i).sekundär, f));
+				primär.add(createLabel(" "+tn.primär, f));
+				primärEinzel.add(createLabel(" "+tn.primärEinzel, f));
+				sekundär.add(createLabel(" "+hf.sortierterVector.get(i).sekundär, f));
 				sekundärEinzel.add(createLabel(""+tn.sekundärEinzel, f));
-				bemalung.add(createLabel(""+tn.bemalwertung, f));
-				armee.add(createLabel(""+tn.armeeliste, f));
-				sos.add(createLabel(""+hf.sortierterVector.get(i).sos, f));
+				bemalung.add(createLabel(" "+tn.bemalwertung, f));
+				armee.add(createLabel(" "+tn.armeeliste, f));
+				sos.add(createLabel(" "+hf.sortierterVector.get(i).sos, f));
 			} 
 		}
-		
+
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
 		if(hf.teilnehmerVector.size()==0){
-			
+
 			platz.setLayout(new GridLayout(33,1));
 			spieler.setLayout(new GridLayout(33,1));
 			primär.setLayout(new GridLayout(33,1));
@@ -150,53 +176,72 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			bemalung.setLayout(new GridLayout(33,1));
 			armee.setLayout(new GridLayout(33,1));
 			sos.setLayout(new GridLayout(33,1));
-			
+
 			for(int i=30;i>0;i--){
-					platz.add(createLabel("", f));
-					spieler.add(createLabel("", f));
-					primär.add(createLabel("", f));
-					primärEinzel.add(createLabel("", f));
-					sekundär.add(createLabel("", f));
-					sekundärEinzel.add(createLabel("", f));
-					bemalung.add(createLabel("", f));
-					armee.add(createLabel("", f));
-					sos.add(createLabel("", f));
+				platz.add(createLabel("", f));
+				spieler.add(createLabel("", f));
+				primär.add(createLabel("", f));
+				primärEinzel.add(createLabel("", f));
+				sekundär.add(createLabel("", f));
+				sekundärEinzel.add(createLabel("", f));
+				bemalung.add(createLabel("", f));
+				armee.add(createLabel("", f));
+				sos.add(createLabel("", f));
 			}
 		}
-		if(punktePanel.equals(this.punktePanel)){
-			platz.add(druckenButton);
-			platz.add(createEmptyPanel());
-		} else{
-			platz.add(druckenButtonTab);
-			platz.add(createEmptyPanel());
-		}
-		primär.add(createEmptyPanel());
-		primär.add(createEmptyPanel());
-		sekundär.add(createEmptyPanel());
-		sekundär.add(createEmptyPanel());
-		primärEinzel.add(createEmptyPanel());
-		primärEinzel.add(createEmptyPanel());
-		sekundärEinzel.add(createEmptyPanel());
-		sekundärEinzel.add(createEmptyPanel());
-		bemalung.add(createEmptyPanel());
-		bemalung.add(createEmptyPanel());
-		armee.add(createEmptyPanel());
-		armee.add(createEmptyPanel());
+
+		punktePanel.validate();
 		
-		if(punktePanel.equals(this.punktePanel)){
-			spieler.add(bm);
-			spieler.add(ab);
-			sos.add(punkteSchliessenButton);
-			sos.add(createEmptyPanel());
-		}else{
-			spieler.add(bmTab);
-			spieler.add(abTab);
-			sos.add(createEmptyPanel());
-			sos.add(createEmptyPanel());
+		JPanel header= new JPanel();
+		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
+
+		header.add(createHeader("Platz",f,platz));
+		header.add(createHeader("Spieler",f,spieler));
+
+		if(hf.optionenFeld.PSS.isSelected()){
+			header.add(createHeader("Primär(komplett)",f,primär));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			header.add(createHeader("Turnierpunkte(komplett)",f,primär));
 		}
+
+		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())){
+			header.add(createHeader("Primär(einzel)",f,primärEinzel));
+		}
+
+		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
+			header.add(createHeader("Bemalwertung",f,bemalung));
+		}
+		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
+			header.add(createHeader("Armeewertung",f,armee));
+		}
+
+		if(hf.optionenFeld.PSS.isSelected()){
+			header.add(createHeader("Sekundär(komplett)",f,sekundär));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			header.add(createHeader("Siegespunktedifferenz",f,sekundär));
+		}
+
+		if((hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
+			header.add(createHeader("Sekundär(einzel)",f,sekundärEinzel));
+		}
+
+		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
+			header.add(createHeader("Bemalwertung",f,bemalung));
+		}
+		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
+			header.add(createHeader("Armeewertung",f,armee));
+		}
+
+		if(hf.optionenFeld.PSS.isSelected()){
+			header.add(createHeader("SOS",f,sos));
+		}
+
+		header.setBackground(Color.white);
+		sp.setColumnHeaderView(header);
+
 		punktePanel.validate();
 	}
-	
+
 	JPanel punktePanel=new JPanel();
 	JPanel punktePanelTab=new JPanel();
 	JCheckBox ab = new JCheckBox("Armeeliste");
@@ -206,8 +251,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	JButton punkteSchliessenButton=new JButton("OK");
 	JButton druckenButton=new JButton("Drucken");
 	JButton druckenButtonTab=new JButton("Drucken");
+	JComboBox combo = new JComboBox();
+	JComboBox comboTab = new JComboBox();
+	JButton anzeigenButton= new JButton("Anzeigen");
+	JButton anzeigenButtonTab= new JButton("Anzeigen");
 	boolean color=false;
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==punkteSchliessenButton){
@@ -231,12 +280,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			tp.sicht=KTextPrintable.PUNKTE;
 			pj.setPrintable(tp);
 			//PageFormat pf = pj.pageDialog(pj.defaultPage());
-		    if (pj.printDialog()) {
-		        try {pj.print();}
-		        catch (PrinterException exc) {
-		            System.out.println(exc);
-		         }
-		     }
+			if (pj.printDialog()) {
+				try {pj.print();}
+				catch (PrinterException exc) {
+					System.out.println(exc);
+				}
+			}
 		} else if(e.getSource()==druckenButtonTab){
 			PrinterJob pj = PrinterJob.getPrinterJob();
 			KTextPrintable tp = new KTextPrintable();
@@ -244,29 +293,38 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			tp.sicht=KTextPrintable.PUNKTE;
 			pj.setPrintable(tp);
 			//PageFormat pf = pj.pageDialog(pj.defaultPage());
-		    if (pj.printDialog()) {
-		        try {pj.print();}
-		        catch (PrinterException exc) {
-		            System.out.println(exc);
-		         }
-		     }
+			if (pj.printDialog()) {
+				try {pj.print();}
+				catch (PrinterException exc) {
+					System.out.println(exc);
+				}
+			}
+		} else if(e.getSource()==anzeigenButton ){
+			hf.rundenAnzeige= combo.getSelectedIndex();
+			hf.updatePanels();
+		} else if(e.getSource()==anzeigenButtonTab){
+			hf.rundenAnzeige= comboTab.getSelectedIndex();
+			hf.updatePanels();
 		}
 	}
 	
-	public JLabel createHeader(String s, Font f){
+	public JLabel createHeader(String s, Font f, JPanel p){
 		JLabel l = new JLabel(s);
+		l.setMaximumSize(new Dimension(p.getWidth(),35));
+		l.setMinimumSize(new Dimension(p.getWidth(),35));
+		l.setPreferredSize(new Dimension(p.getWidth(),35));
 		l.setBorder(BorderFactory.createRaisedBevelBorder());
 		l.setFont(f);
 		return l;
 	}
-	
+
 	public JLabel createLabel(String s, Font f){
 		JLabel l = new JLabel(s);
 		l.setBorder(BorderFactory.createEtchedBorder());
 		l.setFont(f);
 		return l;
 	}
-	
+
 	public JButton createButton(JPanel punktePanel,KTeilnehmer tn, Font f){
 		JButton b;
 		if(punktePanel.equals(this.punktePanel)){
@@ -274,17 +332,18 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		} else{
 			b=tn.punkteTabButton;
 		}
-		
-		b.setText(tn.vorname+" "+tn.nachname);
+
+		b.setText(" "+tn.vorname+" "+tn.nachname);
 		b.setBorder(BorderFactory.createEtchedBorder());
+		b.setHorizontalAlignment(SwingConstants.LEFT);
 		b.setFont(f);
 		b.setBackground(Color.white);
 		return b;
 	}
-	
+
 	public JPanel createPanel(JPanel punktePanel, boolean b){
 		JPanel p = new JPanel() ;
-		p.setLayout(new GridLayout(hf.teilnehmerVector.size()+3,1));
+		p.setLayout(new GridLayout(hf.teilnehmerVector.size(),1));
 		if(b){
 			punktePanel.add(p);
 		}
@@ -298,4 +357,17 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		return p;
 	}
 	
+	public String laengeAnpassenVorne(String s, int i){
+		while(s.length()<i){
+			s= " "+s;
+		}
+		return s;
+	}
+	public String laengeAnpassenHinten(String s, int i){
+		while(s.length()<i){
+			s+= " ";
+		}
+		return s;
+	}
+
 }

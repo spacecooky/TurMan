@@ -49,14 +49,14 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Die Möglichkeit die Tabelle und Paarungen von vorherigen Spieltagen aufzurufen.
- * TODO Das Abspeichern der Tabelle als pdf oder so (ganz hilfreich wenn man ein Zwischenergebniss in Foren usw. posten möchte)
- * TODO Bei uns ist ja der Fehler aufgetaucht, dass kein Teamschutz mehr in Runde 3 möglich war, also evntl. eine möglichkeit das zu umgehen... also dass es möglich ist.
- * TODO Verschiebung der Paarung korrigieren, die nach den dem hin und her mit Herausforderungen und Teamschutz entstanden sind.
- * TODO in der Tabelle Spielerzahlen einfügen, bzw. Nummerierungen um festzustellen wieviele spieler da sind.
- * TODO Dann was ich mir noch so überlegt hab, weis halt nicht in wie weit es ein Aufwand ist sowas zu programmieren: evntl. die Möglichkeit eine virtuelle Anmeldeliste zu haben. also halt die Tablle mit allen Spielern.. und dann ein Kästchen das einen Haken bekommen muss... wenn man dann auf paaren drückt, werden alle die kein haken haben automatisch entfernt. ---> würde Papierkram reduzieren.
+ * TODO Möglichkeit die Tabelle und Paarungen von vorherigen Spieltagen aufzurufen.
+ * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
+ * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereits gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
+ * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
+ * TODO In der Tabelle Spielerzahlen einfügen, bzw. Nummerierungen um festzustellen wieviele spieler da sind.
+ * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
- * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereit gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
+ * TODO Entfernen von Herausforderungen.
  * @author jk
  *
  */
@@ -69,8 +69,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public KHauptFenster(){
 		super("TurMan "+version);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		setSize(800,600);
+		setLocation(0, 500);
+		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -89,7 +91,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
 		//Hauptbereich
 		tab.addTab("Matrix",null,sp);
-		tab.addTab("Punkte",null,new JScrollPane(punkteFenster.punktePanelTab));
+		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
 		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
 		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		tab.setBackground(Color.white);
@@ -261,6 +263,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	int gelöschteTeilnehmer=0;
 	int runden=0;
 	int rundenZaehler=0;
+	int rundenAnzeige=0;
 	int mode = KPairings.RANDOM;
 	String TID="0";
 	Vector<KTeilnehmer> teilnehmerVector= new Vector<KTeilnehmer>();
@@ -494,6 +497,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			restHeight=0;
 		}
 		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
+		updatePanels();
 	}
 
 	public void fillTeamPanels(){

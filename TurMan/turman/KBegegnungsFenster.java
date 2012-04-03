@@ -62,12 +62,12 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		JPanel body = new JPanel();
 		JPanel foot = new JPanel();
 		
-		head.setLayout(new GridLayout(1, 18));
+		head.setLayout(new BoxLayout(head,BoxLayout.X_AXIS));
 		head.add(new JLabel("Runde: "));
 		head.add(begegnungsPanel==this.begegnungsPanel?combo:comboTab);
 		head.add(begegnungsPanel==this.begegnungsPanel?anzeigenButton:anzeigenButtonTab);
 		for(int i=0;i<15;i++){
-			head.add(new JLabel(""));
+			head.add(new JPanel());
 		}
 		
 		body.setLayout(new BoxLayout(body,BoxLayout.X_AXIS));
@@ -92,8 +92,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 			comboTab.addItem(i);
 		}
 		
-		combo.setSelectedItem(runde);
-		comboTab.setSelectedItem(runde);
+		combo.setSelectedItem(hf.rundenAnzeige);
+		comboTab.setSelectedItem(hf.rundenAnzeige);
 		
 		JPanel tische = new JPanel();
 		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
@@ -138,7 +138,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
-			if(bg.runde==runde){
+			if(bg.runde==hf.rundenAnzeige){
 				JLabel label6 = new JLabel(""+(bg.tisch+1));
 				tische.add(label6);
 				label6.setBorder(BorderFactory.createEtchedBorder());
@@ -209,7 +209,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	JComboBox comboTab = new JComboBox();
 	JButton anzeigenButton= new JButton("Anzeigen");
 	JButton anzeigenButtonTab= new JButton("Anzeigen");
-	int runde=0;
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -229,10 +229,10 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		         }
 		     }
 		} else if(e.getSource()==anzeigenButton ){
-			runde= combo.getSelectedIndex();
+			hf.rundenAnzeige= combo.getSelectedIndex();
 			hf.updatePanels();
 		} else if(e.getSource()==anzeigenButtonTab){
-			runde= comboTab.getSelectedIndex();
+			hf.rundenAnzeige= comboTab.getSelectedIndex();
 			hf.updatePanels();
 		}
 	}

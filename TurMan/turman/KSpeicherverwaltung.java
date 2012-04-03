@@ -180,7 +180,7 @@ public class KSpeicherverwaltung {
 				}
 			}
 
-			hf.begegnungsFenster.runde=hf.rundenZaehler;
+			hf.rundenAnzeige=hf.rundenZaehler;
 			
 			hf.updatePanels();
 		} catch (FileNotFoundException e1) {
