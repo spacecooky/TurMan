@@ -350,12 +350,6 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		p.setBackground(Color.white);
 		return p;
 	}
-
-	public JPanel createEmptyPanel(){
-		JPanel p = new JPanel() ;
-		p.setBackground(Color.white);
-		return p;
-	}
 	
 	public String laengeAnpassenVorne(String s, int i){
 		while(s.length()<i){

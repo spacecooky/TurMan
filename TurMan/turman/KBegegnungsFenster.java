@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -57,10 +58,14 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		
 		begegnungsPanel.removeAll();
 		begegnungsPanel.setLayout(new BorderLayout());
-
+		begegnungsPanel.setBackground(Color.white);
+		
 		JPanel head = new JPanel();
 		JPanel body = new JPanel();
 		JPanel foot = new JPanel();
+		head.setBackground(Color.white);
+		body.setBackground(Color.white);
+		foot.setBackground(Color.white);
 		
 		head.setLayout(new BoxLayout(head,BoxLayout.X_AXIS));
 		head.add(new JLabel("Runde: "));
@@ -95,54 +100,32 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		combo.setSelectedItem(hf.rundenAnzeige);
 		comboTab.setSelectedItem(hf.rundenAnzeige);
 		
-		JPanel tische = new JPanel();
-		tische.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		JPanel tische = createPanel(body);
 		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,20000));
-		body.add(tische);
 		
-		JPanel begegnung = new JPanel();
-		begegnung.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
-		body.add(begegnung);
+		JPanel begegnung = createPanel(body);
+		JPanel primär = createPanel(body);
+		JPanel sekundär = createPanel(body);
 		
-		JPanel primär = new JPanel();
-		primär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
-		body.add(primär);
-		
-		JPanel sekundär = new JPanel();
-		sekundär.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
-		body.add(sekundär);
-		
-		tische.add(new JLabel("Tisch"));
-		tische.getComponent(0).setFont(f);
-		((JLabel)tische.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
-		
-		begegnung.add(new JLabel("Begegnung"));
-		begegnung.getComponent(0).setFont(f);
-		((JLabel)begegnung.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
+		tische.add(createHeader("Tisch",f,tische));
+		begegnung.add(createHeader("Begegnung",f,begegnung));
 		
 		if(hf.optionenFeld.PSS.isSelected()){	
-			primär.add(new JLabel("Primär"));
+			primär.add(createHeader("Primär",f,primär));
 		} else if(hf.optionenFeld.TS.isSelected()){	
-			primär.add(new JLabel("Turnierpunkte"));
+			primär.add(createHeader("Turnierpunkte",f,primär));
 		}
-		primär.getComponent(0).setFont(f);
-		((JLabel)primär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		if(hf.optionenFeld.PSS.isSelected()){
-			sekundär.add(new JLabel("Sekundär"));
+			sekundär.add(createHeader("Sekundär",f,primär));
 		} else if(hf.optionenFeld.TS.isSelected()){
-			sekundär.add(new JLabel("Siegespunkte"));
+			sekundär.add(createHeader("Siegespunkte",f,primär));
 		}
-		sekundär.getComponent(0).setFont(f);
-		((JLabel)sekundär.getComponent(0)).setBorder(BorderFactory.createRaisedBevelBorder());
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
 			if(bg.runde==hf.rundenAnzeige){
-				JLabel label6 = new JLabel(""+(bg.tisch+1));
-				tische.add(label6);
-				label6.setBorder(BorderFactory.createEtchedBorder());
-				label6.setFont(f);
+				tische.add(createLabel(""+(bg.tisch+1),f));
 				
 				KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
@@ -159,15 +142,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);
 				
-				JLabel label2 = new JLabel(bg.p1+" : "+bg.p2);
-				primär.add(label2);
-				label2.setBorder(BorderFactory.createEtchedBorder());
-				label2.setFont(f);
-				
-				JLabel label3 = new JLabel(bg.p12+" : "+bg.p22);
-				sekundär.add(label3);
-				label3.setBorder(BorderFactory.createEtchedBorder());
-				label3.setFont(f);
+				primär.add(createLabel(bg.p1+" : "+bg.p2,f));
+				sekundär.add(createLabel(bg.p12+" : "+bg.p22,f));
 			}
 		}
 		
@@ -237,5 +213,28 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		}
 	}
 
+	public JLabel createHeader(String s, Font f, JPanel p){
+		JLabel l = new JLabel(s);
+		//l.setMaximumSize(new Dimension(p.getWidth(),35));
+		//l.setMinimumSize(new Dimension(p.getWidth(),35));
+		//l.setPreferredSize(new Dimension(p.getWidth(),35));
+		l.setBorder(BorderFactory.createRaisedBevelBorder());
+		l.setFont(f);
+		return l;
+	}
 	
+	public JLabel createLabel(String s, Font f){
+		JLabel l = new JLabel(s);
+		l.setBorder(BorderFactory.createEtchedBorder());
+		l.setFont(f);
+		return l;
+	}
+	
+	public JPanel createPanel(JPanel punktePanel){
+		JPanel p = new JPanel() ;
+		p.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		punktePanel.add(p);
+		p.setBackground(Color.white);
+		return p;
+	}
 }
