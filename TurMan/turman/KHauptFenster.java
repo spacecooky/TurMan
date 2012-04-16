@@ -56,6 +56,7 @@ import javax.swing.JTextField;
  * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
  * TODO Entfernen von Herausforderungen.
+ * TODO Speichern der Turnier-ID.
  * @author jk
  *
  */
