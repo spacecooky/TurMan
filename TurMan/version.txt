@@ -1,8 +1,11 @@
-WIP Version 0.0.16
+WIP Version 0.0.17
+- Anzahl der Spieler im Begegnungs-/Punktefenster
+
+Version 0.0.16
 - Spieler im Punktefenster sind jetzt Buttons, mit denen die Spielerinformationen verändert werden können.
 - Farbänderung der Felder und Buttons zur besseren Sichtbarkeit per Beameranzeige.
 - Konfigurationsmenü im Tab neben Matrix, Punkte und Begegnungen für eine schnellere Navigation.
-- Bei den Begegnungen können alte Runden angesehen werden.
+- Bei Begegnungen/Punkte können alte Runden angesehen werden.
 
 Version 0.0.15
 - Freilos-Spieler hinzufügen überarbeitet. Wenn der Freilosspieler bereits vorhanden ist, wird er aktualisisert und auf nicht gelöscht gesetzt, falls er gelöscht war.

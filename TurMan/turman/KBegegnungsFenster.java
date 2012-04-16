@@ -68,11 +68,15 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		foot.setBackground(Color.white);
 		
 		head.setLayout(new BoxLayout(head,BoxLayout.X_AXIS));
+		head.setBorder(BorderFactory.createEtchedBorder());
 		head.add(new JLabel("Runde: "));
 		head.add(begegnungsPanel==this.begegnungsPanel?combo:comboTab);
 		head.add(begegnungsPanel==this.begegnungsPanel?anzeigenButton:anzeigenButtonTab);
-		for(int i=0;i<15;i++){
-			head.add(new JPanel());
+		head.add(new JLabel(" Spieler: "+hf.sortierterVector.size()));
+		for(int i=0;i<14;i++){
+			JPanel p = new JPanel();
+			p.setBackground(Color.white);
+			head.add(p);
 		}
 		
 		body.setLayout(new BoxLayout(body,BoxLayout.X_AXIS));

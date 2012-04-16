@@ -52,7 +52,6 @@ import javax.swing.JTextField;
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
  * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereits gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
  * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
- * TODO In der Tabelle Spielerzahlen einfügen, bzw. Nummerierungen um festzustellen wieviele spieler da sind.
  * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
  * TODO Entfernen von Herausforderungen.

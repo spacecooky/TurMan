@@ -79,10 +79,12 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		foot.setBackground(Color.white);
 
 		head.setLayout(new BoxLayout(head,BoxLayout.X_AXIS));
+		head.setBorder(BorderFactory.createEtchedBorder());
 		head.add(new JLabel("Runde: "));
 		head.add(punktePanel==this.punktePanel?combo:comboTab);
 		head.add(punktePanel==this.punktePanel?anzeigenButton:anzeigenButtonTab);
-		for(int i=0;i<15;i++){
+		head.add(new JLabel(" Spieler: "+hf.sortierterVector.size()));
+		for(int i=0;i<14;i++){
 			JPanel p = new JPanel();
 			p.setBackground(Color.white);
 			head.add(p);
