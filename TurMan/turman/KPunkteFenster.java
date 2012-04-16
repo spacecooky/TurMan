@@ -59,9 +59,9 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 	}
 
 	public void updatePanel(JPanel punktePanel){
-		hf.sortieren(ab.isSelected(),bm.isSelected());
+		//hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
-		hf.sortieren(ab.isSelected(),bm.isSelected());
+		hf.sortieren(ab.isSelected(),bm.isSelected(),hf.rundenAnzeige);
 		color=false;
 		punktePanel.removeAll();
 		punktePanel.setLayout(new BorderLayout());

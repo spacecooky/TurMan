@@ -108,7 +108,7 @@ public class KPort {
 
 					fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");
 					fw.write("#TID-"+hf.TID+"||x\r\n");
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 						KTeilnehmer tn = hf.sortierterVector.get(i);
 							int primeinzel=tn.primärEinzel;

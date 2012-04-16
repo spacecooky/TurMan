@@ -49,7 +49,6 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Möglichkeit die Tabelle und Paarungen von vorherigen Spieltagen aufzurufen.
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
  * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereits gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
  * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
@@ -185,7 +184,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.15");
+	static String version=new String("V0.0.16");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -378,7 +377,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		} else if(quelle==zeit){
 			new TTimer(this);
 		} else if(quelle==urkundenErstellen){
-			sortieren(true, true);
+			sortieren(true, true,rundenZaehler);
 			urkunde.urkundeErstellen(sortierterVector);
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
@@ -532,7 +531,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	}
 
 
-	public void sortieren(boolean ab,boolean bm){
+	public void sortieren(boolean ab,boolean bm,int lokRunde){
 		KTeilnehmer t;
 		//Primär und Sekundärpunkte für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
@@ -545,24 +544,18 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t.platzGruppe=-1;
 			t.platz=0;
 			for(int j=0;j<t.paarungen.size();j++){
-				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
-				if(optionenFeld.PSS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
-				} else if(optionenFeld.TS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+					t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
+					if(optionenFeld.PSS.isSelected()){
+						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
+					} else if(optionenFeld.TS.isSelected()){
+						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+					}
 				}
 			}
 			
 			t.primärEinzel=t.primär;
 			t.sekundärEinzel=t.sekundär;
-			
-			//SOS berechnen
-			if(optionenFeld.PSS.isSelected()){
-					t=teilnehmerVector.get(i);
-					for(int j=0;j<t.paarungen.size();j++){
-						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
-					}
-			}
 			
 			if(ab){
 				if(optionenFeld.armeePri.isSelected()){
@@ -582,6 +575,15 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		}
 		
+		//SOS berechnen
+		for(int i=0;i<teilnehmer;i++){
+			if(optionenFeld.PSS.isSelected()){
+					t=teilnehmerVector.get(i);
+					for(int j=0;j<t.paarungen.size();j++){
+						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
+					}
+			}
+		}
 
 		//Sortiern nach primär
 		sortierterVector.clear();

@@ -224,7 +224,7 @@ public class KPairings {
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
-			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 			hf.rundenZaehler++;
 			while(!KPairings.createPairings(hf,hf.mode)){
 				if(hf.mode==KPairings.SWISS){
@@ -265,7 +265,7 @@ public class KPairings {
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 				
@@ -283,7 +283,7 @@ public class KPairings {
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected());
+					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 			}
