@@ -50,7 +50,7 @@ import javax.swing.JTextField;
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
- * TODO Paarungs-Algorithmus anpassen. Vor Paarungsversuch einen Pool erstellen, aus dem alle bereits gespielten und alle durch Konfiguration entfernten Paarungen gelöscht werden. 
+ * TODO Paarungs-Algorithmus anpassen. Falls für einen Spieler keine Paarungen möglich sind, Auflistung und manuelle Auswahl der verbotenen Paarungen
  * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
  * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
@@ -638,114 +638,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 						}
 				}
 			}
-	
-	/*public void sortieren(boolean ab,boolean bm){
-		KTeilnehmer t;
-		//Primär und Sekundärpunkte für alle berechnen
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			t.primär=0;
-			t.sekundär=0;
-			t.primärEinzel=0;
-			t.sekundärEinzel=0;
-			t.sos=0;
-			t.platzGruppe=-1;
-			t.platz=0;
-			for(int j=0;j<t.paarungen.size();j++){
-				t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
-				if(optionenFeld.PSS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
-				} else if(optionenFeld.TS.isSelected()){
-					t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
-				}
-			}
-			
-			t.primärEinzel=t.primär;
-			t.sekundärEinzel=t.sekundär;
-			
-			//SOS berechnen
-			if(optionenFeld.PSS.isSelected()){
-					t=teilnehmerVector.get(i);
-					for(int j=0;j<t.paarungen.size();j++){
-						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
-					}
-			}
-			
-			if(ab){
-				if(optionenFeld.armeePri.isSelected()){
-					t.primär+=t.armeeliste;
-				}
-				if(optionenFeld.armeeSek.isSelected()){
-					t.sekundär+=t.armeeliste;
-				}
-			}
-			if(bm){
-				if(optionenFeld.bemalPri.isSelected()){
-					t.primär+=t.bemalwertung;
-				}
-				if(optionenFeld.bemalSek.isSelected()){
-					t.sekundär+=t.bemalwertung;
-				}
-			}
-		}
-		
-
-		//Sortiern nach primär
-		sortierterVector.clear();
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			int j=0;
-			while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
-				j++;
-			}
-			//Sortieren nach Sekundär
-			while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
-				j++;
-			}
-			//Sortieren nach sos
-			if(optionenFeld.PSS.isSelected()){
-				while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
-					j++;
-				}
-			}
-			sortierterVector.insertElementAt(t,j);	
-		}
-		
-		//Platzgruppen berechnen
-		platzgruppe=-1;
-		platzGruppe.clear();
-		for(int i=1;i<sortierterVector.size();i++){
-			KTeilnehmer t1=sortierterVector.get(i);
-			KTeilnehmer t2=sortierterVector.get(i-1);
-			if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
-				if(t2.platzGruppe==-1){
-					platzgruppe++;
-					t2.platzGruppe=platzgruppe;
-					t1.platzGruppe=platzgruppe;
-					platzGruppe.add(new Vector<KTeilnehmer>());
-					platzGruppe.get(platzgruppe).add(t2);
-					platzGruppe.get(platzgruppe).add(t1);
-				} else{
-					t1.platzGruppe=t2.platzGruppe;
-					platzGruppe.get(platzgruppe).add(t1);
-				}
-			} 
-		}
-		
-		//Plätze eintragen
-		int deleted=0;
-		for(int i=teilnehmerVector.size()-1;i>=0;i--){
-			if(sortierterVector.get(i).deleted==false){
-				if(i<teilnehmerVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
-					sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
-				} else{
-					sortierterVector.get(i).platz=teilnehmerVector.size()-i-deleted;
-				}
-			} else{ 
-				deleted++;
-			}
-		}
-	}*/
 	
 	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
 		System.out.println("Alt");

@@ -173,7 +173,8 @@ public class KPairings {
 			
 			
 			//Paaren
-			Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf,0,0,0,0);
+			//Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf,0,0,0,0);
+			Vector<KBegegnungen> bVector= swiss2(tVector,hf);
 			if(bVector==null){
 				return false;
 			}
@@ -492,6 +493,116 @@ public class KPairings {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Einfaches Berechnen der Paarungen mit vorheriger Aussortierung aller unmöglichen Paarungen
+	 * 
+	 * @param tV
+	 * @param hf
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	static Vector<KBegegnungen> swiss2(Vector<KTeilnehmer> tV,KHauptFenster hf){
+		Vector<KBegegnungen> begegnungsPool = (Vector<KBegegnungen>)hf.alleBegegnungenVector.clone();
+		Vector<KBegegnungen> endergebnis = new Vector<KBegegnungen>();
+		//System.out.println(begegnungsPool.size());
+		//System.out.println("Armeen: "+hf.optionenFeld.armeen.isSelected());
+		//System.out.println("Mirror: "+hf.optionenFeld.mirror.isSelected());
+		//System.out.println("Orte: "+hf.optionenFeld.orte.isSelected());
+		//System.out.println("Team: "+hf.optionenFeld.teams.isSelected());
+		
+		//Entfernen aller unerlaubten Paarungen
+		for(int i=0; i<begegnungsPool.size();i++){
+			KBegegnungen b = begegnungsPool.get(i);
+			if(hf.optionenFeld.armeen.isSelected()){
+				if(b.armee()){
+					begegnungsPool.remove(b);
+					i=0;
+				}
+			}
+			if(hf.optionenFeld.mirror.isSelected()){
+				if(b.mirror()){
+					begegnungsPool.remove(b);
+					i=0;
+				}
+			}
+			if(hf.optionenFeld.orte.isSelected()){
+				if(b.ort()){
+					begegnungsPool.remove(b);
+					i=0;
+				}
+			}
+			if(hf.optionenFeld.team.isSelected()){
+				if(b.team()){
+					begegnungsPool.remove(b);
+					i=0;
+				}
+			}
+		}
+		//System.out.println(begegnungsPool.size());
+		
+		//Paaren
+		for(int i=0;i<tV.size();i++){
+			Vector<KBegegnungen> tB = new Vector<KBegegnungen>();
+			KTeilnehmer t=tV.get(i);
+			//System.out.println(t.vorname+" "+t.nachname+":");
+			
+			//Alle möglichen Paarungen für den Spieler auswählen
+			for(int j=0;j<begegnungsPool.size();j++){
+				KBegegnungen b = begegnungsPool.get(j);
+				if(b.t1.equals(t)){
+					tB.add(b);
+					begegnungsPool.remove(b);
+					j=0;
+				}
+				if(b.t2.equals(t)){
+					begegnungsPool.remove(b);
+					j=0;
+				}
+			}
+			//Falls für den Spieler keine Paarung möglich ist, sind die Vorgaben zu streng und müssen gelockert werden.
+			if(tB.size()==0){
+				//TODO Alternatives manuelles Auswahlverfahren für die Paarung Spielern ohne erlaubte Paarung
+				return null;
+			}
+			
+			//Die Paarung/en mit dem niedrigsten Platzabstand auswählen
+			for(int j=0;j<tB.size()-1;j++){
+				int p1=tB.get(j).t1.platz-tB.get(j).t2.platz;
+				int p2=tB.get(j+1).t1.platz-tB.get(j+1).t2.platz;
+				if(p1>p2){
+					tB.remove(j+1);
+					j=0;
+				} else if(p2>p1){
+					tB.remove(j);
+					j=0;
+				}
+			}
+			
+			//Auswahl der ersten Begegnung. Da Gleichplatzierte bereits gemischt wurden, kein weiterer Schritt nötig. 
+			endergebnis.add(tB.get(0));
+			//System.out.println(tB.get(0).t1.vorname+" "+tB.get(0).t1.nachname+" : "+tB.get(0).t2.vorname+" "+tB.get(0).t2.nachname);
+			tV.remove(tB.get(0).t1);
+			//Alle Paarungen des zweiten Spielers entfernen
+			t=tB.get(0).t2;
+			for(int j=0;j<begegnungsPool.size();j++){
+				KBegegnungen b = begegnungsPool.get(j);
+				if(b.t1.equals(t)){
+					begegnungsPool.remove(b);
+					j=0;
+				}
+				if(b.t2.equals(t)){
+					begegnungsPool.remove(b);
+					j=0;
+				}
+			}
+			tV.remove(tB.get(0).t2);
+			i=0;
+		}
+		
+		//System.out.println(endergebnis.size());
+		return endergebnis;
 	}
 
 	static void rundeReset(KHauptFenster hf){
