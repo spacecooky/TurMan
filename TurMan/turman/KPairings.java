@@ -171,10 +171,42 @@ public class KPairings {
 				tVector.remove(hf.herausforderungsVector.get(i));
 			}
 			
+			//Begegnungspool vorbereiten
+			@SuppressWarnings("unchecked")
+			Vector<KBegegnungen> begegnungsPool = (Vector<KBegegnungen>)hf.alleBegegnungenVector.clone();
 			
+			//Entfernen aller unerlaubten Paarungen
+			for(int i=0; i<begegnungsPool.size();i++){
+				KBegegnungen b = begegnungsPool.get(i);
+				if(hf.optionenFeld.armeen.isSelected()){
+					if(b.armee()){
+						begegnungsPool.remove(b);
+						i=0;
+					}
+				}
+				if(hf.optionenFeld.mirror.isSelected()){
+					if(b.mirror()){
+						begegnungsPool.remove(b);
+						i=0;
+					}
+				}
+				if(hf.optionenFeld.orte.isSelected()){
+					if(b.ort()){
+						begegnungsPool.remove(b);
+						i=0;
+					}
+				}
+				if(hf.optionenFeld.team.isSelected()){
+					if(b.team()){
+						begegnungsPool.remove(b);
+						i=0;
+					}
+				}
+			}
 			//Paaren
 			//Vector<KBegegnungen> bVector= swiss(tVector,new Vector<KBegegnungen>(),hf,0,0,0,0);
-			Vector<KBegegnungen> bVector= swiss2(tVector,hf);
+			//Vector<KBegegnungen> bVector= swiss2(tVector,hf);
+			Vector<KBegegnungen> bVector= swiss3(tVector,new Vector<KBegegnungen>(),hf,begegnungsPool);
 			if(bVector==null){
 				return false;
 			}
@@ -540,10 +572,17 @@ public class KPairings {
 				}
 			}
 		}
-		//System.out.println(begegnungsPool.size());
 		
 		//Paaren
 		for(int i=0;i<tV.size();i++){
+			
+			//System.out.println(begegnungsPool.size());
+			for(int j=0;j<tV.size();j++){
+				KTeilnehmer t=tV.get(j);
+				System.out.println(t.vorname+" "+t.nachname+", mögliche Paarungen:"+t.getPossiblePairings(begegnungsPool).size());
+			}
+			System.out.println();
+			
 			Vector<KBegegnungen> tB = new Vector<KBegegnungen>();
 			KTeilnehmer t=tV.get(i);
 			//System.out.println(t.vorname+" "+t.nachname+":");
@@ -599,10 +638,81 @@ public class KPairings {
 			}
 			tV.remove(tB.get(0).t2);
 			i=0;
+			
 		}
 		
 		//System.out.println(endergebnis.size());
 		return endergebnis;
+	}
+	
+	/**
+	 * Rekursive Berechnung der Paarungen
+	 * 
+	 * @param tV
+	 * @param bV
+	 * @param hf
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	static Vector<KBegegnungen> swiss3(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,KHauptFenster hf,Vector<KBegegnungen> Expool){
+		Vector<KBegegnungen> pool=(Vector<KBegegnungen>)Expool.clone();
+		for(int j=0;j<tV.size();j++){
+			KTeilnehmer t=tV.get(j);
+			System.out.println(t.vorname+" "+t.nachname+", mögliche Paarungen:"+t.getPossiblePairings(pool).size());
+		}
+		System.out.println();
+		
+		Vector<KTeilnehmer> tVector=(Vector<KTeilnehmer>)tV.clone();
+		for(int i=0;i < tVector.size();i++){
+			//System.out.println(""+i+"<"+tVector.size());
+			Vector<KBegegnungen> bVector=(Vector<KBegegnungen>)bV.clone();
+			if((hf.teilnehmerVector.indexOf(tVector.get(0))+1)!=hf.teilnehmerVector.indexOf(tVector.get(i))+1){//Falls beide Teilnehmer nicht identisch sind 
+				Vector<KTeilnehmer> tneu=(Vector<KTeilnehmer>)tV.clone();
+				KBegegnungen b=(KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0)))).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i)));
+				
+				if(pool.contains(b)){//Falls sich die Begegnung noch im Pool aller möglichen Begegnungen befindet
+					if(tVector.get(0).deleted){
+						tneu.remove(0);
+					}else if(tVector.get(i).deleted){
+						tneu.remove(i);
+					}else{
+						
+						for(int j=0;j<pool.size();j++){
+							KBegegnungen bneu = pool.get(j);
+							if(b.t1.equals(tneu.get(0))){
+								pool.remove(bneu);
+								j=0;
+							}
+							if(b.t2.equals(tneu.get(0))){
+								pool.remove(bneu);
+								j=0;
+							}
+							if(b.t1.equals(tneu.get(i))){
+								pool.remove(bneu);
+								j=0;
+							}
+							if(b.t2.equals(tneu.get(i))){
+								pool.remove(bneu);
+								j=0;
+							}
+						}
+						
+							bVector.add((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.teilnehmerVector.indexOf(tneu.get(0)))).getComponent(hf.teilnehmerVector.indexOf(tneu.get(i))));
+							tneu.remove(i);
+							tneu.remove(0);
+							
+					}
+					if(tneu.size()==0){
+						return bVector;
+					}
+					bVector=swiss3(tneu,bVector,hf,pool);
+					if(bVector!=null){
+						return bVector;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	static void rundeReset(KHauptFenster hf){

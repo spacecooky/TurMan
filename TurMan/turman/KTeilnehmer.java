@@ -77,4 +77,15 @@ public class KTeilnehmer implements ActionListener {
 		hf.spielerFenster.anzeigen(this);
 	}
 	
+	public Vector<KBegegnungen> getPossiblePairings(Vector<KBegegnungen> b){
+		Vector<KBegegnungen> re = new Vector<KBegegnungen>();
+		for(int i=0;i<b.size();i++){
+			if(b.get(i).t1.equals(this)){
+				re.add(b.get(i));
+			}
+		}
+		return re;
+		
+	}
+	
 }
