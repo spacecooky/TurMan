@@ -50,11 +50,11 @@ import javax.swing.JTextField;
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
- * TODO Paarungs-Algorithmus anpassen. Falls für einen Spieler keine Paarungen möglich sind, Auflistung und manuelle Auswahl der verbotenen Paarungen
  * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
  * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
- * TODO Entfernen von Herausforderungen.
+ * TODO Erkennen von Herausforderungen beim Neuladen.
+ * TODO Herausforderungen und normale Berechnung kollidieren noch
  * TODO Speichern der Turnier-ID.
  * @author jk
  *
@@ -125,6 +125,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		menubar.add(turnierRunde);
 		turnierRunde.add(herausforderung);
 		herausforderung.addActionListener(this);
+		turnierRunde.add(herausforderungDel);
+		herausforderungDel.addActionListener(this);
 		turnierRunde.add(runde);
 		runde.addActionListener(this);
 		turnierRunde.add(rundeWdh);
@@ -184,7 +186,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.16");
+	static String version=new String("V0.0.17");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -215,6 +217,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
+	JMenuItem herausforderungDel = new JMenuItem("Herausforderung entfernen");
 	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
 	JMenuItem rundeWdh = new JMenuItem("Runde erneut paaren");
 	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
@@ -283,6 +286,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KFreilosFenster freilosFenster = new KFreilosFenster(this);
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
 	KHerausforderungsFenster herausforderungsFenster = new KHerausforderungsFenster(this);
+	KHerausforderungsDelFenster herausforderungsDelFenster = new KHerausforderungsDelFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KDialog dialog = new KDialog(this);
@@ -374,7 +378,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			erweiternFenster.init();
 		} else if(quelle==herausforderung){
 			herausforderungsFenster.init();
-		} else if(quelle==zeit){
+		} else if(quelle==herausforderungDel){
+			herausforderungsDelFenster.init();
+		}else if(quelle==zeit){
 			new TTimer(this);
 		} else if(quelle==urkundenErstellen){
 			sortieren(true, true,rundenZaehler);

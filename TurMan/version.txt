@@ -1,6 +1,7 @@
 WIP Version 0.0.17
 - Anzahl der Spieler im Begegnungs-/Punktefenster
 - Neuer Paarungs-Algorithmus (ohne Berücksichtigung von Ausnahmen bei den Optionen)
+- Herausforderungen können entfernt werden. Noch nicht nach Speichern und Neuladen.
 
 Version 0.0.16
 - Spieler im Punktefenster sind jetzt Buttons, mit denen die Spielerinformationen verändert werden können.

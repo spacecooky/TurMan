@@ -81,11 +81,29 @@ public class KTeilnehmer implements ActionListener {
 		Vector<KBegegnungen> re = new Vector<KBegegnungen>();
 		for(int i=0;i<b.size();i++){
 			if(b.get(i).t1.equals(this)){
+				int j=0;
+				for(;j<re.size();j++){
+					if(b.get(i).t2.platz<=re.get(j).t2.platz){
+						break;
+					}
+				}
+				re.add(j,b.get(i));
+			}
+		}
+		/*for(int i=0;i<re.size();i++){
+			System.out.println("Platz:"+re.get(i).t2.platz);
+		}*/
+		return re;
+		
+	}
+	public Vector<KBegegnungen> get2ndMemberIn(Vector<KBegegnungen> b){
+		Vector<KBegegnungen> re = new Vector<KBegegnungen>();
+		for(int i=0;i<b.size();i++){
+			if(b.get(i).t2.equals(this)){
 				re.add(b.get(i));
 			}
 		}
 		return re;
-		
 	}
 	
 }

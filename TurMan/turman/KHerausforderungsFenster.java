@@ -60,19 +60,23 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 		} else if(arg0.getSource()==ok){
 			hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo1.getSelectedIndex()));
 			hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo2.getSelectedIndex()));
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())).setEnabled(true);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).setEnabled(true);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())).setBackground(Color.orange);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).setBackground(Color.orange);
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())).setText(""+(hf.rundenZaehler+1));
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).setText(""+(hf.rundenZaehler+1));
+			KBegegnungen b1=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex()));
+			KBegegnungen b2=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex()));
+			b1.setEnabled(true);
+			b2.setEnabled(true);
+			b1.setBackground(Color.orange);
+			b2.setBackground(Color.orange);
+			b1.setText(""+(hf.rundenZaehler+1));
+			b2.setText(""+(hf.rundenZaehler+1));
+			b1.t2.paarungen.add(b1.xPos);
+			b1.t1.paarungen.add(b1.yPos);
 			
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())).runde=hf.rundenZaehler+1;
+			b1.runde=hf.rundenZaehler+1;
 			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).runde=hf.rundenZaehler+1;
 			
-			hf.begegnungsVector.add(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())));
-			hf.alleBegegnungenVector.remove(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex())));
-			hf.alleBegegnungenVector.remove(((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())));
+			hf.begegnungsVector.add(b1);
+			hf.alleBegegnungenVector.remove(b1);
+			hf.alleBegegnungenVector.remove(b2);
 			
 			hf.repaint();
 			hf.setVisible(true);
