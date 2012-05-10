@@ -290,8 +290,9 @@ public class KPairings {
 				hf.mode=KPairings.SWISS;
 			}
 		}
-		hf.herausforderungsVector.clear();
+		
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0 && swissErr==false){
+			hf.herausforderungsVector.clear();
 			tische(hf);
 			if(hf.rundenZaehler>1){
 				differenz(hf);
@@ -469,19 +470,19 @@ public class KPairings {
 	 */
 	@SuppressWarnings("unchecked")
 	static Vector<KBegegnungen> swiss3(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,Vector<KBegegnungen> Expool){
-		//System.out.println("Übrige Teilnehmer: "+tV.size());
+		System.out.println("Übrige Teilnehmer: "+tV.size());
 		if(tV.size()==0){
 			return bV;
 		}
 		
 		Vector<KBegegnungen> pB =tV.get(0).getPossiblePairings(Expool);
-		/*System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mögliche Paarungen: "+pB.size());
+		System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mögliche Paarungen: "+pB.size());
 		for(int i=0;i < pB.size();i++){
 			System.out.println(pB.get(i).t1.vorname+ " "+pB.get(i).t1.nachname+" : "+pB.get(i).t2.vorname+ " "+pB.get(i).t2.nachname);
 		}
 		System.out.println("Berechnete Begegnungen: "+bV.size());
 		System.out.println("Pool: "+Expool.size());
-		System.out.println();*/
+		System.out.println();
 		
 		for(int i=0;i < pB.size();i++){
 			Vector<KBegegnungen> retVec= (Vector<KBegegnungen>)bV.clone();
