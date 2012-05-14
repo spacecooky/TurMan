@@ -182,6 +182,19 @@ public class KSpeicherverwaltung {
 
 			hf.rundenAnzeige=hf.rundenZaehler;
 			
+			//Herausforderungen in den Herausforderungsvektor
+			for(int i=0;i<hf.begegnungsVector.size();i++){
+				KBegegnungen b = hf.begegnungsVector.get(i);
+				if(b.runde>hf.rundenZaehler){
+					KTeilnehmer t1= b.t1;
+					KTeilnehmer t2= b.t2;
+					if(!hf.herausforderungsVector.contains(t1)){
+						hf.herausforderungsVector.add(t1);
+						hf.herausforderungsVector.add(t2);
+					}
+				}
+			}
+			
 			hf.updatePanels();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();

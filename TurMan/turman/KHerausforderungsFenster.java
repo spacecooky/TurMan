@@ -58,30 +58,40 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 		if(arg0.getSource()==cancel){
 			setVisible(false);
 		} else if(arg0.getSource()==ok){
-			hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo1.getSelectedIndex()));
-			hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo2.getSelectedIndex()));
-			KBegegnungen b1=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex()));
-			KBegegnungen b2=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex()));
-			b1.setEnabled(true);
-			b2.setEnabled(true);
-			b1.setBackground(Color.orange);
-			b2.setBackground(Color.orange);
-			b1.setText(""+(hf.rundenZaehler+1));
-			b2.setText(""+(hf.rundenZaehler+1));
-			b1.t2.paarungen.add(b1.xPos);
-			b1.t1.paarungen.add(b1.yPos);
-			
-			b1.runde=hf.rundenZaehler+1;
-			((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).runde=hf.rundenZaehler+1;
-			
-			hf.begegnungsVector.add(b1);
-			hf.alleBegegnungenVector.remove(b1);
-			hf.alleBegegnungenVector.remove(b2);
-			
-			hf.repaint();
-			hf.setVisible(true);
-			setVisible(false);
-		}
-		
+			if(combo1.getSelectedIndex()==combo2.getSelectedIndex()){
+				hf.dialog.getErrorDialog(hf.dialog.errorHerausforderung1);
+			}else if(hf.herausforderungsVector.contains(hf.teilnehmerVector.get(combo1.getSelectedIndex())) || hf.herausforderungsVector.contains(hf.teilnehmerVector.get(combo2.getSelectedIndex()))){
+				hf.dialog.getErrorDialog(hf.dialog.errorHerausforderung2);
+			}else{
+				
+				KBegegnungen b1=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo1.getSelectedIndex())).getComponent(combo2.getSelectedIndex()));
+				KBegegnungen b2=((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex()));
+				if(hf.alleBegegnungenVector.contains(b1)){
+					hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo1.getSelectedIndex()));
+					hf.herausforderungsVector.add(hf.teilnehmerVector.get(combo2.getSelectedIndex()));
+					b1.setEnabled(true);
+					b2.setEnabled(true);
+					b1.setBackground(Color.orange);
+					b2.setBackground(Color.orange);
+					b1.setText(""+(hf.rundenZaehler+1));
+					b2.setText(""+(hf.rundenZaehler+1));
+					b1.t2.paarungen.add(b1.xPos);
+					b1.t1.paarungen.add(b1.yPos);
+					
+					b1.runde=hf.rundenZaehler+1;
+					((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).runde=hf.rundenZaehler+1;
+					
+					hf.begegnungsVector.add(b1);
+					hf.alleBegegnungenVector.remove(b1);
+					hf.alleBegegnungenVector.remove(b2);
+					
+					hf.repaint();
+					hf.setVisible(true);
+					setVisible(false);
+				}else{
+					hf.dialog.getErrorDialog(hf.dialog.errorHerausforderung3);
+				}
+			}
+		}	
 	}
 }

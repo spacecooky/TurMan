@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -23,7 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 
-public class KPunkteFenster extends JFrame implements ActionListener{
+public class KPunkteFenster extends JFrame implements ActionListener,ComponentListener{
 
 	/**
 	 * 
@@ -41,13 +43,13 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		druckenButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
+		addComponentListener(this);
 	}
 
 	KHauptFenster hf=null;
 
 	public void init(Dimension d){
 
-		updatePanel(punktePanel);
 		updatePanel(punktePanelTab);
 		setContentPane(punktePanel);
 		if(d==null){
@@ -56,6 +58,7 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 			setSize(d);
 		}
 		setVisible(true);
+		updatePanel(punktePanel);
 	}
 
 	public void updatePanel(JPanel punktePanel){
@@ -366,4 +369,24 @@ public class KPunkteFenster extends JFrame implements ActionListener{
 		return s;
 	}
 
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		init(getSize());
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		init(getSize());
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		init(getSize());
+	}
+	
 }

@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -20,7 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class KBegegnungsFenster extends JFrame implements ActionListener{
+public class KBegegnungsFenster extends JFrame implements ActionListener,ComponentListener{
 
 	/**
 	 * 
@@ -34,12 +36,13 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		druckenButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
+		addComponentListener(this);
 	}
 	
 	KHauptFenster hf=null;
 	
 	public void init(Dimension d){
-		updatePanel(begegnungsPanel);
+		
 		updatePanel(begegnungsPanelTab);
 		setContentPane(begegnungsPanel);
 		if(d==null){
@@ -47,9 +50,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		} else{
 			setSize(d);
 		}
-		
-		
 		setVisible(true);
+		updatePanel(begegnungsPanel);
 		
 	}
 
@@ -80,7 +82,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		}
 		
 		body.setLayout(new BoxLayout(body,BoxLayout.X_AXIS));
-		begegnungsPanel.add(new JScrollPane(body));
+		JScrollPane sp = new JScrollPane(body);
 		
 		foot.setLayout(new GridLayout(1, 8));
 		foot.add(begegnungsPanel==this.begegnungsPanel?druckenButton:druckenButtonTab);
@@ -90,7 +92,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		foot.add(begegnungsPanel==this.begegnungsPanel?punkteSchliessenButton:new JLabel(""));
 		
 		begegnungsPanel.add(head,BorderLayout.NORTH);
-		begegnungsPanel.add(new JScrollPane(body),BorderLayout.CENTER);
+		begegnungsPanel.add(sp,BorderLayout.CENTER);
 		begegnungsPanel.add(foot,BorderLayout.SOUTH);
 		
 		combo.removeAllItems();
@@ -105,31 +107,16 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 		comboTab.setSelectedItem(hf.rundenAnzeige);
 		
 		JPanel tische = createPanel(body);
-		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/20,20000));
+		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 		
 		JPanel begegnung = createPanel(body);
 		JPanel primär = createPanel(body);
 		JPanel sekundär = createPanel(body);
 		
-		tische.add(createHeader("Tisch",f,tische));
-		begegnung.add(createHeader("Begegnung",f,begegnung));
-		
-		if(hf.optionenFeld.PSS.isSelected()){	
-			primär.add(createHeader("Primär",f,primär));
-		} else if(hf.optionenFeld.TS.isSelected()){	
-			primär.add(createHeader("Turnierpunkte",f,primär));
-		}
-		
-		if(hf.optionenFeld.PSS.isSelected()){
-			sekundär.add(createHeader("Sekundär",f,primär));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			sekundär.add(createHeader("Siegespunkte",f,primär));
-		}
-		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
 			if(bg.runde==hf.rundenAnzeige){
-				tische.add(createLabel(""+(bg.tisch+1),f));
+				tische.add(createLabel(laengeAnpassenVorne(""+(bg.tisch+1)+" ",8), f));
 				
 				KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 				KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
@@ -178,6 +165,30 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 					}
 				}
 		begegnungsPanel.validate();
+		
+		JPanel header= new JPanel();
+		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
+
+		
+		header.add(createHeader("Tisch",f,tische));
+		header.add(createHeader("Begegnung",f,begegnung));
+		
+		if(hf.optionenFeld.PSS.isSelected()){	
+			header.add(createHeader("Primär",f,primär));
+		} else if(hf.optionenFeld.TS.isSelected()){	
+			header.add(createHeader("Turnierpunkte",f,primär));
+		}
+		
+		if(hf.optionenFeld.PSS.isSelected()){
+			header.add(createHeader("Sekundär",f,primär));
+		} else if(hf.optionenFeld.TS.isSelected()){
+			header.add(createHeader("Siegespunkte",f,primär));
+		}
+
+		header.setBackground(Color.white);
+		sp.setColumnHeaderView(header);
+
+		begegnungsPanel.validate();
 	}
 	
 	JPanel begegnungsPanel=new JPanel();
@@ -219,9 +230,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 
 	public JLabel createHeader(String s, Font f, JPanel p){
 		JLabel l = new JLabel(s);
-		//l.setMaximumSize(new Dimension(p.getWidth(),35));
-		//l.setMinimumSize(new Dimension(p.getWidth(),35));
-		//l.setPreferredSize(new Dimension(p.getWidth(),35));
+		l.setMaximumSize(new Dimension(p.getWidth(),35));
+		l.setMinimumSize(new Dimension(p.getWidth(),35));
+		l.setPreferredSize(new Dimension(p.getWidth(),35));
 		l.setBorder(BorderFactory.createRaisedBevelBorder());
 		l.setFont(f);
 		return l;
@@ -236,9 +247,36 @@ public class KBegegnungsFenster extends JFrame implements ActionListener{
 	
 	public JPanel createPanel(JPanel punktePanel){
 		JPanel p = new JPanel() ;
-		p.setLayout(new GridLayout(hf.teilnehmerVector.size()/2+1,1));
+		p.setLayout(new GridLayout(hf.teilnehmerVector.size()/2,1));
 		punktePanel.add(p);
 		p.setBackground(Color.white);
 		return p;
+	}
+	
+	public String laengeAnpassenVorne(String s, int i){
+		while(s.length()<i){
+			s= " "+s;
+		}
+		return s;
+	}
+	
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		init(getSize());
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		init(getSize());
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		init(getSize());
 	}
 }

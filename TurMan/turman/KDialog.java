@@ -53,6 +53,18 @@ public class KDialog extends JDialog implements ActionListener{
 			"Es können nur natürliche Zahlen eingegeben werden.",
 		    JOptionPane.ERROR_MESSAGE);
 	
+	public JOptionPane errorHerausforderung1 = new JOptionPane(
+			"Ein Spieler kann nicht gegen sich selbst spielen.",
+		    JOptionPane.ERROR_MESSAGE);
+	
+	public JOptionPane errorHerausforderung2 = new JOptionPane(
+			"Spieler hat bereits eine Herausforderung.",
+		    JOptionPane.ERROR_MESSAGE);
+	
+	public JOptionPane errorHerausforderung3 = new JOptionPane(
+			"Begegnung wurde bereits gespielt.",
+		    JOptionPane.ERROR_MESSAGE);
+	
 	public JOptionPane errorSwiss = new JOptionPane(
 			"Es konnten keine Paarungen generiert werden.\n" +
 			"Die Paarungsoptionen sollten gelockert werden.",

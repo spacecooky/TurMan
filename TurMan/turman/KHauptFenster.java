@@ -44,18 +44,16 @@ import javax.swing.JTextField;
  * TODO Speicherung von Agenda-Schablonen.
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
  * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
- * TODO Buttons/Überschriften in Kopf-/ Fußzeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
- * TODO Verschiebungsfehler finden, der beim Herumspielen mit Neu-Laden und Herausforderungen in späteren Runden entstehen kann.
  * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
- * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift. 
- * TODO Erkennen von Herausforderungen beim Neuladen.
- * TODO Herausforderungen und normale Berechnung kollidieren noch
+ * TODO Speicherung der virtuellen Anmeldeliste nach jedem Eintrag.
+ * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
  * TODO Speichern der Turnier-ID.
+ * TODO Nach neuer Paarung die Runde in den Sichten setzen und aktualisieren.
  * @author jk
  *
  */
@@ -113,6 +111,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		beenden.addActionListener(this);
 
 		menubar.add(turnier);
+		turnier.add(anmeldung);
+		anmeldung.addActionListener(this);
 		turnier.add(punkte);
 		punkte.addActionListener(this);
 		turnier.add(begegnungen);
@@ -210,6 +210,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem beenden = new JMenuItem("Beenden");
 
 	JMenu turnier = new JMenu("Turnier");
+	JMenuItem anmeldung = new JMenuItem("Anmeldeverwaltung");
 	JMenuItem punkte = new JMenuItem("Punkte anzeigen");
 	JMenuItem begegnungen = new JMenuItem("Begegnungen anzeigen");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
@@ -289,6 +290,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KHerausforderungsDelFenster herausforderungsDelFenster = new KHerausforderungsDelFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
+	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
@@ -351,6 +353,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.speichernWrap(this);
 		}else if(quelle == oeffnen){
 			KSpeicherverwaltung.ladenWrap(this);
+		} else if(quelle == anmeldung){
+			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
 			punkteFenster.init(null);
 		} else if(quelle == runde){
