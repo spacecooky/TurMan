@@ -41,6 +41,10 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		bmTab.addActionListener(this);
 		druckenButton.addActionListener(this);
 		druckenButtonTab.addActionListener(this);
+		pdfButton.addActionListener(this);
+		pdfButtonTab.addActionListener(this);
+		txtButton.addActionListener(this);
+		txtButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
 		addComponentListener(this);
@@ -98,11 +102,12 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 
 		foot.setLayout(new GridLayout(1, 8));
 		foot.add(punktePanel==this.punktePanel?druckenButton:druckenButtonTab);
+		foot.add(punktePanel==this.punktePanel?pdfButton:pdfButtonTab);
+		foot.add(punktePanel==this.punktePanel?txtButton:txtButtonTab);
+		foot.add(new JLabel(""));
 		foot.add(punktePanel==this.punktePanel?bm:bmTab);
 		foot.add(punktePanel==this.punktePanel?ab:abTab);
-		for(int i=0;i<4;i++){
-			foot.add(new JLabel(""));
-		}
+		foot.add(new JLabel(""));
 		foot.add(punktePanel==this.punktePanel?punkteSchliessenButton:new JLabel(""));
 
 		punktePanel.add(head,BorderLayout.NORTH);
@@ -256,6 +261,10 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 	JButton punkteSchliessenButton=new JButton("OK");
 	JButton druckenButton=new JButton("Drucken");
 	JButton druckenButtonTab=new JButton("Drucken");
+	JButton pdfButton=new JButton("PDF");
+	JButton pdfButtonTab=new JButton("PDF");
+	JButton txtButton=new JButton("TXT");
+	JButton txtButtonTab=new JButton("TXT");
 	JComboBox combo = new JComboBox();
 	JComboBox comboTab = new JComboBox();
 	JButton anzeigenButton= new JButton("Anzeigen");
@@ -310,6 +319,10 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		} else if(e.getSource()==anzeigenButtonTab){
 			hf.rundenAnzeige= comboTab.getSelectedIndex();
 			hf.updatePanels();
+		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
+			hf.pdf.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige);
+		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){
+			hf.txt.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige);
 		}
 	}
 	

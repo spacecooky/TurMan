@@ -48,7 +48,6 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
  * TODO Sortierfunktionen / Suche für virtuelle Anmeldeliste
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
  * TODO Speichern der Turnier-ID.
@@ -295,6 +294,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	//Urkunden
 	KUrkunde urkunde = new KUrkunde();
+	//PDF-/TXT-Erstellug
+	KPDFErstellung pdf = new KPDFErstellung();
+	KTextErstellung txt = new KTextErstellung();
 	/**
 	 * @param args
 	 */

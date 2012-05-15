@@ -34,6 +34,10 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		punkteSchliessenButton.addActionListener(this);
 		druckenButton.addActionListener(this);
 		druckenButtonTab.addActionListener(this);
+		pdfButton.addActionListener(this);
+		pdfButtonTab.addActionListener(this);
+		txtButton.addActionListener(this);
+		txtButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
 		addComponentListener(this);
@@ -86,7 +90,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		
 		foot.setLayout(new GridLayout(1, 8));
 		foot.add(begegnungsPanel==this.begegnungsPanel?druckenButton:druckenButtonTab);
-		for(int i=0;i<6;i++){
+		foot.add(begegnungsPanel==this.begegnungsPanel?pdfButton:pdfButtonTab);
+		foot.add(begegnungsPanel==this.begegnungsPanel?txtButton:txtButtonTab);
+		for(int i=0;i<4;i++){
 			foot.add(new JLabel(""));
 		}
 		foot.add(begegnungsPanel==this.begegnungsPanel?punkteSchliessenButton:new JLabel(""));
@@ -196,6 +202,10 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 	JButton punkteSchliessenButton=new JButton("OK");
 	JButton druckenButton=new JButton("Drucken");
 	JButton druckenButtonTab=new JButton("Drucken");
+	JButton pdfButton=new JButton("PDF");
+	JButton pdfButtonTab=new JButton("PDF");
+	JButton txtButton=new JButton("TXT");
+	JButton txtButtonTab=new JButton("TXT");
 	JComboBox combo = new JComboBox();
 	JComboBox comboTab = new JComboBox();
 	JButton anzeigenButton= new JButton("Anzeigen");
@@ -225,6 +235,10 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		} else if(e.getSource()==anzeigenButtonTab){
 			hf.rundenAnzeige= comboTab.getSelectedIndex();
 			hf.updatePanels();
+		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
+			hf.pdf.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige);
+		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){
+			hf.txt.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige);
 		}
 	}
 
