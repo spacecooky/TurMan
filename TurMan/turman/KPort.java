@@ -87,6 +87,7 @@ public class KPort {
 					hf.fillPanels();
 					hf.fillTeamPanels();
 					hf.updatePanels();
+					hf.anmeldung.setEnabled(true);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {

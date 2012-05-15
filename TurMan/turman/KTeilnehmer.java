@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 public class KTeilnehmer implements ActionListener {
 	
@@ -70,6 +71,7 @@ public class KTeilnehmer implements ActionListener {
 	JButton matrixButton = new JButton();
 	JButton punkteFensterButton = new JButton();
 	JButton punkteTabButton = new JButton();
+	JCheckBox anwesend = new JCheckBox();
 	@Override
 	
 	public void actionPerformed(ActionEvent arg0) {

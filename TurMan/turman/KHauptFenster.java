@@ -49,11 +49,9 @@ import javax.swing.JTextField;
  * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Abspeichern der Tabelle/Begegnungen als pdf/txt(mit html-tags)
- * TODO Virtuelle Anmeldeliste. Wenn diese bestätigt wird, sollen alle nicht angehakten Spieler aus der Liste entfernt werden.
- * TODO Speicherung der virtuellen Anmeldeliste nach jedem Eintrag.
+ * TODO Sortierfunktionen / Suche für virtuelle Anmeldeliste
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
  * TODO Speichern der Turnier-ID.
- * TODO Nach neuer Paarung die Runde in den Sichten setzen und aktualisieren.
  * @author jk
  *
  */
@@ -347,7 +345,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 			fillPanels();
 			fillTeamPanels();
-
+			anmeldung.setEnabled(true);
 
 		}else if(quelle == speichern){
 			KSpeicherverwaltung.speichernWrap(this);

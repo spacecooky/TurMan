@@ -196,6 +196,11 @@ public class KSpeicherverwaltung {
 			}
 			
 			hf.updatePanels();
+			
+			if(hf.rundenZaehler>0){
+				hf.anmeldung.setEnabled(false);
+			}
+			
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {

@@ -79,34 +79,46 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		anmeldePanel.add(sp,BorderLayout.CENTER);
 		anmeldePanel.add(foot,BorderLayout.SOUTH);
 
+		JPanel anwesend = createPanel(body,true);
 		JPanel vorname = createPanel(body,true);
 		JPanel nickname = createPanel(body,true);
 		JPanel nachname = createPanel(body,true);
-		JPanel anwesend = createPanel(body,true);
+		JPanel armee = createPanel(body,true);
+		JPanel ort = createPanel(body,true);
+		JPanel team = createPanel(body,true);
 
 		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
 			if(hf.sortierterVector.get(i).deleted==false){
 				KTeilnehmer tn=hf.teilnehmerVector.get(i);
+				anwesend.add(tn.anwesend);
 				vorname.add(createField(tn.vorname, f));
 				nickname.add(createField(tn.nickname, f));
 				nachname.add(createField(tn.nachname, f));
-				anwesend.add(new JCheckBox());
+				armee.add(createField(tn.armee, f));
+				ort.add(createField(tn.ort, f));
+				team.add(createField(tn.team, f));
 			} 
 		}
 
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
 		if(hf.teilnehmerVector.size()==0){
 
+			anwesend.setLayout(new GridLayout(33,1));
 			vorname.setLayout(new GridLayout(33,1));
 			nickname.setLayout(new GridLayout(33,1));
 			nachname.setLayout(new GridLayout(33,1));
-			anwesend.setLayout(new GridLayout(33,1));
+			armee.setLayout(new GridLayout(33,1));
+			ort.setLayout(new GridLayout(33,1));
+			team.setLayout(new GridLayout(33,1));
 
 			for(int i=30;i>0;i--){
+				anwesend.add(createLabel("", f));
 				vorname.add(createLabel("", f));
 				nickname.add(createLabel("", f));
 				nachname.add(createLabel("", f));
-				anwesend.add(createLabel("", f));
+				armee.add(createLabel("", f));
+				ort.add(createLabel("", f));
+				team.add(createLabel("", f));
 			}
 		}
 
@@ -116,12 +128,14 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
 
 		System.out.println(vorname.getWidth());
-		header.add(createHeader("Spieler",f,vorname));
-		header.add(createHeader("Spieler",f,nickname));
-		header.add(createHeader("Spieler",f,nachname));
-		header.add(createHeader("Anwesend",f,nachname));
+		header.add(createHeader("Anwesend",f,anwesend));
+		header.add(createHeader("Vorname",f,vorname));
+		header.add(createHeader("Nickname",f,nickname));
+		header.add(createHeader("Nachname",f,nachname));
+		header.add(createHeader("Armee",f,armee));
+		header.add(createHeader("Ort",f,ort));
+		header.add(createHeader("Team",f,team));
 		
-
 		header.setBackground(Color.white);
 		sp.setColumnHeaderView(header);
 
@@ -152,7 +166,16 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 				}
 			}*/
 		} else if(e.getSource()==endeButton ){
-			//TODO
+			for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
+				KTeilnehmer tn = hf.teilnehmerVector.get(i);
+				if(!tn.anwesend.isSelected()){
+					hf.teilnehmerVector.remove(tn);
+				}
+			}
+			hf.HauptPanel.removeAll();
+			hf.fillPanels();
+			hf.fillTeamPanels();
+			setVisible(false);
 		} 
 	}
 	
@@ -170,6 +193,12 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		JLabel l = new JLabel(s);
 		l.setBorder(BorderFactory.createEtchedBorder());
 		l.setFont(f);
+		return l;
+	}
+	
+	public JCheckBox createBox(){
+		JCheckBox l = new JCheckBox();
+		l.setBorder(BorderFactory.createEtchedBorder());
 		return l;
 	}
 	

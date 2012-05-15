@@ -341,6 +341,10 @@ public class KPairings {
 			}
 		}
 		
+		hf.rundenAnzeige=hf.rundenZaehler;
+		if(hf.rundenZaehler>0){
+			hf.anmeldung.setEnabled(false);
+		}
 		hf.updatePanels();
 	}
 
@@ -556,6 +560,7 @@ public class KPairings {
 			
 			if(hf.rundenZaehler==0){
 				hf.mode=KPairings.RANDOM;
+					hf.anmeldung.setEnabled(true);
 			}
 		}
 		//System.out.println("Begegnungen nach Reset: "+hf.begegnungsVector.size());
