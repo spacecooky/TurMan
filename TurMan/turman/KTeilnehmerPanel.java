@@ -24,6 +24,7 @@ public class KTeilnehmerPanel extends JPanel{
 		nameLabel.setMinimumSize(new Dimension(150,20));
 		nameLabel.setPreferredSize(new Dimension(150,20));
 		nameLabel.setBorder(BorderFactory.createRaisedBevelBorder());
+		nameLabel.setForeground(Color.black);
 		
 		for(int i=0;i<teilnehmerZahl;i++){
 

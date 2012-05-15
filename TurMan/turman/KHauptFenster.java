@@ -45,8 +45,7 @@ import javax.swing.JTextField;
  * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
  * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
- * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren?
- * TODO Möglichkeit, nach der ersten Runde gelöschte Spieler wieder zu aktivieren.  
+ * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren? 
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Sortierfunktionen / Suche für virtuelle Anmeldeliste
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
@@ -63,10 +62,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public KHauptFenster(){
 		super("TurMan "+version);
-		setSize(800,600);
-		setLocation(0, 500);
-		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		//setSize(800,600);
+		//setLocation(0, 500);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -134,6 +133,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		menubar.add(spieler);
 		spieler.add(entfernen);
 		entfernen.addActionListener(this);
+		spieler.add(wiederherstellen);
+		wiederherstellen.addActionListener(this);
 		spieler.add(erweitern);
 		erweitern.addActionListener(this);
 		spieler.add(extraPunkte);
@@ -222,6 +223,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
+	JMenuItem wiederherstellen = new JMenuItem("Wiederherstellen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
 	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfügen");
@@ -378,7 +380,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KPort.gExport(this);
 		} else if(quelle==entfernen){
 			entfernenFenster.init();
-		} else if(quelle==erweitern){
+		} else if(quelle==wiederherstellen){
+			entfernenFenster.initRestore();
+		}else if(quelle==erweitern){
 			erweiternFenster.init();
 		} else if(quelle==herausforderung){
 			herausforderungsFenster.init();
@@ -433,6 +437,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			jp.setPreferredSize(new Dimension(20,150));
 			jp.setUI( new VerticalLabelUI(false));
 			jp.setBorder(BorderFactory.createRaisedBevelBorder());
+			jp.setForeground(Color.black);
 			header.add(jp);
 		}
 		//HauptPanel.add(header);

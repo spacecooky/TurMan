@@ -23,6 +23,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		add(p);
 		cancel.addActionListener(this);
 		ok.addActionListener(this);
+		rok.addActionListener(this);
 	}
 	
 	KHauptFenster hf;
@@ -30,6 +31,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 	JComboBox combo = new JComboBox();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Löschen");
+	JButton rok= new JButton("Wiederherstellen");
 	
 	public void init(){
 		p.removeAll();
@@ -47,6 +49,23 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		p.add(ok);
 		setVisible(true);
 	}
+	
+	public void initRestore(){
+		p.removeAll();
+		setSize(400,100);
+		p.setLayout(new GridLayout(2,2));
+		combo=new JComboBox();
+		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			if(hf.teilnehmerVector.get(i).deleted==true){
+				combo.addItem(hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname);
+			} 
+		}
+		p.add(new JLabel("Spieler"));
+		p.add(combo);
+		p.add(cancel);
+		p.add(rok);
+		setVisible(true);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -60,6 +79,14 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 				hf.fillTeamPanels();
 			} else {
 				entfernen(combo.getSelectedIndex());
+			}
+			hf.updatePanels();
+			setVisible(false);
+		} else if(arg0.getSource()==rok){
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				if((hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname).equals(combo.getSelectedItem())){
+					wiederherstellen(i);
+				}
 			}
 			hf.updatePanels();
 			setVisible(false);
@@ -86,6 +113,28 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		}
 		hf.teilnehmerVector.get(index).deleted=true;
 		hf.gelöschteTeilnehmer++;
+	}
+	
+	public void wiederherstellen(int index){
+		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setForeground(Color.black);
+		((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setForeground(Color.black);
+		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setEnabled(true);
+		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			if(((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i) instanceof KBegegnungen){
+				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.green) &&
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.orange)){
+					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).setBackground(Color.darkGray);
+				}
+			}
+			if(((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index) instanceof KBegegnungen){
+				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.green) &&
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.orange)){
+					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setBackground(Color.darkGray);
+				}
+			}
+		}
+		hf.teilnehmerVector.get(index).deleted=false;
+		hf.gelöschteTeilnehmer--;
 	}
 	
 }

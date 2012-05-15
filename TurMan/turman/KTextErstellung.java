@@ -1,11 +1,6 @@
 package turman;
 
 import java.awt.Desktop;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -60,7 +55,6 @@ public class KTextErstellung{
 			Desktop d = java.awt.Desktop.getDesktop();
 			d.open(new java.io.File("tabelle.txt")); 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -112,7 +106,6 @@ public class KTextErstellung{
 			Desktop d = java.awt.Desktop.getDesktop();
 			d.open(new java.io.File("begegnung.txt")); 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

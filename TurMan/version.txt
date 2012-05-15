@@ -1,10 +1,14 @@
-WIP Version 0.0.17
-- Anzahl der Spieler im Begegnungs-/Punktefenster
+Version 0.0.17
+- Anzeige der Spieleranzahl im Begegnungs-/Punktefenster.
 - Überschriften in den verschieden Sichten scrollen nicht mehr weg. 
-- Neuer Paarungs-Algorithmus (ohne Berücksichtigung von Ausnahmen bei den Optionen, welche in Zukunft entfernt werden)
+- Neuer Paarungs-Algorithmus (ohne Berücksichtigung von Ausnahmen bei den Optionen, welche in Zukunft entfernt werden).
 - Herausforderungen können entfernt werden.
 - Herausforderungen werden nach Laden einer Speicherung erkannt.
-- Herausforderungen, die nicht möglich sind, erzeugen einen Fehlerdialog
+- Herausforderungen, die nicht möglich sind, erzeugen einen Fehlerdialog.
+- Nach neuer Paarung wird in den Sichten auf die aktuelle Runde gewechselt.
+- Anmeldefenster eingefügt, mit dem anwesende Spieler markiert werden. Alle abwesenden Spieler werden nach Bestätigung entfernt.
+- PDF-/TXT-Dateien der Paarungen/Tabelle können erstellt werden(bisher nur für Primär/Sekundär/SOS)
+- Spieler, die nach der ersten Runde entfernt wurden, können wieder hinzugefügt werden.
 
 Version 0.0.16
 - Spieler im Punktefenster sind jetzt Buttons, mit denen die Spielerinformationen verändert werden können.

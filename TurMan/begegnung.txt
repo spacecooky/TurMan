@@ -1,0 +1,43 @@
+Begegnungen Runde 1
+
+ Tisch   Begegnung                                                             Primär       Sekundär     
+     1   Michael Müller : Manuel Wieczorek                                     0 : 0        0 : 0        
+     2   Florian Börner : Bernhard Geulig                                      0 : 0        0 : 0        
+     3   Jannik Schmitz : Martin Reimann                                       0 : 0        0 : 0        
+     4   Dennis Reber : Sven Butenborg                                         0 : 0        0 : 0        
+     5   Marcel Ogan : Sven Schauer                                            0 : 0        0 : 0        
+     6   Thomas Lerch : Pascal Bialek                                          0 : 0        0 : 0        
+     7   Riccardo Caponeri : Dirk Ullrich                                      0 : 0        0 : 0        
+     8   Martin Hakenesch : Fritz Peters                                       0 : 0        0 : 0        
+     9   Thomas Naudorf : Bernd Witschel                                       0 : 0        0 : 0        
+    10   Sebastian Theisen : Sebastian Theisen                                 0 : 0        0 : 0        
+    11   Mathias Lemm : Rüdiger Schmidt                                        0 : 0        0 : 0        
+    12   Mirco Klein : Johannes Hübner                                         0 : 0        0 : 0        
+    13   Nils Möller : Steffen Fastner                                         0 : 0        0 : 0        
+    14   Dennis Schmitz : Raphael Dörr                                         0 : 0        0 : 0        
+    15   Arno Warken : Alexander Kamp                                          0 : 0        0 : 0        
+    16   Wolfgang Stocker : Michael Fett                                       0 : 0        0 : 0        
+    17   Martin Eger : Kayu Orellana                                           0 : 0        0 : 0        
+    18   Hendrik Grüne : Alexander Hackenberg                                  0 : 0        0 : 0        
+    19   Simon Oerding : Michael Brötz                                         0 : 0        0 : 0        
+    20   Sebastian Müller : Michael Bartlitz                                   0 : 0        0 : 0        
+    21   Oliver Gorgoni : Dominic Moser                                        0 : 0        0 : 0        
+    22   Sascha Börner : Pierre Sinke                                          0 : 0        0 : 0        
+    23   Manuel Fehr : Tobias Wolf                                             0 : 0        0 : 0        
+    24   Dennis Theisen : Ali Simsek                                           0 : 0        0 : 0        
+    25   Barzen Markus : José Kuhlmann                                         0 : 0        0 : 0        
+    26   Christian Schleich : Dominik Thoma                                    0 : 0        0 : 0        
+    27   Matthias Roth : Carsten Wolff                                         0 : 0        0 : 0        
+    28   Stephan Pfenninger : Francesco Ferrara                                0 : 0        0 : 0        
+    29   Daniel Bromberg : Jochen Gierl                                        0 : 0        0 : 0        
+    30   Michal Schiller : Ralf Wagner                                         0 : 0        0 : 0        
+    31   Frank Stüdemann : Norbert Hertel                                      0 : 0        0 : 0        
+    32   Andreas Neugebauer : Manuel Roos                                      0 : 0        0 : 0        
+    33   Björn Kubik : Nils Peters                                             0 : 0        0 : 0        
+    34   Lennart Bumann : Stefan Kraut                                         0 : 0        0 : 0        
+    35   Oliver Triebler : Benjamin Fechir                                     0 : 0        0 : 0        
+    36   Jan Rennfanz : Sascha Rothenberg                                      0 : 0        0 : 0        
+    37   Thomas Brutscher : Dennis Becker                                      0 : 0        0 : 0        
+    38   Roland Zaglauer : Mario Schwab                                        0 : 0        0 : 0        
+    39   Florian Schmidt : Sascha Rossol                                       0 : 0        0 : 0        
+    40   Alex Burst. : Alexander Jütz                                          0 : 0        0 : 0        
