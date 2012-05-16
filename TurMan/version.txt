@@ -1,3 +1,6 @@
+WIP Version 0.0.18
+- Turnier-ID wird gespeichert.
+
 Version 0.0.17
 - Anzeige der Spieleranzahl im Begegnungs-/Punktefenster.
 - Überschriften in den verschieden Sichten scrollen nicht mehr weg. 

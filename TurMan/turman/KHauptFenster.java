@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -49,11 +51,11 @@ import javax.swing.JTextField;
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Sortierfunktionen / Suche für virtuelle Anmeldeliste
  * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
- * TODO Speichern der Turnier-ID.
+ * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * @author jk
  *
  */
-public class KHauptFenster extends JFrame implements ActionListener,ComponentListener{
+public class KHauptFenster extends JFrame implements ActionListener,ComponentListener, KeyListener{
 
 	/**
 	 * 
@@ -62,10 +64,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public KHauptFenster(){
 		super("TurMan "+version);
-		//setSize(800,600);
-		//setLocation(0, 500);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		setSize(800,600);
+		setLocation(0, 500);
+		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -182,6 +184,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenKonfig(this,f2);
 		}
 		
+		p1Field.addKeyListener(this);
+		p2Field.addKeyListener(this);
+		
 	}
 
 	static String version=new String("V0.0.17");
@@ -293,6 +298,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
+	KSiegpunkteMatrix matrix = new KSiegpunkteMatrix(this);
 
 	//Urkunden
 	KUrkunde urkunde = new KUrkunde();
@@ -729,6 +735,31 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public void componentShown(ComponentEvent e) {
 		adaptPanel();
 		repaint();
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		if(arg0.getSource()==p1Field || arg0.getSource()==p2Field){
+			if(optionenFeld.TS.isSelected() && optionenFeld.matrixBenutzen.isSelected()){
+				try{
+					p12Field.setText(""+matrix.getTP(Integer.parseInt(p1Field.getText())-Integer.parseInt(p2Field.getText())));
+					p22Field.setText(""+matrix.getTP(Integer.parseInt(p2Field.getText())-Integer.parseInt(p1Field.getText())));
+					
+				}catch(NumberFormatException e){
+					
+				}
+			}
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
 	}
 	
 

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -68,6 +69,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
 	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
 	ButtonGroup wertung = new ButtonGroup();
+	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
+	JButton matrix= new JButton("Siegpunktematrix");
 	
 	JRadioButton bemalPri = new JRadioButton("Bemalwertung");
 	JRadioButton bemalSek = new JRadioButton("Bemalwertung");
@@ -170,9 +173,14 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p6 = new JPanel();
 		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
-		p6.setLayout(new GridLayout(2,1));
+		p6.setLayout(new GridLayout(4,1));
 		p6.add(PSS);
 		p6.add(TS);
+		p6.add(matrixBenutzen);
+		p6.add(matrix);
+		matrix.addActionListener(this);
+		matrixBenutzen.setEnabled(false);
+		matrix.setEnabled(false);
 		wertung.add(PSS);
 		wertung.add(TS);
 		PSS.setSelected(true);
@@ -232,9 +240,13 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 			if(PSS.isSelected()){
 				bemalSek.setEnabled(true);
 				armeeSek.setEnabled(true);
+				matrixBenutzen.setEnabled(false);
+				matrix.setEnabled(false);
 			} else if(TS.isSelected()){
 				bemalSek.setEnabled(false);
 				armeeSek.setEnabled(false);
+				matrixBenutzen.setEnabled(true);
+				matrix.setEnabled(true);
 				if(bemalSek.isSelected()){
 					bemalSek.setSelected(false);
 					bemalNo.setSelected(true);
@@ -245,6 +257,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 				}
 			}
 			hf.updatePanels();
+		}else if(arg0.getSource()==matrix){
+			hf.matrix.init();
 		}
 		
 	}

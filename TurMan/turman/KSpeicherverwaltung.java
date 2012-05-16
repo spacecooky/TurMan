@@ -57,8 +57,9 @@ public class KSpeicherverwaltung {
 			fr.close();
 			//Splitten in Teilnehmerdaten und Begegnungsdaten
 			String rundenzähler=s.split("\\|\\|")[0];
-			String teilnehmerDaten=s.split("\\|\\|")[1];
-			String begegnungsDaten=s.split("\\|\\|")[2];
+			hf.TID=s.split("\\|\\|")[1];
+			String teilnehmerDaten=s.split("\\|\\|")[2];
+			String begegnungsDaten=s.split("\\|\\|")[3];
 
 			//Teilnehmerdaten
 			String[] sAr=teilnehmerDaten.split("\r\n");
@@ -163,7 +164,7 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
-
+			
 			try{
 			hf.rundenZaehler=Integer.parseInt(rundenzähler);
 			}catch (NumberFormatException e) {
@@ -213,6 +214,8 @@ public class KSpeicherverwaltung {
 			FileWriter fw = new FileWriter(f);
 
 			fw.write(hf.rundenZaehler+"");
+			fw.write("||");
+			fw.write(hf.TID+"");
 			fw.write("||");
 			//Teilnehmer
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
@@ -398,6 +401,8 @@ public class KSpeicherverwaltung {
 							hf.optionenFeld.PSS.setSelected(true);
 						} else if(optval.equals("TS")){
 							hf.optionenFeld.TS.setSelected(true);
+							hf.optionenFeld.matrixBenutzen.setEnabled(true);
+							hf.optionenFeld.matrix.setEnabled(true);
 						} 
 					} else if(optname.equals("bemalwertung")){
 						if(optval.equals("keine")){
