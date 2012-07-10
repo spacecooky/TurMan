@@ -23,6 +23,8 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		addActionListener(this);
 		begegnungsFensterButton.addActionListener(this);
 		begegnungsTabButton.addActionListener(this);
+		begegnungsFensterButton.setBackground(Color.white);
+		begegnungsTabButton.setBackground(Color.white);
 		normalButtonColor=begegnungsFensterButton.getBackground();
 		addMouseListener(this);
 		setBorder(BorderFactory.createRaisedBevelBorder());
@@ -126,8 +128,10 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	
 	public void setUnpairedColor(){
 		setBackground(Color.darkGray);
-		begegnungsFensterButton.setBackground(normalButtonColor);
-		begegnungsTabButton.setBackground(normalButtonColor);
+		//begegnungsFensterButton.setBackground(normalButtonColor);
+		//begegnungsTabButton.setBackground(normalButtonColor);
+		begegnungsFensterButton.setBackground(Color.white);
+		begegnungsTabButton.setBackground(Color.white);
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
