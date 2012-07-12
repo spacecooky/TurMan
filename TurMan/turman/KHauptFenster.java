@@ -117,6 +117,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		begegnungen.addActionListener(this);
 		turnier.add(zeit);
 		zeit.addActionListener(this);
+		turnier.add(agenda);
+		agenda.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
 
@@ -217,6 +219,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem punkte = new JMenuItem("Punkte anzeigen");
 	JMenuItem begegnungen = new JMenuItem("Begegnungen anzeigen");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
+	JMenuItem agenda = new JMenuItem("Agenda");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	
 	JMenu turnierRunde = new JMenu("Turnierrunde");
@@ -396,6 +399,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			herausforderungsDelFenster.init();
 		}else if(quelle==zeit){
 			new TTimer(this);
+		}else if(quelle==agenda){
+			new TAgenda(this);
 		} else if(quelle==urkundenErstellen){
 			sortieren(true, true,rundenZaehler);
 			urkunde.urkundeErstellen(sortierterVector);
