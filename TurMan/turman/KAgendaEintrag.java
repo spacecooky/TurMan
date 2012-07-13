@@ -9,7 +9,7 @@ public class KAgendaEintrag {
 		this.name=name;
 		this.startzeit=Calendar.getInstance();
 		startzeit.set(year, month-1, date, hour, minute);
-		
+
 	}
 	
 	String name;
@@ -22,6 +22,46 @@ public class KAgendaEintrag {
 		}else{
 			return 0;
 		}
+	}
+	
+	protected void add5Minutes(){
+		startzeit.add(Calendar.MINUTE,+5);
+	}
+	
+	protected void subtract5Minutes(){
+		startzeit.add(Calendar.MINUTE,-5);
+	}
+	
+	protected void setCalendarToNow(){
+		startzeit=Calendar.getInstance();
+	}
+	
+	protected String[] getTimeArray(){
+		String time[] = new String[6];
+		time[0]=name;
+		time[1]=startzeit.get(Calendar.DAY_OF_MONTH)<10?"0"+startzeit.get(Calendar.DAY_OF_MONTH):""+startzeit.get(Calendar.DAY_OF_MONTH);
+		time[2]=(startzeit.get(Calendar.MONTH)+1)<10?"0"+(startzeit.get(Calendar.MONTH)+1):""+(startzeit.get(Calendar.MONTH)+1);
+		time[3]=startzeit.get(Calendar.YEAR)<10?"0"+startzeit.get(Calendar.YEAR):""+startzeit.get(Calendar.YEAR);
+		time[4]=(startzeit.get(Calendar.HOUR_OF_DAY))<10?"0"+(startzeit.get(Calendar.HOUR_OF_DAY)):""+(startzeit.get(Calendar.HOUR_OF_DAY));
+		time[5]=startzeit.get(Calendar.MINUTE)<10?"0"+startzeit.get(Calendar.MINUTE):""+startzeit.get(Calendar.MINUTE);
+		
+		return time;
+	}
+	
+	protected String getTimeString(){
+		String time = "";
+		time+=startzeit.get(Calendar.DAY_OF_MONTH)<10?"0"+startzeit.get(Calendar.DAY_OF_MONTH):""+startzeit.get(Calendar.DAY_OF_MONTH);
+		time+=".";
+		time+=(startzeit.get(Calendar.MONTH)+1)<10?"0"+(startzeit.get(Calendar.MONTH)+1):""+(startzeit.get(Calendar.MONTH)+1);
+		time+=".";
+		time+=startzeit.get(Calendar.YEAR)<10?"0"+startzeit.get(Calendar.YEAR):""+startzeit.get(Calendar.YEAR);
+		time+=" ";
+		time+=(startzeit.get(Calendar.HOUR_OF_DAY))<10?"0"+(startzeit.get(Calendar.HOUR_OF_DAY)):""+(startzeit.get(Calendar.HOUR_OF_DAY));
+		time+=":";
+		time+=startzeit.get(Calendar.MINUTE)<10?"0"+startzeit.get(Calendar.MINUTE):""+startzeit.get(Calendar.MINUTE);
+		time+=":\n"+name;
+		
+		return time;
 	}
 	
 }

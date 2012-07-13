@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -54,6 +56,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		left.add(ablauf);
 		ablauf.setLayout(new BoxLayout(ablauf, BoxLayout.Y_AXIS));
 		ablauf.setBackground(Color.black);
+		//left.add(Box.createRigidArea(new Dimension(0,100)));
 		left.add(add);
 		add.addActionListener(this);
 		left.add(remove);
@@ -62,10 +65,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		ok.addActionListener(this);
 		left.add(cancel);
 		cancel.addActionListener(this);
-		left.add(edit);
-		edit.addActionListener(this);
-		left.add(editEnde);
-		editEnde.addActionListener(this);
+		left.add(plus5);
+		plus5.addActionListener(this);
+		left.add(minus5);
+		minus5.addActionListener(this);
+		left.add(startNextPhase);
+		startNextPhase.addActionListener(this);
 		
 		center.add(agendaPunkt);
 		center.add(timeLabel);
@@ -78,6 +83,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
 			public void windowClosing(WindowEvent ereignis){
+				speichern();
 				run=false;
 				frame.dispose();
 			}
@@ -89,6 +95,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		table.setForeground(Color.white);
 		aheader.setForeground(Color.white);
 		aheader.setFont(new Font("Comic Sans Serif",1,18));
+		aheader.setHorizontalAlignment(JLabel.LEFT);
 		table.setFont(new Font("Comic Sans Serif",1,18));
 		center.setBackground(Color.black);
 		center.setBorder(BorderFactory.createLineBorder(Color.white));
@@ -102,21 +109,25 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		ok.setForeground(Color.white);
 		cancel.setBackground(Color.black);
 		cancel.setForeground(Color.white);
-		edit.setBackground(Color.black);
-		edit.setForeground(Color.white);
-		editEnde.setBackground(Color.black);
-		editEnde.setForeground(Color.white);
+		plus5.setBackground(Color.black);
+		plus5.setForeground(Color.white);
+		minus5.setBackground(Color.black);
+		minus5.setForeground(Color.white);
+		startNextPhase.setBackground(Color.black);
+		startNextPhase.setForeground(Color.white);
 		if(Toolkit.getDefaultToolkit().getScreenSize().width<=1024){
 			timeLabel.setFont(new Font("Comic Sans Serif",1,180));
-			agendaPunkt.setFont(new Font("Comic Sans Serif",1,180));
+			agendaPunkt.setFont(new Font("Comic Sans Serif",1,80));
 		}else{
 			timeLabel.setFont(new Font("Comic Sans Serif",1,280));
-			agendaPunkt.setFont(new Font("Comic Sans Serif",1,280));
+			agendaPunkt.setFont(new Font("Comic Sans Serif",1,160));
 		}
 		agendaPunkt.setFocusable(false);
 		timeLabel.setFocusable(false);
-		edit.setVisible(false);
-		editEnde.setVisible(false);
+		plus5.setVisible(false);
+		minus5.setVisible(false);
+		startNextPhase.setVisible(false);
+		laden();
 		frame.setVisible(true);
 	}
 
@@ -130,7 +141,10 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 	JScrollPane scrollPane;
 	JPanel ablauf= new JPanel();
 	String [] headers={"Ereignis","TT","MM","JJJJ","HH","MM"};
-	String [][] eintraege={{"Start","11","07","2012","15","00"},{"Stop","11","07","2012","16","00"}};
+	String [][] eintraege={{"Anmeldung","13","07","2012","09","00"},
+						   {"Hinweise auf Turniersonderregeln und Bekanntgabe der ersten Paarungen","13","07","2012","09","45"},
+						   {"Turnierrunde 1","13","07","2012","10","00"},
+						   {"Mittagspause + Bemalwertung","13","07","2012","12","00"}};
 	Vector<KAgendaEintrag> agendaEintraege=new Vector<KAgendaEintrag>();
 	JLabel aheader = new JLabel("Turnierablauf");
 	JLabel agendaPunkt= new JLabel("Zeit bis zum Start:");
@@ -141,14 +155,18 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 	JButton remove = new JButton("Aktuelle Zeile löschen");
 	JButton ok = new JButton("Agenda Starten");
 	JButton cancel = new JButton("Abbrechen");
-	JButton edit = new JButton("Bearbeiten");
-	JButton editEnde = new JButton("Speichern");
+	JButton plus5 = new JButton("+5 Minuten");
+	JButton minus5 = new JButton("-5 Minuten");
+	JButton startNextPhase = new JButton("Nächsten Agendapunkt starten");
 	
 	KHauptFenster hf;
 	long time;
 	boolean run=true;
 
 	public void run(){
+		left.setPreferredSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+		left.setMinimumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+		left.setMaximumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
 			scrollPane.setVisible(false);
 			ok.setVisible(false);
 			cancel.setVisible(false);
@@ -166,24 +184,33 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 				
 				try{
 					agendaEintraege.add(new KAgendaEintrag(name, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute)));
-					JLabel l =new JLabel(day+"."+month+"."+year+" "+hour+":"+minute+" - "+name);
-					l.setFont(new Font("Comic Sans Serif",Font.PLAIN,18));
-					l.setForeground(Color.lightGray);
-					ablauf.add(l);
+					JTextArea ta =new JTextArea(day+"."+month+"."+year+" "+hour+":"+minute+":\n"+name);
+					ta.setFont(new Font("Comic Sans Serif",Font.PLAIN,18));
+					ta.setLineWrap(true);
+					ta.setBackground(Color.black);
+					ta.setForeground(Color.lightGray);
+					ablauf.add(ta);
 				}catch(NumberFormatException e){
 					//TODO Fehlerdialog
 					System.err.println("err");
 				}
 			}
+			
+			plus5.setVisible(true);
+			minus5.setVisible(true);
+			startNextPhase.setVisible(true);
 			long acttime=0;
 			while(run){
 				int agendaCounter=-1;
 				for(int i=0;i<agendaEintraege.size();i++){
 					acttime=agendaEintraege.get(i).zeitBis();
-					System.out.println(acttime);
+					//System.out.println(acttime);
 					if(acttime>0){
 						agendaCounter=i-1;
 						break;
+					} else{
+						((JTextArea)ablauf.getComponent(i)).setFont(new Font("Comic Sans Serif",Font.PLAIN,18));
+						((JTextArea)ablauf.getComponent(i)).setForeground(Color.lightGray);
 					}
 				}
 			
@@ -194,8 +221,8 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 				
 				if(agendaCounter>-1){
 					agendaPunkt.setText((String)table.getModel().getValueAt(agendaCounter, 0));
-					((JLabel)ablauf.getComponent(agendaCounter)).setFont(new Font("Comic Sans Serif",Font.BOLD,18));
-					((JLabel)ablauf.getComponent(agendaCounter)).setForeground(Color.white);
+					((JTextArea)ablauf.getComponent(agendaCounter)).setFont(new Font("Comic Sans Serif",Font.BOLD,18));
+					((JTextArea)ablauf.getComponent(agendaCounter)).setForeground(Color.white);
 				}
 				
 				try {
@@ -221,6 +248,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 			if(table.getSelectedRow()>-1){
 				((DefaultTableModel)table.getModel()).removeRow(table.getSelectedRow());
 			}
+		} else if(src==plus5){
+			add5minutes();
+		} else if(src==minus5){
+			subtract5minutes();
+		}else if(src==startNextPhase){
+			startNext();
 		}
 	}
 
@@ -238,6 +271,9 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 			frame.setResizable(true);
 			frame.setUndecorated(false); 
 			frame.setBounds(mXPos, mYPos, mWidth, mHeight);
+			left.setPreferredSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+			left.setMinimumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+			left.setMaximumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
 			frame.setVisible(true);
 			
 			
@@ -246,6 +282,9 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 			frame.setResizable(false);
 			frame.setUndecorated(true); 
 			frame.setBounds(mXPos, mYPos, mWidth, mHeight);
+			left.setPreferredSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+			left.setMinimumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+			left.setMaximumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
 			frame.setVisible(true);
 		}
 	}
@@ -267,22 +306,23 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 	}
 
 	public void speichern(){
-		for(int i=0; i<table.getRowCount(); i++){
-			File f = new File("agenda");
+		File f = new File("agenda");
+		FileWriter fw;
+		try {
+			fw = new FileWriter(f);
+			for(int i=0; i<table.getRowCount(); i++){
 			
-			FileWriter fw;
-			try {
-				fw = new FileWriter(f);
 				fw.write((String)table.getModel().getValueAt(i, 0)+";");
 				fw.write((String)table.getModel().getValueAt(i, 1)+";");
 				fw.write((String)table.getModel().getValueAt(i, 2)+";");
 				fw.write((String)table.getModel().getValueAt(i, 3)+";");
 				fw.write((String)table.getModel().getValueAt(i, 4)+";");
 				fw.write((String)table.getModel().getValueAt(i, 5)+"\r\n");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
+			fw.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
@@ -314,7 +354,8 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 
 			for(int i=0;i<optionen.length;i++){
 				if(!optionen[i].equals("")){
-					String optname= optionen[i].split("=")[0];
+					String dates[]= optionen[i].split(";");
+					((DefaultTableModel)table.getModel()).addRow(dates);
 					
 				}
 			}
@@ -323,6 +364,69 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void adaptPanel(){
+		int restHeight=panel.getHeight()/25-table.getRowCount()-1;
+		if(restHeight<0){
+			restHeight=0;
+		}
+		left.setLayout(new GridLayout(table.getRowCount()+1+restHeight, 1,0,0));
+	}
+	
+	public void add5minutes(){
+		for(int i=0;i<agendaEintraege.size();i++){
+			long acttime=agendaEintraege.get(i).zeitBis();
+			if(acttime>0){
+				agendaEintraege.get(i).add5Minutes();
+				String sArr[] = agendaEintraege.get(i).getTimeArray();
+				String s = agendaEintraege.get(i).getTimeString();
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[3], i, 3);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[4], i, 4);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[5], i, 5);
+				((JTextArea)ablauf.getComponent(i)).setText(s);	
+			}
+		}
+	}
+	
+	public void subtract5minutes(){
+		for(int i=0;i<agendaEintraege.size();i++){
+			long acttime=agendaEintraege.get(i).zeitBis();
+			if(acttime>0){
+				agendaEintraege.get(i).subtract5Minutes();
+				String sArr[] = agendaEintraege.get(i).getTimeArray();
+				String s = agendaEintraege.get(i).getTimeString();
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[3], i, 3);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[4], i, 4);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[5], i, 5);
+				((JTextArea)ablauf.getComponent(i)).setText(s);	
+			}
+		}
+	}
+	
+	public void startNext(){
+		for(int i=0;i<agendaEintraege.size();i++){
+			long acttime=agendaEintraege.get(i).zeitBis();
+			if(acttime>0){
+				agendaEintraege.get(i).setCalendarToNow();
+				String sArr[] = agendaEintraege.get(i).getTimeArray();
+				String s = agendaEintraege.get(i).getTimeString();
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[3], i, 3);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[4], i, 4);
+				((DefaultTableModel)table.getModel()).setValueAt(sArr[5], i, 5);
+				((JTextArea)ablauf.getComponent(i)).setText(s);	
+				break;
+			}
 		}
 	}
 }
