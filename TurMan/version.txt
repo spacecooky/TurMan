@@ -1,5 +1,7 @@
 WIP Version 0.0.18
 - Turnier-ID wird gespeichert.
+- Turnieragenda
+- Alternativer Anzeigename für Spieler die in T3 fehlerhaft oder unter Pseudonym gespeichert sind
 
 Version 0.0.17
 - Anzeige der Spieleranzahl im Begegnungs-/Punktefenster.

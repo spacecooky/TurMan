@@ -351,7 +351,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			b=tn.punkteTabButton;
 		}
 
-		b.setText(" "+tn.vorname+" "+tn.nachname);
+		String vn = tn.vornameAlter.equals("")?tn.vorname:tn.vornameAlter;
+		String nn = tn.nachnameAlter.equals("")?tn.nachname:tn.nachnameAlter;
+		b.setText(" "+vn+" "+nn);
 		b.setBorder(BorderFactory.createEtchedBorder());
 		b.setHorizontalAlignment(SwingConstants.LEFT);
 		b.setFont(f);

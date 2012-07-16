@@ -182,16 +182,19 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 					khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
 				}
 				
+				String vn1 = t1.vornameAlter.equals("")?t1.vorname:t1.vornameAlter;
+				String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
 				khf.begegnungsPanel.add(khf.t1Label);
-				khf.t1Label.setText(t1.vorname+" "+t1.nachname);
+				khf.t1Label.setText(vn1+" "+nn1);
 				khf.begegnungsPanel.add(khf.p1Field);
 				khf.p1Field.setText(Integer.toString(p1));
 				khf.begegnungsPanel.add(khf.p12Field);
 				khf.p12Field.setText(Integer.toString(p12));
 				
-				
+				String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
+				String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
 				khf.begegnungsPanel.add(khf.t2Label);
-				khf.t2Label.setText(t2.vorname+" "+t2.nachname);
+				khf.t2Label.setText(vn2+" "+nn2);
 				khf.begegnungsPanel.add(khf.p2Field);
 				khf.p2Field.setText(Integer.toString(p2));
 				khf.begegnungsPanel.add(khf.p22Field);

@@ -86,18 +86,22 @@ public class KUrkunde {
 				int del=0;
 				for (int i = 0; i < tV.size(); i++) {
 						PdfContentByte canvas = stamper.getOverContent(i+1-del);
-						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 12.1",turnier), reader.getPageSize(i+1-del).width()/2, 525, 0);
-						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1-del).width()/2, 485, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("V-Con 12.1",turnier), reader.getPageSize(i+1-del).width()/2, 525, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1-del).width()/2, 485, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Mit dem Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("nach Sibirien 2",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
 						
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase((tV.size()-i-delPlaces)+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).platz+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
 						
-						String insertName = tV.get(i).vorname+" \""+tV.get(i).nickname+"\" "+tV.get(i).nachname;
+						String vn = tV.get(i).vornameAlter.equals("")?tV.get(i).vorname:tV.get(i).vornameAlter;
+						String nn = tV.get(i).nachnameAlter.equals("")?tV.get(i).nachname:tV.get(i).nachnameAlter;
+						String insertName = vn+" \""+tV.get(i).nickname+"\" "+nn;
+						
 						insertName = insertName.replace("\"\" ", "");
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(insertName,insertName.length()<40?name:nameKlein), reader.getPageSize(i+1-del).width()/2, 310, 0);
-						
 						
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("mit",name), reader.getPageSize(i+1-del).width()/2, 270, 0);
 						

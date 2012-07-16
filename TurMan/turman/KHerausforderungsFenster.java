@@ -38,11 +38,15 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 		p.setLayout(new GridLayout(3,2));
 		combo1=new JComboBox();
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
-			combo1.addItem(hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname);
+			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
+			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
+			combo1.addItem(vn+" "+nn);
 		}
 		combo2=new JComboBox();
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
-			combo2.addItem(hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname);
+			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
+			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
+			combo2.addItem(vn+" "+nn);
 		}
 		p.add(new JLabel("Spieler 1"));
 		p.add(new JLabel("Spieler 2"));

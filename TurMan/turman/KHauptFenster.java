@@ -42,9 +42,7 @@ import javax.swing.JTextField;
  * TODO Teamturniere Einzelpaarungsfenster
  * TODO Multilingualität
  * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
- * TODO Turnieragenda, mit hervorgehobenen Programmpunkten und verbleibender Zeit zum nächsten. Optionen zum schnellen Verschieben der Zeitpunkte.
  * TODO Speicherung von Agenda-Schablonen.
- * TODO Alternative Anzeigenamen während des Turniers und für die Urkunden für Spieler die in T3 unter einem Pseudonym gespeichert sind.
  * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren? 
@@ -64,10 +62,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public KHauptFenster(){
 		super("TurMan "+version);
-		setSize(800,600);
-		setLocation(0, 500);
-		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		//setSize(800,600);
+		//setLocation(0, 500);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -288,7 +286,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	int freilosSek=0;
 
 	//Fenster
-	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster();
+	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster(this);
 	KPunkteFenster punkteFenster = new KPunkteFenster(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
 	KFreilosFenster freilosFenster = new KFreilosFenster(this);
@@ -442,7 +440,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		sider.setLayout(new BoxLayout(sider,BoxLayout.Y_AXIS));
 
 		for(int i=0;i<teilnehmerVector.size();i++){
-			JLabel jp= new JLabel(teilnehmerVector.get(i).vorname+ " "+teilnehmerVector.get(i).nachname);
+			String vn = teilnehmerVector.get(i).vornameAlter.equals("")?teilnehmerVector.get(i).vorname:teilnehmerVector.get(i).vornameAlter;
+			String nn = teilnehmerVector.get(i).nachnameAlter.equals("")?teilnehmerVector.get(i).nachname:teilnehmerVector.get(i).nachnameAlter;
+			JLabel jp= new JLabel(vn+ " "+nn);
 			jp.setMaximumSize(new Dimension(20,150));
 			jp.setMinimumSize(new Dimension(20,150));
 			jp.setPreferredSize(new Dimension(20,150));
@@ -454,7 +454,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		//HauptPanel.add(header);
 		
 		for(int i=0;i<teilnehmerVector.size();i++){
-			KTeilnehmerPanel tp=new KTeilnehmerPanel(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname,teilnehmerVector.size(),i,this);
+			String vn = teilnehmerVector.get(i).vornameAlter.equals("")?teilnehmerVector.get(i).vorname:teilnehmerVector.get(i).vornameAlter;
+			String nn = teilnehmerVector.get(i).nachnameAlter.equals("")?teilnehmerVector.get(i).nachname:teilnehmerVector.get(i).nachnameAlter;
+			KTeilnehmerPanel tp=new KTeilnehmerPanel(vn+" "+nn,teilnehmerVector.size(),i,this);
 			HauptPanel.add(tp);
 			sider.add(tp.nameLabel);
 		}

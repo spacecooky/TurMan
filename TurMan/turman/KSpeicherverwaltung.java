@@ -70,41 +70,43 @@ public class KSpeicherverwaltung {
 				String vorname =sBr[1];
 				String nachname =sBr[2];
 				String nickname =sBr[3];
-				String armee =sBr[4];
-				String ort =sBr[5];
-				String team =sBr[6];
+				String vornameAlter =sBr[4];
+				String nachnameAlter =sBr[5];
+				String armee =sBr[6];
+				String ort =sBr[7];
+				String team =sBr[8];
 
 				int unknown=0;
 				try{
-					unknown = Integer.parseInt(sBr[7]);
+					unknown = Integer.parseInt(sBr[9]);
 				}catch(NumberFormatException e){
 
 				}
 
 				int armeeliste = 0;
 				try{
-					armeeliste = Integer.parseInt(sBr[8]);
+					armeeliste = Integer.parseInt(sBr[10]);
 				}catch(NumberFormatException e){
 
 				}
 
 				int bezahlt = 0;
 				try{
-					bezahlt = Integer.parseInt(sBr[9]);
+					bezahlt = Integer.parseInt(sBr[11]);
 				}catch(NumberFormatException e){
 
 				}
 
 				int bemalwertung = 0;
 				try{
-					bemalwertung = Integer.parseInt(sBr[10]);
+					bemalwertung = Integer.parseInt(sBr[12]);
 				}catch(NumberFormatException e){
 
 				}
 
 				int ntr = 0;
 				try{
-					ntr = Integer.parseInt(sBr[11]);
+					ntr = Integer.parseInt(sBr[13]);
 				}catch(NumberFormatException e){
 
 				}
@@ -112,6 +114,8 @@ public class KSpeicherverwaltung {
 				hf.teilnehmerVector.add(new KTeilnehmer(id,vorname,nachname,nickname,armee,ort,team,unknown,armeeliste,bezahlt,ntr,hf));
 
 				hf.teilnehmerVector.lastElement().bemalwertung=bemalwertung;
+				hf.teilnehmerVector.lastElement().vornameAlter=vornameAlter;
+				hf.teilnehmerVector.lastElement().nachnameAlter=nachnameAlter;
 
 				if(sBr[12].contains("true")){
 					hf.teilnehmerVector.lastElement().deleted=true;
@@ -224,6 +228,8 @@ public class KSpeicherverwaltung {
 				fw.write(tn.vorname+";");
 				fw.write(tn.nachname+";");
 				fw.write(tn.nickname+";");
+				fw.write(tn.vornameAlter+";");
+				fw.write(tn.nachnameAlter+";");
 				fw.write(tn.armee+";");
 				fw.write(tn.ort+";");
 				fw.write(tn.team+";");

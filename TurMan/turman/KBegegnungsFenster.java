@@ -134,7 +134,13 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 				} else {
 					b1=((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(bg.xPos)).getComponent(bg.yPos)).begegnungsTabButton;
 				}
-				b1.setText(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname);
+				
+				String vn1 = tn1.vornameAlter.equals("")?tn1.vorname:tn1.vornameAlter;
+				String nn1 = tn1.nachnameAlter.equals("")?tn1.nachname:tn1.nachnameAlter;
+				String vn2 = tn2.vornameAlter.equals("")?tn2.vorname:tn2.vornameAlter;
+				String nn2 = tn2.nachnameAlter.equals("")?tn2.nachname:tn2.nachnameAlter;
+				
+				b1.setText(vn1+" "+nn1 +" : "+vn2+" "+nn2);
 				begegnung.add(b1);
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);

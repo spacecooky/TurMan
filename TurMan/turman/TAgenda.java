@@ -2,6 +2,7 @@ package turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -75,10 +76,10 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		center.add(agendaPunkt);
 		center.add(timeLabel);
 		frame.setTitle("Agenda");
-		//frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		frame.setSize(new Dimension(1024,300));
-		//frame.setResizable(false);
-		//frame.setUndecorated(true);
+		frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//frame.setSize(new Dimension(1024,300));
+		frame.setResizable(false);
+		frame.setUndecorated(true);
 		frame.addMouseListener(this);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -100,6 +101,8 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		center.setBackground(Color.black);
 		center.setBorder(BorderFactory.createLineBorder(Color.white));
 		agendaPunkt.setForeground(Color.white);
+		agendaPunkt.setBackground(Color.black);
+		//agendaPunkt.setLineWrap(true);
 		timeLabel.setForeground(Color.white);
 		add.setBackground(Color.black);
 		add.setForeground(Color.white);
@@ -115,13 +118,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		minus5.setForeground(Color.white);
 		startNextPhase.setBackground(Color.black);
 		startNextPhase.setForeground(Color.white);
-		if(Toolkit.getDefaultToolkit().getScreenSize().width<=1024){
-			timeLabel.setFont(new Font("Comic Sans Serif",1,180));
-			agendaPunkt.setFont(new Font("Comic Sans Serif",1,80));
-		}else{
-			timeLabel.setFont(new Font("Comic Sans Serif",1,280));
-			agendaPunkt.setFont(new Font("Comic Sans Serif",1,160));
-		}
+			
+		int size1 = Toolkit.getDefaultToolkit().getScreenSize().width/6;
+		int size2 = size1/2;
+		timeLabel.setFont(new Font("Comic Sans Serif",1,size1));
+		agendaPunkt.setFont(new Font("Comic Sans Serif",1,size2));
+		
 		agendaPunkt.setFocusable(false);
 		timeLabel.setFocusable(false);
 		plus5.setVisible(false);
@@ -147,7 +149,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 						   {"Mittagspause + Bemalwertung","13","07","2012","12","00"}};
 	Vector<KAgendaEintrag> agendaEintraege=new Vector<KAgendaEintrag>();
 	JLabel aheader = new JLabel("Turnierablauf");
-	JLabel agendaPunkt= new JLabel("Zeit bis zum Start:");
+	JTextArea agendaPunkt= new JTextArea("Zeit bis zum Start:");
 	JLabel timeLabel= new JLabel("00:00:00");
 	JTextField field=new JTextField("");
 	
@@ -167,6 +169,18 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		left.setPreferredSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
 		left.setMinimumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
 		left.setMaximumSize(new Dimension(panel.getWidth()/4,panel.getHeight()));
+		for(int i=0;i<left.getComponentCount();i++){
+			if(left.getComponent(i) instanceof JButton){
+				((JButton)left.getComponent(i)).setAlignmentX(Component.LEFT_ALIGNMENT);
+				((JButton)left.getComponent(i)).setPreferredSize(new Dimension(left.getWidth(),30));
+				((JButton)left.getComponent(i)).setMaximumSize(new Dimension(left.getWidth(),30));
+				((JButton)left.getComponent(i)).setMinimumSize(new Dimension(left.getWidth(),30));
+			}else if(left.getComponent(i) instanceof JLabel){
+				((JLabel)left.getComponent(i)).setAlignmentX(Component.LEFT_ALIGNMENT);
+			}else if(left.getComponent(i) instanceof JPanel){
+				((JPanel)left.getComponent(i)).setAlignmentX(Component.LEFT_ALIGNMENT);
+			}
+		}
 			scrollPane.setVisible(false);
 			ok.setVisible(false);
 			cancel.setVisible(false);

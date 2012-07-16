@@ -36,7 +36,11 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 		p.setLayout(new GridLayout(2,2));
 		combo1=new JComboBox();
 		for(int i=0;i<hf.herausforderungsVector.size();i+=2){
-			combo1.addItem(hf.herausforderungsVector.get(i).vorname+" "+hf.herausforderungsVector.get(i).nachname+" : "+hf.herausforderungsVector.get(i+1).vorname+" "+hf.herausforderungsVector.get(i+1).nachname);
+			String vn1 = hf.herausforderungsVector.get(i).vornameAlter.equals("")?hf.herausforderungsVector.get(i).vorname:hf.herausforderungsVector.get(i).vornameAlter;
+			String nn1 = hf.herausforderungsVector.get(i).nachnameAlter.equals("")?hf.herausforderungsVector.get(i).nachname:hf.herausforderungsVector.get(i).nachnameAlter;
+			String vn2 = hf.herausforderungsVector.get(i+1).vornameAlter.equals("")?hf.herausforderungsVector.get(i+1).vorname:hf.herausforderungsVector.get(i+1).vornameAlter;
+			String nn2 = hf.herausforderungsVector.get(i+1).nachnameAlter.equals("")?hf.herausforderungsVector.get(i+1).nachname:hf.herausforderungsVector.get(i+1).nachnameAlter;
+			combo1.addItem(vn1+" "+nn1+" : "+vn2+" "+nn2);
 		}
 		
 		p.add(new JLabel("Herausforderung"));

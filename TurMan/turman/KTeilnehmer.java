@@ -41,6 +41,8 @@ public class KTeilnehmer implements ActionListener {
 	int id=0;
 	String vorname="";
 	String nachname="";
+	String vornameAlter="";
+	String nachnameAlter="";
 	String nickname="";
 	String armee="";
 	String ort="";

@@ -16,14 +16,19 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	 * 
 	 */
 	private static final long serialVersionUID = -6451174956602020757L;
-	public KTeilnehmerFenster(){
+	public KTeilnehmerFenster(KHauptFenster hf){
+		this.hf=hf;
 		init();
 	}
+	
+	KHauptFenster hf;
 	
 	JPanel mainPanel = new JPanel();
 	JLabel vornameLabel = new JLabel("Vorname");
 	JLabel nicknameLabel = new JLabel("Nickname");
 	JLabel nachnameLabel = new JLabel("Nachname");
+	JLabel vornameAlterLabel = new JLabel("Alternativer Vorname");
+	JLabel nachnameAlterLabel = new JLabel("Alternativer Nachname");
 	JLabel armeeLabel = new JLabel("Armee");
 	JLabel ortLabel = new JLabel("Ort");
 	JLabel teamLabel = new JLabel("Team");
@@ -34,6 +39,8 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	JTextField vornameArea = new JTextField("");
 	JTextField nicknameArea = new JTextField("");
 	JTextField nachnameArea = new JTextField("");
+	JTextField vornameAlterArea = new JTextField("");
+	JTextField nachnameAlterArea = new JTextField("");
 	JTextField armeeArea = new JTextField("");
 	JTextField ortArea = new JTextField("");
 	JTextField teamArea = new JTextField("");
@@ -48,7 +55,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	
 	public void init(){
 		setSize(300, 300);
-		mainPanel.setLayout(new GridLayout(9,2));
+		mainPanel.setLayout(new GridLayout(11,2));
 		
 		mainPanel.add(vornameLabel);
 		mainPanel.add(vornameArea);
@@ -58,6 +65,12 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 		
 		mainPanel.add(nachnameLabel);
 		mainPanel.add(nachnameArea);
+		
+		mainPanel.add(vornameAlterLabel);
+		mainPanel.add(vornameAlterArea);
+		
+		mainPanel.add(nachnameAlterLabel);
+		mainPanel.add(nachnameAlterArea);
 		
 		mainPanel.add(armeeLabel);
 		mainPanel.add(armeeArea);
@@ -93,6 +106,8 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 		vornameArea.setText(teilnehmer.vorname);
 		nicknameArea.setText(teilnehmer.nickname);
 		nachnameArea.setText(teilnehmer.nachname);
+		vornameAlterArea.setText(teilnehmer.vornameAlter);
+		nachnameAlterArea.setText(teilnehmer.nachnameAlter);
 		armeeArea.setText(teilnehmer.armee);
 		ortArea.setText(teilnehmer.ort);
 		teamArea.setText(teilnehmer.team);
@@ -110,6 +125,8 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 			teilnehmer.vorname=vornameArea.getText();
 			teilnehmer.nickname=nicknameArea.getText();
 			teilnehmer.nachname=nachnameArea.getText();
+			teilnehmer.vornameAlter=vornameAlterArea.getText();
+			teilnehmer.nachnameAlter=nachnameAlterArea.getText();
 			teilnehmer.armee=armeeArea.getText();
 			teilnehmer.ort=ortArea.getText();
 			teilnehmer.team=teamArea.getText();
@@ -124,6 +141,11 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 				} catch(Exception e){
 					
 				}
+			hf.HauptPanel.removeAll();
+			hf.fillPanels();
+			hf.fillTeamPanels();
+			hf.refillPanels();
+			hf.updatePanels();
 			setVisible(false);
 		}
 		
