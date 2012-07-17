@@ -179,8 +179,9 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		} 
 	}
 	
-	public JLabel createHeader(String s, Font f, JPanel p){
-		JLabel l = new JLabel(s);
+	public JButton createHeader(String s, Font f, JPanel p){
+		JButton l = new JButton(s);
+		//JLabel l = new JLabel(s);
 		l.setMaximumSize(new Dimension(p.getWidth(),35));
 		l.setMinimumSize(new Dimension(p.getWidth(),35));
 		l.setPreferredSize(new Dimension(p.getWidth(),35));
@@ -189,8 +190,8 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		return l;
 	}
 
-	public JLabel createLabel(String s, Font f){
-		JLabel l = new JLabel(s);
+	public JButton createLabel(String s, Font f){
+		JButton l = new JButton(s);
 		l.setBorder(BorderFactory.createEtchedBorder());
 		l.setFont(f);
 		return l;
