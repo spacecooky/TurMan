@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -87,9 +88,9 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		JPanel ort = createPanel(body,true);
 		JPanel team = createPanel(body,true);
 
-		for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
-			if(hf.sortierterVector.get(i).deleted==false){
-				KTeilnehmer tn=hf.teilnehmerVector.get(i);
+		for(int i=sortLocal.size()-1;i>=0;i--){
+			if(sortLocal.get(i).deleted==false){
+				KTeilnehmer tn=sortLocal.get(i);
 				anwesend.add(tn.anwesend);
 				vorname.add(createField(tn.vorname, f));
 				nickname.add(createField(tn.nickname, f));
@@ -176,7 +177,22 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 			hf.fillPanels();
 			hf.fillTeamPanels();
 			setVisible(false);
-		} 
+		} else if(e.getSource() instanceof JButton){
+			System.out.println(((JButton)e.getSource()).getText());
+			if(((JButton)e.getSource()).getText().equals("Vorname")){
+				sortieren("Vorname");
+			} else if(((JButton)e.getSource()).getText().equals("Nachname")){
+				sortieren("Nachname");
+			} else if(((JButton)e.getSource()).getText().equals("Nickname")){
+				sortieren("Nickname");
+			} else if(((JButton)e.getSource()).getText().equals("Armee")){
+				sortieren("Armee");
+			} else if(((JButton)e.getSource()).getText().equals("Ort")){
+				sortieren("Ort");
+			} else if(((JButton)e.getSource()).getText().equals("Team")){
+				sortieren("Team");
+			}
+		}
 	}
 	
 	public JButton createHeader(String s, Font f, JPanel p){
@@ -186,6 +202,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		l.setMinimumSize(new Dimension(p.getWidth(),35));
 		l.setPreferredSize(new Dimension(p.getWidth(),35));
 		l.setBorder(BorderFactory.createRaisedBevelBorder());
+		l.addActionListener(this);
 		l.setFont(f);
 		return l;
 	}
@@ -247,6 +264,52 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 
 	@Override
 	public void componentShown(ComponentEvent e) {
+		init(getSize());
+	}
+	
+	Vector<KTeilnehmer> sortLocal = new Vector<KTeilnehmer>();
+	String lastButton="";
+	boolean dir=true;
+	
+	public void sortieren(String name){
+		KTeilnehmer t;
+		sortLocal.clear();
+		if(lastButton.equals(name)){
+			dir=!dir;
+		}
+		for(int i=0;i<hf.sortierterVector.size();i++){
+			t=hf.sortierterVector.get(i);
+			if(t.deleted==false){
+				int j=0;
+				if(name=="Vorname"){
+					while(j<sortLocal.size()&&(dir==false?t.vorname.compareTo(sortLocal.get(j).vorname)>0:t.vorname.compareTo(sortLocal.get(j).vorname)<0)){
+						j++;
+					}
+				} else if(name=="Nachname"){
+					while(j<sortLocal.size()&&(dir==false?t.nachname.compareTo(sortLocal.get(j).nachname)>0:t.nachname.compareTo(sortLocal.get(j).nachname)<0)){
+						j++;
+					}
+				} else if(name=="Nickname"){
+					while(j<sortLocal.size()&&(dir==false?t.nickname.compareTo(sortLocal.get(j).nickname)>0:t.nickname.compareTo(sortLocal.get(j).nickname)<0)){
+						j++;
+					}
+				} else if(name=="Armee"){
+					while(j<sortLocal.size()&&(dir==false?t.armee.compareTo(sortLocal.get(j).armee)>0:t.armee.compareTo(sortLocal.get(j).armee)<0)){
+						j++;
+					}
+				} else if(name=="Ort"){
+					while(j<sortLocal.size()&&(dir==false?t.ort.compareTo(sortLocal.get(j).ort)>0:t.ort.compareTo(sortLocal.get(j).ort)<0)){
+						j++;
+					}
+				} else if(name=="Team"){
+					while(j<sortLocal.size()&&(dir==false?t.team.compareTo(sortLocal.get(j).team)>0:t.team.compareTo(sortLocal.get(j).team)<0)){
+						j++;
+					}
+				}
+				sortLocal.insertElementAt(t,j);	
+			}
+		}
+		lastButton=name;
 		init(getSize());
 	}
 }

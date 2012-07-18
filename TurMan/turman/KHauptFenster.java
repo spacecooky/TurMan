@@ -47,8 +47,7 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler: Punktwerte speichern.
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren? 
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Sortierfunktionen / Suche für virtuelle Anmeldeliste
- * TODO Größere Anzeige von Begegnungen. Evtl. Kontrastfarben, für Buttons und Schrift.
+ * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * @author jk
  *
@@ -363,6 +362,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}else if(quelle == oeffnen){
 			KSpeicherverwaltung.ladenWrap(this);
 		} else if(quelle == anmeldung){
+			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
 			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
 			punkteFenster.init(null);
