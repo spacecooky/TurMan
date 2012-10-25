@@ -79,8 +79,8 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 					b2.setBackground(Color.orange);
 					b1.setText(""+(hf.rundenZaehler+1));
 					b2.setText(""+(hf.rundenZaehler+1));
-					b1.t2.paarungen.add(b1.xPos);
-					b1.t1.paarungen.add(b1.yPos);
+					//b1.t2.paarungen.add(b1.xPos);
+					//b1.t1.paarungen.add(b1.yPos);
 					
 					b1.runde=hf.rundenZaehler+1;
 					((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(combo2.getSelectedIndex())).getComponent(combo1.getSelectedIndex())).runde=hf.rundenZaehler+1;

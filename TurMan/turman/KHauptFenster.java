@@ -49,6 +49,7 @@ import javax.swing.JTextField;
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
+ * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
  * @author jk
  *
  */
@@ -188,7 +189,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.17");
+	static String version=new String("V0.0.18");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -560,6 +561,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 
 	public void sortieren(boolean ab,boolean bm,int lokRunde){
+		System.out.println(lokRunde);
 		KTeilnehmer t;
 		//Primär und Sekundärpunkte für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
@@ -571,6 +573,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t.sos=0;
 			t.platzGruppe=-1;
 			t.platz=0;
+			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
 			for(int j=0;j<t.paarungen.size();j++){
 				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
 					t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
@@ -608,7 +611,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			if(optionenFeld.PSS.isSelected()){
 					t=teilnehmerVector.get(i);
 					for(int j=0;j<t.paarungen.size();j++){
-						t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
+						if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+							t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
+						}
 					}
 			}
 		}
@@ -664,6 +669,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 						} else{
 							sortierterVector.get(i).platz=sortierterVector.size()-i;
 						}
+						sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
 				}
 			}
 	
@@ -687,6 +693,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		System.out.println("Neu");
 		for(int i=0;i<tVector.size();i++){
 			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+			tVector.get(i).tabellenPosition=sortierterVector.size()-i;
 		}
 		
 	}

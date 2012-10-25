@@ -61,6 +61,7 @@ public class KTeilnehmer implements ActionListener {
 	
 	int platzGruppe=-1;
 	int platz=0;
+	int tabellenPosition=0;
 	
 	Vector<Integer> paarungen= new Vector<Integer>();
 	Vector<Integer> tische= new Vector<Integer>();
@@ -87,7 +88,10 @@ public class KTeilnehmer implements ActionListener {
 			if(b.get(i).t1.equals(this)){
 				int j=0;
 				for(;j<re.size();j++){
-					if(b.get(i).t2.platz<=re.get(j).t2.platz){
+					/*if(b.get(i).t2.platz<=re.get(j).t2.platz){
+						break;
+					}*/
+					if(b.get(i).t2.tabellenPosition<=re.get(j).t2.tabellenPosition){
 						break;
 					}
 				}
