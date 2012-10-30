@@ -32,6 +32,8 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 	private static final long serialVersionUID = 2924742194067324526L;
 
 	public KAnmeldeFenster(KHauptFenster hf) {
+		super("Anmeldeverwaltung");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		abbrechenButton.addActionListener(this);
 		druckenButton.addActionListener(this);

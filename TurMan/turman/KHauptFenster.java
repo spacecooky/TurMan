@@ -32,7 +32,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Variable Einstellung der Urkunden-Infos (nur V-Con-Turniere).
  * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
  * TODO Zusätzliche Punkte-Arten hinzufügen.
  * TODO Zusätzliche Turniermodi: Komplett zufällige Paarungen, KO-System
@@ -62,10 +61,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public KHauptFenster(){
 		super("TurMan "+version);
-		//setSize(800,600);
-		//setLocation(0, 500);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+		setSize(800,600);
+		setLocation(0, 500);
+		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -117,6 +117,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		zeit.addActionListener(this);
 		turnier.add(agenda);
 		agenda.addActionListener(this);
+		turnier.add(urkundenInfos);
+		urkundenInfos.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
 
@@ -157,6 +159,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		hilfeDatei.addActionListener(this);
 
 		// neues Turnier
+		neuFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+		neuFrame.setTitle("Neues Turnier");
 		neuFrame.setContentPane(neuPanel);
 		neuFrame.setSize(300,100);
 		neuFrame.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().width-300)/2), (int)((Toolkit.getDefaultToolkit().getScreenSize().height-100)/2));
@@ -219,6 +223,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem agenda = new JMenuItem("Agenda");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
+	JMenuItem urkundenInfos = new JMenuItem("Urkunden-Einstellungen");
 	
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
@@ -300,6 +305,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
 	KSiegpunkteMatrix matrix = new KSiegpunkteMatrix(this);
+	KUrkundenFenster urkundenFenster = new KUrkundenFenster(this);
 
 	//Urkunden
 	KUrkunde urkunde = new KUrkunde();
@@ -400,9 +406,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			new TTimer(this);
 		}else if(quelle==agenda){
 			new TAgenda(this);
-		} else if(quelle==urkundenErstellen){
+		} else if(quelle==urkundenInfos){
+			urkundenFenster.anzeigen();
+		}else if(quelle==urkundenErstellen){
 			sortieren(true, true,rundenZaehler);
-			urkunde.urkundeErstellen(sortierterVector);
+			urkunde.urkundeErstellen(sortierterVector,urkundenFenster.zeile1Area.getText(),urkundenFenster.zeile2Area.getText());
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
 		}else if(quelle==extraPunkte){

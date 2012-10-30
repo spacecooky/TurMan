@@ -30,6 +30,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 	private static final long serialVersionUID = 2924742194067324526L;
 
 	public KBegegnungsFenster(KHauptFenster hf) {
+		super("Begegnung");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
 		druckenButton.addActionListener(this);

@@ -49,7 +49,7 @@ public class KUrkunde {
 	/**
 	 * Erstellt das Dokument anhand der Benutzereingaben, der gespeicherten Informationen und dem Erfolg der einzelnen Prüfungen.
 	 */
-	public void urkundeErstellen(Vector<KTeilnehmer> tV){
+	public void urkundeErstellen(Vector<KTeilnehmer> tV,String zeile1,String zeile2){
 
 		
 		//System.out.println(tV.size());
@@ -90,8 +90,10 @@ public class KUrkunde {
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("WH40K-Turnier",turnier), reader.getPageSize(i+1-del).width()/2, 485, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Kreuzender Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("FanDex Special",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
-						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Mit dem Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
-						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("nach Sibirien 2",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("Mit dem Brennzug",turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase("nach Sibirien 2",turnier), reader.getPageSize(i+1).width()/2, 485, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(zeile1,turnier), reader.getPageSize(i+1).width()/2, 525, 0);
+						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(zeile2,turnier), reader.getPageSize(i+1).width()/2, 485, 0);
 						
 						//ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase((tV.size()-i-delPlaces)+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);
 						ColumnText.showTextAligned(canvas,Element.ALIGN_CENTER, new Phrase(tV.get(i).platz+".Platz",turnier), reader.getPageSize(i+1-del).width()/2, 400, 0);

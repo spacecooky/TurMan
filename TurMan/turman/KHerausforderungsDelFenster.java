@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,8 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 	private static final long serialVersionUID = 4005838746171262L;
 
 	public KHerausforderungsDelFenster(KHauptFenster hf){
+		super("Herausforderung entfernen");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
 		cancel.addActionListener(this);

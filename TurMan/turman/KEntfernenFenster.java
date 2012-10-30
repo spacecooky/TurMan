@@ -2,6 +2,7 @@ package turman;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +20,8 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 4005838746171262L;
 
 	public KEntfernenFenster(KHauptFenster hf){
+		super("Spieler entfernen");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
 		cancel.addActionListener(this);

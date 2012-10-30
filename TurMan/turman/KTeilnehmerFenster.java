@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,6 +18,8 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = -6451174956602020757L;
 	public KTeilnehmerFenster(KHauptFenster hf){
+		super("Teilnehmer-Einstellungen");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		init();
 	}

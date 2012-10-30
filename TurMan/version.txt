@@ -1,6 +1,9 @@
 WIP Version 0.0.19
-- Korrektur im Auswahlverfahren bei gleich platzierter Spieler.
+- Korrektur im Auswahlverfahren bei gleich platzierten Spielern.
 - SOS werden bei Auswahl älterer Runden korrekt angezeigt.
+- Die ersten zwei Zeilen der Urkunden sind jetzt variabel.
+- Namen bei allen Fenstern eingefügt
+- Icon-Dummy bei allen Fenstern eingefügt
 
 Version 0.0.18
 - Turnier-ID wird gespeichert.

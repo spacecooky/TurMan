@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,8 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 4005838746171262L;
 
 	public KErweiternFenster(KHauptFenster hf){
+		super("Spieler hinzufügen");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
 		cancel.addActionListener(this);

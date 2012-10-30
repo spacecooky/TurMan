@@ -1,6 +1,7 @@
 package turman;
 
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -20,6 +21,7 @@ public class KSiegpunkteMatrix extends JFrame implements ActionListener{
 
 	public KSiegpunkteMatrix(KHauptFenster hf){
 		super("Siegpunkte-Matrix");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
 		cancel.addActionListener(this);

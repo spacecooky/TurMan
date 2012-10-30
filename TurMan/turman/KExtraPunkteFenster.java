@@ -26,6 +26,8 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 2924742194067324526L;
 
 	public KExtraPunkteFenster(KHauptFenster hf) {
+		super("Zus. Punkte");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		SchliessenButton.addActionListener(this);
 		AbbrechenButton.addActionListener(this);

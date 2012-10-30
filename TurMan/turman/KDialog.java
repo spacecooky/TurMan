@@ -21,6 +21,7 @@ public class KDialog extends JDialog implements ActionListener{
 
 
 	public KDialog(KHauptFenster s){
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.s = s;
 		init();
 		setModal(true);

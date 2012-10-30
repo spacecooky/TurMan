@@ -33,6 +33,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 	private static final long serialVersionUID = 2924742194067324526L;
 
 	public KPunkteFenster(KHauptFenster hf) {
+		super("Rangliste");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
 		ab.addActionListener(this);

@@ -21,6 +21,7 @@ public class KInfoFenster extends JFrame{
 
 	public KInfoFenster() {
 		super("TurMan");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		init();
 	}
 	
