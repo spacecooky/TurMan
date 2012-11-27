@@ -32,6 +32,10 @@ public class KAgendaEintrag {
 		startzeit.add(Calendar.MINUTE,-5);
 	}
 	
+	protected void changeTime(int minutes){
+		startzeit.add(Calendar.MINUTE,minutes);
+	}
+	
 	protected void setCalendarToNow(){
 		startzeit=Calendar.getInstance();
 	}

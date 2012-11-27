@@ -1,9 +1,11 @@
-WIP Version 0.0.19
+Version 0.0.19
 - Korrektur im Auswahlverfahren bei gleich platzierten Spielern.
 - SOS werden bei Auswahl älterer Runden korrekt angezeigt.
 - Die ersten zwei Zeilen der Urkunden sind jetzt variabel.
 - Namen bei allen Fenstern eingefügt
 - Icon-Dummy bei allen Fenstern eingefügt
+- Agenda: automatische Anpassung der Schriftbreite
+- Agenda: Start des nächsten Punktes mit durchgängiger Zeitänderung
 
 Version 0.0.18
 - Turnier-ID wird gespeichert.

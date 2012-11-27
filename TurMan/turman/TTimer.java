@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -21,7 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class TTimer extends Thread implements ActionListener, MouseListener{
+public class TTimer extends Thread implements ActionListener, MouseListener,ComponentListener{
 
 	public TTimer(KHauptFenster hf){
 		this.hf=hf;
@@ -61,6 +64,8 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 			frame.setResizable(false);
 			frame.setUndecorated(true);
 			frame.addMouseListener(this);
+			frame.addComponentListener(this);
+			frame.setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 			
 			frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			WindowListener meinListener=new WindowAdapter(){
@@ -72,11 +77,13 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 			
 			panel.setBackground(Color.black);
 			label.setForeground(Color.white);
-			if(Toolkit.getDefaultToolkit().getScreenSize().width<=1024){
+			int size1 = Toolkit.getDefaultToolkit().getScreenSize().width/5;
+			label.setFont(new Font("Comic Sans Serif",1,size1));
+			/*if(Toolkit.getDefaultToolkit().getScreenSize().width<=1024){
 				label.setFont(new Font("Comic Sans Serif",1,200));
 			}else{
 				label.setFont(new Font("Comic Sans Serif",1,300));
-			}
+			}*/
 			label.setFocusable(false);
 			//panel.setAlignmentX(0.5f);
 			frame.setVisible(true);
@@ -148,6 +155,12 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 			frame.setVisible(true);
 		}
 	}
+	
+	public void adaptPanel(){
+		int size1 = frame.getWidth()/5;
+		label.setFont(new Font("Comic Sans Serif",1,size1));
+		frame.repaint();
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -169,6 +182,24 @@ public class TTimer extends Thread implements ActionListener, MouseListener{
 		
 	}
 
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		adaptPanel();
+	}
 
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		adaptPanel();
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		adaptPanel();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		adaptPanel();
+	}
 
 }

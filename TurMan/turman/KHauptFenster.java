@@ -49,6 +49,7 @@ import javax.swing.JTextField;
  * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
+ * TODO Paarung tauschen (mit Warnung, ob es die Paarung bereits gab)
  * @author jk
  *
  */
@@ -62,10 +63,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		setSize(800,600);
-		setLocation(0, 500);
-		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		//setSize(800,600);
+		//setLocation(0, 500);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -193,7 +194,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 
-	static String version=new String("V0.0.18");
+	static String version=new String("V0.0.19");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();

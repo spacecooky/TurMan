@@ -5,10 +5,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -20,6 +21,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -36,7 +38,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class TAgenda extends Thread implements ActionListener, MouseListener{
+public class TAgenda extends Thread implements ActionListener, MouseListener,ComponentListener{
 
 	public TAgenda(KHauptFenster hf){
 		this.hf=hf;
@@ -80,7 +82,9 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 		//frame.setSize(new Dimension(1024,300));
 		frame.setResizable(false);
 		frame.setUndecorated(true);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		frame.addMouseListener(this);
+		frame.addComponentListener(this);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
 			public void windowClosing(WindowEvent ereignis){
@@ -382,11 +386,17 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 	}
 	
 	public void adaptPanel(){
-		int restHeight=panel.getHeight()/25-table.getRowCount()-1;
+		/*int restHeight=panel.getHeight()/25-table.getRowCount()-1;
 		if(restHeight<0){
 			restHeight=0;
 		}
-		left.setLayout(new GridLayout(table.getRowCount()+1+restHeight, 1,0,0));
+		left.setLayout(new GridLayout(table.getRowCount()+1+restHeight, 1,0,0));*/
+		
+		int size1 = center.getWidth()/5;
+		int size2 = size1/2;
+		timeLabel.setFont(new Font("Comic Sans Serif",1,size1));
+		agendaPunkt.setFont(new Font("Comic Sans Serif",1,size2));
+		frame.repaint();
 	}
 	
 	public void add5minutes(){
@@ -426,8 +436,10 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 	}
 	
 	public void startNext(){
-		for(int i=0;i<agendaEintraege.size();i++){
-			long acttime=agendaEintraege.get(i).zeitBis();
+		int i;
+		long acttime=0;
+		for(i=0;i<agendaEintraege.size();i++){
+			acttime=agendaEintraege.get(i).zeitBis();
 			if(acttime>0){
 				agendaEintraege.get(i).setCalendarToNow();
 				String sArr[] = agendaEintraege.get(i).getTimeArray();
@@ -442,5 +454,41 @@ public class TAgenda extends Thread implements ActionListener, MouseListener{
 				break;
 			}
 		}
+		int minutes = (int)(acttime/60000);
+		
+		for(;i<agendaEintraege.size();i++){
+			agendaEintraege.get(i).changeTime(-minutes);
+			String sArr[] = agendaEintraege.get(i).getTimeArray();
+			String s = agendaEintraege.get(i).getTimeString();
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[3], i, 3);
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[4], i, 4);
+			((DefaultTableModel)table.getModel()).setValueAt(sArr[5], i, 5);
+			((JTextArea)ablauf.getComponent(i)).setText(s);
+		}
+		
+	}
+	
+	
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		adaptPanel();
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		adaptPanel();
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		adaptPanel();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		adaptPanel();
 	}
 }
