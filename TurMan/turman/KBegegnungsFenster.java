@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -118,8 +118,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 		
 		JPanel begegnung = createPanel(body);
-		JPanel prim‰r = createPanel(body);
-		JPanel sekund‰r = createPanel(body);
+		JPanel prim√§r = createPanel(body);
+		JPanel sekund√§r = createPanel(body);
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
@@ -147,18 +147,18 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);
 				
-				prim‰r.add(createLabel(bg.p1+" : "+bg.p2,f));
-				sekund‰r.add(createLabel(bg.p12+" : "+bg.p22,f));
+				prim√§r.add(createLabel(bg.p1+" : "+bg.p2,f));
+				sekund√§r.add(createLabel(bg.p12+" : "+bg.p22,f));
 			}
 		}
 		
-		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef¸llt.
+		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef√ºllt.
 				if(hf.begegnungsVector.size()==0){
 					
 					tische.setLayout(new GridLayout(16,1));
 					begegnung.setLayout(new GridLayout(16,1));
-					prim‰r.setLayout(new GridLayout(16,1));
-					sekund‰r.setLayout(new GridLayout(16,1));
+					prim√§r.setLayout(new GridLayout(16,1));
+					sekund√§r.setLayout(new GridLayout(16,1));
 					
 					for(int i=15;i>0;i--){
 						JLabel label6 = new JLabel("");
@@ -170,11 +170,11 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 						label1.setBorder(BorderFactory.createEtchedBorder());
 						
 						JLabel label2 = new JLabel("");
-						prim‰r.add(label2);
+						prim√§r.add(label2);
 						label2.setBorder(BorderFactory.createEtchedBorder());
 						
 						JLabel label3 = new JLabel("");
-						sekund‰r.add(label3);
+						sekund√§r.add(label3);
 						label3.setBorder(BorderFactory.createEtchedBorder());
 					}
 				}
@@ -188,15 +188,15 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		header.add(createHeader("Begegnung",f,begegnung));
 		
 		if(hf.optionenFeld.PSS.isSelected()){	
-			header.add(createHeader("Prim‰r",f,prim‰r));
+			header.add(createHeader("Prim√§r",f,prim√§r));
 		} else if(hf.optionenFeld.TS.isSelected()){	
-			header.add(createHeader("Turnierpunkte",f,prim‰r));
+			header.add(createHeader("Turnierpunkte",f,prim√§r));
 		}
 		
 		if(hf.optionenFeld.PSS.isSelected()){
-			header.add(createHeader("Sekund‰r",f,prim‰r));
+			header.add(createHeader("Sekund√§r",f,prim√§r));
 		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Siegespunkte",f,prim‰r));
+			header.add(createHeader("Siegespunkte",f,prim√§r));
 		}
 
 		header.setBackground(Color.white);

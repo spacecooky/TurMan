@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -66,7 +66,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JTextField tischField = new JTextField("0");
 	
 	//WertungsOptionen
-	JRadioButton PSS = new JRadioButton("Prim‰rpunkte, Sekund‰rpunkte, SOS");
+	JRadioButton PSS = new JRadioButton("Prim√§rpunkte, Sekund√§rpunkte, SOS");
 	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
 	ButtonGroup wertung = new ButtonGroup();
 	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
@@ -195,8 +195,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		JPanel p7no = new JPanel();
 		
 		p7.setBorder(BorderFactory.createTitledBorder("Zusatzpunkte"));
-		p7pri.setBorder(BorderFactory.createTitledBorder("Prim‰r"));
-		p7sek.setBorder(BorderFactory.createTitledBorder("Sekund‰r"));
+		p7pri.setBorder(BorderFactory.createTitledBorder("Prim√§r"));
+		p7sek.setBorder(BorderFactory.createTitledBorder("Sekund√§r"));
 		p7no.setBorder(BorderFactory.createTitledBorder("keine Wertung"));
 		p7.setLayout(new GridLayout(1,3));
 		p7pri.setLayout(new GridLayout(2,1));

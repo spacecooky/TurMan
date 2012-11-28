@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -47,11 +47,11 @@ public class KDialog extends JDialog implements ActionListener{
 		    JOptionPane.ERROR_MESSAGE);
 	
 	public JOptionPane errorDateiFehler = new JOptionPane(
-			"Fehler beim Öffnen der Datei",
+			"Fehler beim Ã–ffnen der Datei",
 		    JOptionPane.ERROR_MESSAGE);
 	
 	public JOptionPane errorNummerEingabe = new JOptionPane(
-			"Es können nur natürliche Zahlen eingegeben werden.",
+			"Es kÃ¶nnen nur natÃ¼rliche Zahlen eingegeben werden.",
 		    JOptionPane.ERROR_MESSAGE);
 	
 	public JOptionPane errorHerausforderung1 = new JOptionPane(
@@ -72,7 +72,7 @@ public class KDialog extends JDialog implements ActionListener{
 		    JOptionPane.ERROR_MESSAGE);
 	
 	public JOptionPane infoTische = new JOptionPane(
-			"Es müssen Spieler erneut am selben Tisch spielen.",
+			"Es mÃ¼ssen Spieler erneut am selben Tisch spielen.",
 		    JOptionPane.INFORMATION_MESSAGE);
 	
 	public JOptionPane infoDifferenz = new JOptionPane(
@@ -108,7 +108,7 @@ public class KDialog extends JDialog implements ActionListener{
 	
 	public void setPaarungsDialog(){
 		String s = "Durch die Paarungsoptionen bzw. Paarungsart\n" +
-				"haben sich folgende Paarungsabstände >1 ergeben:\n";
+				"haben sich folgende PaarungsabstÃ¤nde >1 ergeben:\n";
 		
 		for(int i=0;i<differenz.size();i++){
 			s+=differenz.get(i)+"\n";

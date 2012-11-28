@@ -1,4 +1,4 @@
-package turman;
+﻿package turman;
 
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -39,7 +39,7 @@ public class KUrkundenFenster extends JFrame implements ActionListener{
 	JTextField zeile2Area = new JTextField("");
 	
 	JButton cancel = new JButton("Abbrechen");
-	JButton ok = new JButton("�ndern");
+	JButton ok = new JButton("Ändern");
 	
 	
 	public void init(){

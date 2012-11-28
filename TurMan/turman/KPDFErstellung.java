@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -50,8 +50,8 @@ public class KPDFErstellung {
 
 			PdfPCell cellHeader1 = new PdfPCell(new Phrase("Platz",bold));
 			PdfPCell cellHeader2 = new PdfPCell(new Phrase("Spieler",bold));
-			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Prim‰r",bold));
-			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekund‰r",bold));
+			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Prim√§r",bold));
+			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekund√§r",bold));
 			PdfPCell cellHeader6 = new PdfPCell(new Phrase("SOS",bold));
 
 			table2.addCell(cellHeader1);
@@ -65,8 +65,8 @@ public class KPDFErstellung {
 			for(int i=0; i<tV.size();i++){
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).platz,normal)));
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).vorname+" "+tV.get(i).nachname,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).prim‰r,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sekund‰r,normal)));
+				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).prim√§r,normal)));
+				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sekund√§r,normal)));
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sos,normal)));
 			}
 
@@ -114,8 +114,8 @@ public class KPDFErstellung {
 
 			PdfPCell cellHeader1 = new PdfPCell(new Phrase("Tisch",bold));
 			PdfPCell cellHeader2 = new PdfPCell(new Phrase("Begegnung",bold));
-			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Prim‰r",bold));
-			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekund‰r",bold));
+			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Prim√§r",bold));
+			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekund√§r",bold));
 
 			table2.addCell(cellHeader1);
 			table2.addCell(cellHeader2);

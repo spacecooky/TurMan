@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -33,7 +33,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 	JPanel p = new JPanel();
 	JComboBox combo = new JComboBox();
 	JButton cancel= new JButton("Abbrechen");
-	JButton ok= new JButton("Löschen");
+	JButton ok= new JButton("LÃ¶schen");
 	JButton rok= new JButton("Wiederherstellen");
 	
 	public void init(){
@@ -115,7 +115,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 			}
 		}
 		hf.teilnehmerVector.get(index).deleted=true;
-		hf.gelöschteTeilnehmer++;
+		hf.gelÃ¶schteTeilnehmer++;
 	}
 	
 	public void wiederherstellen(int index){
@@ -137,7 +137,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 			}
 		}
 		hf.teilnehmerVector.get(index).deleted=false;
-		hf.gelöschteTeilnehmer--;
+		hf.gelÃ¶schteTeilnehmer--;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -19,7 +19,7 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 4005838746171262L;
 
 	public KFreilosFenster(KHauptFenster hf){
-		super("Freilos hinzufügen");
+		super("Freilos hinzufÃ¼gen");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
@@ -32,15 +32,15 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 	JTextField prim = new JTextField();
 	JTextField sek = new JTextField();
 	JButton cancel= new JButton("Abbrechen");
-	JButton ok= new JButton("Hinzufügen");
+	JButton ok= new JButton("HinzufÃ¼gen");
 	
 	public void init(){
 		p.removeAll();
 		setSize(500,100);
 		p.setLayout(new GridLayout(3,2));
 		if(hf.optionenFeld.PSS.isSelected()){
-			p.add(new JLabel("Primärpunkte"));
-			p.add(new JLabel("Sekundärpunkte"));
+			p.add(new JLabel("PrimÃ¤rpunkte"));
+			p.add(new JLabel("SekundÃ¤rpunkte"));
 		} else if(hf.optionenFeld.TS.isSelected()){
 			p.add(new JLabel("Turnierpunkte"));
 			p.add(new JLabel("Siegespunkte"));

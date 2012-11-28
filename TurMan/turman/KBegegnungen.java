@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -53,11 +53,11 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	int runde=0;
 	
 	//int position=0;
-	//int prim‰r=0;
-	//int sekund‰r=0;
+	//int prim√§r=0;
+	//int sekund√§r=0;
 	//int sos=0;
 	
-	JButton bestaetigung = new JButton("Best‰tigung");
+	JButton bestaetigung = new JButton("Best√§tigung");
 	JButton begegnungsFensterButton = new JButton("");
 	JButton begegnungsTabButton = new JButton("");
 	Color normalButtonColor;
@@ -106,7 +106,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	
 	/**
-	 * Berechnung, ob mit dem angegebenen Tisch i ein tischfehler mˆglich ist
+	 * Berechnung, ob mit dem angegebenen Tisch i ein tischfehler m√∂glich ist
 	 * @param i 
 	 * @return
 	 */
@@ -175,8 +175,8 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 				
 				khf.begegnungsPanel.add(new JLabel(""));
 				if(khf.optionenFeld.PSS.isSelected()){
-					khf.begegnungsPanel.add(new JLabel("Prim‰r"));
-					khf.begegnungsPanel.add(new JLabel("Sekund‰r"));
+					khf.begegnungsPanel.add(new JLabel("Prim√§r"));
+					khf.begegnungsPanel.add(new JLabel("Sekund√§r"));
 				} else if(khf.optionenFeld.TS.isSelected()){
 					khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
 					khf.begegnungsPanel.add(new JLabel("Siegespunkte"));

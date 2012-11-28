@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,10 +52,10 @@ public class KTeilnehmer implements ActionListener {
 	int bezahlt;
 	int ntr;
 	
-	int prim‰r=0;
-	int prim‰rEinzel=0;
-	int sekund‰r=0;
-	int sekund‰rEinzel=0;
+	int prim√§r=0;
+	int prim√§rEinzel=0;
+	int sekund√§r=0;
+	int sekund√§rEinzel=0;
 	int sos=0;
 	int bemalwertung=0;
 	

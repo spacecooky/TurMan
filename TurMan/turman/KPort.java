@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ public class KPort {
 			File f =new File(fileChooser.getSelectedFile().toString());
 			if(f!=null){
 				KSpeicherverwaltung.leeren(hf);
-				hf.gelˆschteTeilnehmer=0;
+				hf.gel√∂schteTeilnehmer=0;
 				hf.mode=KPairings.RANDOM;
 				//KPairings.team=true; //Haken muss manuell entfernt werden
 				hf.rundenZaehler=0;
@@ -112,7 +112,7 @@ public class KPort {
 					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 						KTeilnehmer tn = hf.sortierterVector.get(i);
-							int primeinzel=tn.prim‰rEinzel;
+							int primeinzel=tn.prim√§rEinzel;
 							int armee=(hf.optionenFeld.armeePri.isSelected()?tn.armeeliste:0);
 							int bemalung=(hf.optionenFeld.bemalPri.isSelected()?tn.bemalwertung:0);
 							int primkomp=primeinzel+armee+bemalung;

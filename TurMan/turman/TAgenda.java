@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -157,13 +157,13 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 	JLabel timeLabel= new JLabel("00:00:00");
 	JTextField field=new JTextField("");
 	
-	JButton add = new JButton("Neue Zeile anhängen");
-	JButton remove = new JButton("Aktuelle Zeile löschen");
+	JButton add = new JButton("Neue Zeile anhÃ¤ngen");
+	JButton remove = new JButton("Aktuelle Zeile lÃ¶schen");
 	JButton ok = new JButton("Agenda Starten");
 	JButton cancel = new JButton("Abbrechen");
 	JButton plus5 = new JButton("+5 Minuten");
 	JButton minus5 = new JButton("-5 Minuten");
-	JButton startNextPhase = new JButton("Nächsten Agendapunkt starten");
+	JButton startNextPhase = new JButton("NÃ¤chsten Agendapunkt starten");
 	
 	KHauptFenster hf;
 	long time;

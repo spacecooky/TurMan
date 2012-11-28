@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -32,22 +32,22 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
- * TODO Zusätzliche Punkte-Arten hinzufügen.
- * TODO Zusätzliche Turniermodi: Komplett zufällige Paarungen, KO-System
- * TODO Siegpunkte-Matrix für den Turnierpunkte-Siegpunkte-Modus
+ * TODO Freiere Festlegung der PrimÃ¤r-, SekundÃ¤r- und SOS-Punkte.
+ * TODO ZusÃ¤tzliche Punkte-Arten hinzufÃ¼gen.
+ * TODO ZusÃ¤tzliche Turniermodi: Komplett zufÃ¤llige Paarungen, KO-System
+ * TODO Siegpunkte-Matrix fÃ¼r den Turnierpunkte-Siegpunkte-Modus
  * TODO Teamturniere:
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
- * TODO Multilingualität
+ * TODO MultilingualitÃ¤t
  * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
  * TODO Speicherung von Agenda-Schablonen.
- * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
+ * TODO MaximalhÃ¶hen der Zeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
- * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren? 
- * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
- * TODO Bessere Sichtbarkeit für Beamer.
- * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
+ * TODO Freilos-Spieler/Punkte Ã¼ber Konfiguration aktivieren? 
+ * TODO Ordnerstruktur. SpeicherstÃ¤nde, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
+ * TODO Bessere Sichtbarkeit fÃ¼r Beamer.
+ * TODO Druck/PDF/TXT fÃ¼r verschiedenen Wertungs-Modi
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
  * TODO Paarung tauschen (mit Warnung, ob es die Paarung bereits gab)
  * @author jk
@@ -211,9 +211,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuBar menubar = new JMenuBar();
 	JMenu datei = new JMenu("Datei");
 	JMenuItem neu = new JMenuItem("Neues Turnier - Manuell");
-	JMenuItem gImport = new JMenuItem("Neues Turnier - GöPP Import");
-	JMenuItem gExport = new JMenuItem("GöPP Export");
-	JMenuItem oeffnen = new JMenuItem("Turnier Öffnen");
+	JMenuItem gImport = new JMenuItem("Neues Turnier - GÃ¶PP Import");
+	JMenuItem gExport = new JMenuItem("GÃ¶PP Export");
+	JMenuItem oeffnen = new JMenuItem("Turnier Ã–ffnen");
 	JMenuItem speichern = new JMenuItem("Turnier Speichern");
 	JMenuItem beenden = new JMenuItem("Beenden");
 
@@ -229,16 +229,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem herausforderungDel = new JMenuItem("Herausforderung entfernen");
-	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
+	JMenuItem runde = new JMenuItem("NÃ¤chste Runde paaren");
 	JMenuItem rundeWdh = new JMenuItem("Runde erneut paaren");
-	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
+	JMenuItem rundeReset = new JMenuItem("Runde ZurÃ¼cksetzen");
 
 	JMenu spieler = new JMenu("Spieler");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem wiederherstellen = new JMenuItem("Wiederherstellen");
-	JMenuItem erweitern = new JMenuItem("Hinzufügen");
+	JMenuItem erweitern = new JMenuItem("HinzufÃ¼gen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
-	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfügen");
+	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfÃ¼gen");
 	
 	JMenu optionen = new JMenu("Optionen");
 	JMenuItem optionenSpeichern = new JMenuItem("Konfiguration speichern");
@@ -274,7 +274,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	//Variablen
 	int teilnehmer=0;
 	int teams=0;
-	int gelöschteTeilnehmer=0;
+	int gelÃ¶schteTeilnehmer=0;
 	int runden=0;
 	int rundenZaehler=0;
 	int rundenAnzeige=0;
@@ -327,7 +327,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			neuFrame.setVisible(true);
 		} else if(quelle == neuButton){
 			teilnehmer=Integer.parseInt(neuTeilnehmerField.getText());
-			gelöschteTeilnehmer=0;
+			gelÃ¶schteTeilnehmer=0;
 			runden=Integer.parseInt(neuRundenField.getText());
 			neuFrame.setVisible(false);
 
@@ -518,7 +518,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}	
 		}
 		
-		gelöschteTeilnehmer=0;
+		gelÃ¶schteTeilnehmer=0;
 		for(int i=0;i<teilnehmerVector.size();i++){
 			if(teilnehmerVector.get(i).deleted==true){
 				entfernenFenster.entfernen(i);
@@ -572,45 +572,45 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public void sortieren(boolean ab,boolean bm,int lokRunde){
 		System.out.println(lokRunde);
 		KTeilnehmer t;
-		//Primär und Sekundärpunkte für alle berechnen
+		//PrimÃ¤r und SekundÃ¤rpunkte fÃ¼r alle berechnen
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			t.primär=0;
-			t.sekundär=0;
-			t.primärEinzel=0;
-			t.sekundärEinzel=0;
+			t.primÃ¤r=0;
+			t.sekundÃ¤r=0;
+			t.primÃ¤rEinzel=0;
+			t.sekundÃ¤rEinzel=0;
 			t.sos=0;
 			t.platzGruppe=-1;
 			t.platz=0;
 			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
 			for(int j=0;j<t.paarungen.size();j++){
 				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-					t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
+					t.primÃ¤r+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
 					if(optionenFeld.PSS.isSelected()){
-						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
+						t.sekundÃ¤r+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
 					} else if(optionenFeld.TS.isSelected()){
-						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+						t.sekundÃ¤r+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
 					}
 				}
 			}
 			
-			t.primärEinzel=t.primär;
-			t.sekundärEinzel=t.sekundär;
+			t.primÃ¤rEinzel=t.primÃ¤r;
+			t.sekundÃ¤rEinzel=t.sekundÃ¤r;
 			
 			if(ab){
 				if(optionenFeld.armeePri.isSelected()){
-					t.primär+=t.armeeliste;
+					t.primÃ¤r+=t.armeeliste;
 				}
 				if(optionenFeld.armeeSek.isSelected()){
-					t.sekundär+=t.armeeliste;
+					t.sekundÃ¤r+=t.armeeliste;
 				}
 			}
 			if(bm){
 				if(optionenFeld.bemalPri.isSelected()){
-					t.primär+=t.bemalwertung;
+					t.primÃ¤r+=t.bemalwertung;
 				}
 				if(optionenFeld.bemalSek.isSelected()){
-					t.sekundär+=t.bemalwertung;
+					t.sekundÃ¤r+=t.bemalwertung;
 				}
 			}
 		}
@@ -621,28 +621,28 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					t=teilnehmerVector.get(i);
 					for(int j=0;j<t.paarungen.size();j++){
 						if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-							t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
+							t.sos += teilnehmerVector.get(t.paarungen.get(j)).primÃ¤rEinzel;
 						}
 					}
 			}
 		}
 
-		//Sortiern nach primär
+		//Sortiern nach primÃ¤r
 		sortierterVector.clear();
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
 			if(t.deleted==false){
 				int j=0;
-				while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
+				while(j<sortierterVector.size()&&t.primÃ¤r>sortierterVector.get(j).primÃ¤r){
 					j++;
 				}
-				//Sortieren nach Sekundär
-				while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
+				//Sortieren nach SekundÃ¤r
+				while(j<sortierterVector.size()&&t.primÃ¤r==sortierterVector.get(j).primÃ¤r&&teilnehmerVector.get(i).sekundÃ¤r>sortierterVector.get(j).sekundÃ¤r){
 					j++;
 				}
 				//Sortieren nach sos
 				if(optionenFeld.PSS.isSelected()){
-					while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+					while(j<sortierterVector.size()&&t.primÃ¤r==sortierterVector.get(j).primÃ¤r&&t.sekundÃ¤r==sortierterVector.get(j).sekundÃ¤r&&t.sos>sortierterVector.get(j).sos){
 						j++;
 					}
 				}
@@ -656,7 +656,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		for(int i=1;i<sortierterVector.size();i++){
 			KTeilnehmer t1=sortierterVector.get(i);
 			KTeilnehmer t2=sortierterVector.get(i-1);
-			if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
+			if(t1.primÃ¤r==t2.primÃ¤r && t1.sekundÃ¤r==t2.sekundÃ¤r && t1.sos==t2.sos){
 				if(t2.platzGruppe==-1){
 					platzgruppe++;
 					t2.platzGruppe=platzgruppe;
@@ -670,7 +670,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				}
 			} 
 		}
-		//Plätze eintragen
+		//PlÃ¤tze eintragen
 				
 				for(int i=sortierterVector.size()-1;i>=0;i--){
 						if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
@@ -685,7 +685,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
 		System.out.println("Alt");
 		for(int i=0;i<tVector.size();i++){
-			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primÃ¤r + " "+ tVector.get(i).sekundÃ¤r + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
 		}
 		Random randomGenerator = new Random();
 		for(int i=0;i<platzGruppe.size();i++){
@@ -701,7 +701,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}
 		System.out.println("Neu");
 		for(int i=0;i<tVector.size();i++){
-			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primÃ¤r + " "+ tVector.get(i).sekundÃ¤r + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
 			tVector.get(i).tabellenPosition=sortierterVector.size()-i;
 		}
 		

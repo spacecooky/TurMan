@@ -1,4 +1,4 @@
-package turman;
+﻿package turman;
 
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -52,7 +52,7 @@ public class KTeilnehmerFenster extends JFrame implements ActionListener{
 	JTextField bemalArea = new JTextField("");
 	
 	JButton cancel = new JButton("Abbrechen");
-	JButton ok = new JButton("�ndern");
+	JButton ok = new JButton("Ändern");
 	
 	KTeilnehmer teilnehmer = null;
 	

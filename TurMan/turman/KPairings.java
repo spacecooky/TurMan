@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Color;
 import java.util.Random;
@@ -55,21 +55,21 @@ public class KPairings {
 					int gegner=i;//v.size();
 					while(true){
 						gegner = randomGenerator.nextInt(v.size());
-						if(v.get(gegner).paired==-1){ //Der ausgewählte Gegner hat noch keine Paarung
+						if(v.get(gegner).paired==-1){ //Der ausgewÃ¤hlte Gegner hat noch keine Paarung
 
-							//Prüfung, falls Teams beachtet werden sollen
+							//PrÃ¼fung, falls Teams beachtet werden sollen
 							if(hf.optionenFeld.teams.isSelected() && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
 								teamFailureBool=true;
 							}
-							//Prüfung, falls Mirrormatches beachtet werden sollen
+							//PrÃ¼fung, falls Mirrormatches beachtet werden sollen
 							if(hf.optionenFeld.mirror.isSelected() &&! v.get(i).armee.equals("") && v.get(i).armee.equals(v.get(gegner).armee)){
 								mirrorFailureBool=true;
 							}
-							//Prüfung, falls Orte beachtet werden sollen
+							//PrÃ¼fung, falls Orte beachtet werden sollen
 							if(hf.optionenFeld.orte.isSelected() &&! v.get(i).ort.equals("") && v.get(i).ort.equals(v.get(gegner).ort)){
 								ortFailureBool=true;
 							}
-							//Prüfung, falls Armeen beachtet werden sollen
+							//PrÃ¼fung, falls Armeen beachtet werden sollen
 							if(hf.optionenFeld.armeen.isSelected()){
 								if(!v.get(gegner).armee.equals("")){
 									for(int j=0;j<v.get(i).paarungen.size();j++){
@@ -214,10 +214,10 @@ public class KPairings {
 				}
 			}
 			
-			//Test, ob ein Spieler keine möglichen Paarungen hat
+			//Test, ob ein Spieler keine mÃ¶glichen Paarungen hat
 			for(int i=0;i < tVector.size();i++){
 				Vector<KBegegnungen> pB =tVector.get(i).getPossiblePairings(begegnungsPool);
-				System.out.println(tVector.get(i).vorname+" "+tVector.get(i).nachname+", mögliche Paarungen: "+pB.size());
+				System.out.println(tVector.get(i).vorname+" "+tVector.get(i).nachname+", mÃ¶gliche Paarungen: "+pB.size());
 				if(pB.size()==0){
 					return false;
 				}
@@ -272,7 +272,7 @@ public class KPairings {
 	 */
 	static void runde(KHauptFenster hf){
 		boolean swissErr=false;
-		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
+		if((hf.teilnehmerVector.size()-hf.gelÃ¶schteTeilnehmer)%2==1){
 			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
 			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
@@ -291,7 +291,7 @@ public class KPairings {
 			}
 		}
 		
-		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==0 && swissErr==false){
+		if((hf.teilnehmerVector.size()-hf.gelÃ¶schteTeilnehmer)%2==0 && swissErr==false){
 			hf.herausforderungsVector.clear();
 			tische(hf);
 			if(hf.rundenZaehler>1){
@@ -350,7 +350,7 @@ public class KPairings {
 
 	
 	/**
-	 * Verteilt die Spieler möglichst so an den Tischen, dass sie nicht mehrmals am selben Tisch spielen müssen
+	 * Verteilt die Spieler mÃ¶glichst so an den Tischen, dass sie nicht mehrmals am selben Tisch spielen mÃ¼ssen
 	 * @param hf
 	 */
 	static void tische(KHauptFenster hf){
@@ -365,7 +365,7 @@ public class KPairings {
 			((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos)).getComponent(hf.begegnungsVector.get(i).xPos)).tisch=tisch;
 		}
 		
-		//Prüfung, falls gleiche Tische beachtet werden sollen
+		//PrÃ¼fung, falls gleiche Tische beachtet werden sollen
 		if(hf.optionenFeld.tisch.isSelected()){
 			//if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
 				
@@ -398,7 +398,7 @@ public class KPairings {
 	}
 	
 	/**
-	 * Überprüft, wie weit bestimmte Paarungen auseinander liegen
+	 * ÃœberprÃ¼ft, wie weit bestimmte Paarungen auseinander liegen
 	 * @param hf
 	 */
 	static void differenz(KHauptFenster hf){
@@ -474,13 +474,13 @@ public class KPairings {
 	 */
 	@SuppressWarnings("unchecked")
 	static Vector<KBegegnungen> swiss3(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,Vector<KBegegnungen> Expool){
-		System.out.println("Übrige Teilnehmer: "+tV.size());
+		System.out.println("Ãœbrige Teilnehmer: "+tV.size());
 		if(tV.size()==0){
 			return bV;
 		}
 		
 		Vector<KBegegnungen> pB =tV.get(0).getPossiblePairings(Expool);
-		System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mögliche Paarungen: "+pB.size());
+		System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mÃ¶gliche Paarungen: "+pB.size());
 		for(int i=0;i < pB.size();i++){
 			System.out.println(pB.get(i).t1.vorname+ " "+pB.get(i).t1.nachname+" : "+pB.get(i).t2.vorname+ " "+pB.get(i).t2.nachname);
 		}

@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -131,8 +131,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 
 		JPanel spieler = createPanel(body,true);
-		JPanel prim‰r = createPanel(body,true);
-		JPanel prim‰rEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
+		JPanel prim√§r = createPanel(body,true);
+		JPanel prim√§rEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
 		JPanel bemalung= createPanel(body,false);
 		JPanel armee= createPanel(body,false);
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
@@ -141,8 +141,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
-		JPanel sekund‰r = createPanel(body,true);
-		JPanel sekund‰rEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
+		JPanel sekund√§r = createPanel(body,true);
+		JPanel sekund√§rEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
 			body.add(bemalung);
 		}
@@ -156,8 +156,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
-			prim‰r.setBackground(Color.lightGray);
-			sekund‰r.setBackground(Color.lightGray);
+			prim√§r.setBackground(Color.lightGray);
+			sekund√§r.setBackground(Color.lightGray);
 			sos.setBackground(Color.lightGray);
 		}
 
@@ -166,25 +166,25 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				KTeilnehmer tn=hf.sortierterVector.get(i);
 				platz.add(createLabel(laengeAnpassenVorne(""+hf.sortierterVector.get(i).platz+" ",10), f));
 				spieler.add(createButton(punktePanel,tn, f));
-				prim‰r.add(createLabel(" "+tn.prim‰r, f));
-				prim‰rEinzel.add(createLabel(" "+tn.prim‰rEinzel, f));
-				sekund‰r.add(createLabel(" "+hf.sortierterVector.get(i).sekund‰r, f));
-				sekund‰rEinzel.add(createLabel(""+tn.sekund‰rEinzel, f));
+				prim√§r.add(createLabel(" "+tn.prim√§r, f));
+				prim√§rEinzel.add(createLabel(" "+tn.prim√§rEinzel, f));
+				sekund√§r.add(createLabel(" "+hf.sortierterVector.get(i).sekund√§r, f));
+				sekund√§rEinzel.add(createLabel(""+tn.sekund√§rEinzel, f));
 				bemalung.add(createLabel(" "+tn.bemalwertung, f));
 				armee.add(createLabel(" "+tn.armeeliste, f));
 				sos.add(createLabel(" "+hf.sortierterVector.get(i).sos, f));
 			} 
 		}
 
-		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef¸llt.
+		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef√ºllt.
 		if(hf.teilnehmerVector.size()==0){
 
 			platz.setLayout(new GridLayout(33,1));
 			spieler.setLayout(new GridLayout(33,1));
-			prim‰r.setLayout(new GridLayout(33,1));
-			prim‰rEinzel.setLayout(new GridLayout(33,1));
-			sekund‰r.setLayout(new GridLayout(33,1));
-			sekund‰rEinzel.setLayout(new GridLayout(33,1));
+			prim√§r.setLayout(new GridLayout(33,1));
+			prim√§rEinzel.setLayout(new GridLayout(33,1));
+			sekund√§r.setLayout(new GridLayout(33,1));
+			sekund√§rEinzel.setLayout(new GridLayout(33,1));
 			bemalung.setLayout(new GridLayout(33,1));
 			armee.setLayout(new GridLayout(33,1));
 			sos.setLayout(new GridLayout(33,1));
@@ -192,10 +192,10 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			for(int i=30;i>0;i--){
 				platz.add(createLabel("", f));
 				spieler.add(createLabel("", f));
-				prim‰r.add(createLabel("", f));
-				prim‰rEinzel.add(createLabel("", f));
-				sekund‰r.add(createLabel("", f));
-				sekund‰rEinzel.add(createLabel("", f));
+				prim√§r.add(createLabel("", f));
+				prim√§rEinzel.add(createLabel("", f));
+				sekund√§r.add(createLabel("", f));
+				sekund√§rEinzel.add(createLabel("", f));
 				bemalung.add(createLabel("", f));
 				armee.add(createLabel("", f));
 				sos.add(createLabel("", f));
@@ -211,13 +211,13 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		header.add(createHeader("Spieler",f,spieler));
 
 		if(hf.optionenFeld.PSS.isSelected()){
-			header.add(createHeader("Prim‰r(komplett)",f,prim‰r));
+			header.add(createHeader("Prim√§r(komplett)",f,prim√§r));
 		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Turnierpunkte(komplett)",f,prim‰r));
+			header.add(createHeader("Turnierpunkte(komplett)",f,prim√§r));
 		}
 
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())){
-			header.add(createHeader("Prim‰r(einzel)",f,prim‰rEinzel));
+			header.add(createHeader("Prim√§r(einzel)",f,prim√§rEinzel));
 		}
 
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
@@ -228,13 +228,13 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		if(hf.optionenFeld.PSS.isSelected()){
-			header.add(createHeader("Sekund‰r(komplett)",f,sekund‰r));
+			header.add(createHeader("Sekund√§r(komplett)",f,sekund√§r));
 		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Siegespunktedifferenz",f,sekund‰r));
+			header.add(createHeader("Siegespunktedifferenz",f,sekund√§r));
 		}
 
 		if((hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
-			header.add(createHeader("Sekund‰r(einzel)",f,sekund‰rEinzel));
+			header.add(createHeader("Sekund√§r(einzel)",f,sekund√§rEinzel));
 		}
 
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){

@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Color;
 import java.io.File;
@@ -38,7 +38,7 @@ public class KSpeicherverwaltung {
 
 	static void laden(KHauptFenster hf, File f){
 		leeren(hf);
-		hf.gelöschteTeilnehmer=0;
+		hf.gelÃ¶schteTeilnehmer=0;
 		String s ="";
 		int read;
 		FileReader fr;
@@ -56,7 +56,7 @@ public class KSpeicherverwaltung {
 			}
 			fr.close();
 			//Splitten in Teilnehmerdaten und Begegnungsdaten
-			String rundenzähler=s.split("\\|\\|")[0];
+			String rundenzÃ¤hler=s.split("\\|\\|")[0];
 			hf.TID=s.split("\\|\\|")[1];
 			String teilnehmerDaten=s.split("\\|\\|")[2];
 			String begegnungsDaten=s.split("\\|\\|")[3];
@@ -170,10 +170,10 @@ public class KSpeicherverwaltung {
 			}
 			
 			try{
-			hf.rundenZaehler=Integer.parseInt(rundenzähler);
+			hf.rundenZaehler=Integer.parseInt(rundenzÃ¤hler);
 			}catch (NumberFormatException e) {
 				// TODO Fehlerdialog
-				System.err.println("rundenzähler nicht auslesbar");
+				System.err.println("rundenzÃ¤hler nicht auslesbar");
 			}
 			if(hf.rundenZaehler>0){
 				hf.mode=KPairings.SWISS;

@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -19,15 +19,15 @@ public class KTextErstellung{
 		FileWriter fw;
 		try {
 			fw = new FileWriter(f);
-			////////////////////////////‹berschrift ////////////////////////
+			////////////////////////////√úberschrift ////////////////////////
 			fw.write("Tabelle Runde "+runde+"\r\n");
 			fw.write("\r\n");
 
 
 			String platz="Platz";
 			String name="Name";
-			String pri="Prim‰r";
-			String sek="Sekund‰r";
+			String pri="Prim√§r";
+			String sek="Sekund√§r";
 			String sos="SOS";
 
 			platz=laengeAnpassenVorne(platz, 6);
@@ -45,8 +45,8 @@ public class KTextErstellung{
 				nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
 				nachricht+="   ";
 				nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-				nachricht +=laengeAnpassenHinten(""+t.prim‰r,9);
-				nachricht +=laengeAnpassenHinten(""+t.sekund‰r,9);
+				nachricht +=laengeAnpassenHinten(""+t.prim√§r,9);
+				nachricht +=laengeAnpassenHinten(""+t.sekund√§r,9);
 				nachricht +=laengeAnpassenHinten(""+t.sos,9);
 				fw.write(nachricht+"\r\n");	
 			}
@@ -72,13 +72,13 @@ public class KTextErstellung{
 		FileWriter fw;
 		try {
 			fw = new FileWriter(f);
-			////////////////////////////‹berschrift ////////////////////////
+			////////////////////////////√úberschrift ////////////////////////
 			fw.write("Begegnungen Runde "+runde+"\r\n");
 			fw.write("\r\n");
 			String platz="Tisch";
 			String name="Begegnung";
-			String pri="Prim‰r";
-			String sek="Sekund‰r";
+			String pri="Prim√§r";
+			String sek="Sekund√§r";
 
 			platz=laengeAnpassenVorne(platz, 6);
 			platz+="   ";

@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.util.Vector;
 
@@ -10,8 +10,8 @@ public class KTeam {
 	
 	String name="";
 	
-	int prim‰r=0;
-	int sekund‰r=0;
+	int prim√§r=0;
+	int sekund√§r=0;
 	int sos=0;
 	
 	Vector<KTeilnehmer> teilnehmer=new Vector<KTeilnehmer>();

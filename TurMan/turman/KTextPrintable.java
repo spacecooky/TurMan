@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -26,11 +26,11 @@ public class KTextPrintable implements Printable{
 	
 			g.setFont(font2);
 	
-			//////////////////////////// ‹berschrift ////////////////////////
+			//////////////////////////// √úberschrift ////////////////////////
 			String platz="Platz";
 			String name="Name";
-			String pri="Prim‰r";
-			String sek="Sekund‰r";
+			String pri="Prim√§r";
+			String sek="Sekund√§r";
 			String sos="SOS";
 			
 			platz=laengeAnpassenVorne(platz, 6);
@@ -51,8 +51,8 @@ public class KTextPrintable implements Printable{
 					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
 					nachricht+="   ";
 					nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-					nachricht +=laengeAnpassenHinten(""+t.prim‰r,9);
-					nachricht +=laengeAnpassenHinten(""+t.sekund‰r,9);
+					nachricht +=laengeAnpassenHinten(""+t.prim√§r,9);
+					nachricht +=laengeAnpassenHinten(""+t.sekund√§r,9);
 					nachricht +=laengeAnpassenHinten(""+t.sos,9);
 					g.drawString(nachricht,75,84+14*(i+2));
 				}
@@ -64,11 +64,11 @@ public class KTextPrintable implements Printable{
 	
 			g.setFont(font2);
 	
-			//////////////////////////// ‹berschrift ////////////////////////
+			//////////////////////////// √úberschrift ////////////////////////
 			String platz="Tisch";
 			String name="Begegnung";
-			String pri="Prim‰r";
-			String sek="Sekund‰r";
+			String pri="Prim√§r";
+			String sek="Sekund√§r";
 			
 			platz=laengeAnpassenVorne(platz, 6);
 			platz+="   ";
@@ -102,7 +102,7 @@ public class KTextPrintable implements Printable{
 	
 			g.setFont(font2);
 	
-			//////////////////////////// ‹berschrift ////////////////////////
+			//////////////////////////// √úberschrift ////////////////////////
 			
 			String name="Name";
 			String pri="Bemalpunkte";

@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -24,7 +24,7 @@ import com.lowagie.text.pdf.PdfWriter;
 
 /**
  * Erstellt die V-Con-Urkunden
- * Vorgefertigtes PDF wird genommen, pro Teilnehmer eingefügt und mit Name und Armee versehen. Und dann wieder abgespeichert. 
+ * Vorgefertigtes PDF wird genommen, pro Teilnehmer eingefÃ¼gt und mit Name und Armee versehen. Und dann wieder abgespeichert. 
  * @author Jan Koch
  *
  */
@@ -47,7 +47,7 @@ public class KUrkunde {
 	int namePosY=0;
 		
 	/**
-	 * Erstellt das Dokument anhand der Benutzereingaben, der gespeicherten Informationen und dem Erfolg der einzelnen Prüfungen.
+	 * Erstellt das Dokument anhand der Benutzereingaben, der gespeicherten Informationen und dem Erfolg der einzelnen PrÃ¼fungen.
 	 */
 	public void urkundeErstellen(Vector<KTeilnehmer> tV,String zeile1,String zeile2){
 
@@ -68,8 +68,8 @@ public class KUrkunde {
 				reader = new PdfReader("Urkunde_Einzel.pdf");
 				PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(new File("Urkunden.pdf")));
 				document.open();
-				// In das Urkunden-PDF werden so viele Kopien der einzelnen Urkunde eingefügt, wie es Teilnehmer gibt.
-				// Wurde ein Teilnehmer gelöscht, wird für jeden gelöschten eine Seite weniger eingefügt.
+				// In das Urkunden-PDF werden so viele Kopien der einzelnen Urkunde eingefÃ¼gt, wie es Teilnehmer gibt.
+				// Wurde ein Teilnehmer gelÃ¶scht, wird fÃ¼r jeden gelÃ¶schten eine Seite weniger eingefÃ¼gt.
 				PdfImportedPage page;
 				for (int i = 0; i < tV.size(); i++) {
 						page = writer.getImportedPage(reader, 1);
@@ -78,8 +78,8 @@ public class KUrkunde {
 				
 				document.close();
 				
-				//Auf jede Urkundenseite werden die Daten für einen Spieler eingetragen.
-				//Gelöschte Spieler werden übersprungen und der Zähler del inkrementiert und bei späteren Seiten eingerechnet.
+				//Auf jede Urkundenseite werden die Daten fÃ¼r einen Spieler eingetragen.
+				//GelÃ¶schte Spieler werden Ã¼bersprungen und der ZÃ¤hler del inkrementiert und bei spÃ¤teren Seiten eingerechnet.
 				reader = new PdfReader("Urkunden.pdf");
 				PdfStamper stamper;
 				stamper = new PdfStamper(reader, new FileOutputStream(new File("UrkundenFertig.pdf")));
@@ -131,10 +131,10 @@ public class KUrkunde {
 
 	/**
 	 * Erstellt eine Tabellenzelle mit 2 Zeilen.
-	 * @param ger Text für die obere Zeile.
+	 * @param ger Text fÃ¼r die obere Zeile.
 	 * @param fger Schrifttyp der oberern Zeile.
-	 * @param eng Text für die untere Zeile.
-	 * @param feng Schrifttyp für die untere Zeile.
+	 * @param eng Text fÃ¼r die untere Zeile.
+	 * @param feng Schrifttyp fÃ¼r die untere Zeile.
 	 * @param noBorder true=kein Rahmen. false=Rahmen mit Dicke 1.
 	 * @return Die erstellte Celle
 	 */

@@ -1,4 +1,4 @@
-package turman;
+Ôªøpackage turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -103,7 +103,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 			} 
 		}
 
-		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef¸llt.
+		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgef√ºllt.
 		if(hf.teilnehmerVector.size()==0){
 
 			anwesend.setLayout(new GridLayout(33,1));
@@ -148,7 +148,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 	JPanel anmeldePanel=new JPanel();
 	JButton abbrechenButton=new JButton("Abbrechen");
 	JButton druckenButton=new JButton("Drucken");
-	JButton endeButton= new JButton("Anmeldung abschlieﬂen");
+	JButton endeButton= new JButton("Anmeldung abschlie√üen");
 	boolean color=false;
 
 	@Override

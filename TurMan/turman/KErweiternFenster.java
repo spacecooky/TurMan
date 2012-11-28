@@ -1,4 +1,4 @@
-package turman;
+ï»¿package turman;
 
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -19,7 +19,7 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 4005838746171262L;
 
 	public KErweiternFenster(KHauptFenster hf){
-		super("Spieler hinzufügen");
+		super("Spieler hinzufÃ¼gen");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		add(p);
@@ -32,7 +32,7 @@ public class KErweiternFenster extends JFrame implements ActionListener{
 	JTextField vn = new JTextField();
 	JTextField nn = new JTextField();
 	JButton cancel= new JButton("Abbrechen");
-	JButton ok= new JButton("Hinzufügen");
+	JButton ok= new JButton("HinzufÃ¼gen");
 	
 	public void init(){
 		p.removeAll();
