@@ -189,12 +189,12 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenKonfig(this,f2);
 		}
 		
-		p1Field.addKeyListener(this);
-		p2Field.addKeyListener(this);
+		p12Field.addKeyListener(this);
+		p22Field.addKeyListener(this);
 		
 	}
 
-	static String version=new String("V0.0.19");
+	static String version=new String("V0.0.20");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -767,11 +767,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if(arg0.getSource()==p1Field || arg0.getSource()==p2Field){
+		if(arg0.getSource()==p12Field || arg0.getSource()==p22Field){
 			if(optionenFeld.TS.isSelected() && optionenFeld.matrixBenutzen.isSelected()){
 				try{
-					p12Field.setText(""+matrix.getTP(Integer.parseInt(p1Field.getText())-Integer.parseInt(p2Field.getText())));
-					p22Field.setText(""+matrix.getTP(Integer.parseInt(p2Field.getText())-Integer.parseInt(p1Field.getText())));
+					p1Field.setText(""+matrix.getTP(Integer.parseInt(p12Field.getText())-Integer.parseInt(p22Field.getText())));
+					p2Field.setText(""+matrix.getTP(Integer.parseInt(p22Field.getText())-Integer.parseInt(p12Field.getText())));
 					
 				}catch(NumberFormatException e){
 					

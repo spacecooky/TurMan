@@ -335,6 +335,12 @@ public class KSpeicherverwaltung {
 			} else if(hf.optionenFeld.TS.isSelected()){
 				fw.write("punktetyp=TS\r\n");
 			}
+			
+			if(hf.optionenFeld.matrixBenutzen.isSelected()){
+				fw.write("matrix=ja\r\n");
+			} else{
+				fw.write("matrix=nein\r\n");
+			}
 
 			if(hf.optionenFeld.bemalNo.isSelected()){
 				fw.write("bemalwertung=keine\r\n");
@@ -357,6 +363,8 @@ public class KSpeicherverwaltung {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		speichernMatrix(hf);
 	}
 
 	static void ladenKonfig(KHauptFenster hf, File f){
@@ -410,7 +418,13 @@ public class KSpeicherverwaltung {
 							hf.optionenFeld.matrixBenutzen.setEnabled(true);
 							hf.optionenFeld.matrix.setEnabled(true);
 						} 
-					} else if(optname.equals("bemalwertung")){
+					} else if(optname.equals("matrix")){
+						if(optval.equals("ja")){
+							hf.optionenFeld.matrixBenutzen.setSelected(true);
+						} else if(optval.equals("nein")){
+							hf.optionenFeld.matrixBenutzen.setSelected(false);
+						} 
+					}else if(optname.equals("bemalwertung")){
 						if(optval.equals("keine")){
 							hf.optionenFeld.bemalNo.setSelected(true);
 						} else if(optval.equals("pri")){
@@ -450,13 +464,73 @@ public class KSpeicherverwaltung {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		ladenMatrix(hf);
 	}
 
+	static void speichernMatrix(KHauptFenster hf){
+		try {
+			File f = new File("matrix");
+			FileWriter fw = new FileWriter(f);
+
+			for(int i=0;i<hf.matrix.spv.size();i++){
+				fw.write(hf.matrix.spv.get(i)+";");
+				fw.write(hf.matrix.tpa.get(i)+";");
+				fw.write(hf.matrix.tpb.get(i)+"\r\n");
+			}
+			
+			fw.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	static void ladenMatrix(KHauptFenster hf){
+hf.optionenFeld.clear();
+		
+		String s ="";
+		int read;
+		File f = new File("matrix");
+		FileReader fr;
+
+		try {
+			fr = new FileReader(f);
+
+			while(true){
+				read=fr.read();
+				if(read==-1){
+					break;
+				}else{
+					s+=(char)read;
+				}
+			}
+			fr.close();
+
+			//Splitten in Matrixzeilen
+			String[] matrix=s.split("\r\n");
+			hf.matrix.felder=matrix.length;
+			hf.matrix.spv.clear();
+			hf.matrix.tpa.clear();
+			hf.matrix.tpb.clear();
+			for(int i=0;i<matrix.length;i++){
+				String zeile[]=matrix[i].split(";");
+				hf.matrix.spv.add(zeile[0]);
+				hf.matrix.tpa.add(zeile[1]);
+				hf.matrix.tpb.add(zeile[2]);
+			}
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	static void leeren(KHauptFenster hf){
 		hf.teilnehmerVector.removeAllElements();
 		hf.begegnungsVector.removeAllElements();
 		hf.HauptPanel.removeAll();
 	}
-
 
 }

@@ -1,10 +1,14 @@
 ﻿package turman;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -28,18 +32,23 @@ public class KPort {
 
 				String s ="";
 				int read;
-				FileReader fr;
+				//FileReader fr;
+				InputStreamReader isr;
 				try {
-					fr = new FileReader(f);
+					isr = new InputStreamReader(new FileInputStream(f),"CP1252");
+					//fr = new FileReader(f);
+					
 					while(true){
-						read=fr.read();
+						//read=fr.read();
+						read=isr.read();
 						if(read==-1){
 							break;
 						}else{
 							s+=(char)read;
 						}
 					}
-					fr.close();
+					//fr.close();
+					isr.close();
 					String[] sAr=s.split("\r\n");
 					hf.TID=sAr[2];
 					for(int i=0;i<sAr.length;i++){
@@ -104,7 +113,8 @@ public class KPort {
 			File f =new File(fileChooser.getSelectedFile().toString());
 			if(f!=null){
 				try {
-					FileWriter fw = new FileWriter(f);
+					//FileWriter fw = new FileWriter(f);
+					OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(f),"CP1252");
 					String date = datum();
 
 					fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");

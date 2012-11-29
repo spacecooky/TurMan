@@ -56,6 +56,7 @@ public class KSiegpunkteMatrix extends JFrame implements ActionListener{
 	public void init(){
 		p.removeAll();
 		setSize(400, 60+(felder)*18);
+		felderFeld.setText(""+felder);
 		
 		p.setLayout(new GridLayout(felder+3,3));
 		
@@ -115,13 +116,13 @@ public class KSiegpunkteMatrix extends JFrame implements ActionListener{
 			if(diff<0){
 				diff*=-1;
 				for(int i=spv.size()-1;i>=0;i--){
-					if(diff>Integer.parseInt(spv.get(i))){
+					if(diff>=Integer.parseInt(spv.get(i))){
 						return Integer.parseInt(tpb.get(i));
 					}
 				}
 			}else{
 				for(int i=spv.size()-1;i>=0;i--){
-					if(diff>Integer.parseInt(spv.get(i))){
+					if(diff>=Integer.parseInt(spv.get(i))){
 						return Integer.parseInt(tpa.get(i));
 					}
 				}

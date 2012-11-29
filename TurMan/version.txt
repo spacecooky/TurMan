@@ -1,116 +1,121 @@
+ï»¿Version 0.0.20
+- Konvertierung der Dateien in UTF8
+- GÃ¶PP-Dateien werden mit Windows-Kodierung geladen und gespeichert.
+- Siegpunkte-Matrix wird korrekt geladen und gespeichert
+
 Version 0.0.19
 - Korrektur im Auswahlverfahren bei gleich platzierten Spielern.
-- SOS werden bei Auswahl älterer Runden korrekt angezeigt.
+- SOS werden bei Auswahl Ã¤lterer Runden korrekt angezeigt.
 - Die ersten zwei Zeilen der Urkunden sind jetzt variabel.
-- Namen bei allen Fenstern eingefügt
-- Icon-Dummy bei allen Fenstern eingefügt
+- Namen bei allen Fenstern eingefÃ¼gt
+- Icon-Dummy bei allen Fenstern eingefÃ¼gt
 - Agenda: automatische Anpassung der Schriftbreite
-- Agenda: Start des nächsten Punktes mit durchgängiger Zeitänderung
+- Agenda: Start des nÃ¤chsten Punktes mit durchgÃ¤ngiger ZeitÃ¤nderung
 
 Version 0.0.18
 - Turnier-ID wird gespeichert.
 - Turnieragenda
-- Alternativer Anzeigename für Spieler die in T3 fehlerhaft oder unter Pseudonym gespeichert sind
-- Sortierfunktionen für die virtuelle Anmeldeliste
+- Alternativer Anzeigename fÃ¼r Spieler die in T3 fehlerhaft oder unter Pseudonym gespeichert sind
+- Sortierfunktionen fÃ¼r die virtuelle Anmeldeliste
 
 Version 0.0.17
 - Anzeige der Spieleranzahl im Begegnungs-/Punktefenster.
-- Überschriften in den verschieden Sichten scrollen nicht mehr weg. 
-- Neuer Paarungs-Algorithmus (ohne Berücksichtigung von Ausnahmen bei den Optionen, welche in Zukunft entfernt werden).
-- Herausforderungen können entfernt werden.
+- Ãœberschriften in den verschieden Sichten scrollen nicht mehr weg. 
+- Neuer Paarungs-Algorithmus (ohne BerÃ¼cksichtigung von Ausnahmen bei den Optionen, welche in Zukunft entfernt werden).
+- Herausforderungen kÃ¶nnen entfernt werden.
 - Herausforderungen werden nach Laden einer Speicherung erkannt.
-- Herausforderungen, die nicht möglich sind, erzeugen einen Fehlerdialog.
+- Herausforderungen, die nicht mÃ¶glich sind, erzeugen einen Fehlerdialog.
 - Nach neuer Paarung wird in den Sichten auf die aktuelle Runde gewechselt.
-- Anmeldefenster eingefügt, mit dem anwesende Spieler markiert werden. Alle abwesenden Spieler werden nach Bestätigung entfernt.
-- PDF-/TXT-Dateien der Paarungen/Tabelle können erstellt werden(bisher nur für Primär/Sekundär/SOS)
-- Spieler, die nach der ersten Runde entfernt wurden, können wieder hinzugefügt werden.
+- Anmeldefenster eingefÃ¼gt, mit dem anwesende Spieler markiert werden. Alle abwesenden Spieler werden nach BestÃ¤tigung entfernt.
+- PDF-/TXT-Dateien der Paarungen/Tabelle kÃ¶nnen erstellt werden(bisher nur fÃ¼r PrimÃ¤r/SekundÃ¤r/SOS)
+- Spieler, die nach der ersten Runde entfernt wurden, kÃ¶nnen wieder hinzugefÃ¼gt werden.
 
 Version 0.0.16
-- Spieler im Punktefenster sind jetzt Buttons, mit denen die Spielerinformationen verändert werden können.
-- Farbänderung der Felder und Buttons zur besseren Sichtbarkeit per Beameranzeige.
-- Konfigurationsmenü im Tab neben Matrix, Punkte und Begegnungen für eine schnellere Navigation.
-- Bei Begegnungen/Punkte können alte Runden angesehen werden.
+- Spieler im Punktefenster sind jetzt Buttons, mit denen die Spielerinformationen verÃ¤ndert werden kÃ¶nnen.
+- FarbÃ¤nderung der Felder und Buttons zur besseren Sichtbarkeit per Beameranzeige.
+- KonfigurationsmenÃ¼ im Tab neben Matrix, Punkte und Begegnungen fÃ¼r eine schnellere Navigation.
+- Bei Begegnungen/Punkte kÃ¶nnen alte Runden angesehen werden.
 
 Version 0.0.15
-- Freilos-Spieler hinzufügen überarbeitet. Wenn der Freilosspieler bereits vorhanden ist, wird er aktualisisert und auf nicht gelöscht gesetzt, falls er gelöscht war.
-- Reihenfolge der Aktualisiserung beim Einfügen von Spieler/Freilos geändert. Tabellen werden jetzt erst neu gezeichnet, wenn die Punkte neu berechnet wurden.
-- Höhe der Tischnummern verschiebt sich nicht mehr im Vergleich zur Höhe der Begegnungen im Begegnungsfenster
-- Als Schriftart der Ausdrucke díe Monotype-Schriftaret Courier ausgewählt
+- Freilos-Spieler hinzufÃ¼gen Ã¼berarbeitet. Wenn der Freilosspieler bereits vorhanden ist, wird er aktualisisert und auf nicht gelÃ¶scht gesetzt, falls er gelÃ¶scht war.
+- Reihenfolge der Aktualisiserung beim EinfÃ¼gen von Spieler/Freilos geÃ¤ndert. Tabellen werden jetzt erst neu gezeichnet, wenn die Punkte neu berechnet wurden.
+- HÃ¶he der Tischnummern verschiebt sich nicht mehr im Vergleich zur HÃ¶he der Begegnungen im Begegnungsfenster
+- Als Schriftart der Ausdrucke dÃ­e Monotype-Schriftaret Courier ausgewÃ¤hlt
  
 Version 0.0.14
 - Berechnung der SOS korrigiert
 - Hilfe-Datei erstellt
 - Paarungsoption korrigiert
-- Anzeige der Plätze in der Druckausgabe korrigiert
-- Gelöschte Spieler komplett aus dem sortierten Vektor entfernt, nur noch im Teilnehmervektor vorhanden
+- Anzeige der PlÃ¤tze in der Druckausgabe korrigiert
+- GelÃ¶schte Spieler komplett aus dem sortierten Vektor entfernt, nur noch im Teilnehmervektor vorhanden
 
 
 Version 0.0.13
-- Hinzufügen neuer Spieler während des Turniers möglich
-- Speicherdatei enthält jetzt den Rundenzähler
-- Änderung des Datenaufbaus beim Laden/Importieren/Spieler hinzufügen
+- HinzufÃ¼gen neuer Spieler wÃ¤hrend des Turniers mÃ¶glich
+- Speicherdatei enthÃ¤lt jetzt den RundenzÃ¤hler
+- Ã„nderung des Datenaufbaus beim Laden/Importieren/Spieler hinzufÃ¼gen
 - Scrollbar im Dialog
-- Freilosspieler eingefügt
-- Gelöschte Spieler müssen momentan noch in der Lösch-Auswahlliste stehen bleiben, damit die richtigen Spieler gelöscht werden können.
+- Freilosspieler eingefÃ¼gt
+- GelÃ¶schte Spieler mÃ¼ssen momentan noch in der LÃ¶sch-Auswahlliste stehen bleiben, damit die richtigen Spieler gelÃ¶scht werden kÃ¶nnen.
 - Layout der Matrix angepasst
 
 Version 0.0.12
 - Optionale Punkte reimplementiert
-- übersichlichere Anzeige von Zusatzpunkten
+- Ã¼bersichlichere Anzeige von Zusatzpunkten
 - Funktion zum laden/speichern der aktuellen Konfiguration
-- Automatisches Speichern der aktuell benutzten Konfiguration beim Schließen des Programms + Laden der automatischen Speicherung beim Start
-- Info-Fenster hinzugefügt
-- Hauptfenster wird nach Änderung der Matrix neu gezeichnet
+- Automatisches Speichern der aktuell benutzten Konfiguration beim SchlieÃŸen des Programms + Laden der automatischen Speicherung beim Start
+- Info-Fenster hinzugefÃ¼gt
+- Hauptfenster wird nach Ã„nderung der Matrix neu gezeichnet
 
 Version 0.0.11
-- Funktion Runde zurücksetzen/Runde neu berechnen geändert, damit sie auch in geladenen Turnieren die korrekten Begegnungen entfernen.
+- Funktion Runde zurÃ¼cksetzen/Runde neu berechnen geÃ¤ndert, damit sie auch in geladenen Turnieren die korrekten Begegnungen entfernen.
 - Spieler werden mit dem gleichen Platz angezeigt, wenn sie genau Punktgleich sind
-- Platzgleiche Spieler werden vor der Paarung zufällig gemischt
-- bestätigte Paarungen im Begegnungsfenster werden grau hinterlegt
-- Grundstruktur für variable Zusatzpunkte eingefügt
+- Platzgleiche Spieler werden vor der Paarung zufÃ¤llig gemischt
+- bestÃ¤tigte Paarungen im Begegnungsfenster werden grau hinterlegt
+- Grundstruktur fÃ¼r variable Zusatzpunkte eingefÃ¼gt
 
 Version 0.0.10
-- Druckfunktionen für Punkte-, Begegnungs-, Zusatzpunktefenster
+- Druckfunktionen fÃ¼r Punkte-, Begegnungs-, Zusatzpunktefenster
 
 Version 0.0.9
 - Dialog, falls es Paarungen mit Platzabstand >1 gibt.
-- Punkte-, Begegnungs- und Extrapunktefenster werden jetzt mit leeren Elementen vorgefüllt, solange noch keine Teilnehmer/Begegnungen  eingetragen sind.
+- Punkte-, Begegnungs- und Extrapunktefenster werden jetzt mit leeren Elementen vorgefÃ¼llt, solange noch keine Teilnehmer/Begegnungen  eingetragen sind.
 - Automatische Speicherung, beim Verlassen des Programms und automatisches Laden dieser Speicherung beim Starten des Programms.
 - Automatische Speicherung vor und nach dem Berechnen einer neuen Runde.
 
 Version 0.0.8
-- Fehler-/Infodialoge eingefügt für Tischverteilungen, Paarungen, Werteingaben im Übersichtsfenster
+- Fehler-/Infodialoge eingefÃ¼gt fÃ¼r Tischverteilungen, Paarungen, Werteingaben im Ãœbersichtsfenster
 
 Version 0.0.7
-- Grundstruktur für mehr Optionen und Teamturniere eingebaut
-- Punkte und Paarungen können jetzt auch als Tab neben der Matrix angesehen werden
-- neben Primärpunkten, Sekundärpunkten und SOS sind jetzt auch Turnierpunkte und Siegespunkte möglich
+- Grundstruktur fÃ¼r mehr Optionen und Teamturniere eingebaut
+- Punkte und Paarungen kÃ¶nnen jetzt auch als Tab neben der Matrix angesehen werden
+- neben PrimÃ¤rpunkten, SekundÃ¤rpunkten und SOS sind jetzt auch Turnierpunkte und Siegespunkte mÃ¶glich
 
 Version 0.0.6
-- Tischverteilung überarbeitet
+- Tischverteilung Ã¼berarbeitet
 - Tische werden jetzt erst bei Auswahl der Option beachtet.
 
 Version 0.0.5
 - Schweizer System Paarungen: Fehler behoben.
-- "Runde zurücknehmen" eingefügt.
-- "Runde erneut paaren" eingefügt 
+- "Runde zurÃ¼cknehmen" eingefÃ¼gt.
+- "Runde erneut paaren" eingefÃ¼gt 
 
 Version 0.0.4
-- Paarungsoptionen eingefügt.
+- Paarungsoptionen eingefÃ¼gt.
 - Automatischer Platzeintrag und Sortierung der Urkunden.
-- Fenster zum übersichtlichen Eintragen von Zusatzpunkten.
+- Fenster zum Ã¼bersichtlichen Eintragen von Zusatzpunkten.
 
 Version 0.0.3
-- Urkunden auf Basis einer Vorlage können erstellt werden (V-Con-Urkunden-Vorlage)
+- Urkunden auf Basis einer Vorlage kÃ¶nnen erstellt werden (V-Con-Urkunden-Vorlage)
 
 Version 0.0.2
-- Spieler können während eines laufenden Turniers gelöscht werden.
+- Spieler kÃ¶nnen wÃ¤hrend eines laufenden Turniers gelÃ¶scht werden.
   Sie werden dann in der Matrix deaktiviert und nur auf bereits erstellte Paarungen kann noch zugegriffen werden.
-  Die Punkte für bereits gespielte Partien werden den Gegnern weiterhin gutgeschrieben.
-  In allen anderen Bereichen werden gelöschte Spieler nicht mehr angezeigt oder beachtet.
-- Ergebnisse können auch über das Begegnungsfenster eingetragen werden.
-- Verschieben der Armeelistenpunkte in den Sekundärbereich.
-- Erstellung der Bemalpunkte im Primärbereich. 
+  Die Punkte fÃ¼r bereits gespielte Partien werden den Gegnern weiterhin gutgeschrieben.
+  In allen anderen Bereichen werden gelÃ¶schte Spieler nicht mehr angezeigt oder beachtet.
+- Ergebnisse kÃ¶nnen auch Ã¼ber das Begegnungsfenster eingetragen werden.
+- Verschieben der Armeelistenpunkte in den SekundÃ¤rbereich.
+- Erstellung der Bemalpunkte im PrimÃ¤rbereich. 
 
 Version 0.0.1: 
 - Neuerstellung des Programms
