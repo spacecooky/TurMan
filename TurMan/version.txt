@@ -1,4 +1,7 @@
-﻿Version 0.0.20
+﻿Version 0.0.21 WIP
+- Bei der Punkteingabe(Begegnungen und Zus. Punkte) wird beim Fokussieren der Felder immer der gesamte Feldinhalt ausgewählt.
+
+Version 0.0.20
 - Konvertierung der Dateien in UTF8
 - GöPP-Dateien werden mit Windows-Kodierung geladen und gespeichert.
 - Siegpunkte-Matrix wird korrekt geladen und gespeichert

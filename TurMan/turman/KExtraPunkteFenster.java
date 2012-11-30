@@ -83,11 +83,13 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 			bm.add(bmField);
 			bm.setBorder(BorderFactory.createEtchedBorder());
 			bm.setFont(f);
+			setSelectAll(bmField);
 			
 			JTextField abField = new JTextField(""+hf.teilnehmerVector.get(i).armeeliste);
 			ab.add(abField);
 			ab.setBorder(BorderFactory.createEtchedBorder());
 			ab.setFont(f);
+			setSelectAll(abField);
 			
 			if(hf.teilnehmerVector.get(i).deleted){
 				label1.setVisible(false);
@@ -161,5 +163,16 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 		         }
 		     }
 		}
+	}
+	
+	/*
+	 * Komplettauswahl eines Textfeldes, sobald der Fokus erlangt wurde
+	 */
+	public void setSelectAll(final JTextField tf){
+		tf.addFocusListener(new java.awt.event.FocusAdapter() {
+		    public void focusGained(java.awt.event.FocusEvent evt) {
+		        tf.selectAll();
+		    }
+		});
 	}
 }

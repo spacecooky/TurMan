@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
@@ -87,6 +88,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		tab.addTab("Matrix",null,sp);
 		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
 		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
+		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		tab.setBackground(Color.white);
+		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
 		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		tab.setBackground(Color.white);
 		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeld));
@@ -191,6 +195,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 		p12Field.addKeyListener(this);
 		p22Field.addKeyListener(this);
+		
+		setSelectAll(p1Field);
+		setSelectAll(p2Field);
+		setSelectAll(p12Field);
+		setSelectAll(p22Field);
 		
 	}
 
@@ -304,6 +313,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
+	KDynamischerTimerFeld dynamischerTimerFeld = new KDynamischerTimerFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
 	KSiegpunkteMatrix matrix = new KSiegpunkteMatrix(this);
 	KUrkundenFenster urkundenFenster = new KUrkundenFenster(this);
@@ -785,5 +795,15 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		
 	}
 	
+	/*
+	 * Komplettauswahl eines Textfeldes, sobald der Fokus erlangt wurde
+	 */
+	public void setSelectAll(final JTextField tf){
+		tf.addFocusListener(new java.awt.event.FocusAdapter() {
+		    public void focusGained(java.awt.event.FocusEvent evt) {
+		        tf.selectAll();
+		    }
+		});
+	}
 
 }
