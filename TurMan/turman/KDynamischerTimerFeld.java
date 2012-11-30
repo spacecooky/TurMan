@@ -1,22 +1,23 @@
 package turman;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -35,14 +36,20 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	
 	KHauptFenster hf;
 	
-	//WertungsOptionen
+	//Logo
+	JCheckBox logoAnzeigen= new JCheckBox("Logo anzeigen");
+	JButton logoButton= new JButton("LogoAuswählen");
+	String imageName="";
+	
+	//Agenda/Timer
 	JRadioButton agenda = new JRadioButton("Agenda");
-	JRadioButton timer = new JRadioButton("Timer");
+	JRadioButton timer = new JRadioButton("Timer   ");
 	JLabel timerLabel = new JLabel("Spielzeit(Minuten)");
 	JTextField timerFeld = new JTextField("");
 	ButtonGroup timerAgendaGruppe = new ButtonGroup();
 	JButton aktualisieren= new JButton("Starten/Aktualisieren");
 	
+	//Pukte/Begegnungen
 	JRadioButton punkte = new JRadioButton("Punkte");
 	JRadioButton begegnungen = new JRadioButton("Begegnungen");
 	ButtonGroup punkteBegegnungenGruppe = new ButtonGroup();
@@ -65,41 +72,67 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	JLabel aheader = new JLabel("Turnierablauf");
 	
 	public void init(){
-		//WertungsOptionen
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//Dateiauswahl für das Logo
+		JPanel p4 = new JPanel();
+		p4.setBorder(BorderFactory.createTitledBorder("Logo"));
+		p4.setLayout(new GridLayout(1,5));
+		p4.add(logoAnzeigen);
+		p4.add(logoButton);
+		p4.add(new JLabel());
+		p4.add(new JLabel());
+		p4.add(new JLabel());
+		logoAnzeigen.addActionListener(this);
+		logoButton.setEnabled(false);
+		logoButton.addActionListener(this);
 		
+		//WertungsOptionen
 		JPanel p5 = new JPanel();
 		p5.setBorder(BorderFactory.createTitledBorder("Timer/Agenda"));
-		p5.setLayout(new GridLayout(1,2));
+		p5.setLayout(new BoxLayout(p5, BoxLayout.Y_AXIS));
 		
 		//Agenda
 		JPanel p51=new JPanel();
-		p51.setLayout(new BoxLayout(p51, BoxLayout.Y_AXIS));
+		JPanel p511=new JPanel();
+		p51.setLayout(new BoxLayout(p51, BoxLayout.X_AXIS));
 		p51.setBorder(BorderFactory.createEtchedBorder());
 		p51.add(agenda);
 		
+		p511.setLayout(new BoxLayout(p511, BoxLayout.Y_AXIS));
 		table=new JTable(new DefaultTableModel(eintraege,headers));
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
-		p51.add(aheader);
-		p51.add(scrollPane);
-		p51.add(ablauf);
+		JPanel hPanel= new JPanel();
+		hPanel.add(aheader);
+		hPanel.setLayout(new GridLayout(1,1));
+		p511.add(hPanel);
+		p511.add(scrollPane);
+		p511.add(ablauf);
 		ablauf.setLayout(new BoxLayout(ablauf, BoxLayout.Y_AXIS));
 		aheader.setFont(new Font("Comic Sans Serif",1,18));
 		aheader.setHorizontalAlignment(JLabel.LEFT);
 		table.setFont(new Font("Comic Sans Serif",1,18));
-		p51.add(add);
+		JPanel aPanel= new JPanel();
+		aPanel.add(add);
+		aPanel.setLayout(new GridLayout(1,1));
+		p511.add(aPanel);
 		add.addActionListener(this);
-		p51.add(remove);
+		JPanel rPanel= new JPanel();
+		rPanel.add(remove);
+		rPanel.setLayout(new GridLayout(1,1));
+		p511.add(rPanel);
 		remove.addActionListener(this);
+		
+		p51.add(p511);
 
 		//Timer
 		JPanel p52=new JPanel();
-		p52.setLayout(new BoxLayout(p52, BoxLayout.Y_AXIS));
+		p52.setLayout(new BoxLayout(p52, BoxLayout.X_AXIS));
 		p52.setBorder(BorderFactory.createEtchedBorder());
 		p52.add(timer);
 		p52.add(timerLabel);
 		p52.add(timerFeld);
+		p52.add(Box.createVerticalStrut(p52.getHeight()-timer.getHeight()-timerLabel.getHeight()-timerFeld.getHeight()));
 		
 		timerAgendaGruppe.add(agenda);
 		timerAgendaGruppe.add(timer);
@@ -107,9 +140,9 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		agenda.addActionListener(this);
 		timer.addActionListener(this);
 		
-		p5.add(p51);
 		p5.add(p52);
-		add(p5);
+		p5.add(p51);
+		
 		
 		JPanel p6 = new JPanel();
 		p6.setBorder(BorderFactory.createTitledBorder("Zusatzanzeige"));
@@ -131,19 +164,23 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		punkte.setEnabled(false);
 		begegnungen.setEnabled(false);
 		
-		add(p6);
+		
 		
 		JPanel p7 = new JPanel();
 		p7.setLayout(new GridLayout(1,1));
 		p7.add(aktualisieren);
 		aktualisieren.addActionListener(this);
-		add(p7);
+		
 		
 		JPanel p8 = new JPanel();
 		p8.setLayout(new GridLayout(40,1));
 		p8.add(new JLabel("a"));
 		p8.getComponent(0).setForeground(p8.getBackground());
 		
+		add(p4);
+		add(p5);
+		add(p6);
+		add(p7);
 		add(p8);
 	}
 
@@ -165,6 +202,18 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		} else if(src==remove){
 			if(table.getSelectedRow()>-1){
 				((DefaultTableModel)table.getModel()).removeRow(table.getSelectedRow());
+			}
+		} else if(src==logoAnzeigen){
+			logoButton.setEnabled(logoAnzeigen.isSelected());
+		} else if(src==logoButton){
+			JFileChooser fileChooser=new JFileChooser();
+			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
+			if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
+				File f =new File(fileChooser.getSelectedFile().toString());
+				if(f !=null){
+						imageName=f.getAbsolutePath();
+				}
 			}
 		} 
 	}	
