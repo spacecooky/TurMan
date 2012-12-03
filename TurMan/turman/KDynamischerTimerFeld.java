@@ -36,6 +36,12 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	
 	KHauptFenster hf;
 	
+	//dyn
+	TDynamischerTimer dynTimer=null;
+	int typ=0;
+	int takt=0;
+	int zeit=0;
+	
 	//Logo
 	JCheckBox logoAnzeigen= new JCheckBox("Logo anzeigen");
 	JButton logoButton= new JButton("LogoAuswählen");
@@ -190,7 +196,15 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		if(src==agenda || src==timer){
 			//TODO
 		}else if(src==aktualisieren){
-			//TODO
+			if(dynTimer==null || (dynTimer!=null && !dynTimer.frame.isVisible())){
+				typ=agenda.isSelected()?0:1;
+				zeit=Integer.parseInt(timerFeld.getText());
+				takt=Integer.parseInt(taktFeld.getText());
+				dynTimer=new TDynamischerTimer(hf, zeit, takt, typ,imageName);
+			}else if(dynTimer.frame.isVisible()){
+				dynTimer.setVars(zeit, takt, typ, imageName);
+				dynTimer.frame.setVisible(true);
+			}
 		}else if(src==punkte || src==begegnungen){
 			//TODO
 		}else if(src==punkteBegegnungenAnzeigen){
