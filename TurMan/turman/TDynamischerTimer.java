@@ -27,20 +27,22 @@ import javax.swing.JPanel;
 
 public class TDynamischerTimer extends Thread implements MouseListener,ComponentListener{
 
-	public TDynamischerTimer(KHauptFenster hf, int zeit, int takt, int typ,String logo){
+	public TDynamischerTimer(KHauptFenster hf, int zeit, int takt, int timerTyp,int zusTyp,String logo){
 		System.out.println("Constructor");
 		this.hf=hf;
 		this.zeit=zeit*60*1000;
 		this.takt=takt*10;
-		this.typ=typ;
+		this.timerTyp=timerTyp;
+		this.zusTyp=zusTyp;
 		this.logo=logo;
 		start();
 	}
 	
-	public void setVars(int zeit, int takt, int typ,String logo){
+	public void setVars(int zeit, int takt, int timerTyp,int zusTyp,String logo){
 		this.zeit=zeit*60*1000;
-		this.takt=takt*100;
-		this.typ=typ;
+		this.takt=takt*10;
+		this.timerTyp=timerTyp;
+		this.zusTyp=zusTyp;
 		this.logo=logo;
 	}
 
@@ -53,7 +55,7 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
         public void paintComponent(Graphics g){
             super.paintComponent(g);
  
-            if(typ==0){
+            if(zusTyp==0){
     			g.setFont(font2);
     	
     			//////////////////////////// Überschrift ////////////////////////
@@ -71,12 +73,15 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
     			sos = laengeAnpassenHinten(sos, 9);
     			
     			String nachricht=platz+name+pri+sek+sos;
-    			g.drawString(nachricht,75,84+14);
+    			//g.drawString(nachricht,75,84+14);
     	
     			g.setFont(font);
-    			int startVal=(g.getFontMetrics(font).getHeight()+5)*1;
+    			int startVal=0;
     			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.sortierterVector.size()+1);
-    			int startVal2=begegnungslaenge>typPanel.getHeight()?begegnungslaenge:(typPanel.getHeight()-begegnungslaenge);
+    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
+    			System.out.println("StartVal "+startVal);
+    			System.out.println("Begegnungslaenge "+begegnungslaenge);
+    			System.out.println("StartVal2 "+startVal2);
     	
     			for (int i=0;i<hf.sortierterVector.size();i++){
     					KTeilnehmer t=hf.sortierterVector.get(i);
@@ -86,11 +91,11 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
     					nachricht +=laengeAnpassenHinten(""+t.primär,9);
     					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
     					nachricht +=laengeAnpassenHinten(""+t.sos,9);
-    					g.drawString(nachricht,75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i);
+    					g.drawString(nachricht,75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
     			}
     			
     			
-    			/*int newPosVerschiebung=posVerschiebung+startVal2;
+    			int newPosVerschiebung=posVerschiebung+startVal2;
     			for (int i=0;i<hf.sortierterVector.size();i++){
 					KTeilnehmer t=hf.sortierterVector.get(i);
 					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
@@ -99,13 +104,13 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 					nachricht +=laengeAnpassenHinten(""+t.primär,9);
 					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
 					nachricht +=laengeAnpassenHinten(""+t.sos,9);
-					g.drawString(nachricht,75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i);
+					g.drawString(nachricht,75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
 			}
-				if(newPosVerschiebung-startVal<1 || newPosVerschiebung-startVal>-1){
-					posVerschiebung=0;
-				}*/
+    			if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
+					posVerschiebung=(newPosVerschiebung-startVal);
+				}
 				
-    		} else if(typ==1){
+    		} else if(zusTyp==1){
     			g.setFont(font2);
     	
     			//////////////////////////// Überschrift ////////////////////////
@@ -123,9 +128,9 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
     			//g.drawString(nachricht,55,84+14);
     	
     			g.setFont(font);
-    			int startVal=(g.getFontMetrics(font).getHeight()+5)*1;
+    			int startVal=0;
     			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.begegnungsVector.size()+1);
-    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight()+startVal);
+    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
     			System.out.println("StartVal "+startVal);
     			System.out.println("Begegnungslaenge "+begegnungslaenge);
     			System.out.println("StartVal2 "+startVal2);
@@ -140,7 +145,7 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 						nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
 						nachricht +=laengeAnpassenHinten(""+bg.p1+" : "+bg.p2,13);
 						nachricht +=laengeAnpassenHinten(""+bg.p12+" : "+bg.p22,13);
-						g.drawString(nachricht,55,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+1);
+						g.drawString(nachricht,55,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
 					}
     			}
     			
@@ -156,11 +161,11 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 						nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
 						nachricht +=laengeAnpassenHinten(""+bg.p1+" : "+bg.p2,13);
 						nachricht +=laengeAnpassenHinten(""+bg.p12+" : "+bg.p22,13);
-						g.drawString(nachricht,55,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i);
+						g.drawString(nachricht,55,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
 					}
     			}
 				if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
-					posVerschiebung=0;
+					posVerschiebung=(newPosVerschiebung-startVal);
 				}
     			
     		}
@@ -186,7 +191,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	KHauptFenster hf;
 	long zeit=0;
 	long takt=1000;
-	long typ=0;
+	long timerTyp=0;
+	long zusTyp=0;
 	String logo="";
 	boolean run=true;
 	static Font font = new Font("Courier",Font.PLAIN,24);

@@ -38,7 +38,8 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	
 	//dyn
 	TDynamischerTimer dynTimer=null;
-	int typ=0;
+	int timerTyp=0;
+	int zusTyp=0;
 	int takt=0;
 	int zeit=0;
 	
@@ -197,12 +198,17 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 			//TODO
 		}else if(src==aktualisieren){
 			if(dynTimer==null || (dynTimer!=null && !dynTimer.frame.isVisible())){
-				typ=agenda.isSelected()?0:1;
+				timerTyp=agenda.isSelected()?0:1;
+				zusTyp=begegnungen.isSelected()?1:0;
 				zeit=Integer.parseInt(timerFeld.getText());
 				takt=Integer.parseInt(taktFeld.getText());
-				dynTimer=new TDynamischerTimer(hf, zeit, takt, typ,imageName);
+				dynTimer=new TDynamischerTimer(hf, zeit, takt, timerTyp,zusTyp,imageName);
 			}else if(dynTimer.frame.isVisible()){
-				dynTimer.setVars(zeit, takt, typ, imageName);
+				timerTyp=agenda.isSelected()?0:1;
+				zusTyp=begegnungen.isSelected()?1:0;
+				zeit=Integer.parseInt(timerFeld.getText());
+				takt=Integer.parseInt(taktFeld.getText());
+				dynTimer.setVars(zeit, takt, timerTyp,zusTyp, imageName);
 				dynTimer.frame.setVisible(true);
 			}
 		}else if(src==punkte || src==begegnungen){
