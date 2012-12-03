@@ -60,8 +60,8 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	JRadioButton begegnungen = new JRadioButton("Begegnungen");
 	ButtonGroup punkteBegegnungenGruppe = new ButtonGroup();
 	JCheckBox punkteBegegnungenAnzeigen= new JCheckBox("Punkte/Begegnungen anzeigen");
-	JLabel taktLabel = new JLabel("Aktualisierungszeit (*100ms)");
-	JTextField taktFeld = new JTextField("10");
+	JLabel taktLabel = new JLabel("Aktualisierungszeit (*10ms)");
+	JTextField taktFeld = new JTextField("100");
 	
 	//Agendaberechnung
 	JButton add = new JButton("Neue Zeile anhängen");
