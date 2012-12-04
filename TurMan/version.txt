@@ -1,5 +1,6 @@
-﻿Version 0.0.21 WIP
+﻿Version 0.0.21
 - Bei der Punkteingabe(Begegnungen und Zus. Punkte) wird beim Fokussieren der Felder immer der gesamte Feldinhalt ausgewählt.
+- Dynamische Timeranzeige, mit Einblendung eines Logos in der Kopfzeile und einer durchlaufenden Anzeige von Begegnungen/Punkten
 
 Version 0.0.20
 - Konvertierung der Dateien in UTF8
