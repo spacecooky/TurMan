@@ -334,6 +334,8 @@ public class KSpeicherverwaltung {
 				fw.write("punktetyp=PSS\r\n");
 			} else if(hf.optionenFeld.TS.isSelected()){
 				fw.write("punktetyp=TS\r\n");
+			} else if(hf.optionenFeld.Veiovis.isSelected()){
+				fw.write("punktetyp=Veiovis\r\n");
 			}
 			
 			if(hf.optionenFeld.matrixBenutzen.isSelected()){
@@ -411,13 +413,15 @@ public class KSpeicherverwaltung {
 							hf.optionenFeld.ko.setSelected(true);
 						}
 					} else if(optname.equals("punktetyp")){
-						if(optval.equals("pss")){
+						if(optval.equals("PSS")){
 							hf.optionenFeld.PSS.setSelected(true);
 						} else if(optval.equals("TS")){
 							hf.optionenFeld.TS.setSelected(true);
 							hf.optionenFeld.matrixBenutzen.setEnabled(true);
 							hf.optionenFeld.matrix.setEnabled(true);
-						} 
+						} else if(optval.equals("Veiovis")){
+							hf.optionenFeld.Veiovis.setSelected(true);
+						}
 					} else if(optname.equals("matrix")){
 						if(optval.equals("ja")){
 							hf.optionenFeld.matrixBenutzen.setSelected(true);

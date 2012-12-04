@@ -599,6 +599,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t.primärEinzel=0;
 			t.sekundärEinzel=0;
 			t.sos=0;
+			t.sosos=0;
 			t.platzGruppe=-1;
 			t.platz=0;
 			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
@@ -744,10 +745,12 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			t.veiovisScore=t.primärEinzel * 0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))
-					+ (t.sos/lokRunde) * (1-0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))) / 1.5
-					+ (t.sosos/lokRunde) * (1-0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))) / 3;
-			System.out.println("Veoivis score: "+t.veiovisScore);
+			
+			t.veiovisScore = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
+				           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
+				           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
+			
+			System.out.println("Veiovis score: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
 		}
 	}
 	

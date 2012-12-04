@@ -131,6 +131,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 
 		JPanel spieler = createPanel(body,true);
+		JPanel veiovis = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		
 		JPanel primär = createPanel(body,true);
 		JPanel primärEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
 		JPanel bemalung= createPanel(body,false);
@@ -154,6 +156,13 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		if(!hf.optionenFeld.PSS.isSelected()){
 			sos.setVisible(false);
 		}
+		
+		JPanel sosMW = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		
+		
+		JPanel sosos = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		
+		JPanel sososMW = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
 
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
 			primär.setBackground(Color.lightGray);
@@ -166,6 +175,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				KTeilnehmer tn=hf.sortierterVector.get(i);
 				platz.add(createLabel(laengeAnpassenVorne(""+hf.sortierterVector.get(i).platz+" ",10), f));
 				spieler.add(createButton(punktePanel,tn, f));
+				veiovis.add(createLabel(" "+tn.veiovisScore, f));
 				primär.add(createLabel(" "+tn.primär, f));
 				primärEinzel.add(createLabel(" "+tn.primärEinzel, f));
 				sekundär.add(createLabel(" "+hf.sortierterVector.get(i).sekundär, f));
@@ -173,6 +183,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				bemalung.add(createLabel(" "+tn.bemalwertung, f));
 				armee.add(createLabel(" "+tn.armeeliste, f));
 				sos.add(createLabel(" "+hf.sortierterVector.get(i).sos, f));
+				sosMW.add(createLabel(" "+hf.sortierterVector.get(i).sos/hf.rundenAnzeige, f));
+				sosos.add(createLabel(" "+hf.sortierterVector.get(i).sosos, f));
+				sososMW.add(createLabel(" "+hf.sortierterVector.get(i).sosos/(hf.rundenAnzeige*hf.rundenAnzeige), f));
 			} 
 		}
 
@@ -181,6 +194,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 
 			platz.setLayout(new GridLayout(33,1));
 			spieler.setLayout(new GridLayout(33,1));
+			veiovis.setLayout(new GridLayout(33,1));
 			primär.setLayout(new GridLayout(33,1));
 			primärEinzel.setLayout(new GridLayout(33,1));
 			sekundär.setLayout(new GridLayout(33,1));
@@ -188,10 +202,14 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			bemalung.setLayout(new GridLayout(33,1));
 			armee.setLayout(new GridLayout(33,1));
 			sos.setLayout(new GridLayout(33,1));
+			sosMW.setLayout(new GridLayout(33,1));
+			sosos.setLayout(new GridLayout(33,1));
+			sososMW.setLayout(new GridLayout(33,1));
 
 			for(int i=30;i>0;i--){
 				platz.add(createLabel("", f));
 				spieler.add(createLabel("", f));
+				veiovis.add(createLabel("", f));
 				primär.add(createLabel("", f));
 				primärEinzel.add(createLabel("", f));
 				sekundär.add(createLabel("", f));
@@ -199,6 +217,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				bemalung.add(createLabel("", f));
 				armee.add(createLabel("", f));
 				sos.add(createLabel("", f));
+				sosMW.add(createLabel("", f));
+				sosos.add(createLabel("", f));
+				sososMW.add(createLabel("", f));
 			}
 		}
 
@@ -210,13 +231,17 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		header.add(createHeader("Platz",f,platz));
 		header.add(createHeader("Spieler",f,spieler));
 
+		if(hf.optionenFeld.Veiovis.isSelected()){
+			header.add(createHeader("Veiovis Score",f,veiovis));
+		}
+		
 		if(hf.optionenFeld.PSS.isSelected()){
 			header.add(createHeader("Primär(komplett)",f,primär));
 		} else if(hf.optionenFeld.TS.isSelected()){
 			header.add(createHeader("Turnierpunkte(komplett)",f,primär));
 		}
 
-		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())){
+		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())|| (hf.optionenFeld.Veiovis.isSelected())){
 			header.add(createHeader("Primär(einzel)",f,primärEinzel));
 		}
 
@@ -244,8 +269,20 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			header.add(createHeader("Armeewertung",f,armee));
 		}
 
-		if(hf.optionenFeld.PSS.isSelected()){
+		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.Veiovis.isSelected()){
 			header.add(createHeader("SOS",f,sos));
+		}
+		
+		if(hf.optionenFeld.Veiovis.isSelected()){
+			header.add(createHeader("SOS(Mittelw.)",f,sosMW));
+		}
+		
+		if(hf.optionenFeld.Veiovis.isSelected()){
+			header.add(createHeader("SOSOS",f,sosos));
+		}
+		
+		if(hf.optionenFeld.Veiovis.isSelected()){
+			header.add(createHeader("SOSOS(Mittelw.)",f,sososMW));
 		}
 
 		header.setBackground(Color.white);

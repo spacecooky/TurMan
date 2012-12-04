@@ -68,6 +68,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	//WertungsOptionen
 	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
 	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
+	JRadioButton Veiovis = new JRadioButton("Lord Veoivis Score");
 	ButtonGroup wertung = new ButtonGroup();
 	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
 	JButton matrix= new JButton("Siegpunktematrix");
@@ -175,6 +176,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
 		p6.setLayout(new GridLayout(4,1));
 		p6.add(PSS);
+		p6.add(Veiovis);
 		p6.add(TS);
 		p6.add(matrixBenutzen);
 		p6.add(matrix);
@@ -183,9 +185,11 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		matrix.setEnabled(false);
 		wertung.add(PSS);
 		wertung.add(TS);
+		wertung.add(Veiovis);
 		PSS.setSelected(true);
 		PSS.addActionListener(this);
 		TS.addActionListener(this);
+		Veiovis.addActionListener(this);
 		
 		wertungsPanel.add(p6);
 		
@@ -236,13 +240,26 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource()==PSS || arg0.getSource()==TS){
+		if(arg0.getSource()==PSS || arg0.getSource()==TS || arg0.getSource()==Veiovis){
 			if(PSS.isSelected()){
 				bemalSek.setEnabled(true);
 				armeeSek.setEnabled(true);
 				matrixBenutzen.setEnabled(false);
 				matrix.setEnabled(false);
-			} else if(TS.isSelected()){
+			} else if(Veiovis.isSelected()){
+				bemalSek.setEnabled(false);
+				armeeSek.setEnabled(false);
+				matrixBenutzen.setEnabled(false);
+				matrix.setEnabled(false);
+				if(bemalSek.isSelected()){
+					bemalSek.setSelected(false);
+					bemalNo.setSelected(true);
+				}
+				if(armeeSek.isSelected()){
+					armeeSek.setSelected(false);
+					armeeNo.setSelected(true);
+				}
+			}else if(TS.isSelected()){
 				bemalSek.setEnabled(false);
 				armeeSek.setEnabled(false);
 				matrixBenutzen.setEnabled(true);
@@ -285,6 +302,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		 PSS.setSelected(false);
 		 TS.setSelected(false);
+		 Veiovis.setSelected(false);
 		
 		 bemalPri.setSelected(false);
 		 bemalSek.setSelected(false);
