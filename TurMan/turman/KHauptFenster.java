@@ -323,6 +323,15 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	//PDF-/TXT-Erstellug
 	KPDFErstellung pdf = new KPDFErstellung();
 	KTextErstellung txt = new KTextErstellung();
+	
+	//Agenda
+	Vector<KAgendaEintrag> agendaVector=new Vector<KAgendaEintrag>();
+	String [] agendaHeaders={"Ereignis","TT","MM","JJJJ","HH","MM"};
+	String [][] agendaEintraege={{"Anmeldung","13","07","2012","09","00"},
+						   {"Infos","13","07","2012","09","45"},
+						   {"Turnierrunde 1","13","07","2012","10","00"},
+						   {"Mittagspause","13","07","2012","12","00"}};
+	
 	/**
 	 * @param args
 	 */

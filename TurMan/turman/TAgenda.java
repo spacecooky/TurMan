@@ -50,7 +50,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 		panel.add(center,BorderLayout.CENTER);
 		
 		left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-		table=new JTable(new DefaultTableModel(eintraege,headers));
+		table=new JTable(new DefaultTableModel(hf.agendaEintraege,hf.agendaHeaders));
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		
@@ -146,12 +146,6 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 	JTable table;
 	JScrollPane scrollPane;
 	JPanel ablauf= new JPanel();
-	String [] headers={"Ereignis","TT","MM","JJJJ","HH","MM"};
-	String [][] eintraege={{"Anmeldung","13","07","2012","09","00"},
-						   {"Hinweise auf Turniersonderregeln und Bekanntgabe der ersten Paarungen","13","07","2012","09","45"},
-						   {"Turnierrunde 1","13","07","2012","10","00"},
-						   {"Mittagspause + Bemalwertung","13","07","2012","12","00"}};
-	Vector<KAgendaEintrag> agendaEintraege=new Vector<KAgendaEintrag>();
 	JLabel aheader = new JLabel("Turnierablauf");
 	JTextArea agendaPunkt= new JTextArea("Zeit bis zum Start:");
 	JLabel timeLabel= new JLabel("00:00:00");
@@ -190,7 +184,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 			cancel.setVisible(false);
 			add.setVisible(false);
 			remove.setVisible(false);
-			agendaEintraege.clear();
+			hf.agendaVector.clear();
 			ablauf.removeAll();
 			for(int i=0; i<table.getRowCount(); i++){
 				String name = (String)table.getModel().getValueAt(i, 0);
@@ -201,7 +195,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 				String minute = (String)table.getModel().getValueAt(i, 5);
 				
 				try{
-					agendaEintraege.add(new KAgendaEintrag(name, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute)));
+					hf.agendaVector.add(new KAgendaEintrag(name, Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(hour), Integer.parseInt(minute)));
 					JTextArea ta =new JTextArea(day+"."+month+"."+year+" "+hour+":"+minute+":\n"+name);
 					ta.setFont(new Font("Comic Sans Serif",Font.PLAIN,18));
 					ta.setLineWrap(true);
@@ -220,8 +214,8 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 			long acttime=0;
 			while(run){
 				int agendaCounter=-1;
-				for(int i=0;i<agendaEintraege.size();i++){
-					acttime=agendaEintraege.get(i).zeitBis();
+				for(int i=0;i<hf.agendaVector.size();i++){
+					acttime=hf.agendaVector.get(i).zeitBis();
 					//System.out.println(acttime);
 					if(acttime>0){
 						agendaCounter=i-1;
@@ -400,12 +394,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 	}
 	
 	public void add5minutes(){
-		for(int i=0;i<agendaEintraege.size();i++){
-			long acttime=agendaEintraege.get(i).zeitBis();
+		for(int i=0;i<hf.agendaVector.size();i++){
+			long acttime=hf.agendaVector.get(i).zeitBis();
 			if(acttime>0){
-				agendaEintraege.get(i).add5Minutes();
-				String sArr[] = agendaEintraege.get(i).getTimeArray();
-				String s = agendaEintraege.get(i).getTimeString();
+				hf.agendaVector.get(i).add5Minutes();
+				String sArr[] = hf.agendaVector.get(i).getTimeArray();
+				String s = hf.agendaVector.get(i).getTimeString();
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
@@ -418,12 +412,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 	}
 	
 	public void subtract5minutes(){
-		for(int i=0;i<agendaEintraege.size();i++){
-			long acttime=agendaEintraege.get(i).zeitBis();
+		for(int i=0;i<hf.agendaVector.size();i++){
+			long acttime=hf.agendaVector.get(i).zeitBis();
 			if(acttime>0){
-				agendaEintraege.get(i).subtract5Minutes();
-				String sArr[] = agendaEintraege.get(i).getTimeArray();
-				String s = agendaEintraege.get(i).getTimeString();
+				hf.agendaVector.get(i).subtract5Minutes();
+				String sArr[] = hf.agendaVector.get(i).getTimeArray();
+				String s = hf.agendaVector.get(i).getTimeString();
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
@@ -438,12 +432,12 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 	public void startNext(){
 		int i;
 		long acttime=0;
-		for(i=0;i<agendaEintraege.size();i++){
-			acttime=agendaEintraege.get(i).zeitBis();
+		for(i=0;i<hf.agendaVector.size();i++){
+			acttime=hf.agendaVector.get(i).zeitBis();
 			if(acttime>0){
-				agendaEintraege.get(i).setCalendarToNow();
-				String sArr[] = agendaEintraege.get(i).getTimeArray();
-				String s = agendaEintraege.get(i).getTimeString();
+				hf.agendaVector.get(i).setCalendarToNow();
+				String sArr[] = hf.agendaVector.get(i).getTimeArray();
+				String s = hf.agendaVector.get(i).getTimeString();
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);
@@ -456,10 +450,10 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 		}
 		int minutes = (int)(acttime/60000);
 		
-		for(;i<agendaEintraege.size();i++){
-			agendaEintraege.get(i).changeTime(-minutes);
-			String sArr[] = agendaEintraege.get(i).getTimeArray();
-			String s = agendaEintraege.get(i).getTimeString();
+		for(;i<hf.agendaVector.size();i++){
+			hf.agendaVector.get(i).changeTime(-minutes);
+			String sArr[] = hf.agendaVector.get(i).getTimeArray();
+			String s = hf.agendaVector.get(i).getTimeString();
 			((DefaultTableModel)table.getModel()).setValueAt(sArr[0], i, 0);
 			((DefaultTableModel)table.getModel()).setValueAt(sArr[1], i, 1);
 			((DefaultTableModel)table.getModel()).setValueAt(sArr[2], i, 2);

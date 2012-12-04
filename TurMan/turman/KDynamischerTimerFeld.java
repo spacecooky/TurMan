@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -47,12 +46,13 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	JCheckBox logoAnzeigen= new JCheckBox("Logo anzeigen");
 	JButton logoButton= new JButton("LogoAuswählen");
 	String imageName="";
+	JLabel logoLabel=new JLabel();
 	
 	//Agenda/Timer
 	JRadioButton agenda = new JRadioButton("Agenda");
 	JRadioButton timer = new JRadioButton("Timer   ");
 	JLabel timerLabel = new JLabel("Spielzeit(Minuten)");
-	JTextField timerFeld = new JTextField("");
+	JTextField timerFeld = new JTextField("10");
 	ButtonGroup timerAgendaGruppe = new ButtonGroup();
 	JButton aktualisieren= new JButton("Starten/Aktualisieren");
 	
@@ -62,7 +62,7 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	ButtonGroup punkteBegegnungenGruppe = new ButtonGroup();
 	JCheckBox punkteBegegnungenAnzeigen= new JCheckBox("Punkte/Begegnungen anzeigen");
 	JLabel taktLabel = new JLabel("Aktualisierungszeit (*10ms)");
-	JTextField taktFeld = new JTextField("100");
+	JTextField taktFeld = new JTextField("5");
 	
 	//Agendaberechnung
 	JButton add = new JButton("Neue Zeile anhängen");
@@ -70,12 +70,8 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	JTable table;
 	JScrollPane scrollPane;
 	JPanel ablauf= new JPanel();
-	String [] headers={"Ereignis","TT","MM","JJJJ","HH","MM"};
-	String [][] eintraege={{"Anmeldung","13","07","2012","09","00"},
-						   {"Infos","13","07","2012","09","45"},
-						   {"Turnierrunde 1","13","07","2012","10","00"},
-						   {"Mittagspause","13","07","2012","12","00"}};
-	Vector<KAgendaEintrag> agendaEintraege=new Vector<KAgendaEintrag>();
+	
+	
 	JLabel aheader = new JLabel("Turnierablauf");
 	
 	public void init(){
@@ -87,7 +83,7 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		p4.add(logoAnzeigen);
 		p4.add(logoButton);
 		p4.add(new JLabel());
-		p4.add(new JLabel());
+		p4.add(logoLabel);
 		p4.add(new JLabel());
 		logoAnzeigen.addActionListener(this);
 		logoButton.setEnabled(false);
@@ -106,7 +102,7 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		p51.add(agenda);
 		
 		p511.setLayout(new BoxLayout(p511, BoxLayout.Y_AXIS));
-		table=new JTable(new DefaultTableModel(eintraege,headers));
+		table=new JTable(new DefaultTableModel(hf.agendaEintraege,hf.agendaHeaders));
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		JPanel hPanel= new JPanel();
@@ -143,9 +139,13 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		
 		timerAgendaGruppe.add(agenda);
 		timerAgendaGruppe.add(timer);
-		agenda.setSelected(true);
+		timer.setSelected(true);
 		agenda.addActionListener(this);
 		timer.addActionListener(this);
+		agenda.setEnabled(false);
+		add.setEnabled(false);
+		remove.setEnabled(false);
+		aheader.setEnabled(false);
 		
 		p5.add(p52);
 		p5.add(p51);
@@ -202,13 +202,13 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 				zusTyp=begegnungen.isSelected()?1:0;
 				zeit=Integer.parseInt(timerFeld.getText());
 				takt=Integer.parseInt(taktFeld.getText());
-				dynTimer=new TDynamischerTimer(hf, zeit, takt, timerTyp,zusTyp,imageName);
+				dynTimer=new TDynamischerTimer(hf, zeit, takt, timerTyp,zusTyp,punkteBegegnungenAnzeigen.isSelected(),imageName);
 			}else if(dynTimer.frame.isVisible()){
 				timerTyp=agenda.isSelected()?0:1;
 				zusTyp=begegnungen.isSelected()?1:0;
 				zeit=Integer.parseInt(timerFeld.getText());
 				takt=Integer.parseInt(taktFeld.getText());
-				dynTimer.setVars(zeit, takt, timerTyp,zusTyp, imageName);
+				dynTimer.setVars(zeit, takt, timerTyp,zusTyp,punkteBegegnungenAnzeigen.isSelected(),imageName);
 				dynTimer.frame.setVisible(true);
 			}
 		}else if(src==punkte || src==begegnungen){
@@ -233,6 +233,7 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 				File f =new File(fileChooser.getSelectedFile().toString());
 				if(f !=null){
 						imageName=f.getAbsolutePath();
+						logoLabel.setText(imageName);
 				}
 			}
 		} 

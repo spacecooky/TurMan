@@ -3,7 +3,6 @@ package turman;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -14,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.print.Printable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -27,23 +25,27 @@ import javax.swing.JPanel;
 
 public class TDynamischerTimer extends Thread implements MouseListener,ComponentListener{
 
-	public TDynamischerTimer(KHauptFenster hf, int zeit, int takt, int timerTyp,int zusTyp,String logo){
+	public TDynamischerTimer(KHauptFenster hf, int zeit, int takt, int timerTyp,int zusTyp,boolean zusTypAnzeigen,String logo){
 		System.out.println("Constructor");
 		this.hf=hf;
 		this.zeit=zeit*60*1000;
 		this.takt=takt*10;
 		this.timerTyp=timerTyp;
 		this.zusTyp=zusTyp;
+		this.zusTypAnzeigen=zusTypAnzeigen;
 		this.logo=logo;
+		timerFaktor=zusTypAnzeigen?10:5;
 		start();
 	}
 	
-	public void setVars(int zeit, int takt, int timerTyp,int zusTyp,String logo){
+	public void setVars(int zeit, int takt, int timerTyp,int zusTyp,boolean zusTypAnzeigen,String logo){
 		this.zeit=zeit*60*1000;
 		this.takt=takt*10;
 		this.timerTyp=timerTyp;
 		this.zusTyp=zusTyp;
+		this.zusTypAnzeigen=zusTypAnzeigen;
 		this.logo=logo;
+		timerFaktor=zusTypAnzeigen?10:5;
 	}
 
 	JFrame frame= new JFrame();
@@ -51,126 +53,110 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	JPanel logoPanel = new JPanel();
 	JPanel zeitPanel = new JPanel();
 	JLabel zeitLabel = new JLabel("",JLabel.CENTER);
+	int zeitFontHeight=0;
 	JPanel typPanel = new JPanel(){
         public void paintComponent(Graphics g){
             super.paintComponent(g);
  
-            if(zusTyp==0){
-    			g.setFont(font2);
-    	
-    			//////////////////////////// Überschrift ////////////////////////
-    			String platz="Platz";
-    			String name="Name";
-    			String pri="Primär";
-    			String sek="Sekundär";
-    			String sos="SOS";
-    			
-    			platz=laengeAnpassenVorne(platz, 6);
-    			platz+="   ";
-    			name = laengeAnpassenHinten(name, 50);
-    			pri  = laengeAnpassenHinten(pri, 9);
-    			sek  = laengeAnpassenHinten(sek, 9);
-    			sos = laengeAnpassenHinten(sos, 9);
-    			
-    			String nachricht=platz+name+pri+sek+sos;
-    			//g.drawString(nachricht,75,84+14);
-    	
-    			g.setFont(font);
-    			int startVal=0;
-    			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.sortierterVector.size()+1);
-    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
-    			System.out.println("StartVal "+startVal);
-    			System.out.println("Begegnungslaenge "+begegnungslaenge);
-    			System.out.println("StartVal2 "+startVal2);
-    	
-    			for (int i=0;i<hf.sortierterVector.size();i++){
-    					KTeilnehmer t=hf.sortierterVector.get(i);
-    					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
-    					nachricht+="   ";
-    					nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-    					nachricht +=laengeAnpassenHinten(""+t.primär,9);
-    					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
-    					nachricht +=laengeAnpassenHinten(""+t.sos,9);
-    					g.drawString(nachricht,75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
-    			}
-    			
-    			
-    			int newPosVerschiebung=posVerschiebung+startVal2;
-    			for (int i=0;i<hf.sortierterVector.size();i++){
-					KTeilnehmer t=hf.sortierterVector.get(i);
-					nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
-					nachricht+="   ";
-					nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-					nachricht +=laengeAnpassenHinten(""+t.primär,9);
-					nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
-					nachricht +=laengeAnpassenHinten(""+t.sos,9);
-					g.drawString(nachricht,75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
-			}
-    			if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
-					posVerschiebung=(newPosVerschiebung-startVal);
+            if(zusTypAnzeigen){
+	            if(zusTyp==0){
+	    			g.setFont(font2);
+	    	
+	    			//////////////////////////// Platzierungen ////////////////////////
+	    			g.setFont(font);
+	    			int startVal=0;
+	    			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.sortierterVector.size()+1);
+	    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
+	    			System.out.println("StartVal "+startVal);
+	    			System.out.println("Begegnungslaenge "+begegnungslaenge);
+	    			System.out.println("StartVal2 "+startVal2);
+	    	
+	    			for (int i=0;i<hf.sortierterVector.size();i++){
+	    					KTeilnehmer t=hf.sortierterVector.get(i);
+	    					g.drawString(laengeAnpassenVorne(Integer.toString(t.platz), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(t.vorname+" "+t.nachname,200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(laengeAnpassenVorne(""+t.primär, 10),700,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(laengeAnpassenVorne(""+t.sekundär, 10),830,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(laengeAnpassenVorne(""+t.sos, 10),960,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    			}
+	    			
+	    			int newPosVerschiebung=posVerschiebung+startVal2;
+	    			for (int i=0;i<hf.sortierterVector.size();i++){
+						KTeilnehmer t=hf.sortierterVector.get(i);
+						g.drawString(laengeAnpassenVorne(Integer.toString(t.platz), 6),75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(t.vorname+" "+t.nachname,200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(laengeAnpassenVorne(""+t.primär, 10),700,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(laengeAnpassenVorne(""+t.sekundär, 10),830,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(laengeAnpassenVorne(""+t.sos, 10),960,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 				}
-				
-    		} else if(zusTyp==1){
-    			g.setFont(font2);
-    	
-    			//////////////////////////// Überschrift ////////////////////////
-    			String platz="Tisch";
-    			String name="Begegnung";
-    			String pri="Primär";
-    			String sek="Sekundär";
-    			platz=laengeAnpassenVorne(platz, 6);
-    			platz+="   ";
-    			name = laengeAnpassenHinten(name, 70);
-    			pri  = laengeAnpassenHinten(pri, 13);
-    			sek  = laengeAnpassenHinten(sek, 13);
-    			
-    			String nachricht=platz+name+pri+sek;
-    			//g.drawString(nachricht,55,84+14);
-    	
-    			g.setFont(font);
-    			int startVal=0;
-    			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.begegnungsVector.size()+1);
-    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
-    			System.out.println("StartVal "+startVal);
-    			System.out.println("Begegnungslaenge "+begegnungslaenge);
-    			System.out.println("StartVal2 "+startVal2);
-    			
-    			
-    			for (int i=0;i<hf.begegnungsVector.size();i++){
-					KBegegnungen bg = hf.begegnungsVector.get(i);
-					if(bg.runde==hf.rundenZaehler){
-						KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
-						KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
-						nachricht =laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6);
-						nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
-						nachricht +=laengeAnpassenHinten(""+bg.p1+" : "+bg.p2,13);
-						nachricht +=laengeAnpassenHinten(""+bg.p12+" : "+bg.p22,13);
-						g.drawString(nachricht,55,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
+	    			g.setColor(Color.black);
+	    			g.fillRect(0, 0, typPanel.getWidth(), 30);
+	    			g.setColor(Color.white);
+	    			g.drawString("Platz",75,20);
+					g.drawString("Name",200,20);
+					g.drawString("Primär",710,20);
+					g.drawString("Sekundär",810,20);
+					g.drawString("SOS",990,20);
+					
+	    			if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
+						posVerschiebung=(newPosVerschiebung-startVal);
 					}
-    			}
-    			
-    			
-    			
-				int newPosVerschiebung=posVerschiebung+startVal2;
-				for (int i=0;i<hf.begegnungsVector.size();i++){
-					KBegegnungen bg = hf.begegnungsVector.get(i);
-					if(bg.runde==hf.rundenZaehler){
-						KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
-						KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
-						nachricht =laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6);
-						nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
-						nachricht +=laengeAnpassenHinten(""+bg.p1+" : "+bg.p2,13);
-						nachricht +=laengeAnpassenHinten(""+bg.p12+" : "+bg.p22,13);
-						g.drawString(nachricht,55,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+20);
+					
+	    		} else if(zusTyp==1){
+	    			g.setFont(font2);
+	    	
+	    			//////////////////////////// Begegnungen ////////////////////////
+	    			g.setFont(font);
+	    			int startVal=0;
+	    			int begegnungslaenge=(g.getFontMetrics(font).getHeight()+5)*(hf.begegnungsVector.size()+1);
+	    			int startVal2=(begegnungslaenge>typPanel.getHeight())?begegnungslaenge:(typPanel.getHeight());
+	    			System.out.println("StartVal "+startVal);
+	    			System.out.println("Begegnungslaenge "+begegnungslaenge);
+	    			System.out.println("StartVal2 "+startVal2);
+	    			
+	    			
+	    			for (int i=0;i<hf.begegnungsVector.size();i++){
+						KBegegnungen bg = hf.begegnungsVector.get(i);
+						if(bg.runde==hf.rundenZaehler){
+							KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
+							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
+							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1+" : "+bg.p2,900,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p12+" : "+bg.p22,1050,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+						}
+	    			}
+	    			
+	    			
+	    			
+					int newPosVerschiebung=posVerschiebung+startVal2;
+					for (int i=0;i<hf.begegnungsVector.size();i++){
+						KBegegnungen bg = hf.begegnungsVector.get(i);
+						if(bg.runde==hf.rundenZaehler){
+							KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
+							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
+							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1+" : "+bg.p2,900,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p12+" : "+bg.p22,1050,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+						}
+	    			}
+					
+					g.setColor(Color.black);
+	    			g.fillRect(0, 0, typPanel.getWidth(), 30);
+	    			g.setColor(Color.white);
+	    			g.drawString("Tisch",75,20);
+					g.drawString("Begegnung",200,20);
+					g.drawString("Primär",900,20);
+					g.drawString("Sekundär",1050,20);
+					
+					if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
+						posVerschiebung=(newPosVerschiebung-startVal);
 					}
-    			}
-				if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
-					posVerschiebung=(newPosVerschiebung-startVal);
-				}
-    			
-    		}
+	    			
+	    		}
             
-            
+            }
  
         }
     };
@@ -198,6 +184,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	static Font font = new Font("Courier",Font.PLAIN,24);
 	static Font font2 = new Font("Courier",Font.BOLD,24);
 	int posVerschiebung=0;
+	boolean zusTypAnzeigen=false;
+	int timerFaktor=5;
 
 	public void run(){
 		if(zeit>0){
@@ -227,9 +215,14 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 			
 			zeitPanel.setBackground(Color.black);
 			zeitLabel.setForeground(Color.white);
-			int size1 = Toolkit.getDefaultToolkit().getScreenSize().width/10;
+			int size1 = Toolkit.getDefaultToolkit().getScreenSize().width/timerFaktor;
 			zeitLabel.setFont(new Font("Comic Sans Serif",1,size1));
 			zeitLabel.setFocusable(false);
+			try{
+				zeitFontHeight=hauptPanel.getGraphics().getFontMetrics(zeitLabel.getFont()).getHeight()+10;
+			}catch(NullPointerException e){
+				
+			}
 			
 			ImageIcon i =new ImageIcon(Toolkit.getDefaultToolkit().getImage(logo));
 			float trans = Toolkit.getDefaultToolkit().getScreenSize().width/i.getIconWidth();
@@ -263,10 +256,11 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 
 					zeitLabel.setText(sdf.format(actDate));
 				}
-				
-				zeitPanel.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,hauptPanel.getGraphics().getFontMetrics(zeitLabel.getFont()).getHeight()+10));
-				zeitPanel.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,zeitPanel.getGraphics().getFontMetrics(zeitLabel.getFont()).getHeight()+10));
-				zeitPanel.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,zeitPanel.getGraphics().getFontMetrics(zeitLabel.getFont()).getHeight()+10));
+				if(zusTypAnzeigen){
+					zeitPanel.setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,zeitFontHeight));
+					zeitPanel.setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,zeitFontHeight));
+					zeitPanel.setMinimumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width,zeitFontHeight));
+				}
 				
 				typPanel.repaint();
 				posVerschiebung-=2;
@@ -310,8 +304,9 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	}
 	
 	public void adaptPanel(){
-		int size1 = frame.getWidth()/10;
+		int size1 = frame.getWidth()/timerFaktor;
 		zeitLabel.setFont(new Font("Comic Sans Serif",1,size1));
+		zeitFontHeight=hauptPanel.getGraphics().getFontMetrics(zeitLabel.getFont()).getHeight()+10;
 		frame.repaint();
 	}
 
