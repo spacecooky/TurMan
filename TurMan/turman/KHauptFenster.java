@@ -635,16 +635,13 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}
 		
 		//SOS berechnen
-		for(int i=0;i<teilnehmer;i++){
-			if(optionenFeld.PSS.isSelected()){
-					t=teilnehmerVector.get(i);
-					for(int j=0;j<t.paarungen.size();j++){
-						if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-							t.sos += teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;
-						}
-					}
-			}
-		}
+		calcOS(lokRunde);
+		
+		//SOSOS berechnen
+		calcOOS(lokRunde);
+		
+		//veiovisScore berechnen
+		calcVeiovis(lokRunde);
 
 		//Sortiern nach primär
 		sortierterVector.clear();
@@ -700,6 +697,59 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 						sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
 				}
 			}
+	
+	public void calcOS_SOG(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			for(int j=0;j<t.paarungen.size();j++){
+				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+					int diff=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2;//gegnerische Punkte des eigenen Spiels
+					int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+					t.sos += (allSOS-diff);
+				}
+			}
+		}
+	}
+	
+	public void calcOS(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			for(int j=0;j<t.paarungen.size();j++){
+				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+					int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+					t.sos += allSOS;
+				}
+			}
+		}
+	}
+	
+	public void calcOOS(int lokRunde){
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			if(optionenFeld.PSS.isSelected()){
+					t=teilnehmerVector.get(i);
+					for(int j=0;j<t.paarungen.size();j++){
+						if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+							KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
+							t.sosos += gegner.sos;
+						}
+					}
+			}
+		}
+	}
+	
+	public void calcVeiovis(int lokRunde){
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			t.veiovisScore=t.primärEinzel * 0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))
+					+ (t.sos/lokRunde) * (1-0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))) / 1.5
+					+ (t.sosos/lokRunde) * (1-0.25 * (lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde))) / 3;
+			System.out.println("Veoivis score: "+t.veiovisScore);
+		}
+	}
 	
 	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
 		System.out.println("Alt");
