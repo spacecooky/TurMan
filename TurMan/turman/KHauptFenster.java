@@ -729,28 +729,28 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public void calcOOS(int lokRunde){
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
-			if(optionenFeld.PSS.isSelected()){
-					t=teilnehmerVector.get(i);
-					for(int j=0;j<t.paarungen.size();j++){
-						if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-							KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
-							t.sosos += gegner.sos;
-						}
-					}
+			t=teilnehmerVector.get(i);
+			for(int j=0;j<t.paarungen.size();j++){
+				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+					KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
+					t.sosos += gegner.sos;
+				}
 			}
 		}
 	}
 	
 	public void calcVeiovis(int lokRunde){
-		KTeilnehmer t;
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			
-			t.veiovisScore = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
-				           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
-				           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
-			
-			System.out.println("Veiovis score: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+		if(lokRunde>0){
+			KTeilnehmer t;
+			for(int i=0;i<teilnehmer;i++){
+				t=teilnehmerVector.get(i);
+				
+				t.veiovisScore = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
+					           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
+					           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
+				
+				System.out.println("Veiovis score: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+			}
 		}
 	}
 	

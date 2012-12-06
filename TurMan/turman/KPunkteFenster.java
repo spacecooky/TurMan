@@ -135,6 +135,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		
 		JPanel primär = createPanel(body,true);
 		JPanel primärEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
+		
 		JPanel bemalung= createPanel(body,false);
 		JPanel armee= createPanel(body,false);
 		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
@@ -143,7 +144,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
-		JPanel sekundär = createPanel(body,true);
+		JPanel sekundär = createPanel(body,!hf.optionenFeld.Veiovis.isSelected());
 		JPanel sekundärEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
 			body.add(bemalung);
@@ -153,12 +154,11 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		JPanel sos = createPanel(body,true);
-		if(!hf.optionenFeld.PSS.isSelected()){
+		if(!hf.optionenFeld.PSS.isSelected() && !hf.optionenFeld.Veiovis.isSelected()){
 			sos.setVisible(false);
 		}
 		
 		JPanel sosMW = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
-		
 		
 		JPanel sosos = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
 		
@@ -183,9 +183,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				bemalung.add(createLabel(" "+tn.bemalwertung, f));
 				armee.add(createLabel(" "+tn.armeeliste, f));
 				sos.add(createLabel(" "+hf.sortierterVector.get(i).sos, f));
-				sosMW.add(createLabel(" "+hf.sortierterVector.get(i).sos/hf.rundenAnzeige, f));
+				sosMW.add(createLabel(" "+((hf.rundenAnzeige>0)?((double)hf.sortierterVector.get(i).sos/(double)hf.rundenAnzeige):0), f));
 				sosos.add(createLabel(" "+hf.sortierterVector.get(i).sosos, f));
-				sososMW.add(createLabel(" "+hf.sortierterVector.get(i).sosos/(hf.rundenAnzeige*hf.rundenAnzeige), f));
+				sososMW.add(createLabel(" "+((hf.rundenAnzeige>0)?((double)hf.sortierterVector.get(i).sosos/((double)hf.rundenAnzeige*(double)hf.rundenAnzeige)):0), f));
 			} 
 		}
 
@@ -235,13 +235,13 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			header.add(createHeader("Veiovis Score",f,veiovis));
 		}
 		
-		if(hf.optionenFeld.PSS.isSelected()){
+		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.Veiovis.isSelected()){
 			header.add(createHeader("Primär(komplett)",f,primär));
 		} else if(hf.optionenFeld.TS.isSelected()){
 			header.add(createHeader("Turnierpunkte(komplett)",f,primär));
 		}
 
-		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())|| (hf.optionenFeld.Veiovis.isSelected())){
+		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())){
 			header.add(createHeader("Primär(einzel)",f,primärEinzel));
 		}
 
@@ -270,6 +270,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.Veiovis.isSelected()){
+			System.out.println("sos-Header");
 			header.add(createHeader("SOS",f,sos));
 		}
 		
