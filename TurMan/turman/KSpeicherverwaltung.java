@@ -334,7 +334,7 @@ public class KSpeicherverwaltung {
 				fw.write("punktetyp=PSS\r\n");
 			} else if(hf.optionenFeld.TS.isSelected()){
 				fw.write("punktetyp=TS\r\n");
-			} else if(hf.optionenFeld.Veiovis.isSelected()){
+			} else if(hf.optionenFeld.RPI.isSelected()){
 				fw.write("punktetyp=Veiovis\r\n");
 			}
 			
@@ -420,7 +420,7 @@ public class KSpeicherverwaltung {
 							hf.optionenFeld.matrixBenutzen.setEnabled(true);
 							hf.optionenFeld.matrix.setEnabled(true);
 						} else if(optval.equals("Veiovis")){
-							hf.optionenFeld.Veiovis.setSelected(true);
+							hf.optionenFeld.RPI.setSelected(true);
 						}
 					} else if(optname.equals("matrix")){
 						if(optval.equals("ja")){

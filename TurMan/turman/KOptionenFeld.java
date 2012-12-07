@@ -68,7 +68,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	//WertungsOptionen
 	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
 	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
-	JRadioButton Veiovis = new JRadioButton("Lord Veoivis Score");
+	JRadioButton RPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOSOS anhand einer Formel)");
 	ButtonGroup wertung = new ButtonGroup();
 	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
 	JButton matrix= new JButton("Siegpunktematrix");
@@ -174,9 +174,9 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p6 = new JPanel();
 		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
-		p6.setLayout(new GridLayout(4,1));
+		p6.setLayout(new GridLayout(5,1));
 		p6.add(PSS);
-		p6.add(Veiovis);
+		p6.add(RPI);
 		p6.add(TS);
 		p6.add(matrixBenutzen);
 		p6.add(matrix);
@@ -185,11 +185,11 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		matrix.setEnabled(false);
 		wertung.add(PSS);
 		wertung.add(TS);
-		wertung.add(Veiovis);
+		wertung.add(RPI);
 		PSS.setSelected(true);
 		PSS.addActionListener(this);
 		TS.addActionListener(this);
-		Veiovis.addActionListener(this);
+		RPI.addActionListener(this);
 		
 		wertungsPanel.add(p6);
 		
@@ -240,13 +240,13 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource()==PSS || arg0.getSource()==TS || arg0.getSource()==Veiovis){
+		if(arg0.getSource()==PSS || arg0.getSource()==TS || arg0.getSource()==RPI){
 			if(PSS.isSelected()){
 				bemalSek.setEnabled(true);
 				armeeSek.setEnabled(true);
 				matrixBenutzen.setEnabled(false);
 				matrix.setEnabled(false);
-			} else if(Veiovis.isSelected()){
+			} else if(RPI.isSelected()){
 				bemalSek.setEnabled(false);
 				armeeSek.setEnabled(false);
 				matrixBenutzen.setEnabled(false);
@@ -302,7 +302,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		 PSS.setSelected(false);
 		 TS.setSelected(false);
-		 Veiovis.setSelected(false);
+		 RPI.setSelected(false);
 		
 		 bemalPri.setSelected(false);
 		 bemalSek.setSelected(false);

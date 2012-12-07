@@ -131,7 +131,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 
 		JPanel spieler = createPanel(body,true);
-		JPanel veiovis = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		JPanel veiovis = createPanel(body,hf.optionenFeld.RPI.isSelected());
 		
 		JPanel primär = createPanel(body,true);
 		JPanel primärEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
@@ -144,7 +144,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
-		JPanel sekundär = createPanel(body,!hf.optionenFeld.Veiovis.isSelected());
+		JPanel sekundär = createPanel(body,!hf.optionenFeld.RPI.isSelected());
 		JPanel sekundärEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
 		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
 			body.add(bemalung);
@@ -154,15 +154,15 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		JPanel sos = createPanel(body,true);
-		if(!hf.optionenFeld.PSS.isSelected() && !hf.optionenFeld.Veiovis.isSelected()){
+		if(!hf.optionenFeld.PSS.isSelected() && !hf.optionenFeld.RPI.isSelected()){
 			sos.setVisible(false);
 		}
 		
-		JPanel sosMW = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		JPanel sosMW = createPanel(body,hf.optionenFeld.RPI.isSelected());
 		
-		JPanel sosos = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		JPanel sosos = createPanel(body,hf.optionenFeld.RPI.isSelected());
 		
-		JPanel sososMW = createPanel(body,hf.optionenFeld.Veiovis.isSelected());
+		JPanel sososMW = createPanel(body,hf.optionenFeld.RPI.isSelected());
 
 		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
 			primär.setBackground(Color.lightGray);
@@ -231,11 +231,11 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		header.add(createHeader("Platz",f,platz));
 		header.add(createHeader("Spieler",f,spieler));
 
-		if(hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.RPI.isSelected()){
 			header.add(createHeader("Veiovis Score",f,veiovis));
 		}
 		
-		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){
 			header.add(createHeader("Primär(komplett)",f,primär));
 		} else if(hf.optionenFeld.TS.isSelected()){
 			header.add(createHeader("Turnierpunkte(komplett)",f,primär));
@@ -269,20 +269,20 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			header.add(createHeader("Armeewertung",f,armee));
 		}
 
-		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){
 			System.out.println("sos-Header");
 			header.add(createHeader("SOS",f,sos));
 		}
 		
-		if(hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.RPI.isSelected()){
 			header.add(createHeader("SOS(Mittelw.)",f,sosMW));
 		}
 		
-		if(hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.RPI.isSelected()){
 			header.add(createHeader("SOSOS",f,sosos));
 		}
 		
-		if(hf.optionenFeld.Veiovis.isSelected()){
+		if(hf.optionenFeld.RPI.isSelected()){
 			header.add(createHeader("SOSOS(Mittelw.)",f,sososMW));
 		}
 

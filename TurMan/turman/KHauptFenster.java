@@ -650,17 +650,24 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t=teilnehmerVector.get(i);
 			if(t.deleted==false){
 				int j=0;
-				while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
-					j++;
-				}
-				//Sortieren nach Sekundär
-				while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
-					j++;
-				}
-				//Sortieren nach sos
-				if(optionenFeld.PSS.isSelected()){
-					while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+				if(optionenFeld.RPI.isSelected()){
+					while(j<sortierterVector.size()&&t.veiovisScore>sortierterVector.get(j).veiovisScore){
 						j++;
+					}
+				}
+				else{
+					while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
+						j++;
+					}
+					//Sortieren nach Sekundär
+					while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
+						j++;
+					}
+					//Sortieren nach sos
+					if(optionenFeld.PSS.isSelected()){
+						while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+							j++;
+						}
 					}
 				}
 				sortierterVector.insertElementAt(t,j);	
