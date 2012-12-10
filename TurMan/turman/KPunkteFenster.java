@@ -232,7 +232,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		header.add(createHeader("Spieler",f,spieler));
 
 		if(hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("Veiovis Score",f,veiovis));
+			header.add(createHeader("RPI",f,veiovis));
 		}
 		
 		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){

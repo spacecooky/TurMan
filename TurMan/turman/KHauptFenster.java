@@ -756,7 +756,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
 					           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
 				
-				System.out.println("Veiovis score: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+				System.out.println("RPI: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
 			}
 		}
 	}

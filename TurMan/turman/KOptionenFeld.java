@@ -72,6 +72,14 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	ButtonGroup wertung = new ButtonGroup();
 	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
 	JButton matrix= new JButton("Siegpunktematrix");
+	JCheckBox SUN = new JCheckBox("SUN statt Primärpunkteeingabe (Einheitspunkte für Sieg-Unentschieden-Niederlage)");
+	JRadioButton SUN2_1_0 = new JRadioButton("2-1-0");
+	JRadioButton SUN3_1_0 = new JRadioButton("3-1-0");
+	JRadioButton SUN20_10_1 = new JRadioButton("20-10-1");
+	JRadioButton SUN_frei = new JRadioButton("Freie Wahl:");
+	JTextField SUN_S = new JTextField("2");
+	JTextField SUN_U = new JTextField("1");
+	JTextField SUN_N = new JTextField("0");
 	
 	JRadioButton bemalPri = new JRadioButton("Bemalwertung");
 	JRadioButton bemalSek = new JRadioButton("Bemalwertung");
@@ -174,7 +182,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p6 = new JPanel();
 		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
-		p6.setLayout(new GridLayout(5,1));
+		p6.setLayout(new GridLayout(6,1));
 		p6.add(PSS);
 		p6.add(RPI);
 		p6.add(TS);
@@ -190,6 +198,18 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		PSS.addActionListener(this);
 		TS.addActionListener(this);
 		RPI.addActionListener(this);
+		
+		JPanel p61= new JPanel();
+		p61.add(SUN);
+		p61.setLayout(new BoxLayout(p61, BoxLayout.X_AXIS));
+		p61.add(SUN2_1_0);
+		p61.add(SUN3_1_0);
+		p61.add(SUN20_10_1);
+		p61.add(SUN_frei);
+		p61.add(SUN_S);
+		p61.add(SUN_U);
+		p61.add(SUN_N);
+		p6.add(p61);
 		
 		wertungsPanel.add(p6);
 		
