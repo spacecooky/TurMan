@@ -27,6 +27,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -280,6 +281,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JTextField p2Field = new JTextField();
 	JTextField p12Field = new JTextField();
 	JTextField p22Field = new JTextField();
+	JRadioButton siegP1 = new JRadioButton("Sieg");
+	JRadioButton siegP2 = new JRadioButton("Sieg");
+	JRadioButton unentschieden = new JRadioButton("Unentschieden");
 	//Variablen
 	int teilnehmer=0;
 	int teams=0;
@@ -651,7 +655,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			if(t.deleted==false){
 				int j=0;
 				if(optionenFeld.RPI.isSelected()){
-					while(j<sortierterVector.size()&&t.veiovisScore>sortierterVector.get(j).veiovisScore){
+					while(j<sortierterVector.size()&&t.rpi>sortierterVector.get(j).rpi){
 						j++;
 					}
 				}
@@ -752,11 +756,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			for(int i=0;i<teilnehmer;i++){
 				t=teilnehmerVector.get(i);
 				
-				t.veiovisScore = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
+				t.rpi = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
 					           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
 					           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
 				
-				System.out.println("RPI: "+t.veiovisScore+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
 			}
 		}
 	}

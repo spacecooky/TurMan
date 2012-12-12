@@ -175,7 +175,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				KTeilnehmer tn=hf.sortierterVector.get(i);
 				platz.add(createLabel(laengeAnpassenVorne(""+hf.sortierterVector.get(i).platz+" ",10), f));
 				spieler.add(createButton(punktePanel,tn, f));
-				veiovis.add(createLabel(" "+tn.veiovisScore, f));
+				veiovis.add(createLabel(" "+tn.rpi, f));
 				primär.add(createLabel(" "+tn.primär, f));
 				primärEinzel.add(createLabel(" "+tn.primärEinzel, f));
 				sekundär.add(createLabel(" "+hf.sortierterVector.get(i).sekundär, f));

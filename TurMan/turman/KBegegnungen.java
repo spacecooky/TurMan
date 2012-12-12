@@ -171,40 +171,68 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			
 				khf.begegnungsFrame = new JFrame();
 				khf.begegnungsFrame.setContentPane(khf.begegnungsPanel);
-				khf.begegnungsPanel.setLayout(new GridLayout(4,3));
-				
-				khf.begegnungsPanel.add(new JLabel(""));
-				if(khf.optionenFeld.PSS.isSelected()){
-					khf.begegnungsPanel.add(new JLabel("Primär"));
-					khf.begegnungsPanel.add(new JLabel("Sekundär"));
-				} else if(khf.optionenFeld.TS.isSelected()){
-					khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
-					khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
+				if(khf.optionenFeld.SUN.isSelected()){
+					khf.begegnungsPanel.setLayout(new GridLayout(5,4));
+				}else{
+					khf.begegnungsPanel.setLayout(new GridLayout(4,3));
 				}
+					
+					khf.begegnungsPanel.add(new JLabel(""));
+					if(khf.optionenFeld.PSS.isSelected() || khf.optionenFeld.RPI.isSelected()){
+						khf.begegnungsPanel.add(new JLabel("Primär"));
+						khf.begegnungsPanel.add(new JLabel("Sekundär"));
+					} else if(khf.optionenFeld.TS.isSelected()){
+						khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
+						khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
+					}
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsPanel.add(new JLabel("Sieger"));
+					}
+					
+					String vn1 = t1.vornameAlter.equals("")?t1.vorname:t1.vornameAlter;
+					String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
+					khf.begegnungsPanel.add(khf.t1Label);
+					khf.t1Label.setText(vn1+" "+nn1);
+					khf.begegnungsPanel.add(khf.p1Field);
+					khf.p1Field.setText(Integer.toString(p1));
+					khf.begegnungsPanel.add(khf.p12Field);
+					khf.p12Field.setText(Integer.toString(p12));
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsPanel.add(khf.siegP1);
+					}
+					
+					String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
+					String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
+					khf.begegnungsPanel.add(khf.t2Label);
+					khf.t2Label.setText(vn2+" "+nn2);
+					khf.begegnungsPanel.add(khf.p2Field);
+					khf.p2Field.setText(Integer.toString(p2));
+					khf.begegnungsPanel.add(khf.p22Field);
+					khf.p22Field.setText(Integer.toString(p22));
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsPanel.add(khf.siegP2);
+					}
+					
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsPanel.add(new JLabel(""));
+						khf.begegnungsPanel.add(new JLabel(""));
+						khf.begegnungsPanel.add(new JLabel(""));
+						khf.begegnungsPanel.add(khf.unentschieden);
+					}
+					
+					khf.begegnungsPanel.add(new JLabel(""));
+					khf.begegnungsPanel.add(new JLabel(""));
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsPanel.add(new JLabel(""));
+					}
+					khf.begegnungsPanel.add(bestaetigung);
+					bestaetigung.addActionListener(this);
+					if(khf.optionenFeld.SUN.isSelected()){
+						khf.begegnungsFrame.setSize(500,150);
+					}else{
+						khf.begegnungsFrame.setSize(400,150);
+					}
 				
-				String vn1 = t1.vornameAlter.equals("")?t1.vorname:t1.vornameAlter;
-				String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
-				khf.begegnungsPanel.add(khf.t1Label);
-				khf.t1Label.setText(vn1+" "+nn1);
-				khf.begegnungsPanel.add(khf.p1Field);
-				khf.p1Field.setText(Integer.toString(p1));
-				khf.begegnungsPanel.add(khf.p12Field);
-				khf.p12Field.setText(Integer.toString(p12));
-				
-				String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
-				String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
-				khf.begegnungsPanel.add(khf.t2Label);
-				khf.t2Label.setText(vn2+" "+nn2);
-				khf.begegnungsPanel.add(khf.p2Field);
-				khf.p2Field.setText(Integer.toString(p2));
-				khf.begegnungsPanel.add(khf.p22Field);
-				khf.p22Field.setText(Integer.toString(p22));
-				
-				khf.begegnungsPanel.add(new JLabel(""));
-				khf.begegnungsPanel.add(new JLabel(""));
-				khf.begegnungsPanel.add(bestaetigung);
-				bestaetigung.addActionListener(this);
-				khf.begegnungsFrame.setSize(400,100);
 				khf.begegnungsFrame.setVisible(true);	
 		}
 	}

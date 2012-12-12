@@ -58,7 +58,7 @@ public class KTeilnehmer implements ActionListener {
 	int sekundärEinzel=0;
 	int sos=0;
 	int sosos=0;
-	double veiovisScore;
+	double rpi;
 	int bemalwertung=0;
 	
 	int platzGruppe=-1;
