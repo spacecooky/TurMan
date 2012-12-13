@@ -284,6 +284,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JRadioButton siegP1 = new JRadioButton("Sieg");
 	JRadioButton siegP2 = new JRadioButton("Sieg");
 	JRadioButton unentschieden = new JRadioButton("Unentschieden");
+	JRadioButton unsichtbar = new JRadioButton();
 	//Variablen
 	int teilnehmer=0;
 	int teams=0;
@@ -655,7 +656,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			if(t.deleted==false){
 				int j=0;
 				if(optionenFeld.RPI.isSelected()){
-					while(j<sortierterVector.size()&&t.rpi>sortierterVector.get(j).rpi){
+					while(j<sortierterVector.size() && t.rpi>sortierterVector.get(j).rpi){
+						System.out.println(t.rpi +">"+ sortierterVector.get(j).rpi + " ? "+ (t.rpi>sortierterVector.get(j).rpi));
 						j++;
 					}
 				}
@@ -684,19 +686,49 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		for(int i=1;i<sortierterVector.size();i++){
 			KTeilnehmer t1=sortierterVector.get(i);
 			KTeilnehmer t2=sortierterVector.get(i-1);
-			if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
-				if(t2.platzGruppe==-1){
-					platzgruppe++;
-					t2.platzGruppe=platzgruppe;
-					t1.platzGruppe=platzgruppe;
-					platzGruppe.add(new Vector<KTeilnehmer>());
-					platzGruppe.get(platzgruppe).add(t2);
-					platzGruppe.get(platzgruppe).add(t1);
-				} else{
-					t1.platzGruppe=t2.platzGruppe;
-					platzGruppe.get(platzgruppe).add(t1);
+			if(optionenFeld.RPI.isSelected()){
+				if(t1.rpi==t2.rpi){
+					if(t2.platzGruppe==-1){
+						platzgruppe++;
+						t2.platzGruppe=platzgruppe;
+						t1.platzGruppe=platzgruppe;
+						platzGruppe.add(new Vector<KTeilnehmer>());
+						platzGruppe.get(platzgruppe).add(t2);
+						platzGruppe.get(platzgruppe).add(t1);
+					} else{
+						t1.platzGruppe=t2.platzGruppe;
+						platzGruppe.get(platzgruppe).add(t1);
+					}
 				}
-			} 
+			}else if(optionenFeld.PSS.isSelected()){
+				if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
+					if(t2.platzGruppe==-1){
+						platzgruppe++;
+						t2.platzGruppe=platzgruppe;
+						t1.platzGruppe=platzgruppe;
+						platzGruppe.add(new Vector<KTeilnehmer>());
+						platzGruppe.get(platzgruppe).add(t2);
+						platzGruppe.get(platzgruppe).add(t1);
+					} else{
+						t1.platzGruppe=t2.platzGruppe;
+						platzGruppe.get(platzgruppe).add(t1);
+					}
+				} 
+			}else if(optionenFeld.TS.isSelected()){
+				if(t1.primär==t2.primär && t1.sekundär==t2.sekundär){
+					if(t2.platzGruppe==-1){
+						platzgruppe++;
+						t2.platzGruppe=platzgruppe;
+						t1.platzGruppe=platzgruppe;
+						platzGruppe.add(new Vector<KTeilnehmer>());
+						platzGruppe.get(platzgruppe).add(t2);
+						platzGruppe.get(platzgruppe).add(t1);
+					} else{
+						t1.platzGruppe=t2.platzGruppe;
+						platzGruppe.get(platzgruppe).add(t1);
+					}
+				} 
+			}
 		}
 		//Plätze eintragen
 				

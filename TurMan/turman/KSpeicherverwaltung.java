@@ -343,6 +343,21 @@ public class KSpeicherverwaltung {
 			} else{
 				fw.write("matrix=nein\r\n");
 			}
+			
+			if(hf.optionenFeld.SUN.isSelected()){
+				fw.write("sun=ja\r\n");
+				if(hf.optionenFeld.SUN2_1_0.isSelected()){
+					fw.write("sunmode=0\r\n");
+				} else if(hf.optionenFeld.SUN3_1_0.isSelected()){
+					fw.write("sunmode=1\r\n");
+				} else if(hf.optionenFeld.SUN20_10_1.isSelected()){
+					fw.write("sunmode=2\r\n");
+				} else if(hf.optionenFeld.SUN_frei.isSelected()){
+					fw.write("sunmode=3,"+hf.optionenFeld.SUN_S.getText()+","+hf.optionenFeld.SUN_U.getText()+","+hf.optionenFeld.SUN_N.getText()+""+"\r\n");
+				}
+			} else{
+				fw.write("sun=nein\r\n");
+			}
 
 			if(hf.optionenFeld.bemalNo.isSelected()){
 				fw.write("bemalwertung=keine\r\n");
@@ -428,6 +443,26 @@ public class KSpeicherverwaltung {
 						} else if(optval.equals("nein")){
 							hf.optionenFeld.matrixBenutzen.setSelected(false);
 						} 
+					}else if(optname.equals("sun")){
+						if(optval.equals("ja")){
+							hf.optionenFeld.SUN.setSelected(true);
+						} else if(optval.equals("nein")){
+							hf.optionenFeld.SUN.setSelected(false);
+						}
+					}else if(optname.equals("sunmode")){
+						if(optval.startsWith("0")){
+							hf.optionenFeld.SUN2_1_0.setSelected(true);
+						} else if(optval.startsWith("1")){
+							hf.optionenFeld.SUN3_1_0.setSelected(true);
+						} else if(optval.startsWith("2")){
+							hf.optionenFeld.SUN20_10_1.setSelected(true);
+						} else if(optval.startsWith("3")){
+							hf.optionenFeld.SUN_frei.setSelected(true);
+							String[] free=optval.split(",");
+							hf.optionenFeld.SUN_S.setText(free[1]);
+							hf.optionenFeld.SUN_U.setText(free[2]);
+							hf.optionenFeld.SUN_N.setText(free[3]);
+						}
 					}else if(optname.equals("bemalwertung")){
 						if(optval.equals("keine")){
 							hf.optionenFeld.bemalNo.setSelected(true);

@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,6 +27,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		begegnungsFensterButton.setBackground(Color.white);
 		begegnungsTabButton.setBackground(Color.white);
 		normalButtonColor=begegnungsFensterButton.getBackground();
+		khf.siegP1.addActionListener(this);
+		khf.siegP2.addActionListener(this);
+		khf.unentschieden.addActionListener(this);
+		SUN.add(khf.siegP1);
+		SUN.add(khf.siegP2);
+		SUN.add(khf.unentschieden);
+		SUN.add(khf.unsichtbar);
 		addMouseListener(this);
 		setBorder(BorderFactory.createRaisedBevelBorder());
 		setMaximumSize(new Dimension(20,20));
@@ -51,6 +59,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	
 	int tisch=0;
 	int runde=0;
+	
+
+	ButtonGroup SUN = new ButtonGroup();
 	
 	//int position=0;
 	//int primär=0;
@@ -149,7 +160,6 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			begegnungsTabButton.setBackground(Color.gray);
 			}catch(NumberFormatException e){}
 			
-			
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1=p2;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2=p1;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p12=p22;
@@ -229,11 +239,54 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 					bestaetigung.addActionListener(this);
 					if(khf.optionenFeld.SUN.isSelected()){
 						khf.begegnungsFrame.setSize(500,150);
+						khf.p1Field.setEditable(false);
+						khf.p2Field.setEditable(false);
 					}else{
 						khf.begegnungsFrame.setSize(400,150);
+						khf.p1Field.setEditable(true);
+						khf.p2Field.setEditable(true);
 					}
-				
-				khf.begegnungsFrame.setVisible(true);	
+					khf.unsichtbar.setSelected(true);
+				khf.begegnungsFrame.setVisible(true);
+		}else if(quelle==khf.siegP1){
+			if(khf.optionenFeld.SUN20_10_1.isSelected()){
+				khf.p1Field.setText("20");
+				khf.p2Field.setText("1");
+			} else if(khf.optionenFeld.SUN3_1_0.isSelected()){
+				khf.p1Field.setText("3");
+				khf.p2Field.setText("0");
+			} else if(khf.optionenFeld.SUN2_1_0.isSelected()){
+				khf.p1Field.setText("2");
+				khf.p2Field.setText("0");
+			} else if(khf.optionenFeld.SUN_frei.isSelected()){
+				khf.p1Field.setText(khf.optionenFeld.SUN_S.getText());
+				khf.p2Field.setText(khf.optionenFeld.SUN_N.getText());
+			}
+		}else if(quelle==khf.siegP2){
+			if(khf.optionenFeld.SUN20_10_1.isSelected()){
+				khf.p2Field.setText("20");
+				khf.p1Field.setText("1");
+			} else if(khf.optionenFeld.SUN3_1_0.isSelected()){
+				khf.p2Field.setText("3");
+				khf.p1Field.setText("0");
+			} else if(khf.optionenFeld.SUN2_1_0.isSelected()){
+				khf.p2Field.setText("2");
+				khf.p1Field.setText("0");
+			} else if(khf.optionenFeld.SUN_frei.isSelected()){
+				khf.p2Field.setText(khf.optionenFeld.SUN_S.getText());
+				khf.p1Field.setText(khf.optionenFeld.SUN_N.getText());
+			}
+		}else if(quelle==khf.unentschieden){
+			if(khf.optionenFeld.SUN20_10_1.isSelected()){
+				khf.p2Field.setText("10");
+				khf.p1Field.setText("10");
+			} else if(khf.optionenFeld.SUN3_1_0.isSelected() || khf.optionenFeld.SUN2_1_0.isSelected()){
+				khf.p2Field.setText("1");
+				khf.p1Field.setText("1");
+			} else if(khf.optionenFeld.SUN_frei.isSelected()){
+				khf.p2Field.setText(khf.optionenFeld.SUN_U.getText());
+				khf.p1Field.setText(khf.optionenFeld.SUN_U.getText());
+			}
 		}
 	}
 	@Override

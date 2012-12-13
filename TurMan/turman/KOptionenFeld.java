@@ -80,6 +80,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JTextField SUN_S = new JTextField("2");
 	JTextField SUN_U = new JTextField("1");
 	JTextField SUN_N = new JTextField("0");
+	ButtonGroup sunGroup = new ButtonGroup();
 	
 	JRadioButton bemalPri = new JRadioButton("Bemalwertung");
 	JRadioButton bemalSek = new JRadioButton("Bemalwertung");
@@ -210,6 +211,11 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		p61.add(SUN_U);
 		p61.add(SUN_N);
 		p6.add(p61);
+		SUN2_1_0.setSelected(true);
+		sunGroup.add(SUN2_1_0);
+		sunGroup.add(SUN3_1_0);
+		sunGroup.add(SUN20_10_1);
+		sunGroup.add(SUN_frei);
 		
 		wertungsPanel.add(p6);
 		
