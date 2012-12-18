@@ -594,7 +594,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 
 	public void sortieren(boolean ab,boolean bm,int lokRunde){
-		System.out.println(lokRunde);
+		//System.out.println(lokRunde);
 		KTeilnehmer t;
 		//Primär und Sekundärpunkte für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
@@ -657,7 +657,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				int j=0;
 				if(optionenFeld.RPI.isSelected()){
 					while(j<sortierterVector.size() && t.rpi>sortierterVector.get(j).rpi){
-						System.out.println(t.rpi +">"+ sortierterVector.get(j).rpi + " ? "+ (t.rpi>sortierterVector.get(j).rpi));
+						//System.out.println(t.rpi +">"+ sortierterVector.get(j).rpi + " ? "+ (t.rpi>sortierterVector.get(j).rpi));
 						j++;
 					}
 				}
@@ -792,7 +792,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
 					           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
 				
-				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+				//System.out.println("RPI: "+t.rpi+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
 			}
 		}
 	}

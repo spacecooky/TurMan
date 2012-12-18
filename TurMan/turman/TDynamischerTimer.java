@@ -71,6 +71,10 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	    			System.out.println("Begegnungslaenge "+begegnungslaenge);
 	    			System.out.println("StartVal2 "+startVal2);
 	    	
+	    			if(((g.getFontMetrics(font).getHeight()+5)*hf.sortierterVector.size()+50)<typPanel.getHeight()){
+	    				posVerschiebung=0;
+	    			}
+	    			
 	    			for (int i=0;i<hf.sortierterVector.size();i++){
 	    					KTeilnehmer t=hf.sortierterVector.get(i);
 	    					g.drawString(laengeAnpassenVorne(Integer.toString(t.platz), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
@@ -114,6 +118,9 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	    			System.out.println("Begegnungslaenge "+begegnungslaenge);
 	    			System.out.println("StartVal2 "+startVal2);
 	    			
+	    			if(((g.getFontMetrics(font).getHeight()+5)*hf.begegnungsVector.size()+50)<typPanel.getHeight()){
+	    				posVerschiebung=0;
+	    			}
 	    			
 	    			for (int i=0;i<hf.begegnungsVector.size();i++){
 						KBegegnungen bg = hf.begegnungsVector.get(i);

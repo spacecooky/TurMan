@@ -270,7 +270,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		}
 
 		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){
-			System.out.println("sos-Header");
+			//System.out.println("sos-Header");
 			header.add(createHeader("SOS",f,sos));
 		}
 		

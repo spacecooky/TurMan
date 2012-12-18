@@ -71,19 +71,20 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 			b2.setUnpairedColor();
 			b1.setText("");
 			b2.setText("");
-			/*for(int i=0;i<t1.paarungen.size();i++){
-				if(t1.paarungen.get(i)==hf.teilnehmerVector.indexOf(t2)){
-					t1.paarungen.remove(i);
-					break;
+			if(hf.rundenZaehler>0){
+				for(int i=0;i<t1.paarungen.size();i++){
+					if(t1.paarungen.get(i)==hf.teilnehmerVector.indexOf(t2)){
+						t1.paarungen.remove(i);
+						break;
+					}
+				}
+				for(int i=0;i<t2.paarungen.size();i++){
+					if(t2.paarungen.get(i)==hf.teilnehmerVector.indexOf(t1)){
+						t2.paarungen.remove(i);
+						break;
+					}
 				}
 			}
-			for(int i=0;i<t2.paarungen.size();i++){
-				if(t2.paarungen.get(i)==hf.teilnehmerVector.indexOf(t1)){
-					t2.paarungen.remove(i);
-					break;
-				}
-			}*/
-			
 			b1.runde=0;
 			b2.runde=0;
 			b1.tisch=0;

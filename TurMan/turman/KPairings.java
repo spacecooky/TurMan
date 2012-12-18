@@ -158,6 +158,7 @@ public class KPairings {
 				hf.teilnehmerVector.get(i).paarungen.add(hf.teilnehmerVector.get(i).paired);
 			}
 		} else if(mode== SWISS){
+			
 			//Platzgruppen mischen
 			hf.platzGruppenMischen(hf.sortierterVector);
 			
@@ -169,10 +170,21 @@ public class KPairings {
 			//Begegnungspool vorbereiten
 			@SuppressWarnings("unchecked")
 			Vector<KBegegnungen> begegnungsPool = (Vector<KBegegnungen>)hf.alleBegegnungenVector.clone();
-				//Herausforderungen aus tVector und pool entfernen, Herausforderung ist schon komplett als Begegnung eingetragen
+				//Herausforderungen aus tVector und pool entfernen, und Begegnung in den Begegnungsvektor eintragen
+			for(int i=0;i<hf.herausforderungsVector.size();i+=2){
+				KTeilnehmer t1 = hf.herausforderungsVector.get(i);
+				KTeilnehmer t2 = hf.herausforderungsVector.get(i+1);
+				
+				int ggNmbr=hf.teilnehmerVector.indexOf(hf.herausforderungsVector.get(i+1));
+				int tnNmbr=hf.teilnehmerVector.indexOf(hf.herausforderungsVector.get(i));	
+				
+				t2.paarungen.add(tnNmbr);
+				t1.paarungen.add(ggNmbr);
+			}
 			for(int i=0;i<hf.herausforderungsVector.size();i++){
 				KTeilnehmer t1 = hf.herausforderungsVector.get(i);
 				tVector.remove(t1);
+				System.out.println("Herausforderungsspieler "+t1.vorname+" "+t1.nachname+" wird entfernt.");
 				
 				Vector<KBegegnungen> bt1= t1.getPossiblePairings(begegnungsPool);
 				Vector<KBegegnungen> bt12nd= t1.get2ndMemberIn(begegnungsPool);
@@ -259,7 +271,7 @@ public class KPairings {
 				}
 				hf.alleBegegnungenVector.remove(b);
 			}
-			//System.out.println(hf.begegnungsVector.size());
+			System.out.println("Begegnungsvektor size: "+hf.begegnungsVector.size());
 		} 
 
 		return true;
