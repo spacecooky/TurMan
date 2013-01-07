@@ -1,4 +1,4 @@
-﻿Version 0.0.23 WIP
+﻿Version 0.0.23
 - Anzeigefehler der Punkte korrigiert, der bei Herausforderungen nach der ersten Runde aufgetreten ist.
 - Punkte/Begegnungen in der dynamischen Timeranzeige laufen nicht durch, wenn es so wenige sind, dass kein Durchlaufen nötig ist.
 
