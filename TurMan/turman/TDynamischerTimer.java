@@ -55,7 +55,12 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	JLabel zeitLabel = new JLabel("",JLabel.CENTER);
 	int zeitFontHeight=0;
 	JPanel typPanel = new JPanel(){
-        public void paintComponent(Graphics g){
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public void paintComponent(Graphics g){
             super.paintComponent(g);
  
             if(zusTypAnzeigen){

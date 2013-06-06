@@ -214,8 +214,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 	JButton pdfButtonTab=new JButton("PDF");
 	JButton txtButton=new JButton("TXT");
 	JButton txtButtonTab=new JButton("TXT");
-	JComboBox combo = new JComboBox();
-	JComboBox comboTab = new JComboBox();
+	JComboBox<Integer> combo = new JComboBox<Integer>();
+	JComboBox<Integer> comboTab = new JComboBox<Integer>();
 	JButton anzeigenButton= new JButton("Anzeigen");
 	JButton anzeigenButtonTab= new JButton("Anzeigen");
 	

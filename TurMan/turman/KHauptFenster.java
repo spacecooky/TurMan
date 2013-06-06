@@ -31,7 +31,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 /**
  * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
@@ -344,6 +343,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		new KHauptFenster();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle= arg0.getSource();
 

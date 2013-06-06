@@ -5,6 +5,12 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class KHerausforderungsFenster extends JFrame implements ActionListener{
+public class KHerausforderungsFenster extends JFrame implements ActionListener, ItemListener{
 
 	/**
 	 * 
@@ -30,8 +36,8 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 	
 	KHauptFenster hf;
 	JPanel p = new JPanel();
-	JComboBox combo1 = new JComboBox();
-	JComboBox combo2 = new JComboBox();
+	JComboBox<String> combo1 = new JComboBox<String>();
+	JComboBox<String> combo2 = new JComboBox<String>();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Herausfordern");
 	
@@ -39,18 +45,12 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 		p.removeAll();
 		setSize(400,100);
 		p.setLayout(new GridLayout(3,2));
-		combo1=new JComboBox();
-		for(int i=0;i<hf.teilnehmerVector.size();i++){
-			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
-			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
-			combo1.addItem(vn+" "+nn);
-		}
-		combo2=new JComboBox();
-		for(int i=0;i<hf.teilnehmerVector.size();i++){
-			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
-			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
-			combo2.addItem(vn+" "+nn);
-		}
+		combo1=new JComboBox<String>();
+		fillCombo1("");
+		combo2=new JComboBox<String>();
+		fillCombo2("");
+		combo1.addItemListener(this);
+		combo2.addItemListener(this);
 		p.add(new JLabel("Spieler 1"));
 		p.add(new JLabel("Spieler 2"));
 		p.add(combo1);
@@ -60,6 +60,26 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 
+	public void fillCombo1(String s){
+		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
+			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
+			if(!s.equals(vn+" "+nn)){
+				combo1.addItem(vn+" "+nn);
+			}
+		}
+	}
+	
+	public void fillCombo2(String s){
+		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
+			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
+			if(!s.equals(vn+" "+nn)){
+				combo2.addItem(vn+" "+nn);
+			}
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(arg0.getSource()==cancel){
@@ -101,4 +121,19 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener{
 			}
 		}	
 	}
+
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		if(arg0.getStateChange()==1){
+			System.out.println(arg0.getItem());
+			//TODO gewähltes Element in der anderen Box abwählen
+		}
+		/*if(arg0.getSource()==combo1){
+			System.out.println(combo1.getSelectedItem());
+		}else if(arg0.getSource()==combo2){
+			System.out.println(combo2.getSelectedItem());
+		}*/
+	}
+
+	
 }
