@@ -70,7 +70,7 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
 			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
 			String ID = "SID:"+i;
-			if(hf.herausforderungsVector.contains(i)){
+			if(hf.herausforderungsVector.contains(hf.teilnehmerVector.get(i))){
 				System.out.println(vn+" "+nn+" ist bereits in einer Herausforderung");
 			}else if(!s.equals(vn+" "+nn+" "+ID)){
 				combo1.addItem(vn+" "+nn+" "+ID);
@@ -79,17 +79,29 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 	}
 	
 	public void fillCombo2(String s){
+		int p1ID=-1;
 		if(!s.equals("")){
 			String p1=s.split(" ")[2];
 			p1=p1.split(":")[1];
-			int p1ID=Integer.parseInt(p1);
+			p1ID=Integer.parseInt(p1);
 		}
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
+			boolean ignore=false;
 			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
 			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
 			String ID = "SID:"+i;
+			if(p1ID!=-1){
+				for(int j=0;j<hf.teilnehmerVector.get(p1ID).paarungen.size();j++){
+					if(i==hf.teilnehmerVector.get(p1ID).paarungen.get(j)){
+						ignore=true;
+						break;
+					}
+				}
+			}
 			//Herausforderung bereits vorhanden:
-			if(hf.herausforderungsVector.contains(i)){
+			if(ignore){
+				System.out.println("Gegen "+ vn+" "+nn+" wurde bereits gespielt");
+			}else if(hf.herausforderungsVector.contains(hf.teilnehmerVector.get(i))){
 				System.out.println(vn+" "+nn+" ist bereits in einer Herausforderung");
 			}else if(!s.equals(vn+" "+nn+" "+ID)){
 				combo2.addItem(vn+" "+nn+" "+ID);
