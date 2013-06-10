@@ -140,7 +140,8 @@ public class KSpeicherverwaltung {
 						bg.p12=Integer.parseInt(sEr[2]);
 						bg.p2=Integer.parseInt(sEr[3]);
 						bg.p22=Integer.parseInt(sEr[4]);
-						hf.teilnehmerVector.get(i).paarungen.add(j);
+						//hf.teilnehmerVector.get(i).paarungen.add(j);//welcher Spieler
+						hf.teilnehmerVector.get(i).paarungen.put(Integer.parseInt(sEr[5]),j);//welcher Spieler
 						if(sEr[0].equals("2")){
 							bg.setBackground(Color.orange);
 						} else if(sEr[0].equals("3")){
@@ -162,8 +163,10 @@ public class KSpeicherverwaltung {
 						}
 						if(bgAdd){
 							hf.begegnungsVector.add(bg);
-							bg.t1.tische.add(Integer.parseInt(sEr[6]));
-							bg.t2.tische.add(Integer.parseInt(sEr[6]));
+							//bg.t1.tische.add(Integer.parseInt(sEr[6]));
+							//bg.t2.tische.add(Integer.parseInt(sEr[6]));
+							bg.t1.tische.put(bg.runde,Integer.parseInt(sEr[6]));
+							bg.t2.tische.put(bg.runde,Integer.parseInt(sEr[6]));
 						}
 					}
 				}

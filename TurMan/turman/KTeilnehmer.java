@@ -2,6 +2,7 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -65,8 +66,10 @@ public class KTeilnehmer implements ActionListener {
 	int platz=0;
 	int tabellenPosition=0;
 	
-	Vector<Integer> paarungen= new Vector<Integer>();
-	Vector<Integer> tische= new Vector<Integer>();
+	//Vector<Integer> paarungen= new Vector<Integer>();
+	//Vector<Integer> tische= new Vector<Integer>();
+	HashMap<Integer,Integer> paarungen= new HashMap<Integer,Integer>();
+	HashMap<Integer,Integer> tische= new HashMap<Integer,Integer>();
 	
 	int paired=-1;
 	

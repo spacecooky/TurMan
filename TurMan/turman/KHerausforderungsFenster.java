@@ -5,12 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -91,10 +87,13 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;
 			String ID = "SID:"+i;
 			if(p1ID!=-1){
-				for(int j=0;j<hf.teilnehmerVector.get(p1ID).paarungen.size();j++){
-					if(i==hf.teilnehmerVector.get(p1ID).paarungen.get(j)){
-						ignore=true;
-						break;
+				//for(int j=0;j<hf.teilnehmerVector.get(p1ID).paarungen.size();j++){
+				for(int j=1;j<=hf.rundenZaehler;j++){
+					if(hf.teilnehmerVector.get(p1ID).paarungen.get(j)!=null){
+						if(i==hf.teilnehmerVector.get(p1ID).paarungen.get(j)){
+							ignore=true;
+							break;
+						}
 					}
 				}
 			}

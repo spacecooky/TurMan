@@ -41,6 +41,7 @@ public class KPairings {
 				v.get(i).paired=-1;
 			}
 			//Herausforderungen
+			System.out.println(hf.herausforderungsVector.size());
 			for(int i=0;i<hf.herausforderungsVector.size();i+=2){
 				int ggNmbr=v.indexOf(hf.herausforderungsVector.get(i+1));
 				int tnNmbr=v.indexOf(hf.herausforderungsVector.get(i));	
@@ -72,16 +73,22 @@ public class KPairings {
 							//Prüfung, falls Armeen beachtet werden sollen
 							if(hf.optionenFeld.armeen.isSelected()){
 								if(!v.get(gegner).armee.equals("")){
-									for(int j=0;j<v.get(i).paarungen.size();j++){
-										if(hf.teilnehmerVector.get(v.get(i).paarungen.get(j)).armee.equals(v.get(gegner).armee)){
-											armeeFailureBool=true;
+									//for(int j=0;j<v.get(i).paarungen.size();j++){
+									for(int j=1;j<=hf.rundenZaehler;j++){
+										if(v.get(i).paarungen.get(j)!=null){
+											if(hf.teilnehmerVector.get(v.get(i).paarungen.get(j)).armee.equals(v.get(gegner).armee)){
+												armeeFailureBool=true;
+											}
 										}
 									}
 								}
 								if(!v.get(i).armee.equals("")){
-									for(int j=0;j<v.get(gegner).paarungen.size();j++){
-										if(hf.teilnehmerVector.get(v.get(gegner).paarungen.get(j)).armee.equals(v.get(i).armee)){
-											armeeFailureBool=true;
+									//for(int j=0;j<v.get(gegner).paarungen.size();j++){
+									for(int j=1;j<=hf.rundenZaehler;j++){
+										if(v.get(gegner).paarungen.get(j)!=null){
+											if(hf.teilnehmerVector.get(v.get(gegner).paarungen.get(j)).armee.equals(v.get(i).armee)){
+												armeeFailureBool=true;
+											}
 										}
 									}
 								}
@@ -89,7 +96,7 @@ public class KPairings {
 							//Auswertung ob die Paarung legal ist
 							int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
 							
-							if(!v.get(i).paarungen.contains(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
+							if(!v.get(i).paarungen.containsValue(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
 									(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
 									(!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText())) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
 									(!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText())) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
@@ -155,7 +162,8 @@ public class KPairings {
 				}
 			}
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
-				hf.teilnehmerVector.get(i).paarungen.add(hf.teilnehmerVector.get(i).paired);
+				//hf.teilnehmerVector.get(i).paarungen.add(hf.teilnehmerVector.get(i).paired);
+				hf.teilnehmerVector.get(i).paarungen.put(hf.rundenZaehler,hf.teilnehmerVector.get(i).paired);
 			}
 		} else if(mode== SWISS){
 			
@@ -176,10 +184,12 @@ public class KPairings {
 				KTeilnehmer t2 = hf.herausforderungsVector.get(i+1);
 				
 				int ggNmbr=hf.teilnehmerVector.indexOf(hf.herausforderungsVector.get(i+1));
-				int tnNmbr=hf.teilnehmerVector.indexOf(hf.herausforderungsVector.get(i));	
+				int tnNmbr=hf.teilnehmerVector.indexOf(hf.herausforderungsVector.get(i));
 				
-				t2.paarungen.add(tnNmbr);
-				t1.paarungen.add(ggNmbr);
+				//t2.paarungen.add(tnNmbr);
+				//t1.paarungen.add(ggNmbr);
+				t2.paarungen.put(hf.rundenZaehler,tnNmbr);
+				t1.paarungen.put(hf.rundenZaehler,ggNmbr);
 			}
 			for(int i=0;i<hf.herausforderungsVector.size();i++){
 				KTeilnehmer t1 = hf.herausforderungsVector.get(i);
@@ -200,6 +210,10 @@ public class KPairings {
 			//Entfernen aller unerlaubten Paarungen
 			for(int i=0; i<begegnungsPool.size();i++){
 				KBegegnungen b = begegnungsPool.get(i);
+				if(b.deleted()){
+					begegnungsPool.remove(b);
+					i=0;
+				}
 				if(hf.optionenFeld.armeen.isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
@@ -252,8 +266,10 @@ public class KPairings {
 				b.runde=hf.rundenZaehler;
 				b.setText(""+hf.rundenZaehler);
 				hf.begegnungsVector.add(b);
-				b.t2.paarungen.add(b.xPos);
-				b.t1.paarungen.add(b.yPos);
+				//b.t2.paarungen.add(b.xPos);
+				//b.t1.paarungen.add(b.yPos);
+				b.t2.paarungen.put(hf.rundenZaehler,b.xPos);
+				b.t1.paarungen.put(hf.rundenZaehler,b.yPos);
 				for(int j=0;j<hf.alleBegegnungenVector.size();j++){
 					KBegegnungen b2 = hf.alleBegegnungenVector.get(j);
 					if(b.xPos==b2.yPos && b.yPos==b2.xPos){
@@ -371,8 +387,10 @@ public class KPairings {
 			int tisch=i-(hf.rundenZaehler-1)*((bgCount));
 			KTeilnehmer tn1 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).xPos);
 			KTeilnehmer tn2 = hf.teilnehmerVector.get(hf.begegnungsVector.get(i).yPos);
-			tn1.tische.add(tisch);
-			tn2.tische.add(tisch);
+			//tn1.tische.add(tisch);
+			//tn2.tische.add(tisch);
+			tn1.tische.put(hf.rundenZaehler,tisch);
+			tn2.tische.put(hf.rundenZaehler,tisch);
 			hf.begegnungsVector.get(i).tisch=tisch;
 			((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(hf.begegnungsVector.get(i).yPos)).getComponent(hf.begegnungsVector.get(i).xPos)).tisch=tisch;
 		}
@@ -455,18 +473,26 @@ public class KPairings {
 				for(int j=(hf.rundenZaehler-1)*((hf.teilnehmerVector.size()/2));j<hf.begegnungsVector.size();j++){
 					KBegegnungen b2 =hf.begegnungsVector.get(j);
 					if(!b2.tischfehler(b.tisch) && !b.tischfehler(b2.tisch)){
-						b.t1.tische.remove(b.t1.tische.lastIndexOf(b.tisch));
-						b.t2.tische.remove(b.t2.tische.lastIndexOf(b.tisch));
-						b2.t1.tische.remove(b2.t1.tische.lastIndexOf(b2.tisch));
-						b2.t2.tische.remove(b2.t2.tische.lastIndexOf(b2.tisch));
+//						b.t1.tische.remove(b.t1.tische.lastIndexOf(b.tisch));
+//						b.t2.tische.remove(b.t2.tische.lastIndexOf(b.tisch));
+//						b2.t1.tische.remove(b2.t1.tische.lastIndexOf(b2.tisch));
+//						b2.t2.tische.remove(b2.t2.tische.lastIndexOf(b2.tisch));
+						b.t1.tische.remove(hf.rundenZaehler);
+						b.t2.tische.remove(hf.rundenZaehler);
+						b2.t1.tische.remove(hf.rundenZaehler);
+						b2.t2.tische.remove(hf.rundenZaehler);
 						
 						int b1tempTisch=b.tisch;
 						b.tisch=b2.tisch;
 						b2.tisch=b1tempTisch;
-						b.t1.tische.add(b.tisch);
-						b.t2.tische.add(b.tisch);
-						b2.t1.tische.add(b2.tisch);
-						b2.t2.tische.add(b2.tisch);
+//						b.t1.tische.add(b.tisch);
+//						b.t2.tische.add(b.tisch);
+//						b2.t1.tische.add(b2.tisch);
+//						b2.t2.tische.add(b2.tisch);
+						b.t1.tische.put(hf.rundenZaehler,b.tisch);
+						b.t2.tische.put(hf.rundenZaehler,b.tisch);
+						b2.t1.tische.put(hf.rundenZaehler,b2.tisch);
+						b2.t2.tische.put(hf.rundenZaehler,b2.tisch);
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos)).tisch=b.tisch;
 						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b2.yPos)).getComponent(b2.xPos)).tisch=b2.tisch;
 						break;
@@ -541,29 +567,33 @@ public class KPairings {
 
 	static void rundeReset(KHauptFenster hf){
 		//System.out.println("Begegnungen vor Reset: "+hf.begegnungsVector.size());
+		System.out.println(hf.rundenZaehler);
 		if(hf.rundenZaehler>0){
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				KTeilnehmer t=hf.teilnehmerVector.get(i);
 				int tnNmbr=i;
-				for(int j=0;j<t.paarungen.size();j++){
-					int ggNmbr=t.paarungen.get(j);
-					KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr)).getComponent(ggNmbr));
-					if(b.runde==hf.rundenZaehler){
-						hf.alleBegegnungenVector.add(b);
-						if(hf.begegnungsVector.contains(b)){
-							hf.begegnungsVector.remove(b);
+				//for(int j=0;j<t.paarungen.size();j++){
+				for(int j=1;j<=hf.rundenZaehler;j++){
+					if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+						int ggNmbr=t.paarungen.get(j);
+						KBegegnungen b = ((KBegegnungen)((KTeilnehmerPanel)hf.HauptPanel.getComponent(tnNmbr)).getComponent(ggNmbr));
+						if(b.runde==hf.rundenZaehler){
+							hf.alleBegegnungenVector.add(b);
+							if(hf.begegnungsVector.contains(b)){
+								hf.begegnungsVector.remove(b);
+							}
+							b.setEnabled(false);
+							b.setUnpairedColor();
+							b.runde=0;
+							b.tisch=0;
+							b.setText("");
+							b.p1=0;
+							b.p12=0;
+							b.p2=0;
+							b.p22=0;
+							t.tische.remove(j);
+							t.paarungen.remove(j);
 						}
-						b.setEnabled(false);
-						b.setUnpairedColor();
-						b.runde=0;
-						b.tisch=0;
-						b.setText("");
-						b.p1=0;
-						b.p12=0;
-						b.p2=0;
-						b.p22=0;
-						t.tische.remove(j);
-						t.paarungen.remove(j);
 					}
 				}
 			}

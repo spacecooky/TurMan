@@ -64,10 +64,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		//setSize(800,600);
-		//setLocation(0, 500);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		setSize(800,600);
+		setLocation(0, 500);
+		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -132,6 +132,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		herausforderung.addActionListener(this);
 		turnierRunde.add(herausforderungDel);
 		herausforderungDel.addActionListener(this);
+		turnierRunde.add(paarungTauschen);
+		paarungTauschen.addActionListener(this);
 		turnierRunde.add(runde);
 		runde.addActionListener(this);
 		turnierRunde.add(rundeWdh);
@@ -238,6 +240,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem herausforderungDel = new JMenuItem("Herausforderung entfernen");
+	JMenuItem paarungTauschen = new JMenuItem("Paarung tauschen");
 	JMenuItem runde = new JMenuItem("Nächste Runde paaren");
 	JMenuItem rundeWdh = new JMenuItem("Runde erneut paaren");
 	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
@@ -289,8 +292,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	int teams=0;
 	int gelöschteTeilnehmer=0;
 	int runden=0;
-	int rundenZaehler=0;
-	int rundenAnzeige=0;
+	int rundenZaehler=0; //Tatsächliche Runde
+	int rundenAnzeige=0; //Runde, die zur Betrachtung ausgewählt wurde
 	int mode = KPairings.RANDOM;
 	String TID="0";
 	Vector<KTeilnehmer> teilnehmerVector= new Vector<KTeilnehmer>();
@@ -312,6 +315,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
 	KHerausforderungsFenster herausforderungsFenster = new KHerausforderungsFenster(this);
 	KHerausforderungsDelFenster herausforderungsDelFenster = new KHerausforderungsDelFenster(this);
+	KPaarungTauschenFenster paarungTauschenFenster = new KPaarungTauschenFenster(this);
 	KBegegnungsFenster begegnungsFenster = new KBegegnungsFenster(this);
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
@@ -427,6 +431,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			herausforderungsFenster.init();
 		} else if(quelle==herausforderungDel){
 			herausforderungsDelFenster.init();
+		}else if(quelle==paarungTauschen){
+			paarungTauschenFenster.init();
 		}else if(quelle==zeit){
 			new TTimer(this);
 		}else if(quelle==agenda){
@@ -608,13 +614,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t.platzGruppe=-1;
 			t.platz=0;
 			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
-			for(int j=0;j<t.paarungen.size();j++){
-				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-					t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
-					if(optionenFeld.PSS.isSelected()){
-						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
-					} else if(optionenFeld.TS.isSelected()){
-						t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+			for(int j=1;j<=rundenZaehler;j++){
+			//for(int j=0;j<t.paarungen.size();j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
+						if(optionenFeld.PSS.isSelected()){
+							t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
+						} else if(optionenFeld.TS.isSelected()){
+							t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+						}
 					}
 				}
 			}
@@ -760,10 +769,13 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			for(int j=0;j<t.paarungen.size();j++){
-				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-					int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
-					t.sos += allSOS;
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+						t.sos += allSOS;
+					}
 				}
 			}
 		}
@@ -773,10 +785,13 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			for(int j=0;j<t.paarungen.size();j++){
-				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-					KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
-					t.sosos += gegner.sos;
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
+						t.sosos += gegner.sos;
+					}
 				}
 			}
 		}

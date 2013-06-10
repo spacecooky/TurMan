@@ -41,11 +41,11 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		setPreferredSize(new Dimension(20,20));
 		setEnabled(false);
 		setBackground(Color.darkGray);
-		
+
 		this.xPos=xPos;
 		this.yPos=yPos;
 	}
-	
+
 	KTeilnehmer t1;
 	int p1=0;
 	int p12=0;
@@ -53,90 +53,109 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	int p2=0;
 	int p22=0;
 	KHauptFenster khf;
-	
+
 	int xPos=0;
 	int yPos=0;
-	
+
 	int tisch=0;
 	int runde=0;
-	
+
 
 	ButtonGroup SUN = new ButtonGroup();
-	
+
 	//int position=0;
 	//int primär=0;
 	//int sekundär=0;
 	//int sos=0;
-	
+
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
 	JButton begegnungsTabButton = new JButton("");
 	Color normalButtonColor;
-	
+
+	/**
+	 * @return true, wenn Teilnehmer 1 oder  2 entfernt wurde
+	 */
+	public boolean deleted(){
+		return (t1.deleted || t2.deleted);
+	}
+
 	/**
 	 * @return true, wenn Teilnehmer 1 und 2 im selben Team sind
 	 */
 	public boolean team(){
 		return t1.team.equals(t2.team);
 	}
-	
+
 	/**
 	 * @return true, wenn Teilnehmer 1 und 2 aus dem selben Ort sind
 	 */
 	public boolean ort(){
 		return !t1.ort.equals("") && !t2.ort.equals("") && t1.ort.equals(t2.ort);
 	}
-	
+
 	/**
 	 * @return true, wenn t1 oder t2 bereits gegen die selbe Armee gespielt haben
 	 */
 	public boolean armee(){
 		if(!t2.armee.equals("")){
-			for(int i=0;i<t1.paarungen.size();i++){
-				if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee)){
-					return true;
+			//for(int i=0;i<t1.paarungen.size();i++){
+			for(int i=1;i<=khf.rundenZaehler;i++){
+				if(t1.paarungen.get(i)!=null){
+					if(khf.teilnehmerVector.get(t1.paarungen.get(i)).armee.equals(t2.armee)){
+						return true;
+					}
 				}
 			}
 		}
 		if(!t1.armee.equals("")){
-			for(int i=0;i<t2.paarungen.size();i++){
-				if(khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
-					return true;
+			//for(int i=0;i<t2.paarungen.size();i++){
+			for(int i=1;i<=khf.rundenZaehler;i++){
+				if(t2.paarungen.get(i)!=null){
+					if(khf.teilnehmerVector.get(t2.paarungen.get(i)).armee.equals(t1.armee)){
+						return true;
+					}
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * @return true, wenn Teilnehmer 1 und 2 die gleiche Armee spielen
 	 */
 	public boolean mirror(){
 		return !t1.armee.equals("") && !t2.armee.equals("") && t1.armee.equals(t2.armee);
 	}
-	
+
 	/**
-	 * Berechnung, ob mit dem angegebenen Tisch i ein tischfehler möglich ist
+	 * Berechnung, ob mit dem angegebenen Tisch i ein Tischfehler möglich ist
 	 * @param i 
 	 * @return
 	 */
 	public boolean tischfehler(int i){
-			int tn1Cnt=0;
-			int tn2Cnt=0;
-			for(int j=0;j<t1.tische.size()-1;j++){
+		int tn1Cnt=0;
+		int tn2Cnt=0;
+		//for(int j=0;j<t1.tische.size()-1;j++){
+		for(int j=1;j<=khf.rundenZaehler;j++){
+			if(t1.tische.get(j)!=null){
 				if(t1.tische.get(j)==i){
 					tn1Cnt++;
 				}
 			}
-			for(int j=0;j<t2.tische.size()-1;j++){
+		}
+		//for(int j=0;j<t2.tische.size()-1;j++){
+		for(int j=1;j<=khf.rundenZaehler;j++){
+			if(t2.tische.get(j)!=null){
 				if(t2.tische.get(j)==i){
 					tn2Cnt++;
 				}
 			}
-			return (tn1Cnt>0 || tn2Cnt>0);
+		}
+		return (tn1Cnt>0 || tn2Cnt>0);
 	}
-	
+
 	public void setUnpairedColor(){
 		setBackground(Color.darkGray);
 		//begegnungsFensterButton.setBackground(normalButtonColor);
@@ -144,22 +163,22 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		begegnungsFensterButton.setBackground(Color.white);
 		begegnungsTabButton.setBackground(Color.white);
 	}
-	
+
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();
-		
+
 		if(quelle==bestaetigung){
-			
+
 			try{
-			p1=Integer.parseInt(khf.p1Field.getText());
-			p2=Integer.parseInt(khf.p2Field.getText());
-			p12=Integer.parseInt(khf.p12Field.getText());
-			p22=Integer.parseInt(khf.p22Field.getText());
-			setBackground(Color.green);
-			begegnungsFensterButton.setBackground(Color.gray);
-			begegnungsTabButton.setBackground(Color.gray);
+				p1=Integer.parseInt(khf.p1Field.getText());
+				p2=Integer.parseInt(khf.p2Field.getText());
+				p12=Integer.parseInt(khf.p12Field.getText());
+				p22=Integer.parseInt(khf.p22Field.getText());
+				setBackground(Color.green);
+				begegnungsFensterButton.setBackground(Color.gray);
+				begegnungsTabButton.setBackground(Color.gray);
 			}catch(NumberFormatException e){}
-			
+
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1=p2;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2=p1;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p12=p22;
@@ -178,76 +197,76 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 				khf.begegnungsPanel.removeAll();
 				khf.begegnungsFrame.dispose();
 			}catch(Exception e){}
-			
-				khf.begegnungsFrame = new JFrame();
-				khf.begegnungsFrame.setContentPane(khf.begegnungsPanel);
-				if(khf.optionenFeld.SUN.isSelected()){
-					khf.begegnungsPanel.setLayout(new GridLayout(5,4));
-				}else{
-					khf.begegnungsPanel.setLayout(new GridLayout(4,3));
-				}
-					
-					khf.begegnungsPanel.add(new JLabel(""));
-					if(khf.optionenFeld.PSS.isSelected() || khf.optionenFeld.RPI.isSelected()){
-						khf.begegnungsPanel.add(new JLabel("Primär"));
-						khf.begegnungsPanel.add(new JLabel("Sekundär"));
-					} else if(khf.optionenFeld.TS.isSelected()){
-						khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
-						khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
-					}
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsPanel.add(new JLabel("Sieger"));
-					}
-					
-					String vn1 = t1.vornameAlter.equals("")?t1.vorname:t1.vornameAlter;
-					String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
-					khf.begegnungsPanel.add(khf.t1Label);
-					khf.t1Label.setText(vn1+" "+nn1);
-					khf.begegnungsPanel.add(khf.p1Field);
-					khf.p1Field.setText(Integer.toString(p1));
-					khf.begegnungsPanel.add(khf.p12Field);
-					khf.p12Field.setText(Integer.toString(p12));
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsPanel.add(khf.siegP1);
-					}
-					
-					String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
-					String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
-					khf.begegnungsPanel.add(khf.t2Label);
-					khf.t2Label.setText(vn2+" "+nn2);
-					khf.begegnungsPanel.add(khf.p2Field);
-					khf.p2Field.setText(Integer.toString(p2));
-					khf.begegnungsPanel.add(khf.p22Field);
-					khf.p22Field.setText(Integer.toString(p22));
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsPanel.add(khf.siegP2);
-					}
-					
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsPanel.add(new JLabel(""));
-						khf.begegnungsPanel.add(new JLabel(""));
-						khf.begegnungsPanel.add(new JLabel(""));
-						khf.begegnungsPanel.add(khf.unentschieden);
-					}
-					
-					khf.begegnungsPanel.add(new JLabel(""));
-					khf.begegnungsPanel.add(new JLabel(""));
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsPanel.add(new JLabel(""));
-					}
-					khf.begegnungsPanel.add(bestaetigung);
-					bestaetigung.addActionListener(this);
-					if(khf.optionenFeld.SUN.isSelected()){
-						khf.begegnungsFrame.setSize(500,150);
-						khf.p1Field.setEditable(false);
-						khf.p2Field.setEditable(false);
-					}else{
-						khf.begegnungsFrame.setSize(400,150);
-						khf.p1Field.setEditable(true);
-						khf.p2Field.setEditable(true);
-					}
-					khf.unsichtbar.setSelected(true);
-				khf.begegnungsFrame.setVisible(true);
+
+			khf.begegnungsFrame = new JFrame();
+			khf.begegnungsFrame.setContentPane(khf.begegnungsPanel);
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.setLayout(new GridLayout(5,4));
+			}else{
+				khf.begegnungsPanel.setLayout(new GridLayout(4,3));
+			}
+
+			khf.begegnungsPanel.add(new JLabel(""));
+			if(khf.optionenFeld.PSS.isSelected() || khf.optionenFeld.RPI.isSelected()){
+				khf.begegnungsPanel.add(new JLabel("Primär"));
+				khf.begegnungsPanel.add(new JLabel("Sekundär"));
+			} else if(khf.optionenFeld.TS.isSelected()){
+				khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
+				khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
+			}
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.add(new JLabel("Sieger"));
+			}
+
+			String vn1 = t1.vornameAlter.equals("")?t1.vorname:t1.vornameAlter;
+			String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
+			khf.begegnungsPanel.add(khf.t1Label);
+			khf.t1Label.setText(vn1+" "+nn1);
+			khf.begegnungsPanel.add(khf.p1Field);
+			khf.p1Field.setText(Integer.toString(p1));
+			khf.begegnungsPanel.add(khf.p12Field);
+			khf.p12Field.setText(Integer.toString(p12));
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.add(khf.siegP1);
+			}
+
+			String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
+			String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
+			khf.begegnungsPanel.add(khf.t2Label);
+			khf.t2Label.setText(vn2+" "+nn2);
+			khf.begegnungsPanel.add(khf.p2Field);
+			khf.p2Field.setText(Integer.toString(p2));
+			khf.begegnungsPanel.add(khf.p22Field);
+			khf.p22Field.setText(Integer.toString(p22));
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.add(khf.siegP2);
+			}
+
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.add(new JLabel(""));
+				khf.begegnungsPanel.add(new JLabel(""));
+				khf.begegnungsPanel.add(new JLabel(""));
+				khf.begegnungsPanel.add(khf.unentschieden);
+			}
+
+			khf.begegnungsPanel.add(new JLabel(""));
+			khf.begegnungsPanel.add(new JLabel(""));
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsPanel.add(new JLabel(""));
+			}
+			khf.begegnungsPanel.add(bestaetigung);
+			bestaetigung.addActionListener(this);
+			if(khf.optionenFeld.SUN.isSelected()){
+				khf.begegnungsFrame.setSize(500,150);
+				khf.p1Field.setEditable(false);
+				khf.p2Field.setEditable(false);
+			}else{
+				khf.begegnungsFrame.setSize(400,150);
+				khf.p1Field.setEditable(true);
+				khf.p2Field.setEditable(true);
+			}
+			khf.unsichtbar.setSelected(true);
+			khf.begegnungsFrame.setVisible(true);
 		}else if(quelle==khf.siegP1){
 			if(khf.optionenFeld.SUN20_10_1.isSelected()){
 				khf.p1Field.setText("20");
@@ -291,9 +310,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		
+
 	}
-	
+
 	Color colX=null;
 	Color colY=null;
 	@Override
@@ -305,7 +324,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			colX=((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).getBackground();
 			((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).setBackground(Color.green);
 		}
-		
+
 	}
 	@Override
 	public void mouseExited(MouseEvent arg0) {
@@ -317,10 +336,10 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+
 	}
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		
+
 	}
 }
