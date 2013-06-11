@@ -155,10 +155,10 @@ public class KPunkteFensterVar extends JFrame implements ActionListener,Componen
 
 		JPanel drittwertung = createPanel(body,!hf.optionenFeldVar.tKeine.isSelected());
 		JPanel drittwertungEinzel = createPanel(body,(hf.optionenFeldVar.bemalTer.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeTer.isSelected()&& ab.isSelected()));
-		if(hf.optionenFeldVar.bemalSek.isSelected() && bm.isSelected()){
+		if(hf.optionenFeldVar.bemalTer.isSelected() && bm.isSelected()){
 			body.add(bemalung);
 		}
-		if(hf.optionenFeldVar.armeeSek.isSelected() && ab.isSelected()){
+		if(hf.optionenFeldVar.armeeTer.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
 
@@ -269,7 +269,7 @@ public class KPunkteFensterVar extends JFrame implements ActionListener,Componen
 			}
 		}
 		
-		//Sekundär
+		//Teriär
 		if(hf.optionenFeldVar.tPunkte.isSelected()){
 			header.add(createHeader("Tertiär",f,drittwertung));
 		} else if(hf.optionenFeldVar.tRPI.isSelected()){

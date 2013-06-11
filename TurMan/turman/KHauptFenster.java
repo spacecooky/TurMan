@@ -800,7 +800,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 		//SOS berechnen
 		if(optionenFeldVar.sSOS.isSelected() || optionenFeldVar.tSOS.isSelected()){
-			calcOS(lokRunde);
+			calcOSVar(lokRunde);
 		}
 
 		//SOSOS berechnen
