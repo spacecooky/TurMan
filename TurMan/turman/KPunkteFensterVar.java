@@ -1,4 +1,4 @@
-﻿package turman;
+package turman;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,14 +25,14 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 
-public class KPunkteFenster extends JFrame implements ActionListener,ComponentListener{
+public class KPunkteFensterVar extends JFrame implements ActionListener,ComponentListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2924742194067324526L;
 
-	public KPunkteFenster(KHauptFenster hf) {
+	public KPunkteFensterVar(KHauptFenster hf) {
 		super("Rangliste");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
@@ -70,7 +70,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 	public void updatePanel(JPanel punktePanel){
 		//hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
-		hf.sortieren(ab.isSelected(),bm.isSelected(),hf.rundenAnzeige);
+		hf.sortierenVar(ab.isSelected(),bm.isSelected(),hf.rundenAnzeige);
 		color=false;
 		punktePanel.removeAll();
 		punktePanel.setLayout(new BorderLayout());
@@ -131,43 +131,42 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		platz.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 
 		JPanel spieler = createPanel(body,true);
-		JPanel veiovis = createPanel(body,hf.optionenFeld.RPI.isSelected());
 		
-		JPanel primär = createPanel(body,true);
-		JPanel primärEinzel = createPanel(body,(hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()));
+		JPanel erstwertung = createPanel(body,true);
+		JPanel erstwertungEinzel = createPanel(body,(hf.optionenFeldVar.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeePri.isSelected()&& ab.isSelected()));
 		
 		JPanel bemalung= createPanel(body,false);
 		JPanel armee= createPanel(body,false);
-		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
+		if(hf.optionenFeldVar.bemalPri.isSelected() && bm.isSelected()){
 			body.add(bemalung);
 		}
-		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
+		if(hf.optionenFeldVar.armeePri.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
-		JPanel sekundär = createPanel(body,!hf.optionenFeld.RPI.isSelected());
-		JPanel sekundärEinzel = createPanel(body,(hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected()));
-		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
+		
+		JPanel zweitwertung = createPanel(body,!hf.optionenFeldVar.sKeine.isSelected());
+		JPanel zweitwertungEinzel = createPanel(body,(hf.optionenFeldVar.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeSek.isSelected()&& ab.isSelected()));
+		if(hf.optionenFeldVar.bemalSek.isSelected() && bm.isSelected()){
 			body.add(bemalung);
 		}
-		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
+		if(hf.optionenFeldVar.armeeSek.isSelected() && ab.isSelected()){
 			body.add(armee);
 		}
 
-		JPanel sos = createPanel(body,true);
-		if(!hf.optionenFeld.PSS.isSelected() && !hf.optionenFeld.RPI.isSelected()){
-			sos.setVisible(false);
+		JPanel drittwertung = createPanel(body,!hf.optionenFeldVar.tKeine.isSelected());
+		JPanel drittwertungEinzel = createPanel(body,(hf.optionenFeldVar.bemalTer.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeTer.isSelected()&& ab.isSelected()));
+		if(hf.optionenFeldVar.bemalSek.isSelected() && bm.isSelected()){
+			body.add(bemalung);
 		}
-		
-		JPanel sosMW = createPanel(body,hf.optionenFeld.RPI.isSelected());
-		
-		JPanel sosos = createPanel(body,hf.optionenFeld.RPI.isSelected());
-		
-		JPanel sososMW = createPanel(body,hf.optionenFeld.RPI.isSelected());
+		if(hf.optionenFeldVar.armeeSek.isSelected() && ab.isSelected()){
+			body.add(armee);
+		}
 
-		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
-			primär.setBackground(Color.lightGray);
-			sekundär.setBackground(Color.lightGray);
-			sos.setBackground(Color.lightGray);
+
+		if((hf.optionenFeldVar.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeePri.isSelected()&& ab.isSelected()) || (hf.optionenFeldVar.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeSek.isSelected()&& ab.isSelected()) || (hf.optionenFeldVar.bemalTer.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeTer.isSelected()&& ab.isSelected())){
+			erstwertung.setBackground(Color.lightGray);
+			zweitwertung.setBackground(Color.lightGray);
+			drittwertung.setBackground(Color.lightGray);
 		}
 
 		for(int i=hf.sortierterVector.size()-1;i>=0;i--){
@@ -175,17 +174,14 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 				KTeilnehmer tn=hf.sortierterVector.get(i);
 				platz.add(createLabel(laengeAnpassenVorne(""+hf.sortierterVector.get(i).platz+" ",10), f));
 				spieler.add(createButton(punktePanel,tn, f));
-				veiovis.add(createLabel(" "+tn.rpi, f));
-				primär.add(createLabel(" "+tn.primaer, f));
-				primärEinzel.add(createLabel(" "+tn.primaerEinzel, f));
-				sekundär.add(createLabel(" "+hf.sortierterVector.get(i).sekundaer, f));
-				sekundärEinzel.add(createLabel(""+tn.sekundaerEinzel, f));
+				erstwertung.add(createLabel(" "+tn.erstwertung, f));
+				erstwertungEinzel.add(createLabel(" "+tn.erstwertungEinzel, f));
+				zweitwertung.add(createLabel(" "+tn.zweitwertung, f));
+				zweitwertungEinzel.add(createLabel(" "+tn.zweitwertungEinzel, f));
+				drittwertung.add(createLabel(" "+tn.drittwertung, f));
+				drittwertungEinzel.add(createLabel(""+tn.drittwertungEinzel, f));
 				bemalung.add(createLabel(" "+tn.bemalwertung, f));
 				armee.add(createLabel(" "+tn.armeeliste, f));
-				sos.add(createLabel(" "+hf.sortierterVector.get(i).sos, f));
-				sosMW.add(createLabel(" "+((hf.rundenAnzeige>0)?((double)hf.sortierterVector.get(i).sos/(double)hf.rundenAnzeige):0), f));
-				sosos.add(createLabel(" "+hf.sortierterVector.get(i).sosos, f));
-				sososMW.add(createLabel(" "+((hf.rundenAnzeige>0)?((double)hf.sortierterVector.get(i).sosos/((double)hf.rundenAnzeige*(double)hf.rundenAnzeige)):0), f));
 			} 
 		}
 
@@ -194,32 +190,26 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 
 			platz.setLayout(new GridLayout(33,1));
 			spieler.setLayout(new GridLayout(33,1));
-			veiovis.setLayout(new GridLayout(33,1));
-			primär.setLayout(new GridLayout(33,1));
-			primärEinzel.setLayout(new GridLayout(33,1));
-			sekundär.setLayout(new GridLayout(33,1));
-			sekundärEinzel.setLayout(new GridLayout(33,1));
+			erstwertung.setLayout(new GridLayout(33,1));
+			erstwertungEinzel.setLayout(new GridLayout(33,1));
+			zweitwertung.setLayout(new GridLayout(33,1));
+			zweitwertungEinzel.setLayout(new GridLayout(33,1));
+			drittwertung.setLayout(new GridLayout(33,1));
+			drittwertungEinzel.setLayout(new GridLayout(33,1));
 			bemalung.setLayout(new GridLayout(33,1));
 			armee.setLayout(new GridLayout(33,1));
-			sos.setLayout(new GridLayout(33,1));
-			sosMW.setLayout(new GridLayout(33,1));
-			sosos.setLayout(new GridLayout(33,1));
-			sososMW.setLayout(new GridLayout(33,1));
 
 			for(int i=30;i>0;i--){
 				platz.add(createLabel("", f));
 				spieler.add(createLabel("", f));
-				veiovis.add(createLabel("", f));
-				primär.add(createLabel("", f));
-				primärEinzel.add(createLabel("", f));
-				sekundär.add(createLabel("", f));
-				sekundärEinzel.add(createLabel("", f));
+				erstwertung.add(createLabel("", f));
+				erstwertungEinzel.add(createLabel("", f));
+				zweitwertung.add(createLabel("", f));
+				zweitwertungEinzel.add(createLabel("", f));
+				drittwertung.add(createLabel("", f));
+				drittwertungEinzel.add(createLabel("", f));
 				bemalung.add(createLabel("", f));
 				armee.add(createLabel("", f));
-				sos.add(createLabel("", f));
-				sosMW.add(createLabel("", f));
-				sosos.add(createLabel("", f));
-				sososMW.add(createLabel("", f));
 			}
 		}
 
@@ -231,60 +221,82 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		header.add(createHeader("Platz",f,platz));
 		header.add(createHeader("Spieler",f,spieler));
 
-		if(hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("RPI",f,veiovis));
+		//Primär
+		if(hf.optionenFeldVar.pPunkte.isSelected()){
+			header.add(createHeader("Primär",f,erstwertung));
+		} else if(hf.optionenFeldVar.pRPI.isSelected()){
+			header.add(createHeader("Primär (RPI)",f,erstwertung));
+		} else if(hf.optionenFeldVar.pStrength.isSelected()){
+			header.add(createHeader("Primär (Strenght of Schedule)",f,erstwertung));
 		}
 		
-		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("Primär(komplett)",f,primär));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Turnierpunkte(komplett)",f,primär));
+		if((hf.optionenFeldVar.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeePri.isSelected()&& ab.isSelected())){
+			header.add(createHeader("Primär(ohne Zusatzp.)",f,erstwertungEinzel));
 		}
 
-		if((hf.optionenFeld.bemalPri.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeePri.isSelected()&& ab.isSelected())){
-			header.add(createHeader("Primär(einzel)",f,primärEinzel));
-		}
-
-		if(hf.optionenFeld.bemalPri.isSelected() && bm.isSelected()){
+		if(hf.optionenFeldVar.bemalPri.isSelected() && bm.isSelected()){
 			header.add(createHeader("Bemalwertung",f,bemalung));
 		}
-		if(hf.optionenFeld.armeePri.isSelected() && ab.isSelected()){
+		if(hf.optionenFeldVar.armeePri.isSelected() && ab.isSelected()){
 			header.add(createHeader("Armeewertung",f,armee));
 		}
 
-		if(hf.optionenFeld.PSS.isSelected()){
-			header.add(createHeader("Sekundär(komplett)",f,sekundär));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Siegespunktedifferenz",f,sekundär));
-		}
-
-		if((hf.optionenFeld.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeld.armeeSek.isSelected()&& ab.isSelected())){
-			header.add(createHeader("Sekundär(einzel)",f,sekundärEinzel));
-		}
-
-		if(hf.optionenFeld.bemalSek.isSelected() && bm.isSelected()){
-			header.add(createHeader("Bemalwertung",f,bemalung));
-		}
-		if(hf.optionenFeld.armeeSek.isSelected() && ab.isSelected()){
-			header.add(createHeader("Armeewertung",f,armee));
-		}
-
-		if(hf.optionenFeld.PSS.isSelected() || hf.optionenFeld.RPI.isSelected()){
-			//System.out.println("sos-Header");
-			header.add(createHeader("SOS",f,sos));
+		//Sekundär
+		if(hf.optionenFeldVar.sPunkte.isSelected()){
+			header.add(createHeader("Sekundär",f,zweitwertung));
+		} else if(hf.optionenFeldVar.sRPI.isSelected()){
+			header.add(createHeader("Sekundär (RPI)",f,zweitwertung));
+		} else if(hf.optionenFeldVar.sStrength.isSelected()){
+			header.add(createHeader("Sekundär (Strenght of Schedule)",f,zweitwertung));
+		} else if(hf.optionenFeldVar.sSOS.isSelected()){
+			header.add(createHeader("Sekundär (SOS)",f,zweitwertung));
+		} else if(hf.optionenFeldVar.sSOOS.isSelected()){
+			header.add(createHeader("Sekundär (SOOS)",f,zweitwertung));
+		} else if(hf.optionenFeldVar.sKeine.isSelected()){
+			
+		} 
+		
+		if(!hf.optionenFeldVar.sKeine.isSelected()){
+			if((hf.optionenFeldVar.bemalSek.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeSek.isSelected()&& ab.isSelected())){
+				header.add(createHeader("Sekundär(ohne Zusatzp.)",f,zweitwertungEinzel));
+			}
+	
+			if(hf.optionenFeldVar.bemalSek.isSelected() && bm.isSelected()){
+				header.add(createHeader("Bemalwertung",f,bemalung));
+			}
+			if(hf.optionenFeldVar.armeeSek.isSelected() && ab.isSelected()){
+				header.add(createHeader("Armeewertung",f,armee));
+			}
 		}
 		
-		if(hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("SOS(Mittelw.)",f,sosMW));
+		//Sekundär
+		if(hf.optionenFeldVar.tPunkte.isSelected()){
+			header.add(createHeader("Tertiär",f,drittwertung));
+		} else if(hf.optionenFeldVar.tRPI.isSelected()){
+			header.add(createHeader("Tertiär (RPI)",f,drittwertung));
+		} else if(hf.optionenFeldVar.tStrength.isSelected()){
+			header.add(createHeader("Tertiär (Strenght of Schedule)",f,drittwertung));
+		} else if(hf.optionenFeldVar.tSOS.isSelected()){
+			header.add(createHeader("Tertiär (SOS)",f,drittwertung));
+		} else if(hf.optionenFeldVar.tSOOS.isSelected()){
+			header.add(createHeader("Tertiär (SOOS)",f,drittwertung));
+		} else if(hf.optionenFeldVar.tKeine.isSelected()){
+			
+		} 
+		
+		if(!hf.optionenFeldVar.tKeine.isSelected()){
+			if((hf.optionenFeldVar.bemalTer.isSelected()&& bm.isSelected()) || (hf.optionenFeldVar.armeeTer.isSelected()&& ab.isSelected())){
+				header.add(createHeader("Sekundär(ohne Zusatzp.)",f,drittwertungEinzel));
+			}
+	
+			if(hf.optionenFeldVar.bemalTer.isSelected() && bm.isSelected()){
+				header.add(createHeader("Bemalwertung",f,bemalung));
+			}
+			if(hf.optionenFeldVar.armeeTer.isSelected() && ab.isSelected()){
+				header.add(createHeader("Armeewertung",f,armee));
+			}
 		}
 		
-		if(hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("SOSOS",f,sosos));
-		}
-		
-		if(hf.optionenFeld.RPI.isSelected()){
-			header.add(createHeader("SOSOS(Mittelw.)",f,sososMW));
-		}
 
 		header.setBackground(Color.white);
 		sp.setColumnHeaderView(header);

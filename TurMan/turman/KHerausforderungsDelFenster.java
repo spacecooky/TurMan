@@ -89,14 +89,14 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 			b2.runde=0;
 			b1.tisch=0;
 			b2.tisch=0;
-			b1.p1=0;
-			b1.p12=0;
-			b1.p2=0;
-			b1.p22=0;
-			b2.p1=0;
-			b2.p12=0;
-			b2.p2=0;
-			b2.p22=0;
+			b1.p1pri=0;
+			b1.p1sek=0;
+			b1.p2pri=0;
+			b1.p2sek=0;
+			b2.p1pri=0;
+			b2.p1sek=0;
+			b2.p2pri=0;
+			b2.p2sek=0;
 			
 			hf.begegnungsVector.remove(b1);
 			hf.begegnungsVector.remove(b2);

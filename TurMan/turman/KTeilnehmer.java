@@ -53,14 +53,27 @@ public class KTeilnehmer implements ActionListener {
 	int bezahlt;
 	int ntr;
 	
-	int primär=0;
-	int primärEinzel=0;
-	int sekundär=0;
-	int sekundärEinzel=0;
+	int primaer=0;
+	int primaerEinzel=0;
+	int sekundaer=0;
+	int sekundaerDiff=0;
+	int sekundaerEinzel=0;
+	int tertiaer=0;
+	int tertiaerDiff=0;
+	int tertiaerEinzel=0;
 	int sos=0;
 	int sosos=0;
+	int sos_sog=0;
+	int sosos_sog=0;
 	double rpi;
+	double strengthOfSchedulde;
 	int bemalwertung=0;
+	double erstwertung=0.0;
+	double erstwertungEinzel=0.0;
+	double zweitwertung=0.0;
+	double zweitwertungEinzel=0.0;
+	double drittwertung=0.0;
+	double drittwertungEinzel=0.0;
 	
 	int platzGruppe=-1;
 	int platz=0;

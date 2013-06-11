@@ -147,8 +147,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);
 				
-				primär.add(createLabel(bg.p1+" : "+bg.p2,f));
-				sekundär.add(createLabel(bg.p12+" : "+bg.p22,f));
+				primär.add(createLabel(bg.p1pri+" : "+bg.p2pri,f));
+				sekundär.add(createLabel(bg.p1sek+" : "+bg.p2sek,f));
 			}
 		}
 		

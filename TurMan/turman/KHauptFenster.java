@@ -76,7 +76,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		};
 		this.addWindowListener(meinListener);
-		
+
 		this.addComponentListener(this);
 
 		//Hauptbereich Einzel
@@ -86,14 +86,21 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
 		//Hauptbereich
 		tab.addTab("Matrix",null,sp);
-		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
+//		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
+//		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
+//		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+//		tab.setBackground(Color.white);
+//		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
+//		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		tab.addTab("Punkte",null,punkteFensterVar.punktePanelTab);
 		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
-		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
 		tab.setBackground(Color.white);
 		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
-		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+		punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
 		tab.setBackground(Color.white);
-		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeld));
+		//tab.addTab("Konfiguration",null,new JScrollPane(optionenFeld));
+		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeldVar));
 		setContentPane(tab);
 		//Menue
 		setJMenuBar(menubar);
@@ -152,13 +159,13 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		extraPunkte.addActionListener(this);
 		spieler.add(freilos);
 		freilos.addActionListener(this);
-		
+
 		menubar.add(optionen);
 		optionen.add(optionenSpeichern);
 		optionenSpeichern.addActionListener(this);
 		optionen.add(optionenLaden);
 		optionenLaden.addActionListener(this);
-		
+
 		menubar.add(hilfe);
 		hilfe.add(info);
 		info.addActionListener(this);
@@ -184,36 +191,36 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 		teilnehmerButton.addActionListener(this);
 		setVisible(true);
-		
+
 		File f = new File(System.getProperty("user.dir")+"/autosaveQuit.sav");
 		if(f.exists()){
 			KSpeicherverwaltung.laden(this,f);
 		}
-		
+
 		File f2 = new File(System.getProperty("user.dir")+"/auto.cfg");
 		if(f2.exists()){
 			KSpeicherverwaltung.ladenKonfig(this,f2);
 		}
-		
+
 		p12Field.addKeyListener(this);
 		p22Field.addKeyListener(this);
-		
+
 		setSelectAll(p1Field);
 		setSelectAll(p2Field);
 		setSelectAll(p12Field);
 		setSelectAll(p22Field);
-		
+
 	}
 
 	static String version=new String("V0.0.23");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
-	
+
 	// Hauptbereich Einzelspieler
 	JPanel HauptPanel = new JPanel();
 	JScrollPane sp;
-	
+
 	// Hauptbereich Teams
 	JPanel HauptPanelTeam = new JPanel();
 	JScrollPane spTeam;
@@ -236,7 +243,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem agenda = new JMenuItem("Agenda");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	JMenuItem urkundenInfos = new JMenuItem("Urkunden-Einstellungen");
-	
+
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
 	JMenuItem herausforderungDel = new JMenuItem("Herausforderung entfernen");
@@ -251,11 +258,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
 	JMenuItem extraPunkte = new JMenuItem("Zus. Punkte eingeben");
 	JMenuItem freilos = new JMenuItem("Freilos-Platzhalter einfügen");
-	
+
 	JMenu optionen = new JMenu("Optionen");
 	JMenuItem optionenSpeichern = new JMenuItem("Konfiguration speichern");
 	JMenuItem optionenLaden = new JMenuItem("Konfiguration laden");
-	
+
 	JMenu hilfe = new JMenu("Hilfe");
 	JMenuItem info = new JMenuItem("Info");
 	JMenuItem hilfeDatei = new JMenuItem("Hilfe-Datei");
@@ -309,7 +316,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster(this);
-	KPunkteFenster punkteFenster = new KPunkteFenster(this);
+	//KPunkteFenster punkteFenster = new KPunkteFenster(this);
+	KPunkteFensterVar punkteFensterVar = new KPunkteFensterVar(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
 	KFreilosFenster freilosFenster = new KFreilosFenster(this);
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
@@ -321,6 +329,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
 	KDialog dialog = new KDialog(this);
 	KOptionenFeld optionenFeld = new KOptionenFeld(this);
+	KOptionenFeldVar optionenFeldVar = new KOptionenFeldVar(this);
 	KDynamischerTimerFeld dynamischerTimerFeld = new KDynamischerTimerFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
 	KSiegpunkteMatrix matrix = new KSiegpunkteMatrix(this);
@@ -331,15 +340,15 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	//PDF-/TXT-Erstellug
 	KPDFErstellung pdf = new KPDFErstellung();
 	KTextErstellung txt = new KTextErstellung();
-	
+
 	//Agenda
 	Vector<KAgendaEintrag> agendaVector=new Vector<KAgendaEintrag>();
 	String [] agendaHeaders={"Ereignis","TT","MM","JJJJ","HH","MM"};
 	String [][] agendaEintraege={{"Anmeldung","13","07","2012","09","00"},
-						   {"Infos","13","07","2012","09","45"},
-						   {"Turnierrunde 1","13","07","2012","10","00"},
-						   {"Mittagspause","13","07","2012","12","00"}};
-	
+			{"Infos","13","07","2012","09","45"},
+			{"Turnierrunde 1","13","07","2012","10","00"},
+			{"Mittagspause","13","07","2012","12","00"}};
+
 	/**
 	 * @param args
 	 */
@@ -401,7 +410,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
 			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
-			punkteFenster.init(null);
+			//punkteFenster.init(null);
+			punkteFensterVar.init(null);
 		} else if(quelle == runde){
 			File f = new File(System.getProperty("user.dir")+"/autosaveRunde"+rundenZaehler+"Ende.sav");
 			KSpeicherverwaltung.speichern(this,f);
@@ -475,7 +485,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
-		
+
 		JPanel sider= new JPanel();
 		sider.setLayout(new BoxLayout(sider,BoxLayout.Y_AXIS));
 
@@ -492,7 +502,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			header.add(jp);
 		}
 		//HauptPanel.add(header);
-		
+
 		for(int i=0;i<teilnehmerVector.size();i++){
 			String vn = teilnehmerVector.get(i).vornameAlter.equals("")?teilnehmerVector.get(i).vorname:teilnehmerVector.get(i).vornameAlter;
 			String nn = teilnehmerVector.get(i).nachnameAlter.equals("")?teilnehmerVector.get(i).nachname:teilnehmerVector.get(i).nachnameAlter;
@@ -506,16 +516,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		jL.setMinimumSize(new Dimension(150,150));
 		jL.setPreferredSize(new Dimension(150,150));
 		jL.setBorder(BorderFactory.createRaisedBevelBorder());
-		
+
 		sp.setColumnHeaderView(header);
 		sp.setRowHeaderView(sider);
 		sp.setCorner(JScrollPane.UPPER_LEFT_CORNER,
-                jL);
+				jL);
 
-		
+
 		this.repaint();
 	}
-	
+
 	public void refillPanels(){
 		for(int i=0;i<begegnungsVector.size();i++){
 			KBegegnungen b = begegnungsVector.get(i);
@@ -524,22 +534,22 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			alleBegegnungenVector.remove(((KBegegnungen)((JPanel)HauptPanel.getComponent(b.xPos)).getComponent(b.yPos)));
 			alleBegegnungenVector.remove(((KBegegnungen)((JPanel)HauptPanel.getComponent(b.yPos)).getComponent(b.xPos)));
 			KBegegnungen b2 = ((KBegegnungen)((JPanel)HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
-			
-			b2.p1=b.p2;
-			b2.p2=b.p1;
-			b2.p12=b.p22;
-			b2.p22=b.p12;
+
+			b2.p1pri=b.p2pri;
+			b2.p2pri=b.p1pri;
+			b2.p1sek=b.p2sek;
+			b2.p2sek=b.p1sek;
 			b2.runde=b.runde;
 			b2.tisch=b.tisch;
 			b2.xPos=b.yPos;
 			b2.yPos=b.xPos;
-			
+
 			b.setEnabled(true);
 			b2.setEnabled(true);
 			b.setText(""+b.runde);
 			b2.setText(""+b2.runde);
-			
-			if(b.p1>0 || b.p2>0){
+
+			if(b.p1pri>0 || b.p2pri>0){
 				b.setBackground(Color.green);
 				b2.setBackground(Color.green);
 			} else{
@@ -547,16 +557,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				b2.setBackground(Color.orange);
 			}	
 		}
-		
+
 		gelöschteTeilnehmer=0;
 		for(int i=0;i<teilnehmerVector.size();i++){
 			if(teilnehmerVector.get(i).deleted==true){
 				entfernenFenster.entfernen(i);
 			}
 		}
-		
+
 	}
-	
+
 	public void adaptPanel(){
 		teilnehmer=teilnehmerVector.size();
 		int restHeight=this.getHeight()/25-teilnehmer;
@@ -569,7 +579,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public void fillTeamPanels(){
 		HauptPanelTeam.removeAll();
-		
+
 		teams=teamVector.size();
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
@@ -594,7 +604,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		for(int i=0;i<teamVector.size();i++){
 			HauptPanelTeam.add(new KTeamPanel(teamVector.get(i),teamVector.size(),i,this));
 		}
-		
+
 		this.repaint();
 	}
 
@@ -605,58 +615,62 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		//Primär und Sekundärpunkte für alle berechnen
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			t.primär=0;
-			t.sekundär=0;
-			t.primärEinzel=0;
-			t.sekundärEinzel=0;
+			t.primaer=0;
+			t.sekundaer=0;
+			t.primaerEinzel=0;
+			t.sekundaerEinzel=0;
 			t.sos=0;
 			t.sosos=0;
 			t.platzGruppe=-1;
 			t.platz=0;
 			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
 			for(int j=1;j<=rundenZaehler;j++){
-			//for(int j=0;j<t.paarungen.size();j++){
+				//for(int j=0;j<t.paarungen.size();j++){
 				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
 					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-						t.primär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1;
+						t.primaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1pri;
 						if(optionenFeld.PSS.isSelected()){
-							t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12;
+							t.sekundaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek;
 						} else if(optionenFeld.TS.isSelected()){
-							t.sekundär+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p12-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p22;
+							t.sekundaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2sek;
 						}
 					}
 				}
 			}
-			
-			t.primärEinzel=t.primär;
-			t.sekundärEinzel=t.sekundär;
-			
+
+			t.primaerEinzel=t.primaer;
+			t.sekundaerEinzel=t.sekundaer;
+
 			if(ab){
 				if(optionenFeld.armeePri.isSelected()){
-					t.primär+=t.armeeliste;
+					t.primaer+=t.armeeliste;
 				}
 				if(optionenFeld.armeeSek.isSelected()){
-					t.sekundär+=t.armeeliste;
+					t.sekundaer+=t.armeeliste;
 				}
 			}
 			if(bm){
 				if(optionenFeld.bemalPri.isSelected()){
-					t.primär+=t.bemalwertung;
+					t.primaer+=t.bemalwertung;
 				}
 				if(optionenFeld.bemalSek.isSelected()){
-					t.sekundär+=t.bemalwertung;
+					t.sekundaer+=t.bemalwertung;
 				}
 			}
 		}
-		
+		//Strength of schedule berechnen
+		//calcStrengthOfSchedule(lokRunde);
+
 		//SOS berechnen
 		calcOS(lokRunde);
-		
+
 		//SOSOS berechnen
 		calcOOS(lokRunde);
-		
+
 		//veiovisScore berechnen
-		calcVeiovis(lokRunde);
+		if(optionenFeld.RPI.isSelected()){
+			calcVeiovis(lokRunde);
+		}
 
 		//Sortiern nach primär
 		sortierterVector.clear();
@@ -671,16 +685,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					}
 				}
 				else{
-					while(j<sortierterVector.size()&&t.primär>sortierterVector.get(j).primär){
+					while(j<sortierterVector.size()&&t.primaer>sortierterVector.get(j).primaer){
 						j++;
 					}
 					//Sortieren nach Sekundär
-					while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&teilnehmerVector.get(i).sekundär>sortierterVector.get(j).sekundär){
+					while(j<sortierterVector.size()&&t.primaer==sortierterVector.get(j).primaer&&teilnehmerVector.get(i).sekundaer>sortierterVector.get(j).sekundaer){
 						j++;
 					}
 					//Sortieren nach sos
 					if(optionenFeld.PSS.isSelected()){
-						while(j<sortierterVector.size()&&t.primär==sortierterVector.get(j).primär&&t.sekundär==sortierterVector.get(j).sekundär&&t.sos>sortierterVector.get(j).sos){
+						while(j<sortierterVector.size()&&t.primaer==sortierterVector.get(j).primaer&&t.sekundaer==sortierterVector.get(j).sekundaer&&t.sos>sortierterVector.get(j).sos){
 							j++;
 						}
 					}
@@ -688,7 +702,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				sortierterVector.insertElementAt(t,j);	
 			}
 		}
-		
+
 		//Platzgruppen berechnen
 		platzgruppe=-1;
 		platzGruppe.clear();
@@ -710,7 +724,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					}
 				}
 			}else if(optionenFeld.PSS.isSelected()){
-				if(t1.primär==t2.primär && t1.sekundär==t2.sekundär && t1.sos==t2.sos){
+				if(t1.primaer==t2.primaer && t1.sekundaer==t2.sekundaer && t1.sos==t2.sos){
 					if(t2.platzGruppe==-1){
 						platzgruppe++;
 						t2.platzGruppe=platzgruppe;
@@ -724,7 +738,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 					}
 				} 
 			}else if(optionenFeld.TS.isSelected()){
-				if(t1.primär==t2.primär && t1.sekundär==t2.sekundär){
+				if(t1.primaer==t2.primaer && t1.sekundaer==t2.sekundaer){
 					if(t2.platzGruppe==-1){
 						platzgruppe++;
 						t2.platzGruppe=platzgruppe;
@@ -740,31 +754,231 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		}
 		//Plätze eintragen
-				
-				for(int i=sortierterVector.size()-1;i>=0;i--){
-						if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
-							sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
-						} else{
-							sortierterVector.get(i).platz=sortierterVector.size()-i;
-						}
-						sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
+
+		for(int i=sortierterVector.size()-1;i>=0;i--){
+			if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
+				sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
+			} else{
+				sortierterVector.get(i).platz=sortierterVector.size()-i;
+			}
+			sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
+		}
+	}
+
+	public void sortierenVar(boolean ab,boolean bm,int lokRunde){
+		//System.out.println(lokRunde);
+		KTeilnehmer t;
+		//Primär und Sekundärpunkte und Tertiär für alle berechnen
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			t.primaer=0;
+			t.sekundaer=0;
+			t.sekundaerDiff=0;
+			t.tertiaer=0;
+			t.tertiaerDiff=0;
+			t.sos=0;
+			t.sosos=0;
+			t.platzGruppe=-1;
+			t.platz=0;
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						t.primaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1pri;
+						t.sekundaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek;
+						t.sekundaerDiff+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2sek;
+						t.tertiaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek;
+						t.tertiaerDiff+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2sek;
+					}
 				}
 			}
-	
+
+		}
+		//Strength of schedule berechnen
+		if(optionenFeldVar.pStrength.isSelected() || optionenFeldVar.sStrength.isSelected() || optionenFeldVar.tStrength.isSelected()){
+			calcStrengthOfScheduleVar(lokRunde);
+		}
+
+		//SOS berechnen
+		if(optionenFeldVar.sSOS.isSelected() || optionenFeldVar.tSOS.isSelected()){
+			calcOS(lokRunde);
+		}
+
+		//SOSOS berechnen
+		if(optionenFeldVar.sSOOS.isSelected() || optionenFeldVar.tSOOS.isSelected()){
+			calcOOS(lokRunde);
+		}
+
+		//veiovisScore berechnen
+		if(optionenFeldVar.pRPI.isSelected() || optionenFeldVar.sRPI.isSelected() || optionenFeldVar.tRPI.isSelected()){
+			calcVeiovisVar(lokRunde);
+		}
+
+		//Zuweisung der Wertungen
+		sortierterVector.clear();
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+
+			//Erstwertung
+			if(optionenFeldVar.pPunkte.isSelected()){
+				t.erstwertung=t.primaer;
+			}else if(optionenFeldVar.pRPI.isSelected()){
+				t.erstwertung=t.rpi;
+			}else if(optionenFeldVar.sStrength.isSelected()){
+				t.erstwertung=t.strengthOfSchedulde;
+			}
+
+			//Zweitwertung	
+			if(optionenFeldVar.sPunkte.isSelected()){
+				t.zweitwertung=t.sekundaer;
+			}else if(optionenFeldVar.sRPI.isSelected()){
+				t.zweitwertung=t.rpi;
+			}else if(optionenFeldVar.sStrength.isSelected()){
+				t.zweitwertung=t.strengthOfSchedulde;
+			}else if(optionenFeldVar.sSOS.isSelected()){
+				t.zweitwertung=t.sos;
+			}else if(optionenFeldVar.sSOOS.isSelected()){
+				t.zweitwertung=t.sosos;
+			}else if(optionenFeldVar.sKeine.isSelected()){
+				t.zweitwertung=0.0;
+			}	
+
+			//Drittwertung	
+			if(optionenFeldVar.tPunkte.isSelected()){
+				t.drittwertung=t.sekundaer;
+			}else if(optionenFeldVar.tRPI.isSelected()){
+				t.drittwertung=t.rpi;
+			}else if(optionenFeldVar.tStrength.isSelected()){
+				t.drittwertung=t.strengthOfSchedulde;
+			}else if(optionenFeldVar.tSOS.isSelected()){
+				t.drittwertung=t.sos;
+			}else if(optionenFeldVar.tSOOS.isSelected()){
+				t.drittwertung=t.sosos;
+			}else if(optionenFeldVar.tKeine.isSelected()){
+				t.drittwertung=0.0;
+			}
+
+			//TODO unterscheidung Diff
+			t.erstwertungEinzel=t.erstwertung;
+			t.zweitwertungEinzel=t.zweitwertung;
+			t.drittwertungEinzel=t.drittwertung;
+
+			if(ab){
+				if(optionenFeldVar.armeePri.isSelected()){
+					t.erstwertung+=t.armeeliste;
+				}
+				if(optionenFeldVar.armeeSek.isSelected()){
+					t.zweitwertung+=t.armeeliste;
+				}
+				if(optionenFeldVar.armeeTer.isSelected()){
+					t.drittwertung+=t.armeeliste;
+				}
+			}
+			if(bm){
+				if(optionenFeldVar.bemalPri.isSelected()){
+					t.erstwertung+=t.bemalwertung;
+				}
+				if(optionenFeldVar.bemalSek.isSelected()){
+					t.zweitwertung+=t.bemalwertung;
+				}
+				if(optionenFeldVar.bemalTer.isSelected()){
+					t.drittwertung+=t.bemalwertung;
+				}
+			}
+
+		}
+
+		//Sortieren
+		sortierterVector.clear();
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			if(t.deleted==false){
+				int j=0;
+				//Sortieren nach Erstwertung
+				while(j<sortierterVector.size() && t.erstwertung>sortierterVector.get(j).erstwertung){
+					j++;
+				}
+				//Sortieren nach Zweitwertung
+				if(!optionenFeldVar.sKeine.isSelected()){
+					while(j<sortierterVector.size() && t.erstwertung==sortierterVector.get(j).erstwertung && t.zweitwertung>sortierterVector.get(j).zweitwertung){
+						j++;
+					}
+				}
+				//Sortieren nach Drittwerttng
+				if(!optionenFeldVar.sKeine.isSelected()){
+					while(j<sortierterVector.size() && t.erstwertung==sortierterVector.get(j).erstwertung && t.zweitwertung==sortierterVector.get(j).zweitwertung && t.drittwertung>sortierterVector.get(j).drittwertung){
+						j++;
+					}
+				}	
+
+				sortierterVector.insertElementAt(t,j);	
+			}
+		}
+
+		//Platzgruppen berechnen
+		platzgruppe=-1;
+		platzGruppe.clear();
+		for(int i=1;i<sortierterVector.size();i++){
+			KTeilnehmer t1=sortierterVector.get(i);
+			KTeilnehmer t2=sortierterVector.get(i-1);
+			if(t1.erstwertung==t2.erstwertung && t1.zweitwertung==t2.zweitwertung && t1.drittwertung==t2.drittwertung){
+				if(t2.platzGruppe==-1){
+					platzgruppe++;
+					t2.platzGruppe=platzgruppe;
+					t1.platzGruppe=platzgruppe;
+					platzGruppe.add(new Vector<KTeilnehmer>());
+					platzGruppe.get(platzgruppe).add(t2);
+					platzGruppe.get(platzgruppe).add(t1);
+				} else{
+					t1.platzGruppe=t2.platzGruppe;
+					platzGruppe.get(platzgruppe).add(t1);
+				}
+			} 
+		}
+		//Plätze eintragen
+		for(int i=sortierterVector.size()-1;i>=0;i--){
+			if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
+				sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
+			} else{
+				sortierterVector.get(i).platz=sortierterVector.size()-i;
+			}
+			sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
+		}
+	}
+
 	public void calcOS_SOG(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
-			for(int j=0;j<t.paarungen.size();j++){
-				if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-					int diff=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2;//gegnerische Punkte des eigenen Spiels
-					int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
-					t.sos += (allSOS-diff);
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						int diff=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2pri;//gegnerische Punkte des eigenen Spiels
+						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaerEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+						t.sos_sog += (allSOS-diff);
+					}
 				}
 			}
 		}
 	}
 	
+	public void calcOS_SOGVar(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						int diff=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2pri;//gegnerische Punkte des eigenen Spiels
+						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaer;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+						t.sos_sog += (allSOS-diff);
+					}
+				}
+			}
+		}
+	}
+
 	public void calcOS(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
@@ -773,7 +987,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			for(int j=1;j<=rundenZaehler;j++){
 				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
 					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primärEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaerEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
 						t.sos += allSOS;
 					}
 				}
@@ -781,6 +995,38 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}
 	}
 	
+	public void calcOSVar(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaer;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
+						t.sos += allSOS;
+					}
+				}
+			}
+		}
+	}
+
+	public void calcOOS_SOG(int lokRunde){
+		KTeilnehmer t;
+		for(int i=0;i<teilnehmer;i++){
+			t=teilnehmerVector.get(i);
+			//for(int j=0;j<t.paarungen.size();j++){
+			for(int j=1;j<=rundenZaehler;j++){
+				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
+					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
+						KTeilnehmer gegner=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).t2;
+						t.sosos_sog += gegner.sos_sog;
+					}
+				}
+			}
+		}
+	}
+
 	public void calcOOS(int lokRunde){
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
@@ -796,26 +1042,78 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		}
 	}
-	
+
 	public void calcVeiovis(int lokRunde){
 		if(lokRunde>0){
 			KTeilnehmer t;
 			for(int i=0;i<teilnehmer;i++){
 				t=teilnehmerVector.get(i);
-				
-				t.rpi = t.primärEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
-					           + (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
-					           + (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
-				
-				//System.out.println("RPI: "+t.rpi+ " Primär: "+t.primär+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+
+				t.rpi = t.primaerEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
+						+ (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
+						+ (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
+
+				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primaerEinzel+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
 			}
 		}
 	}
 	
+	public void calcVeiovisVar(int lokRunde){
+		calcOSVar(lokRunde);
+		calcOOS(lokRunde);
+		
+		if(lokRunde>0){
+			KTeilnehmer t;
+			for(int i=0;i<teilnehmer;i++){
+				t=teilnehmerVector.get(i);
+
+				t.rpi = t.primaer*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
+						+ (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
+						+ (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
+
+				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primaer+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+			}
+		}
+	}
+
+	public void calcStrengthOfSchedule(int lokRunde){
+		calcOS_SOG(lokRunde);
+		calcOOS_SOG(lokRunde);
+
+		if(lokRunde>0){
+			KTeilnehmer t;
+			for(int i=0;i<teilnehmer;i++){
+				t=teilnehmerVector.get(i);
+
+				t.strengthOfSchedulde = (double)t.primaerEinzel/3.0 + (double)t.sos_sog/6.0 + (double)t.sosos_sog/18.0;
+
+				System.out.println("Strength of Schedule: "+t.strengthOfSchedulde+ " Primär: "+t.primaerEinzel+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+			}
+		}
+
+	}
+	
+	public void calcStrengthOfScheduleVar(int lokRunde){
+		calcOS_SOGVar(lokRunde);
+		calcOOS_SOG(lokRunde);
+
+		if(lokRunde>0){
+			KTeilnehmer t;
+			for(int i=0;i<teilnehmer;i++){
+				t=teilnehmerVector.get(i);
+
+				t.strengthOfSchedulde = (double)t.primaer/3.0 + (double)t.sos_sog/6.0 + (double)t.sosos_sog/18.0;
+
+				System.out.println("Strength of Schedule: "+t.strengthOfSchedulde+ " Primär: "+t.primaer+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+			}
+		}
+
+	}
+
 	public void platzGruppenMischen(Vector<KTeilnehmer> tVector){
 		System.out.println("Alt");
 		for(int i=0;i<tVector.size();i++){
-			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primaer + " "+ tVector.get(i).sekundaer + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
 		}
 		Random randomGenerator = new Random();
 		for(int i=0;i<platzGruppe.size();i++){
@@ -831,38 +1129,43 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}
 		System.out.println("Neu");
 		for(int i=0;i<tVector.size();i++){
-			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primär + " "+ tVector.get(i).sekundär + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
+			System.out.println(tVector.get(i).platz + " "+ tVector.get(i).primaer + " "+ tVector.get(i).sekundaer + " "+ tVector.get(i).sos + " "+ tVector.get(i).vorname+" "+tVector.get(i).nachname);
 			tVector.get(i).tabellenPosition=sortierterVector.size()-i;
 		}
-		
+
 	}
 
 	public void updatePanels(){
 		validate();
-		
-		if(punkteFenster.isVisible()){
-			punkteFenster.init(punkteFenster.getSize());
+
+//		if(punkteFenster.isVisible()){
+//			punkteFenster.init(punkteFenster.getSize());
+//		} else{
+//			punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+//		}
+		if(punkteFensterVar.isVisible()){
+			punkteFensterVar.init(punkteFensterVar.getSize());
 		} else{
-			punkteFenster.updatePanel(punkteFenster.punktePanelTab);
+			punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
 		}
-		
+
 		if(begegnungsFenster.isVisible()){
 			begegnungsFenster.init(begegnungsFenster.getSize());
 		} else{
 			begegnungsFenster.updatePanel(begegnungsFenster.begegnungsPanelTab);	
 		}
 	}
-	
+
 	/**
 	 * Beendet das Programm
 	 */
 	protected void beenden(){
 		File f = new File(System.getProperty("user.dir")+"/autosaveQuit.sav");
 		KSpeicherverwaltung.speichern(this,f);
-		
+
 		File f2 = new File(System.getProperty("user.dir")+"/auto.cfg");
 		KSpeicherverwaltung.speichernKonfig(this,f2);
-		
+
 		System.exit(0);
 	}
 
@@ -892,7 +1195,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		
+
 	}
 
 	@Override
@@ -902,9 +1205,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				try{
 					p1Field.setText(""+matrix.getTP(Integer.parseInt(p12Field.getText())-Integer.parseInt(p22Field.getText())));
 					p2Field.setText(""+matrix.getTP(Integer.parseInt(p22Field.getText())-Integer.parseInt(p12Field.getText())));
-					
+
 				}catch(NumberFormatException e){
-					
+
 				}
 			}
 		}
@@ -912,17 +1215,17 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		
+
 	}
-	
+
 	/*
 	 * Komplettauswahl eines Textfeldes, sobald der Fokus erlangt wurde
 	 */
 	public void setSelectAll(final JTextField tf){
 		tf.addFocusListener(new java.awt.event.FocusAdapter() {
-		    public void focusGained(java.awt.event.FocusEvent evt) {
-		        tf.selectAll();
-		    }
+			public void focusGained(java.awt.event.FocusEvent evt) {
+				tf.selectAll();
+			}
 		});
 	}
 

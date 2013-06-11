@@ -84,8 +84,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 	    					KTeilnehmer t=hf.sortierterVector.get(i);
 	    					g.drawString(laengeAnpassenVorne(Integer.toString(t.platz), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 	    					g.drawString(t.vorname+" "+t.nachname,200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-	    					g.drawString(laengeAnpassenVorne(""+t.primär, 10),700,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-	    					g.drawString(laengeAnpassenVorne(""+t.sekundär, 10),830,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(laengeAnpassenVorne(""+t.primaer, 10),700,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+	    					g.drawString(laengeAnpassenVorne(""+t.sekundaer, 10),830,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 	    					g.drawString(laengeAnpassenVorne(""+t.sos, 10),960,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 	    			}
 	    			
@@ -94,8 +94,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 						KTeilnehmer t=hf.sortierterVector.get(i);
 						g.drawString(laengeAnpassenVorne(Integer.toString(t.platz), 6),75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
     					g.drawString(t.vorname+" "+t.nachname,200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-    					g.drawString(laengeAnpassenVorne(""+t.primär, 10),700,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-    					g.drawString(laengeAnpassenVorne(""+t.sekundär, 10),830,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(laengeAnpassenVorne(""+t.primaer, 10),700,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+    					g.drawString(laengeAnpassenVorne(""+t.sekundaer, 10),830,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
     					g.drawString(laengeAnpassenVorne(""+t.sos, 10),960,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 				}
 	    			g.setColor(Color.black);
@@ -134,8 +134,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1+" : "+bg.p2,900,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p12+" : "+bg.p22,1050,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,900,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1sek+" : "+bg.p2sek,1050,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 						}
 	    			}
 	    			
@@ -149,8 +149,8 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1+" : "+bg.p2,900,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p12+" : "+bg.p22,1050,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,900,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1sek+" : "+bg.p2sek,1050,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 						}
 	    			}
 					

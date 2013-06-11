@@ -301,10 +301,10 @@ public void begegnungenEntfernen(KTeilnehmer t){
 				b.runde=0;
 				b.tisch=0;
 				b.setText("");
-				b.p1=0;
-				b.p12=0;
-				b.p2=0;
-				b.p22=0;
+				b.p1pri=0;
+				b.p1sek=0;
+				b.p2pri=0;
+				b.p2sek=0;
 				t.tische.remove(j);
 				t.paarungen.remove(j);
 			}

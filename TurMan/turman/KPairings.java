@@ -303,7 +303,8 @@ public class KPairings {
 		if((hf.teilnehmerVector.size()-hf.gelöschteTeilnehmer)%2==1){
 			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
-			hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+			//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+			hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 			hf.rundenZaehler++;
 			while(!KPairings.createPairings(hf,hf.mode)){
 				if(hf.mode==KPairings.SWISS){
@@ -333,37 +334,39 @@ public class KPairings {
 			if(b.runde==hf.rundenZaehler){
 				KTeilnehmer t =b.t1;
 				if(t.vorname.equals("Freilos") && t.nachname.equals("Freilos") && t.nickname.equals("Freilos") && t.armee.equals("Freilos") && t.ort.equals("Freilos")){
-					b.p2=hf.freilosPrim;
-					b.p22=hf.freilosSek;
+					b.p2pri=hf.freilosPrim;
+					b.p2sek=hf.freilosSek;
 					b.setBackground(Color.green);
 					b.begegnungsFensterButton.setBackground(Color.gray);
 					b.begegnungsTabButton.setBackground(Color.gray);
 					
 					KBegegnungen b2 = ((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
-					b2.p1=hf.freilosPrim;
-					b2.p12=hf.freilosPrim;
+					b2.p1pri=hf.freilosPrim;
+					b2.p1sek=hf.freilosPrim;
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+					hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 				
 				t =b.t2;
 				if(t.vorname.equals("Freilos") && t.nachname.equals("Freilos") && t.nickname.equals("Freilos") && t.armee.equals("Freilos") && t.ort.equals("Freilos")){
-					b.p1=hf.freilosPrim;
-					b.p12=hf.freilosSek;
+					b.p1pri=hf.freilosPrim;
+					b.p1sek=hf.freilosSek;
 					b.setBackground(Color.green);
 					b.begegnungsFensterButton.setBackground(Color.gray);
 					b.begegnungsTabButton.setBackground(Color.gray);
 					
 					KBegegnungen b2 = ((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(b.yPos)).getComponent(b.xPos));
-					b2.p2=hf.freilosPrim;
-					b2.p22=hf.freilosPrim;
+					b2.p2pri=hf.freilosPrim;
+					b2.p2sek=hf.freilosPrim;
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+					hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 			}
@@ -587,10 +590,10 @@ public class KPairings {
 							b.runde=0;
 							b.tisch=0;
 							b.setText("");
-							b.p1=0;
-							b.p12=0;
-							b.p2=0;
-							b.p22=0;
+							b.p1pri=0;
+							b.p1sek=0;
+							b.p2pri=0;
+							b.p2sek=0;
 							t.tische.remove(j);
 							t.paarungen.remove(j);
 						}

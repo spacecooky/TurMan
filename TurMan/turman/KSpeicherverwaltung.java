@@ -136,10 +136,10 @@ public class KSpeicherverwaltung {
 
 						KBegegnungen bg = (KBegegnungen) tnp.getComponent(j);
 						String[] sEr = sDr[j].split(",");
-						bg.p1=Integer.parseInt(sEr[1]);
-						bg.p12=Integer.parseInt(sEr[2]);
-						bg.p2=Integer.parseInt(sEr[3]);
-						bg.p22=Integer.parseInt(sEr[4]);
+						bg.p1pri=Integer.parseInt(sEr[1]);
+						bg.p1sek=Integer.parseInt(sEr[2]);
+						bg.p2pri=Integer.parseInt(sEr[3]);
+						bg.p2sek=Integer.parseInt(sEr[4]);
 						//hf.teilnehmerVector.get(i).paarungen.add(j);//welcher Spieler
 						hf.teilnehmerVector.get(i).paarungen.put(Integer.parseInt(sEr[5]),j);//welcher Spieler
 						if(sEr[0].equals("2")){
@@ -255,9 +255,9 @@ public class KSpeicherverwaltung {
 						if(bg.getBackground().equals(Color.darkGray) || bg.getBackground().equals(Color.black)){
 							fw.write("1;");
 						} else if(bg.getBackground().equals(Color.orange)){
-							fw.write("2,"+bg.p1+","+bg.p12+","+bg.p2+","+bg.p22+","+bg.getText()+","+bg.tisch+";");
+							fw.write("2,"+bg.p1pri+","+bg.p1sek+","+bg.p2pri+","+bg.p2sek+","+bg.getText()+","+bg.tisch+";");
 						} else if(bg.getBackground().equals(Color.green)){
-							fw.write("3,"+bg.p1+","+bg.p12+","+bg.p2+","+bg.p22+","+bg.getText()+","+bg.tisch+";");
+							fw.write("3,"+bg.p1pri+","+bg.p1sek+","+bg.p2pri+","+bg.p2sek+","+bg.getText()+","+bg.tisch+";");
 						}
 					}catch(ClassCastException e){
 						fw.write("0;");

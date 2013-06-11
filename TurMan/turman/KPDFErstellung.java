@@ -65,8 +65,8 @@ public class KPDFErstellung {
 			for(int i=0; i<tV.size();i++){
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).platz,normal)));
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).vorname+" "+tV.get(i).nachname,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).primär,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sekundär,normal)));
+				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).primaer,normal)));
+				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sekundaer,normal)));
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sos,normal)));
 			}
 
@@ -128,8 +128,8 @@ public class KPDFErstellung {
 				if(bV.get(i).runde==runde){
 					table2.addCell(new PdfPCell(new Phrase(""+(bV.get(i).tisch+1),normal)));
 					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).t1.vorname+" "+bV.get(i).t1.nachname+" : "+bV.get(i).t2.vorname+" "+bV.get(i).t2.nachname,normal)));
-					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1+" : "+bV.get(i).p2,normal)));
-					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p12+" : "+bV.get(i).p22,normal)));
+					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1pri+" : "+bV.get(i).p2pri,normal)));
+					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1sek+" : "+bV.get(i).p2sek,normal)));
 				}
 			}
 

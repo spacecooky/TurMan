@@ -45,8 +45,8 @@ public class KTextErstellung{
 				nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
 				nachricht+="   ";
 				nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-				nachricht +=laengeAnpassenHinten(""+t.primär,9);
-				nachricht +=laengeAnpassenHinten(""+t.sekundär,9);
+				nachricht +=laengeAnpassenHinten(""+t.primaer,9);
+				nachricht +=laengeAnpassenHinten(""+t.sekundaer,9);
 				nachricht +=laengeAnpassenHinten(""+t.sos,9);
 				fw.write(nachricht+"\r\n");	
 			}
@@ -97,8 +97,8 @@ public class KTextErstellung{
 					KTeilnehmer tn2 = bg.t2;
 					nachricht =laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6);
 					nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
-					nachricht +=laengeAnpassenHinten(""+bg.p1+" : "+bg.p2,13);
-					nachricht +=laengeAnpassenHinten(""+bg.p12+" : "+bg.p22,13);
+					nachricht +=laengeAnpassenHinten(""+bg.p1pri+" : "+bg.p2pri,13);
+					nachricht +=laengeAnpassenHinten(""+bg.p1sek+" : "+bg.p2sek,13);
 					fw.write(nachricht+"\r\n");
 				}
 			}

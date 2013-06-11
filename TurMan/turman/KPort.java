@@ -117,10 +117,11 @@ public class KPort {
 
 					fw.write("#GoePP-Exportdatei, v1.3.3 Export vom "+date+"||x\r\n");
 					fw.write("#TID-"+hf.TID+"||x\r\n");
-					hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
+					hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
 						KTeilnehmer tn = hf.sortierterVector.get(i);
-							int primeinzel=tn.primärEinzel;
+							int primeinzel=tn.primaerEinzel;
 							int armee=(hf.optionenFeld.armeePri.isSelected()?tn.armeeliste:0);
 							int bemalung=(hf.optionenFeld.bemalPri.isSelected()?tn.bemalwertung:0);
 							int primkomp=primeinzel+armee+bemalung;

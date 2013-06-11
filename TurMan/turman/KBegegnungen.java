@@ -47,11 +47,13 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	}
 
 	KTeilnehmer t1;
-	int p1=0;
-	int p12=0;
+	int p1pri=0;
+	int p1sek=0;
+	int p1ter=0;
 	KTeilnehmer t2;
-	int p2=0;
-	int p22=0;
+	int p2pri=0;
+	int p2sek=0;
+	int p2ter=0;
 	KHauptFenster khf;
 
 	int xPos=0;
@@ -62,11 +64,6 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 
 
 	ButtonGroup SUN = new ButtonGroup();
-
-	//int position=0;
-	//int primär=0;
-	//int sekundär=0;
-	//int sos=0;
 
 	JButton bestaetigung = new JButton("Bestätigung");
 	JButton begegnungsFensterButton = new JButton("");
@@ -170,23 +167,24 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		if(quelle==bestaetigung){
 
 			try{
-				p1=Integer.parseInt(khf.p1Field.getText());
-				p2=Integer.parseInt(khf.p2Field.getText());
-				p12=Integer.parseInt(khf.p12Field.getText());
-				p22=Integer.parseInt(khf.p22Field.getText());
+				p1pri=Integer.parseInt(khf.p1Field.getText());
+				p2pri=Integer.parseInt(khf.p2Field.getText());
+				p1sek=Integer.parseInt(khf.p12Field.getText());
+				p2sek=Integer.parseInt(khf.p22Field.getText());
 				setBackground(Color.green);
 				begegnungsFensterButton.setBackground(Color.gray);
 				begegnungsTabButton.setBackground(Color.gray);
 			}catch(NumberFormatException e){}
 
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1=p2;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2=p1;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p12=p22;
-			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p22=p12;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1pri=p2pri;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2pri=p1pri;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1sek=p2sek;
+			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2sek=p1sek;
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).setBackground(Color.green);
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsFensterButton.setBackground(Color.gray);
 			((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsTabButton.setBackground(Color.gray);
-			khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected(),khf.rundenZaehler);
+			//khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected(),khf.rundenZaehler);
+			khf.sortierenVar(khf.punkteFensterVar.ab.isSelected(),khf.punkteFensterVar.bm.isSelected(),khf.rundenZaehler);
 			khf.begegnungsFrame.removeAll();
 			khf.begegnungsPanel.removeAll();
 			khf.begegnungsFrame.dispose();
@@ -223,9 +221,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			khf.begegnungsPanel.add(khf.t1Label);
 			khf.t1Label.setText(vn1+" "+nn1);
 			khf.begegnungsPanel.add(khf.p1Field);
-			khf.p1Field.setText(Integer.toString(p1));
+			khf.p1Field.setText(Integer.toString(p1pri));
 			khf.begegnungsPanel.add(khf.p12Field);
-			khf.p12Field.setText(Integer.toString(p12));
+			khf.p12Field.setText(Integer.toString(p1sek));
 			if(khf.optionenFeld.SUN.isSelected()){
 				khf.begegnungsPanel.add(khf.siegP1);
 			}
@@ -235,9 +233,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			khf.begegnungsPanel.add(khf.t2Label);
 			khf.t2Label.setText(vn2+" "+nn2);
 			khf.begegnungsPanel.add(khf.p2Field);
-			khf.p2Field.setText(Integer.toString(p2));
+			khf.p2Field.setText(Integer.toString(p2pri));
 			khf.begegnungsPanel.add(khf.p22Field);
-			khf.p22Field.setText(Integer.toString(p22));
+			khf.p22Field.setText(Integer.toString(p2sek));
 			if(khf.optionenFeld.SUN.isSelected()){
 				khf.begegnungsPanel.add(khf.siegP2);
 			}
