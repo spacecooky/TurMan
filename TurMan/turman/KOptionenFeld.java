@@ -1,4 +1,4 @@
-﻿package turman;
+package turman;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -65,11 +65,29 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JTextField mirrorField = new JTextField("0");
 	JTextField tischField = new JTextField("0");
 	
-	//WertungsOptionen
-	JRadioButton PSS = new JRadioButton("Primärpunkte, Sekundärpunkte, SOS");
-	JRadioButton TS = new JRadioButton("Turnierpunkte, Siegpunktedifferenz");
-	JRadioButton RPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOSOS anhand einer Formel)");
-	ButtonGroup wertung = new ButtonGroup();
+	//WertungsOptionen Erstwertung
+	JRadioButton pPunkte = new JRadioButton("Punkteeingabe (Primärpunkte)");
+	JRadioButton pRPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	JRadioButton pStrength = new JRadioButton("Strength of Schedule (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	//WertungsOptionen Zweitwertung
+	JRadioButton sPunkte = new JRadioButton("Punkteeingabe (Sekundärpunkte)");
+	JRadioButton sSOS = new JRadioButton("SOS (Summe aller Gegnerpunkte)");
+	JRadioButton sSOOS = new JRadioButton("SOOS (Summe aller Gegnerpunkte aller Gegner)");
+	JRadioButton sRPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	JRadioButton sStrength = new JRadioButton("Strength of Schedule (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	JRadioButton sKeine = new JRadioButton("Keine Zweitwertung");
+	//WertungsOptionen Drittwertung
+	JRadioButton tPunkte = new JRadioButton("Punkteeingabe (Tertiärpunkte)");
+	JRadioButton tSOS = new JRadioButton("SOS (Summe aller Gegnerpunkte)");
+	JRadioButton tSOOS = new JRadioButton("SOOS (Summe aller Gegnerpunkte aller Gegner)");
+	JRadioButton tRPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	JRadioButton tStrength = new JRadioButton("Strength of Schedule (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
+	JRadioButton tKeine = new JRadioButton("Keine Drittwertung");
+	
+	
+	ButtonGroup erstWertung = new ButtonGroup();
+	ButtonGroup zweitWertung = new ButtonGroup();
+	ButtonGroup drittWertung = new ButtonGroup();
 	JCheckBox matrixBenutzen= new JCheckBox("Matrix benutzen");
 	JButton matrix= new JButton("Siegpunktematrix");
 	JCheckBox SUN = new JCheckBox("SUN statt Primärpunkteeingabe (Einheitspunkte für Sieg-Unentschieden-Niederlage)");
@@ -84,11 +102,13 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	
 	JRadioButton bemalPri = new JRadioButton("Bemalwertung");
 	JRadioButton bemalSek = new JRadioButton("Bemalwertung");
+	JRadioButton bemalTer = new JRadioButton("Bemalwertung");
 	JRadioButton bemalNo = new JRadioButton("Bemalwertung");
 	ButtonGroup bemalGroup = new ButtonGroup();
 	
 	JRadioButton armeePri = new JRadioButton("Armeebewertung");
 	JRadioButton armeeSek = new JRadioButton("Armeebewertung");
+	JRadioButton armeeTer = new JRadioButton("Armeebewertung");
 	JRadioButton armeeNo = new JRadioButton("Armeebewertung");
 	ButtonGroup armeeGroup = new ButtonGroup();
 	
@@ -182,23 +202,45 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		wertungsPanel.setLayout(new BoxLayout(wertungsPanel, BoxLayout.Y_AXIS));
 		
 		JPanel p6 = new JPanel();
-		p6.setBorder(BorderFactory.createTitledBorder("Typ"));
-		p6.setLayout(new GridLayout(6,1));
-		p6.add(PSS);
-		p6.add(RPI);
-		p6.add(TS);
-		p6.add(matrixBenutzen);
-		p6.add(matrix);
+		p6.setLayout(new GridLayout(4,1));
+		
+		JPanel p62 = new JPanel();
+		p62.setLayout(new GridLayout(3,1));
+		p62.setBorder(BorderFactory.createTitledBorder("Erstwertung"));
+		addWertung(p62, pPunkte, erstWertung);
+		addWertung(p62, pRPI, erstWertung);
+		addWertung(p62, pStrength, erstWertung);
+		pPunkte.setSelected(true);
+		
+		JPanel p63 = new JPanel();
+		p63.setLayout(new GridLayout(6,1));
+		p63.setBorder(BorderFactory.createTitledBorder("Zweitwertung"));
+		addWertung(p63, sKeine, zweitWertung);
+		addWertung(p63, sPunkte, zweitWertung);
+		addWertung(p63, sRPI, zweitWertung);
+		addWertung(p63, sStrength, zweitWertung);
+		addWertung(p63, sSOS, zweitWertung);
+		addWertung(p63, sSOOS, zweitWertung);
+		sKeine.setSelected(true);
+		
+		JPanel p64 = new JPanel();
+		p64.setLayout(new GridLayout(6,1));
+		p64.setBorder(BorderFactory.createTitledBorder("Drittwertung"));
+		addWertung(p64, tKeine, drittWertung);
+		addWertung(p64, tPunkte, drittWertung);
+		addWertung(p64, tRPI, drittWertung);
+		addWertung(p64, tStrength, drittWertung);
+		addWertung(p64, tSOS, drittWertung);
+		addWertung(p64, tSOOS, drittWertung);
+		tKeine.setSelected(true);
+		
+		JPanel p65 = new JPanel();
+		p65.setLayout(new GridLayout(3,1));
+		p65.add(matrixBenutzen);
+		p65.add(matrix);
 		matrix.addActionListener(this);
 		matrixBenutzen.setEnabled(false);
 		matrix.setEnabled(false);
-		wertung.add(PSS);
-		wertung.add(TS);
-		wertung.add(RPI);
-		PSS.setSelected(true);
-		PSS.addActionListener(this);
-		TS.addActionListener(this);
-		RPI.addActionListener(this);
 		
 		JPanel p61= new JPanel();
 		p61.add(SUN);
@@ -210,45 +252,58 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		p61.add(SUN_S);
 		p61.add(SUN_U);
 		p61.add(SUN_N);
-		p6.add(p61);
+		p65.add(p61);
+		
 		SUN2_1_0.setSelected(true);
 		sunGroup.add(SUN2_1_0);
 		sunGroup.add(SUN3_1_0);
 		sunGroup.add(SUN20_10_1);
 		sunGroup.add(SUN_frei);
 		
+		p6.add(p62);
+		p6.add(p63);
+		p6.add(p64);
+		p6.add(p65);
 		wertungsPanel.add(p6);
 		
 		JPanel p7 = new JPanel();
 		JPanel p7pri = new JPanel();
 		JPanel p7sek = new JPanel();
+		JPanel p7ter = new JPanel();
 		JPanel p7no = new JPanel();
 		
 		p7.setBorder(BorderFactory.createTitledBorder("Zusatzpunkte"));
 		p7pri.setBorder(BorderFactory.createTitledBorder("Primär"));
 		p7sek.setBorder(BorderFactory.createTitledBorder("Sekundär"));
+		p7ter.setBorder(BorderFactory.createTitledBorder("Tertiär"));
 		p7no.setBorder(BorderFactory.createTitledBorder("keine Wertung"));
-		p7.setLayout(new GridLayout(1,3));
+		p7.setLayout(new GridLayout(1,4));
 		p7pri.setLayout(new GridLayout(2,1));
 		p7sek.setLayout(new GridLayout(2,1));
+		p7ter.setLayout(new GridLayout(2,1));
 		p7no.setLayout(new GridLayout(2,1));
 		p7.add(p7pri);
 		p7.add(p7sek);
+		p7.add(p7ter);
 		p7.add(p7no);
 		
 		p7pri.add(bemalPri);
 		p7pri.add(armeePri);
 		p7sek.add(bemalSek);
 		p7sek.add(armeeSek);
+		p7ter.add(bemalTer);
+		p7ter.add(armeeTer);
 		p7no.add(bemalNo);
 		p7no.add(armeeNo);
 		
 		bemalGroup.add(bemalPri);
 		bemalGroup.add(bemalSek);
+		bemalGroup.add(bemalTer);
 		bemalGroup.add(bemalNo);
 		
 		armeeGroup.add(armeePri);
 		armeeGroup.add(armeeSek);
+		armeeGroup.add(armeeTer);
 		armeeGroup.add(armeeNo);
 		
 		bemalNo.setSelected(true);
@@ -266,30 +321,22 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if(arg0.getSource()==PSS || arg0.getSource()==TS || arg0.getSource()==RPI){
-			if(PSS.isSelected()){
-				bemalSek.setEnabled(true);
-				armeeSek.setEnabled(true);
-				matrixBenutzen.setEnabled(false);
-				matrix.setEnabled(false);
-			} else if(RPI.isSelected()){
-				bemalSek.setEnabled(false);
-				armeeSek.setEnabled(false);
-				matrixBenutzen.setEnabled(false);
-				matrix.setEnabled(false);
-				if(bemalSek.isSelected()){
-					bemalSek.setSelected(false);
-					bemalNo.setSelected(true);
-				}
-				if(armeeSek.isSelected()){
-					armeeSek.setSelected(false);
-					armeeNo.setSelected(true);
-				}
-			}else if(TS.isSelected()){
-				bemalSek.setEnabled(false);
-				armeeSek.setEnabled(false);
+		Object src = arg0.getSource();
+		
+		if(src==pPunkte || src==pRPI || src==pStrength){
+			
+		}
+		else if(src==sPunkte || src==sRPI || src==sStrength || src==sSOS || src==sSOOS || src==sKeine){
+			if(src==sPunkte){
 				matrixBenutzen.setEnabled(true);
 				matrix.setEnabled(true);
+			} else{
+				matrixBenutzen.setEnabled(false);
+				matrix.setEnabled(false);
+			}
+			if(src==sKeine){
+				bemalSek.setEnabled(false);
+				armeeSek.setEnabled(false);
 				if(bemalSek.isSelected()){
 					bemalSek.setSelected(false);
 					bemalNo.setSelected(true);
@@ -298,15 +345,22 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 					armeeSek.setSelected(false);
 					armeeNo.setSelected(true);
 				}
+			} else {
+				bemalSek.setEnabled(true);
+				armeeSek.setEnabled(true);
 			}
-			hf.updatePanels();
-		}else if(arg0.getSource()==matrix){
+		}
+		else if(src==tPunkte || src==tRPI || src==tStrength || src==tSOS || src==tSOOS || src==tKeine){
+			
+		}
+		else if(arg0.getSource()==matrix){
 			hf.matrix.init();
 		}
 		
 	}
 	
 	public void clear(){
+		
 		 einzel.setSelected(false);
 		 team.setSelected(false);
 		
@@ -326,10 +380,24 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		 mirrorField.setText("0");
 		 tischField.setText("0");
 		
-		 PSS.setSelected(false);
-		 TS.setSelected(false);
-		 RPI.setSelected(false);
-		
+		 pPunkte.setSelected(false);
+		 pRPI.setSelected(false);
+		 pStrength.setSelected(false);
+		 
+		 sPunkte.setSelected(false);
+		 sRPI.setSelected(false);
+		 sStrength.setSelected(false);
+		 sSOS.setSelected(false);
+		 sSOOS.setSelected(false);
+		 sKeine.setSelected(false);
+
+		 tPunkte.setSelected(false);
+		 tRPI.setSelected(false);
+		 tStrength.setSelected(false);
+		 tSOS.setSelected(false);
+		 tSOOS.setSelected(false);
+		 tKeine.setSelected(false);
+		 
 		 bemalPri.setSelected(false);
 		 bemalSek.setSelected(false);
 		 bemalNo.setSelected(false);
@@ -337,6 +405,12 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		 armeePri.setSelected(false);
 		 armeeSek.setSelected(false);
 		 armeeNo.setSelected(false);
+		 
+	}
+	
+	public void addWertung(JPanel p, JRadioButton b, ButtonGroup bg){
+		p.add(b);
+		bg.add(b);
 	}
 	
 }

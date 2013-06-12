@@ -320,7 +320,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster(this);
 	//KPunkteFenster punkteFenster = new KPunkteFenster(this);
-	KPunkteFensterVar punkteFensterVar = new KPunkteFensterVar(this);
+	KPunkteFenster punkteFensterVar = new KPunkteFenster(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
 	KFreilosFenster freilosFenster = new KFreilosFenster(this);
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
@@ -331,7 +331,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
 	KDialog dialog = new KDialog(this);
-	KOptionenFeldVar optionenFeldVar = new KOptionenFeldVar(this);
+	KOptionenFeld optionenFeldVar = new KOptionenFeld(this);
 	KDynamischerTimerFeld dynamischerTimerFeld = new KDynamischerTimerFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
 	KSiegpunkteMatrix matrix = new KSiegpunkteMatrix(this);

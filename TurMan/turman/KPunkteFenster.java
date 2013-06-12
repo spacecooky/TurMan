@@ -25,14 +25,14 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 
-public class KPunkteFensterVar extends JFrame implements ActionListener,ComponentListener{
+public class KPunkteFenster extends JFrame implements ActionListener,ComponentListener{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2924742194067324526L;
 
-	public KPunkteFensterVar(KHauptFenster hf) {
+	public KPunkteFenster(KHauptFenster hf) {
 		super("Rangliste");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
