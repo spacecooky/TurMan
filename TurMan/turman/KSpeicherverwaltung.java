@@ -132,7 +132,7 @@ public class KSpeicherverwaltung {
 				KTeilnehmerPanel tnp=(KTeilnehmerPanel)hf.HauptPanel.getComponent(i);
 				for(int j=0;j<sDr.length;j++){
 					if(sDr[j].contains(",")){
-						
+
 
 						KBegegnungen bg = (KBegegnungen) tnp.getComponent(j);
 						String[] sEr = sDr[j].split(",");
@@ -171,9 +171,9 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
-			
+
 			try{
-			hf.rundenZaehler=Integer.parseInt(rundenzähler);
+				hf.rundenZaehler=Integer.parseInt(rundenzähler);
 			}catch (NumberFormatException e) {
 				// TODO Fehlerdialog
 				System.err.println("rundenzähler nicht auslesbar");
@@ -189,7 +189,7 @@ public class KSpeicherverwaltung {
 			}
 
 			hf.rundenAnzeige=hf.rundenZaehler;
-			
+
 			//Herausforderungen in den Herausforderungsvektor
 			for(int i=0;i<hf.begegnungsVector.size();i++){
 				KBegegnungen b = hf.begegnungsVector.get(i);
@@ -202,13 +202,13 @@ public class KSpeicherverwaltung {
 					}
 				}
 			}
-			
+
 			hf.updatePanels();
-			
+
 			if(hf.rundenZaehler>0){
 				hf.anmeldung.setEnabled(false);
 			}
-			
+
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
@@ -298,84 +298,116 @@ public class KSpeicherverwaltung {
 			}
 		}
 	}
-	
+
 	static void speichernKonfig(KHauptFenster hf, File f){
 		try {
 			FileWriter fw = new FileWriter(f);
 
-			if(hf.optionenFeld.einzel.isSelected()){
+			if(hf.optionenFeldVar.einzel.isSelected()){
 				fw.write("turniertyp=einzel\r\n");
-			} else if(hf.optionenFeld.team.isSelected()){
+			} else if(hf.optionenFeldVar.team.isSelected()){
 				fw.write("turniertyp=team\r\n");
 			}
 
-			if(hf.optionenFeld.schweizer.isSelected()){
+			if(hf.optionenFeldVar.schweizer.isSelected()){
 				fw.write("modus=schweizer\r\n");
-			} else if(hf.optionenFeld.zufall.isSelected()){
+			} else if(hf.optionenFeldVar.zufall.isSelected()){
 				fw.write("modus=zufall\r\n");
-			} else if(hf.optionenFeld.ko.isSelected()){
+			} else if(hf.optionenFeldVar.ko.isSelected()){
 				fw.write("modus=ko\r\n");
 			}
 
-			if(hf.optionenFeld.teams.isSelected()){
-				fw.write("teams="+hf.optionenFeld.teamsField.getText()+"\r\n");
+			if(hf.optionenFeldVar.teams.isSelected()){
+				fw.write("teams="+hf.optionenFeldVar.teamsField.getText()+"\r\n");
 			}
-			if(hf.optionenFeld.orte.isSelected()){
-				fw.write("orte="+hf.optionenFeld.orteField.getText()+"\r\n");
+			if(hf.optionenFeldVar.orte.isSelected()){
+				fw.write("orte="+hf.optionenFeldVar.orteField.getText()+"\r\n");
 			}
-			if(hf.optionenFeld.armeen.isSelected()){
-				fw.write("armeen="+hf.optionenFeld.armeenField.getText()+"\r\n");
+			if(hf.optionenFeldVar.armeen.isSelected()){
+				fw.write("armeen="+hf.optionenFeldVar.armeenField.getText()+"\r\n");
 			}
-			if(hf.optionenFeld.mirror.isSelected()){
-				fw.write("mirror="+hf.optionenFeld.mirrorField.getText()+"\r\n");
+			if(hf.optionenFeldVar.mirror.isSelected()){
+				fw.write("mirror="+hf.optionenFeldVar.mirrorField.getText()+"\r\n");
 			}
-			if(hf.optionenFeld.tisch.isSelected()){
-				fw.write("tisch="+hf.optionenFeld.tischField.getText()+"\r\n");
+			if(hf.optionenFeldVar.tisch.isSelected()){
+				fw.write("tisch="+hf.optionenFeldVar.tischField.getText()+"\r\n");
 			}
 
-			if(hf.optionenFeld.PSS.isSelected()){
-				fw.write("punktetyp=PSS\r\n");
-			} else if(hf.optionenFeld.TS.isSelected()){
-				fw.write("punktetyp=TS\r\n");
-			} else if(hf.optionenFeld.RPI.isSelected()){
-				fw.write("punktetyp=Veiovis\r\n");
+			if(hf.optionenFeldVar.pPunkte.isSelected()){
+				fw.write("erstwertung=Punkte\r\n");
+			} else if(hf.optionenFeldVar.pStrength.isSelected()){
+				fw.write("erstwertung=Strength\r\n");
+			} else if(hf.optionenFeldVar.pRPI.isSelected()){
+				fw.write("erstwertung=RPI\r\n");
 			}
-			
-			if(hf.optionenFeld.matrixBenutzen.isSelected()){
+
+			if(hf.optionenFeldVar.sPunkte.isSelected()){
+				fw.write("zweitwertung=Punkte\r\n");
+			} else if(hf.optionenFeldVar.sStrength.isSelected()){
+				fw.write("zweitwertung=Strength\r\n");
+			} else if(hf.optionenFeldVar.sRPI.isSelected()){
+				fw.write("zweitwertung=RPI\r\n");
+			} else if(hf.optionenFeldVar.sSOS.isSelected()){
+				fw.write("zweitwertung=SOS\r\n");
+			} else if(hf.optionenFeldVar.sSOOS.isSelected()){
+				fw.write("zweitwertung=SOOS\r\n");
+			} else if(hf.optionenFeldVar.sKeine.isSelected()){
+				fw.write("zweitwertung=Keine\r\n");
+			}
+
+			if(hf.optionenFeldVar.tPunkte.isSelected()){
+				fw.write("drittwertung=Punkte\r\n");
+			} else if(hf.optionenFeldVar.tStrength.isSelected()){
+				fw.write("drittwertung=Strength\r\n");
+			} else if(hf.optionenFeldVar.tRPI.isSelected()){
+				fw.write("drittwertung=RPI\r\n");
+			} else if(hf.optionenFeldVar.tSOS.isSelected()){
+				fw.write("drittwertung=SOS\r\n");
+			} else if(hf.optionenFeldVar.tSOOS.isSelected()){
+				fw.write("drittwertung=SOOS\r\n");
+			} else if(hf.optionenFeldVar.tKeine.isSelected()){
+				fw.write("drittwertung=Keine\r\n");
+			}
+
+			if(hf.optionenFeldVar.matrixBenutzen.isSelected()){
 				fw.write("matrix=ja\r\n");
 			} else{
 				fw.write("matrix=nein\r\n");
 			}
-			
-			if(hf.optionenFeld.SUN.isSelected()){
+
+			if(hf.optionenFeldVar.SUN.isSelected()){
 				fw.write("sun=ja\r\n");
-				if(hf.optionenFeld.SUN2_1_0.isSelected()){
+				if(hf.optionenFeldVar.SUN2_1_0.isSelected()){
 					fw.write("sunmode=0\r\n");
-				} else if(hf.optionenFeld.SUN3_1_0.isSelected()){
+				} else if(hf.optionenFeldVar.SUN3_1_0.isSelected()){
 					fw.write("sunmode=1\r\n");
-				} else if(hf.optionenFeld.SUN20_10_1.isSelected()){
+				} else if(hf.optionenFeldVar.SUN20_10_1.isSelected()){
 					fw.write("sunmode=2\r\n");
-				} else if(hf.optionenFeld.SUN_frei.isSelected()){
-					fw.write("sunmode=3,"+hf.optionenFeld.SUN_S.getText()+","+hf.optionenFeld.SUN_U.getText()+","+hf.optionenFeld.SUN_N.getText()+""+"\r\n");
+				} else if(hf.optionenFeldVar.SUN_frei.isSelected()){
+					fw.write("sunmode=3,"+hf.optionenFeldVar.SUN_S.getText()+","+hf.optionenFeldVar.SUN_U.getText()+","+hf.optionenFeldVar.SUN_N.getText()+""+"\r\n");
 				}
 			} else{
 				fw.write("sun=nein\r\n");
 			}
 
-			if(hf.optionenFeld.bemalNo.isSelected()){
+			if(hf.optionenFeldVar.bemalNo.isSelected()){
 				fw.write("bemalwertung=keine\r\n");
-			} else if(hf.optionenFeld.bemalPri.isSelected()){
+			} else if(hf.optionenFeldVar.bemalPri.isSelected()){
 				fw.write("bemalwertung=pri\r\n");
-			} else if(hf.optionenFeld.bemalSek.isSelected()){
+			} else if(hf.optionenFeldVar.bemalSek.isSelected()){
 				fw.write("bemalwertung=sek\r\n");
+			} else if(hf.optionenFeldVar.bemalTer.isSelected()){
+				fw.write("bemalwertung=ter\r\n");
 			}
 
-			if(hf.optionenFeld.armeeNo.isSelected()){
+			if(hf.optionenFeldVar.armeeNo.isSelected()){
 				fw.write("armeewertung=keine\r\n");
-			} else if(hf.optionenFeld.armeePri.isSelected()){
+			} else if(hf.optionenFeldVar.armeePri.isSelected()){
 				fw.write("armeewertung=pri\r\n");
-			} else if(hf.optionenFeld.armeeSek.isSelected()){
+			} else if(hf.optionenFeldVar.armeeSek.isSelected()){
 				fw.write("armeewertung=sek\r\n");
+			} else if(hf.optionenFeldVar.armeeTer.isSelected()){
+				fw.write("armeewertung=ter\r\n");
 			}
 
 			fw.close();
@@ -383,14 +415,14 @@ public class KSpeicherverwaltung {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		speichernMatrix(hf);
 	}
 
 	static void ladenKonfig(KHauptFenster hf, File f){
 
-		hf.optionenFeld.clear();
-		
+		hf.optionenFeldVar.clear();
+
 		String s ="";
 		int read;
 		FileReader fr;
@@ -418,85 +450,117 @@ public class KSpeicherverwaltung {
 
 					if(optname.equals("turniertyp")){
 						if(optval.equals("einzel")){
-							hf.optionenFeld.einzel.setSelected(true);
+							hf.optionenFeldVar.einzel.setSelected(true);
 						} else if(optval.equals("team")){
-							hf.optionenFeld.team.setSelected(true);
+							hf.optionenFeldVar.team.setSelected(true);
 						}
 					} else if(optname.equals("modus")){
 						if(optval.equals("schweizer")){
-							hf.optionenFeld.schweizer.setSelected(true);
+							hf.optionenFeldVar.schweizer.setSelected(true);
 						} else if(optval.equals("zufall")){
-							hf.optionenFeld.zufall.setSelected(true);
+							hf.optionenFeldVar.zufall.setSelected(true);
 						} else if(optval.equals("ko")){
-							hf.optionenFeld.ko.setSelected(true);
+							hf.optionenFeldVar.ko.setSelected(true);
 						}
-					} else if(optname.equals("punktetyp")){
-						if(optval.equals("PSS")){
-							hf.optionenFeld.PSS.setSelected(true);
-						} else if(optval.equals("TS")){
-							hf.optionenFeld.TS.setSelected(true);
-							hf.optionenFeld.matrixBenutzen.setEnabled(true);
-							hf.optionenFeld.matrix.setEnabled(true);
-						} else if(optval.equals("Veiovis")){
-							hf.optionenFeld.RPI.setSelected(true);
+					} else if(optname.equals("erstwertung")){
+						if(optval.equals("Punkte")){
+							hf.optionenFeldVar.pPunkte.setSelected(true);
+						} else if(optval.equals("Strength")){
+							hf.optionenFeldVar.pStrength.setSelected(true);
+						} else if(optval.equals("RPI")){
+							hf.optionenFeldVar.pRPI.setSelected(true);
 						}
-					} else if(optname.equals("matrix")){
+					} else if(optname.equals("zweitwertung")){
+						if(optval.equals("Punkte")){
+							hf.optionenFeldVar.sPunkte.setSelected(true);
+							hf.optionenFeldVar.matrixBenutzen.setEnabled(true);
+							hf.optionenFeldVar.matrix.setEnabled(true);
+						} else if(optval.equals("Strength")){
+							hf.optionenFeldVar.sStrength.setSelected(true);
+						} else if(optval.equals("RPI")){
+							hf.optionenFeldVar.sRPI.setSelected(true);
+						} else if(optval.equals("SOS")){
+							hf.optionenFeldVar.sSOS.setSelected(true);
+						} else if(optval.equals("SOOS")){
+							hf.optionenFeldVar.sSOOS.setSelected(true);
+						} else if(optval.equals("Keine")){
+							hf.optionenFeldVar.sKeine.setSelected(true);
+						}
+					} else if(optname.equals("drittwertung")){
+						if(optval.equals("Punkte")){
+							hf.optionenFeldVar.tPunkte.setSelected(true);
+						} else if(optval.equals("Strength")){
+							hf.optionenFeldVar.tStrength.setSelected(true);
+						} else if(optval.equals("RPI")){
+							hf.optionenFeldVar.tRPI.setSelected(true);
+						} else if(optval.equals("SOS")){
+							hf.optionenFeldVar.tSOS.setSelected(true);
+						} else if(optval.equals("SOOS")){
+							hf.optionenFeldVar.tSOOS.setSelected(true);
+						} else if(optval.equals("Keine")){
+							hf.optionenFeldVar.tKeine.setSelected(true);
+						}
+					}else if(optname.equals("matrix")){
 						if(optval.equals("ja")){
-							hf.optionenFeld.matrixBenutzen.setSelected(true);
+							hf.optionenFeldVar.matrixBenutzen.setSelected(true);
 						} else if(optval.equals("nein")){
-							hf.optionenFeld.matrixBenutzen.setSelected(false);
+							hf.optionenFeldVar.matrixBenutzen.setSelected(false);
 						} 
 					}else if(optname.equals("sun")){
 						if(optval.equals("ja")){
-							hf.optionenFeld.SUN.setSelected(true);
+							hf.optionenFeldVar.SUN.setSelected(true);
 						} else if(optval.equals("nein")){
-							hf.optionenFeld.SUN.setSelected(false);
+							hf.optionenFeldVar.SUN.setSelected(false);
 						}
 					}else if(optname.equals("sunmode")){
 						if(optval.startsWith("0")){
-							hf.optionenFeld.SUN2_1_0.setSelected(true);
+							hf.optionenFeldVar.SUN2_1_0.setSelected(true);
 						} else if(optval.startsWith("1")){
-							hf.optionenFeld.SUN3_1_0.setSelected(true);
+							hf.optionenFeldVar.SUN3_1_0.setSelected(true);
 						} else if(optval.startsWith("2")){
-							hf.optionenFeld.SUN20_10_1.setSelected(true);
+							hf.optionenFeldVar.SUN20_10_1.setSelected(true);
 						} else if(optval.startsWith("3")){
-							hf.optionenFeld.SUN_frei.setSelected(true);
+							hf.optionenFeldVar.SUN_frei.setSelected(true);
 							String[] free=optval.split(",");
-							hf.optionenFeld.SUN_S.setText(free[1]);
-							hf.optionenFeld.SUN_U.setText(free[2]);
-							hf.optionenFeld.SUN_N.setText(free[3]);
+							hf.optionenFeldVar.SUN_S.setText(free[1]);
+							hf.optionenFeldVar.SUN_U.setText(free[2]);
+							hf.optionenFeldVar.SUN_N.setText(free[3]);
 						}
 					}else if(optname.equals("bemalwertung")){
 						if(optval.equals("keine")){
-							hf.optionenFeld.bemalNo.setSelected(true);
+							hf.optionenFeldVar.bemalNo.setSelected(true);
 						} else if(optval.equals("pri")){
-							hf.optionenFeld.bemalPri.setSelected(true);
+							hf.optionenFeldVar.bemalPri.setSelected(true);
 						} else if(optval.equals("sek")){
-							hf.optionenFeld.bemalSek.setSelected(true);
+							hf.optionenFeldVar.bemalSek.setSelected(true);
+						} else if(optval.equals("ter")){
+							hf.optionenFeldVar.bemalTer.setSelected(true);
 						} 
 					} else if(optname.equals("armeewertung")){
 						if(optval.equals("keine")){
-							hf.optionenFeld.armeeNo.setSelected(true);
+							hf.optionenFeldVar.armeeNo.setSelected(true);
 						} else if(optval.equals("pri")){
-							hf.optionenFeld.armeePri.setSelected(true);
+							hf.optionenFeldVar.armeePri.setSelected(true);
 						} else if(optval.equals("sek")){
-							hf.optionenFeld.armeeSek.setSelected(true);
+							hf.optionenFeldVar.armeeSek.setSelected(true);
+						} else if(optval.equals("ter")){
+							hf.optionenFeldVar.armeeTer.setSelected(true);
 						} 
 					}else if(optname.equals("teams")){
-						hf.optionenFeld.teams.setSelected(true);
-						hf.optionenFeld.teamsField.setText(optval);
+						hf.optionenFeldVar.teams.setSelected(true);
+						hf.optionenFeldVar.teamsField.setText(optval);
 					} else if(optname.equals("orte")){
-						hf.optionenFeld.orte.setSelected(true);
-						hf.optionenFeld.orteField.setText(optval);
+						hf.optionenFeldVar.orte.setSelected(true);
+						hf.optionenFeldVar.orteField.setText(optval);
 					} else if(optname.equals("armeen")){
-						hf.optionenFeld.armeen.setSelected(true);
-						hf.optionenFeld.armeenField.setText(optval);
+						hf.optionenFeldVar.armeen.setSelected(true);
+						hf.optionenFeldVar.armeenField.setText(optval);
 					} else if(optname.equals("mirror")){
-						hf.optionenFeld.mirror.setSelected(true);
-						hf.optionenFeld.mirrorField.setText(optval);
+						hf.optionenFeldVar.mirror.setSelected(true);
+						hf.optionenFeldVar.mirrorField.setText(optval);
 					} else if(optname.equals("tisch")){
-						hf.optionenFeld.tisch.setSelected(true);
-						hf.optionenFeld.tischField.setText(optval);
+						hf.optionenFeldVar.tisch.setSelected(true);
+						hf.optionenFeldVar.tischField.setText(optval);
 					}
 				}
 			}
@@ -506,7 +570,7 @@ public class KSpeicherverwaltung {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		ladenMatrix(hf);
 	}
 
@@ -520,17 +584,17 @@ public class KSpeicherverwaltung {
 				fw.write(hf.matrix.tpa.get(i)+";");
 				fw.write(hf.matrix.tpb.get(i)+"\r\n");
 			}
-			
+
 			fw.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	static void ladenMatrix(KHauptFenster hf){
-hf.optionenFeld.clear();
-		
+		hf.optionenFeldVar.clear();
+
 		String s ="";
 		int read;
 		File f = new File("matrix");
@@ -568,7 +632,7 @@ hf.optionenFeld.clear();
 			e.printStackTrace();
 		}
 	}
-	
+
 	static void leeren(KHauptFenster hf){
 		hf.teilnehmerVector.removeAllElements();
 		hf.begegnungsVector.removeAllElements();

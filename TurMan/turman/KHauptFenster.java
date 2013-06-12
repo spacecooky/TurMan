@@ -99,7 +99,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
 		punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
 		tab.setBackground(Color.white);
-		//tab.addTab("Konfiguration",null,new JScrollPane(optionenFeld));
 		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeldVar));
 		setContentPane(tab);
 		//Menue
@@ -202,13 +201,15 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenKonfig(this,f2);
 		}
 
-		p12Field.addKeyListener(this);
-		p22Field.addKeyListener(this);
+		p1sekField.addKeyListener(this);
+		p2sekField.addKeyListener(this);
 
-		setSelectAll(p1Field);
-		setSelectAll(p2Field);
-		setSelectAll(p12Field);
-		setSelectAll(p22Field);
+		setSelectAll(p1priField);
+		setSelectAll(p2priField);
+		setSelectAll(p1sekField);
+		setSelectAll(p2sekField);
+		setSelectAll(p1terField);
+		setSelectAll(p2terField);
 
 	}
 
@@ -286,10 +287,12 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JPanel begegnungsPanel = new JPanel();
 	JLabel t1Label = new JLabel();
 	JLabel t2Label = new JLabel();
-	JTextField p1Field = new JTextField();
-	JTextField p2Field = new JTextField();
-	JTextField p12Field = new JTextField();
-	JTextField p22Field = new JTextField();
+	JTextField p1priField = new JTextField();
+	JTextField p2priField = new JTextField();
+	JTextField p1sekField = new JTextField();
+	JTextField p2sekField = new JTextField();
+	JTextField p1terField = new JTextField();
+	JTextField p2terField = new JTextField();
 	JRadioButton siegP1 = new JRadioButton("Sieg");
 	JRadioButton siegP2 = new JRadioButton("Sieg");
 	JRadioButton unentschieden = new JRadioButton("Unentschieden");
@@ -328,7 +331,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	KExtraPunkteFenster extraPunkteFenster = new KExtraPunkteFenster(this);
 	KAnmeldeFenster anmeldeFenster = new KAnmeldeFenster(this);
 	KDialog dialog = new KDialog(this);
-	KOptionenFeld optionenFeld = new KOptionenFeld(this);
 	KOptionenFeldVar optionenFeldVar = new KOptionenFeldVar(this);
 	KDynamischerTimerFeld dynamischerTimerFeld = new KDynamischerTimerFeld(this);
 	KInfoFenster infoFenster = new KInfoFenster();
@@ -450,7 +452,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		} else if(quelle==urkundenInfos){
 			urkundenFenster.anzeigen();
 		}else if(quelle==urkundenErstellen){
-			sortieren(true, true,rundenZaehler);
+			sortierenVar(true, true,rundenZaehler);
 			urkunde.urkundeErstellen(sortierterVector,urkundenFenster.zeile1Area.getText(),urkundenFenster.zeile2Area.getText());
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
@@ -606,163 +608,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}
 
 		this.repaint();
-	}
-
-
-	public void sortieren(boolean ab,boolean bm,int lokRunde){
-		//System.out.println(lokRunde);
-		KTeilnehmer t;
-		//Primär und Sekundärpunkte für alle berechnen
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			t.primaer=0;
-			t.sekundaer=0;
-			t.primaerEinzel=0;
-			t.sekundaerEinzel=0;
-			t.sos=0;
-			t.sosos=0;
-			t.platzGruppe=-1;
-			t.platz=0;
-			//System.out.println(t.vorname+" Anzahl der Paarungen: "+t.paarungen.size());
-			for(int j=1;j<=rundenZaehler;j++){
-				//for(int j=0;j<t.paarungen.size();j++){
-				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
-					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-						t.primaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1pri;
-						if(optionenFeld.PSS.isSelected()){
-							t.sekundaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek;
-						} else if(optionenFeld.TS.isSelected()){
-							t.sekundaer+=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p1sek-((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2sek;
-						}
-					}
-				}
-			}
-
-			t.primaerEinzel=t.primaer;
-			t.sekundaerEinzel=t.sekundaer;
-
-			if(ab){
-				if(optionenFeld.armeePri.isSelected()){
-					t.primaer+=t.armeeliste;
-				}
-				if(optionenFeld.armeeSek.isSelected()){
-					t.sekundaer+=t.armeeliste;
-				}
-			}
-			if(bm){
-				if(optionenFeld.bemalPri.isSelected()){
-					t.primaer+=t.bemalwertung;
-				}
-				if(optionenFeld.bemalSek.isSelected()){
-					t.sekundaer+=t.bemalwertung;
-				}
-			}
-		}
-		//Strength of schedule berechnen
-		//calcStrengthOfSchedule(lokRunde);
-
-		//SOS berechnen
-		calcOS(lokRunde);
-
-		//SOSOS berechnen
-		calcOOS(lokRunde);
-
-		//veiovisScore berechnen
-		if(optionenFeld.RPI.isSelected()){
-			calcVeiovis(lokRunde);
-		}
-
-		//Sortiern nach primär
-		sortierterVector.clear();
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			if(t.deleted==false){
-				int j=0;
-				if(optionenFeld.RPI.isSelected()){
-					while(j<sortierterVector.size() && t.rpi>sortierterVector.get(j).rpi){
-						//System.out.println(t.rpi +">"+ sortierterVector.get(j).rpi + " ? "+ (t.rpi>sortierterVector.get(j).rpi));
-						j++;
-					}
-				}
-				else{
-					while(j<sortierterVector.size()&&t.primaer>sortierterVector.get(j).primaer){
-						j++;
-					}
-					//Sortieren nach Sekundär
-					while(j<sortierterVector.size()&&t.primaer==sortierterVector.get(j).primaer&&teilnehmerVector.get(i).sekundaer>sortierterVector.get(j).sekundaer){
-						j++;
-					}
-					//Sortieren nach sos
-					if(optionenFeld.PSS.isSelected()){
-						while(j<sortierterVector.size()&&t.primaer==sortierterVector.get(j).primaer&&t.sekundaer==sortierterVector.get(j).sekundaer&&t.sos>sortierterVector.get(j).sos){
-							j++;
-						}
-					}
-				}
-				sortierterVector.insertElementAt(t,j);	
-			}
-		}
-
-		//Platzgruppen berechnen
-		platzgruppe=-1;
-		platzGruppe.clear();
-		for(int i=1;i<sortierterVector.size();i++){
-			KTeilnehmer t1=sortierterVector.get(i);
-			KTeilnehmer t2=sortierterVector.get(i-1);
-			if(optionenFeld.RPI.isSelected()){
-				if(t1.rpi==t2.rpi){
-					if(t2.platzGruppe==-1){
-						platzgruppe++;
-						t2.platzGruppe=platzgruppe;
-						t1.platzGruppe=platzgruppe;
-						platzGruppe.add(new Vector<KTeilnehmer>());
-						platzGruppe.get(platzgruppe).add(t2);
-						platzGruppe.get(platzgruppe).add(t1);
-					} else{
-						t1.platzGruppe=t2.platzGruppe;
-						platzGruppe.get(platzgruppe).add(t1);
-					}
-				}
-			}else if(optionenFeld.PSS.isSelected()){
-				if(t1.primaer==t2.primaer && t1.sekundaer==t2.sekundaer && t1.sos==t2.sos){
-					if(t2.platzGruppe==-1){
-						platzgruppe++;
-						t2.platzGruppe=platzgruppe;
-						t1.platzGruppe=platzgruppe;
-						platzGruppe.add(new Vector<KTeilnehmer>());
-						platzGruppe.get(platzgruppe).add(t2);
-						platzGruppe.get(platzgruppe).add(t1);
-					} else{
-						t1.platzGruppe=t2.platzGruppe;
-						platzGruppe.get(platzgruppe).add(t1);
-					}
-				} 
-			}else if(optionenFeld.TS.isSelected()){
-				if(t1.primaer==t2.primaer && t1.sekundaer==t2.sekundaer){
-					if(t2.platzGruppe==-1){
-						platzgruppe++;
-						t2.platzGruppe=platzgruppe;
-						t1.platzGruppe=platzgruppe;
-						platzGruppe.add(new Vector<KTeilnehmer>());
-						platzGruppe.get(platzgruppe).add(t2);
-						platzGruppe.get(platzgruppe).add(t1);
-					} else{
-						t1.platzGruppe=t2.platzGruppe;
-						platzGruppe.get(platzgruppe).add(t1);
-					}
-				} 
-			}
-		}
-		//Plätze eintragen
-
-		for(int i=sortierterVector.size()-1;i>=0;i--){
-			if(i<sortierterVector.size()-1 && sortierterVector.get(i).platzGruppe>-1 && sortierterVector.get(i).platzGruppe==sortierterVector.get(i+1).platzGruppe){
-				sortierterVector.get(i).platz=sortierterVector.get(i+1).platz;
-			} else{
-				sortierterVector.get(i).platz=sortierterVector.size()-i;
-			}
-			sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
-		}
 	}
 
 	public void sortierenVar(boolean ab,boolean bm,int lokRunde){
@@ -1200,11 +1045,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		if(arg0.getSource()==p12Field || arg0.getSource()==p22Field){
-			if(optionenFeld.TS.isSelected() && optionenFeld.matrixBenutzen.isSelected()){
+		if(arg0.getSource()==p1sekField || arg0.getSource()==p2sekField){
+			if(optionenFeldVar.sPunkte.isSelected() && optionenFeldVar.matrixBenutzen.isSelected()){
 				try{
-					p1Field.setText(""+matrix.getTP(Integer.parseInt(p12Field.getText())-Integer.parseInt(p22Field.getText())));
-					p2Field.setText(""+matrix.getTP(Integer.parseInt(p22Field.getText())-Integer.parseInt(p12Field.getText())));
+					p1priField.setText(""+matrix.getTP(Integer.parseInt(p1sekField.getText())-Integer.parseInt(p2sekField.getText())));
+					p2priField.setText(""+matrix.getTP(Integer.parseInt(p2sekField.getText())-Integer.parseInt(p1sekField.getText())));
 
 				}catch(NumberFormatException e){
 

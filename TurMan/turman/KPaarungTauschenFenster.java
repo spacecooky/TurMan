@@ -228,16 +228,16 @@ public class KPaarungTauschenFenster extends JFrame implements ActionListener, I
 			errorPaarungNeu1.append("Paarung existiert bereits\r\n");
 			ok.setEnabled(false);
 		}
-		if(hf.optionenFeld.armeen.isSelected() && bg1Neu.armee()){
+		if(hf.optionenFeldVar.armeen.isSelected() && bg1Neu.armee()){
 			errorPaarungNeu1.append("Erneutes Spiel gegen die gleiche Armee\r\n");
 		}
-		if(hf.optionenFeld.mirror.isSelected() && bg1Neu.mirror()){
+		if(hf.optionenFeldVar.mirror.isSelected() && bg1Neu.mirror()){
 			errorPaarungNeu1.append("Mirrormatch\r\n");
 		}
-		if(hf.optionenFeld.orte.isSelected() && bg1Neu.ort()){
+		if(hf.optionenFeldVar.orte.isSelected() && bg1Neu.ort()){
 			errorPaarungNeu1.append("Spiel gegen Person aus dem gleichen Ort\r\n");
 		}
-		if(hf.optionenFeld.teams.isSelected() && bg1Neu.team()){
+		if(hf.optionenFeldVar.teams.isSelected() && bg1Neu.team()){
 			errorPaarungNeu1.append("Teamschutz\r\n");
 		}
 		
@@ -249,16 +249,16 @@ public class KPaarungTauschenFenster extends JFrame implements ActionListener, I
 			errorPaarungNeu2.append("Paarung existiert bereits\r\n");
 			ok.setEnabled(false);
 		}
-		if(hf.optionenFeld.armeen.isSelected() && bg2Neu.armee()){
+		if(hf.optionenFeldVar.armeen.isSelected() && bg2Neu.armee()){
 			errorPaarungNeu2.append("Erneutes Spiel gegen die gleiche Armee\r\n");
 		}
-		if(hf.optionenFeld.mirror.isSelected() && bg2Neu.mirror()){
+		if(hf.optionenFeldVar.mirror.isSelected() && bg2Neu.mirror()){
 			errorPaarungNeu2.append("Mirrormatch\r\n");
 		}
-		if(hf.optionenFeld.orte.isSelected() && bg2Neu.ort()){
+		if(hf.optionenFeldVar.orte.isSelected() && bg2Neu.ort()){
 			errorPaarungNeu2.append("Spiel gegen Person aus dem gleichen Ort\r\n");
 		}
-		if(hf.optionenFeld.teams.isSelected() && bg2Neu.team()){
+		if(hf.optionenFeldVar.teams.isSelected() && bg2Neu.team()){
 			errorPaarungNeu2.append("Teamschutz\r\n");
 		}
 	}

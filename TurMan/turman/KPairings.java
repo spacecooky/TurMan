@@ -59,19 +59,19 @@ public class KPairings {
 						if(v.get(gegner).paired==-1){ //Der ausgewählte Gegner hat noch keine Paarung
 
 							//Prüfung, falls Teams beachtet werden sollen
-							if(hf.optionenFeld.teams.isSelected() && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
+							if(hf.optionenFeldVar.teams.isSelected() && !v.get(i).team.equals("") && v.get(i).team.equals(v.get(gegner).team)){
 								teamFailureBool=true;
 							}
 							//Prüfung, falls Mirrormatches beachtet werden sollen
-							if(hf.optionenFeld.mirror.isSelected() &&! v.get(i).armee.equals("") && v.get(i).armee.equals(v.get(gegner).armee)){
+							if(hf.optionenFeldVar.mirror.isSelected() &&! v.get(i).armee.equals("") && v.get(i).armee.equals(v.get(gegner).armee)){
 								mirrorFailureBool=true;
 							}
 							//Prüfung, falls Orte beachtet werden sollen
-							if(hf.optionenFeld.orte.isSelected() &&! v.get(i).ort.equals("") && v.get(i).ort.equals(v.get(gegner).ort)){
+							if(hf.optionenFeldVar.orte.isSelected() &&! v.get(i).ort.equals("") && v.get(i).ort.equals(v.get(gegner).ort)){
 								ortFailureBool=true;
 							}
 							//Prüfung, falls Armeen beachtet werden sollen
-							if(hf.optionenFeld.armeen.isSelected()){
+							if(hf.optionenFeldVar.armeen.isSelected()){
 								if(!v.get(gegner).armee.equals("")){
 									//for(int j=0;j<v.get(i).paarungen.size();j++){
 									for(int j=1;j<=hf.rundenZaehler;j++){
@@ -97,10 +97,10 @@ public class KPairings {
 							int gegnerNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
 							
 							if(!v.get(i).paarungen.containsValue(gegnerNmbr)&& // Es wurde noch nicht gegen diesen Gegner gespielt
-									(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeld.teamsField.getText())) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
-									(!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeld.mirrorField.getText())) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
-									(!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeld.orteField.getText())) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
-									(!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeld.armeenField.getText())) // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
+									(!teamFailureBool || teamFailures<Integer.parseInt(hf.optionenFeldVar.teamsField.getText())) &&// Es gibt keinen Konflikt bei den Teams der Spieler oder es ist eine bestimmte Anzahl erlaubt
+									(!mirrorFailureBool || mirrorFailures<Integer.parseInt(hf.optionenFeldVar.mirrorField.getText())) && // Es gibt keinen Konflikt bei Mirrormatches oder es ist eine bestimmte Anzahl erlaubt
+									(!ortFailureBool || ortFailures<Integer.parseInt(hf.optionenFeldVar.orteField.getText())) && // Es gibt keinen Konflikt mit Orten oder es ist eine bestimmte Anzahl erlaubt
+									(!armeeFailureBool || armeeFailures<Integer.parseInt(hf.optionenFeldVar.armeenField.getText())) // Es gibt keinen Konflikt mit Armeen oder es ist eine bestimmte Anzahl erlaubt
 									){ 
 								int tnNmbr=hf.teilnehmerVector.indexOf(v.get(i));
 								int ggNmbr=hf.teilnehmerVector.indexOf(v.get(gegner));
@@ -214,25 +214,25 @@ public class KPairings {
 					begegnungsPool.remove(b);
 					i=0;
 				}
-				if(hf.optionenFeld.armeen.isSelected()){
+				if(hf.optionenFeldVar.armeen.isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeld.mirror.isSelected()){
+				if(hf.optionenFeldVar.mirror.isSelected()){
 					if(b.mirror()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeld.orte.isSelected()){
+				if(hf.optionenFeldVar.orte.isSelected()){
 					if(b.ort()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeld.teams.isSelected()){
+				if(hf.optionenFeldVar.teams.isSelected()){
 					if(b.team()){
 						begegnungsPool.remove(b);
 						i=0;
@@ -304,7 +304,7 @@ public class KPairings {
 			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
 			//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
-			hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+			hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 			hf.rundenZaehler++;
 			while(!KPairings.createPairings(hf,hf.mode)){
 				if(hf.mode==KPairings.SWISS){
@@ -347,7 +347,7 @@ public class KPairings {
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
 					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
-					hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+					hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 				
@@ -365,7 +365,7 @@ public class KPairings {
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortieren(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+					hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
 					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
@@ -399,15 +399,15 @@ public class KPairings {
 		}
 		
 		//Prüfung, falls gleiche Tische beachtet werden sollen
-		if(hf.optionenFeld.tisch.isSelected()){
+		if(hf.optionenFeldVar.tisch.isSelected()){
 			//if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
 				
-			for(int i=0;i<((bgCount+1)*bgCount/2) && getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText());i++ ){
+			for(int i=0;i<((bgCount+1)*bgCount/2) && getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText());i++ ){
 				System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
 				repairTischFehler(hf);
 			//}
 			}
-			if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
+			if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText())){
 				hf.dialog.getInfoDialog(hf.dialog.infoTische);
 			}
 			System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));

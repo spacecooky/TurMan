@@ -114,12 +114,13 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		combo.setSelectedItem(hf.rundenAnzeige);
 		comboTab.setSelectedItem(hf.rundenAnzeige);
 		
-		JPanel tische = createPanel(body);
+		JPanel tische = createPanel(body,true);
 		tische.setMaximumSize(new Dimension((Toolkit.getDefaultToolkit().getScreenSize().width)/15,20000));
 		
-		JPanel begegnung = createPanel(body);
-		JPanel primär = createPanel(body);
-		JPanel sekundär = createPanel(body);
+		JPanel begegnung = createPanel(body,true);
+		JPanel primaer= createPanel(body,true);
+		JPanel sekundaer = createPanel(body,hf.optionenFeldVar.sPunkte.isSelected());
+		JPanel tertiaer = createPanel(body,hf.optionenFeldVar.tPunkte.isSelected());
 		
 		for(int i=0;i<hf.begegnungsVector.size();i++){
 			KBegegnungen bg = hf.begegnungsVector.get(i);
@@ -147,8 +148,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 				b1.setBorder(BorderFactory.createEtchedBorder());
 				b1.setFont(f);
 				
-				primär.add(createLabel(bg.p1pri+" : "+bg.p2pri,f));
-				sekundär.add(createLabel(bg.p1sek+" : "+bg.p2sek,f));
+				primaer.add(createLabel(bg.p1pri+" : "+bg.p2pri,f));
+				sekundaer.add(createLabel(bg.p1sek+" : "+bg.p2sek,f));
+				tertiaer.add(createLabel(bg.p1ter+" : "+bg.p2ter,f));
 			}
 		}
 		
@@ -157,8 +159,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 					
 					tische.setLayout(new GridLayout(16,1));
 					begegnung.setLayout(new GridLayout(16,1));
-					primär.setLayout(new GridLayout(16,1));
-					sekundär.setLayout(new GridLayout(16,1));
+					primaer.setLayout(new GridLayout(16,1));
+					sekundaer.setLayout(new GridLayout(16,1));
+					tertiaer.setLayout(new GridLayout(16,1));
 					
 					for(int i=15;i>0;i--){
 						JLabel label6 = new JLabel("");
@@ -170,11 +173,11 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 						label1.setBorder(BorderFactory.createEtchedBorder());
 						
 						JLabel label2 = new JLabel("");
-						primär.add(label2);
+						primaer.add(label2);
 						label2.setBorder(BorderFactory.createEtchedBorder());
 						
 						JLabel label3 = new JLabel("");
-						sekundär.add(label3);
+						sekundaer.add(label3);
 						label3.setBorder(BorderFactory.createEtchedBorder());
 					}
 				}
@@ -187,17 +190,15 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		header.add(createHeader("Tisch",f,tische));
 		header.add(createHeader("Begegnung",f,begegnung));
 		
-		if(hf.optionenFeld.PSS.isSelected()){	
-			header.add(createHeader("Primär",f,primär));
-		} else if(hf.optionenFeld.TS.isSelected()){	
-			header.add(createHeader("Turnierpunkte",f,primär));
-		}
+		header.add(createHeader("Primärpunkte",f,primaer));	
 		
-		if(hf.optionenFeld.PSS.isSelected()){
-			header.add(createHeader("Sekundär",f,primär));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			header.add(createHeader("Siegespunkte",f,primär));
-		}
+		if(hf.optionenFeldVar.sPunkte.isSelected()){
+			header.add(createHeader("Sekundärpunkte",f,sekundaer));
+		} 
+		
+		if(hf.optionenFeldVar.tPunkte.isSelected()){
+			header.add(createHeader("Tertiärpunkte",f,tertiaer));
+		} 
 
 		header.setBackground(Color.white);
 		sp.setColumnHeaderView(header);
@@ -267,10 +268,12 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		return l;
 	}
 	
-	public JPanel createPanel(JPanel punktePanel){
+	public JPanel createPanel(JPanel punktePanel, boolean b){
 		JPanel p = new JPanel() ;
 		p.setLayout(new GridLayout(hf.teilnehmerVector.size()/2,1));
-		punktePanel.add(p);
+		if(b){
+			punktePanel.add(p);
+		}
 		p.setBackground(Color.white);
 		return p;
 	}

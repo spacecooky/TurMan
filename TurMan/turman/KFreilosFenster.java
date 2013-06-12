@@ -31,22 +31,28 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 	JPanel p = new JPanel();
 	JTextField prim = new JTextField();
 	JTextField sek = new JTextField();
+	JTextField ter = new JTextField();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Hinzufügen");
 	
 	public void init(){
 		p.removeAll();
-		setSize(500,100);
-		p.setLayout(new GridLayout(3,2));
-		if(hf.optionenFeld.PSS.isSelected()){
-			p.add(new JLabel("Primärpunkte"));
+		setSize(600,100);
+		p.setLayout(new GridLayout(2+(hf.optionenFeldVar.sPunkte.isSelected()?1:0)+(hf.optionenFeldVar.tPunkte.isSelected()?1:0),2));
+		p.add(new JLabel("Primärpunkte"));
+		if(hf.optionenFeldVar.sPunkte.isSelected()){
 			p.add(new JLabel("Sekundärpunkte"));
-		} else if(hf.optionenFeld.TS.isSelected()){
-			p.add(new JLabel("Turnierpunkte"));
-			p.add(new JLabel("Siegespunkte"));
+		}
+		if(hf.optionenFeldVar.sPunkte.isSelected()){
+			p.add(new JLabel("Tertiärpunkte"));
 		}
 		p.add(prim);
-		p.add(sek);
+		if(hf.optionenFeldVar.sPunkte.isSelected()){
+			p.add(sek);
+		}
+		if(hf.optionenFeldVar.tPunkte.isSelected()){
+			p.add(ter);
+		}
 		p.add(cancel);
 		p.add(ok);
 		setVisible(true);

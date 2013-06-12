@@ -3,6 +3,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -167,10 +168,16 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		if(quelle==bestaetigung){
 
 			try{
-				p1pri=Integer.parseInt(khf.p1Field.getText());
-				p2pri=Integer.parseInt(khf.p2Field.getText());
-				p1sek=Integer.parseInt(khf.p12Field.getText());
-				p2sek=Integer.parseInt(khf.p22Field.getText());
+				p1pri=Integer.parseInt(khf.p1priField.getText());
+				p2pri=Integer.parseInt(khf.p2priField.getText());
+				if(khf.optionenFeldVar.sPunkte.isSelected()){
+					p1sek=Integer.parseInt(khf.p1sekField.getText());
+					p2sek=Integer.parseInt(khf.p2sekField.getText());
+				}
+				if(khf.optionenFeldVar.tPunkte.isSelected()){
+					p1ter=Integer.parseInt(khf.p1terField.getText());
+					p2ter=Integer.parseInt(khf.p2terField.getText());
+				}
 				setBackground(Color.green);
 				begegnungsFensterButton.setBackground(Color.gray);
 				begegnungsTabButton.setBackground(Color.gray);
@@ -197,22 +204,25 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			}catch(Exception e){}
 
 			khf.begegnungsFrame = new JFrame();
+			khf.begegnungsFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+			khf.begegnungsFrame.setTitle("Ergebnis");
 			khf.begegnungsFrame.setContentPane(khf.begegnungsPanel);
-			if(khf.optionenFeld.SUN.isSelected()){
-				khf.begegnungsPanel.setLayout(new GridLayout(5,4));
+			if(khf.optionenFeldVar.SUN.isSelected()){
+				khf.begegnungsPanel.setLayout(new GridLayout(5,3+(khf.optionenFeldVar.sPunkte.isSelected()?1:0)+(khf.optionenFeldVar.tPunkte.isSelected()?1:0)));
 			}else{
-				khf.begegnungsPanel.setLayout(new GridLayout(4,3));
+				khf.begegnungsPanel.setLayout(new GridLayout(4,2+(khf.optionenFeldVar.sPunkte.isSelected()?1:0)+(khf.optionenFeldVar.tPunkte.isSelected()?1:0)));
 			}
 
 			khf.begegnungsPanel.add(new JLabel(""));
-			if(khf.optionenFeld.PSS.isSelected() || khf.optionenFeld.RPI.isSelected()){
-				khf.begegnungsPanel.add(new JLabel("Primär"));
+			
+			khf.begegnungsPanel.add(new JLabel("Primär"));
+			if(khf.optionenFeldVar.sPunkte.isSelected()){
 				khf.begegnungsPanel.add(new JLabel("Sekundär"));
-			} else if(khf.optionenFeld.TS.isSelected()){
-				khf.begegnungsPanel.add(new JLabel("Turnierpunkte"));
-				khf.begegnungsPanel.add(new JLabel("Siegespunkte"));
 			}
-			if(khf.optionenFeld.SUN.isSelected()){
+			if(khf.optionenFeldVar.tPunkte.isSelected()){
+				khf.begegnungsPanel.add(new JLabel("Tertiär"));
+			}
+			if(khf.optionenFeldVar.SUN.isSelected()){
 				khf.begegnungsPanel.add(new JLabel("Sieger"));
 			}
 
@@ -220,89 +230,111 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			String nn1 = t1.nachnameAlter.equals("")?t1.nachname:t1.nachnameAlter;
 			khf.begegnungsPanel.add(khf.t1Label);
 			khf.t1Label.setText(vn1+" "+nn1);
-			khf.begegnungsPanel.add(khf.p1Field);
-			khf.p1Field.setText(Integer.toString(p1pri));
-			khf.begegnungsPanel.add(khf.p12Field);
-			khf.p12Field.setText(Integer.toString(p1sek));
-			if(khf.optionenFeld.SUN.isSelected()){
+			khf.begegnungsPanel.add(khf.p1priField);
+			khf.p1priField.setText(Integer.toString(p1pri));
+			if(khf.optionenFeldVar.sPunkte.isSelected()){
+				khf.begegnungsPanel.add(khf.p1sekField);
+				khf.p1sekField.setText(Integer.toString(p1sek));
+			}
+			if(khf.optionenFeldVar.tPunkte.isSelected()){
+				khf.begegnungsPanel.add(khf.p1terField);
+				khf.p1terField.setText(Integer.toString(p1sek));
+			}
+			if(khf.optionenFeldVar.SUN.isSelected()){
 				khf.begegnungsPanel.add(khf.siegP1);
 			}
-
+			
 			String vn2 = t2.vornameAlter.equals("")?t2.vorname:t2.vornameAlter;
 			String nn2 = t2.nachnameAlter.equals("")?t2.nachname:t2.nachnameAlter;
 			khf.begegnungsPanel.add(khf.t2Label);
 			khf.t2Label.setText(vn2+" "+nn2);
-			khf.begegnungsPanel.add(khf.p2Field);
-			khf.p2Field.setText(Integer.toString(p2pri));
-			khf.begegnungsPanel.add(khf.p22Field);
-			khf.p22Field.setText(Integer.toString(p2sek));
-			if(khf.optionenFeld.SUN.isSelected()){
+			khf.begegnungsPanel.add(khf.p2priField);
+			khf.p2priField.setText(Integer.toString(p2pri));
+			if(khf.optionenFeldVar.sPunkte.isSelected()){
+				khf.begegnungsPanel.add(khf.p2sekField);
+				khf.p2sekField.setText(Integer.toString(p1sek));
+			}
+			if(khf.optionenFeldVar.tPunkte.isSelected()){
+				khf.begegnungsPanel.add(khf.p2terField);
+				khf.p2terField.setText(Integer.toString(p1sek));
+			}
+			if(khf.optionenFeldVar.SUN.isSelected()){
 				khf.begegnungsPanel.add(khf.siegP2);
 			}
 
-			if(khf.optionenFeld.SUN.isSelected()){
+			if(khf.optionenFeldVar.SUN.isSelected()){
 				khf.begegnungsPanel.add(new JLabel(""));
 				khf.begegnungsPanel.add(new JLabel(""));
-				khf.begegnungsPanel.add(new JLabel(""));
+				if(khf.optionenFeldVar.sPunkte.isSelected()){
+					khf.begegnungsPanel.add(new JLabel(""));
+				}
+				if(khf.optionenFeldVar.tPunkte.isSelected()){
+					khf.begegnungsPanel.add(new JLabel(""));
+				}
 				khf.begegnungsPanel.add(khf.unentschieden);
 			}
 
 			khf.begegnungsPanel.add(new JLabel(""));
-			khf.begegnungsPanel.add(new JLabel(""));
-			if(khf.optionenFeld.SUN.isSelected()){
+			if(khf.optionenFeldVar.sPunkte.isSelected()){
+				khf.begegnungsPanel.add(new JLabel(""));
+			}
+			if(khf.optionenFeldVar.tPunkte.isSelected()){
+				khf.begegnungsPanel.add(new JLabel(""));
+			}
+			if(khf.optionenFeldVar.SUN.isSelected()){
 				khf.begegnungsPanel.add(new JLabel(""));
 			}
 			khf.begegnungsPanel.add(bestaetigung);
 			bestaetigung.addActionListener(this);
-			if(khf.optionenFeld.SUN.isSelected()){
-				khf.begegnungsFrame.setSize(500,150);
-				khf.p1Field.setEditable(false);
-				khf.p2Field.setEditable(false);
+			if(khf.optionenFeldVar.SUN.isSelected()){
+				khf.begegnungsFrame.setSize(600,175);
+				khf.p1priField.setEditable(false);
+				khf.p2priField.setEditable(false);
 			}else{
-				khf.begegnungsFrame.setSize(400,150);
-				khf.p1Field.setEditable(true);
-				khf.p2Field.setEditable(true);
+				khf.begegnungsFrame.setSize(500,150);
+				khf.p1priField.setEditable(true);
+				khf.p2priField.setEditable(true);
 			}
 			khf.unsichtbar.setSelected(true);
 			khf.begegnungsFrame.setVisible(true);
 		}else if(quelle==khf.siegP1){
-			if(khf.optionenFeld.SUN20_10_1.isSelected()){
-				khf.p1Field.setText("20");
-				khf.p2Field.setText("1");
-			} else if(khf.optionenFeld.SUN3_1_0.isSelected()){
-				khf.p1Field.setText("3");
-				khf.p2Field.setText("0");
-			} else if(khf.optionenFeld.SUN2_1_0.isSelected()){
-				khf.p1Field.setText("2");
-				khf.p2Field.setText("0");
-			} else if(khf.optionenFeld.SUN_frei.isSelected()){
-				khf.p1Field.setText(khf.optionenFeld.SUN_S.getText());
-				khf.p2Field.setText(khf.optionenFeld.SUN_N.getText());
+			if(khf.optionenFeldVar.SUN20_10_1.isSelected()){
+				khf.p1priField.setText("20");
+				khf.p2priField.setText("1");
+			} else if(khf.optionenFeldVar.SUN3_1_0.isSelected()){
+				khf.p1priField.setText("3");
+				khf.p2priField.setText("0");
+			} else if(khf.optionenFeldVar.SUN2_1_0.isSelected()){
+				khf.p1priField.setText("2");
+				khf.p2priField.setText("0");
+			} else if(khf.optionenFeldVar.SUN_frei.isSelected()){
+				khf.p1priField.setText(khf.optionenFeldVar.SUN_S.getText());
+				khf.p2priField.setText(khf.optionenFeldVar.SUN_N.getText());
 			}
 		}else if(quelle==khf.siegP2){
-			if(khf.optionenFeld.SUN20_10_1.isSelected()){
-				khf.p2Field.setText("20");
-				khf.p1Field.setText("1");
-			} else if(khf.optionenFeld.SUN3_1_0.isSelected()){
-				khf.p2Field.setText("3");
-				khf.p1Field.setText("0");
-			} else if(khf.optionenFeld.SUN2_1_0.isSelected()){
-				khf.p2Field.setText("2");
-				khf.p1Field.setText("0");
-			} else if(khf.optionenFeld.SUN_frei.isSelected()){
-				khf.p2Field.setText(khf.optionenFeld.SUN_S.getText());
-				khf.p1Field.setText(khf.optionenFeld.SUN_N.getText());
+			if(khf.optionenFeldVar.SUN20_10_1.isSelected()){
+				khf.p2priField.setText("20");
+				khf.p1priField.setText("1");
+			} else if(khf.optionenFeldVar.SUN3_1_0.isSelected()){
+				khf.p2priField.setText("3");
+				khf.p1priField.setText("0");
+			} else if(khf.optionenFeldVar.SUN2_1_0.isSelected()){
+				khf.p2priField.setText("2");
+				khf.p1priField.setText("0");
+			} else if(khf.optionenFeldVar.SUN_frei.isSelected()){
+				khf.p2priField.setText(khf.optionenFeldVar.SUN_S.getText());
+				khf.p1priField.setText(khf.optionenFeldVar.SUN_N.getText());
 			}
 		}else if(quelle==khf.unentschieden){
-			if(khf.optionenFeld.SUN20_10_1.isSelected()){
-				khf.p2Field.setText("10");
-				khf.p1Field.setText("10");
-			} else if(khf.optionenFeld.SUN3_1_0.isSelected() || khf.optionenFeld.SUN2_1_0.isSelected()){
-				khf.p2Field.setText("1");
-				khf.p1Field.setText("1");
-			} else if(khf.optionenFeld.SUN_frei.isSelected()){
-				khf.p2Field.setText(khf.optionenFeld.SUN_U.getText());
-				khf.p1Field.setText(khf.optionenFeld.SUN_U.getText());
+			if(khf.optionenFeldVar.SUN20_10_1.isSelected()){
+				khf.p2priField.setText("10");
+				khf.p1priField.setText("10");
+			} else if(khf.optionenFeldVar.SUN3_1_0.isSelected() || khf.optionenFeldVar.SUN2_1_0.isSelected()){
+				khf.p2priField.setText("1");
+				khf.p1priField.setText("1");
+			} else if(khf.optionenFeldVar.SUN_frei.isSelected()){
+				khf.p2priField.setText(khf.optionenFeldVar.SUN_U.getText());
+				khf.p1priField.setText(khf.optionenFeldVar.SUN_U.getText());
 			}
 		}
 	}
