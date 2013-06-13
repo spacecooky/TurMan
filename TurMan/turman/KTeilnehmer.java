@@ -54,13 +54,10 @@ public class KTeilnehmer implements ActionListener {
 	int ntr;
 	
 	int primaer=0;
-	int primaerEinzel=0;
 	int sekundaer=0;
 	int sekundaerDiff=0;
-	int sekundaerEinzel=0;
 	int tertiaer=0;
 	int tertiaerDiff=0;
-	int tertiaerEinzel=0;
 	int sos=0;
 	int sosos=0;
 	int sos_sog=0;

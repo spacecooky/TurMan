@@ -623,6 +623,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t.tertiaerDiff=0;
 			t.sos=0;
 			t.sosos=0;
+			t.sos_sog=0;
+			t.sosos_sog=0;
+			t.rpi=0;
+			t.strengthOfSchedulde=0;
 			t.platzGruppe=-1;
 			t.platz=0;
 			for(int j=1;j<=rundenZaehler;j++){
@@ -638,24 +642,35 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 
 		}
-		//Strength of schedule berechnen
-		if(optionenFeldVar.pStrength.isSelected() || optionenFeldVar.sStrength.isSelected() || optionenFeldVar.tStrength.isSelected()){
-			calcStrengthOfScheduleVar(lokRunde);
-		}
+		
+		boolean strength= optionenFeldVar.pStrength.isSelected() || optionenFeldVar.sStrength.isSelected() || optionenFeldVar.tStrength.isSelected();
+		boolean rpi= optionenFeldVar.pRPI.isSelected() || optionenFeldVar.sRPI.isSelected() || optionenFeldVar.tRPI.isSelected();
+		boolean sos = optionenFeldVar.sSOS.isSelected() || optionenFeldVar.tSOS.isSelected();
+		boolean soos = optionenFeldVar.sSOOS.isSelected() || optionenFeldVar.tSOOS.isSelected();
+		
+		
 
 		//SOS berechnen
-		if(optionenFeldVar.sSOS.isSelected() || optionenFeldVar.tSOS.isSelected()){
-			calcOSVar(lokRunde);
+		if(sos || rpi){
+			calcOS(lokRunde);
 		}
 
 		//SOSOS berechnen
-		if(optionenFeldVar.sSOOS.isSelected() || optionenFeldVar.tSOOS.isSelected()){
+		if(soos || rpi){
 			calcOOS(lokRunde);
 		}
 
 		//veiovisScore berechnen
-		if(optionenFeldVar.pRPI.isSelected() || optionenFeldVar.sRPI.isSelected() || optionenFeldVar.tRPI.isSelected()){
-			calcVeiovisVar(lokRunde);
+		if(rpi){
+			calcVeiovis(lokRunde);
+			System.out.println();
+		}
+		
+		//Strength of schedule berechnen
+		if(strength){
+			calcOS_SOG(lokRunde);
+			calcOOS_SOG(lokRunde);
+			calcStrengthOfSchedule(lokRunde);
 		}
 
 		//Zuweisung der Wertungen
@@ -789,25 +804,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
 		}
 	}
-
-	public void calcOS_SOG(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
-		KTeilnehmer t;
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			//for(int j=0;j<t.paarungen.size();j++){
-			for(int j=1;j<=rundenZaehler;j++){
-				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
-					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-						int diff=((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).p2pri;//gegnerische Punkte des eigenen Spiels
-						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaerEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
-						t.sos_sog += (allSOS-diff);
-					}
-				}
-			}
-		}
-	}
 	
-	public void calcOS_SOGVar(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
+	public void calcOS_SOG(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
@@ -823,24 +821,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		}
 	}
-
-	public void calcOS(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
-		KTeilnehmer t;
-		for(int i=0;i<teilnehmer;i++){
-			t=teilnehmerVector.get(i);
-			//for(int j=0;j<t.paarungen.size();j++){
-			for(int j=1;j<=rundenZaehler;j++){
-				if(t.paarungen.get(j)!=null){//Bei Hash. Bei Vector entfernen
-					if(((KBegegnungen)((JPanel)HauptPanel.getComponent(i)).getComponent(t.paarungen.get(j))).runde<=lokRunde){
-						int allSOS=teilnehmerVector.get(t.paarungen.get(j)).primaerEinzel;//Werden abgezogen, da nur die Spiele gegen andere Spieler eingerechnet werden sollen
-						t.sos += allSOS;
-					}
-				}
-			}
-		}
-	}
 	
-	public void calcOSVar(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
+	public void calcOS(int lokRunde){//Punkte der Gegner mit den Spielen gegen den Spieler selbst
 		KTeilnehmer t;
 		for(int i=0;i<teilnehmer;i++){
 			t=teilnehmerVector.get(i);
@@ -887,26 +869,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 		}
 	}
-
-	public void calcVeiovis(int lokRunde){
-		if(lokRunde>0){
-			KTeilnehmer t;
-			for(int i=0;i<teilnehmer;i++){
-				t=teilnehmerVector.get(i);
-
-				t.rpi = t.primaerEinzel*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) 
-						+ (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
-						+ (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
-
-				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primaerEinzel+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
-			}
-		}
-	}
 	
-	public void calcVeiovisVar(int lokRunde){
-		calcOSVar(lokRunde);
-		calcOOS(lokRunde);
-		
+	public void calcVeiovis(int lokRunde){
 		if(lokRunde>0){
 			KTeilnehmer t;
 			for(int i=0;i<teilnehmer;i++){
@@ -916,32 +880,16 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 						+ (t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5 
 						+ (t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3;
 
-				System.out.println("RPI: "+t.rpi+ " Primär: "+t.primaer+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+				System.out.println(t.vorname+" "+t.nachname+": RPI_gesamt: "+t.rpi);
+				System.out.println("RPI_pri("+(t.primaer)+"): "+(t.primaer*0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)) ));
+				System.out.println("RPI_sos("+(t.sos)+"): "+((t.sos/lokRunde)*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/1.5));
+				System.out.println("RPI_soos("+(t.sosos)+"): "+((t.sosos/(lokRunde*lokRunde))*(1-0.25*(lokRunde*Math.sqrt(lokRunde)+3)/(lokRunde*Math.sqrt(lokRunde)))/3));
+				
 			}
 		}
-	}
-
-	public void calcStrengthOfSchedule(int lokRunde){
-		calcOS_SOG(lokRunde);
-		calcOOS_SOG(lokRunde);
-
-		if(lokRunde>0){
-			KTeilnehmer t;
-			for(int i=0;i<teilnehmer;i++){
-				t=teilnehmerVector.get(i);
-
-				t.strengthOfSchedulde = (double)t.primaerEinzel/3.0 + (double)t.sos_sog/6.0 + (double)t.sosos_sog/18.0;
-
-				System.out.println("Strength of Schedule: "+t.strengthOfSchedulde+ " Primär: "+t.primaerEinzel+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
-			}
-		}
-
 	}
 	
-	public void calcStrengthOfScheduleVar(int lokRunde){
-		calcOS_SOGVar(lokRunde);
-		calcOOS_SOG(lokRunde);
-
+	public void calcStrengthOfSchedule(int lokRunde){
 		if(lokRunde>0){
 			KTeilnehmer t;
 			for(int i=0;i<teilnehmer;i++){
