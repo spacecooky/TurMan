@@ -372,9 +372,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			hf.rundenAnzeige= comboTab.getSelectedIndex();
 			hf.updatePanels();
 		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
-			hf.pdf.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige);
+			hf.pdf.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){
-			hf.txt.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige);
+			hf.txt.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		}
 	}
 	

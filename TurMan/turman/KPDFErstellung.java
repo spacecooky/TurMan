@@ -28,7 +28,7 @@ public class KPDFErstellung {
 	Font bold = FontFactory.getFont("Courier", 8,Font.BOLD);
 	Font title = FontFactory.getFont("Courier", 14,Font.BOLD);
 
-	public void tabelleAnzeigen(Vector<KTeilnehmer> tV, int runde){
+	public void tabelleAnzeigen(Vector<KTeilnehmer> tV, int runde, KOptionenFeld of){
 
 		Document document = new Document();
 		document.setMargins(55, 55, 20, 40);
@@ -41,8 +41,19 @@ public class KPDFErstellung {
 			tabelle.setNumberDepth(0);
 			tabelle.add(Chunk.NEWLINE);
 
-			float[] widths2 = {0.1f, 0.6f, 0.1f, 0.1f, 0.1f};
-			PdfPTable table2 = new PdfPTable(widths2);
+			
+			float[] widthsP = {0.1f, 0.6f, 0.1f};
+			float[]	widthsPS = {0.1f, 0.6f, 0.1f, 0.1f};
+			float[]	widthsPST = {0.1f, 0.6f, 0.1f, 0.1f, 0.1f};
+			
+			PdfPTable table2 = new PdfPTable(widthsPST);
+			
+			if(of.sKeine.isSelected()){
+				table2 = new PdfPTable(widthsP);
+			} else if(of.tKeine.isSelected()){
+				table2 = new PdfPTable(widthsPS);
+			}
+			
 			tabelle.add(table2);
 			table2.setTotalWidth(document.getPageSize().width()-110);
 			table2.setLockedWidth(true);
@@ -50,24 +61,71 @@ public class KPDFErstellung {
 
 			PdfPCell cellHeader1 = new PdfPCell(new Phrase("Platz",bold));
 			PdfPCell cellHeader2 = new PdfPCell(new Phrase("Spieler",bold));
-			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Primär",bold));
-			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär",bold));
-			PdfPCell cellHeader6 = new PdfPCell(new Phrase("SOS",bold));
-
 			table2.addCell(cellHeader1);
 			table2.addCell(cellHeader2);
-			table2.addCell(cellHeader4);
-			table2.addCell(cellHeader5);
-			table2.addCell(cellHeader6);
+			
+			//Kopfzeile Primär
+			if(of.pPunkte.isSelected()){
+				PdfPCell cellHeader4 = new PdfPCell(new Phrase("Primär",bold));
+				table2.addCell(cellHeader4);
+			} else if(of.pRPI.isSelected()){
+				PdfPCell cellHeader4 = new PdfPCell(new Phrase("Primär (RPI)",bold));
+				table2.addCell(cellHeader4);;
+			} else if(of.pStrength.isSelected()){
+				PdfPCell cellHeader4 = new PdfPCell(new Phrase("Primär (Strenght of Schedule)",bold));
+				table2.addCell(cellHeader4);
+			}
+			
+			
+			//Kopfzeile Sekundär
+			if(of.sPunkte.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär",bold));
+				table2.addCell(cellHeader5);
+			} else if(of.sRPI.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (RPI)",bold));
+				table2.addCell(cellHeader5);
+			} else if(of.sStrength.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (Strenght of Schedule)",bold));
+				table2.addCell(cellHeader5);
+			} else if(of.sSOS.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (SOS)",bold));
+				table2.addCell(cellHeader5);
+			} else if(of.sSOOS.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (SOOS)",bold));
+				table2.addCell(cellHeader5);
+			} 
+				
+			//Kopfzeile Teriär
+			if(of.tPunkte.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("SOS",bold));
+				table2.addCell(cellHeader6);
+			} else if(of.tRPI.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("Tertiär (RPI)",bold));
+				table2.addCell(cellHeader6);
+			} else if(of.tStrength.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("Tertiär (Strenght of Schedule)",bold));
+				table2.addCell(cellHeader6);
+			} else if(of.tSOS.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("Tertiär (SOS)",bold));
+				table2.addCell(cellHeader6);
+			} else if(of.tSOOS.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("Tertiär (SOOS)",bold));
+				table2.addCell(cellHeader6);
+			}
+			
 
 			table2.setHeaderRows(1);
 
-			for(int i=0; i<tV.size();i++){
+			for(int i=tV.size()-1; i>=0;i--){
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).platz,normal)));
 				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).vorname+" "+tV.get(i).nachname,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).primaer,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sekundaer,normal)));
-				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).sos,normal)));
+				table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).erstwertung,normal)));
+				if(!of.sKeine.isSelected()){
+					table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).zweitwertung,normal)));
+				}
+				if(!of.tKeine.isSelected()){
+					table2.addCell(new PdfPCell(new Phrase(""+tV.get(i).drittwertung,normal)));
+				}
 			}
 
 

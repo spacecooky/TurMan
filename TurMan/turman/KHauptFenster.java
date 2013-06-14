@@ -47,6 +47,7 @@ import javax.swing.JTextField;
  * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
+ * TODO Paarung nach NTR in der ersten Runde
  * @author jk
  *
  */

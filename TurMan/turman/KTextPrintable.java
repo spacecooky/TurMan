@@ -7,7 +7,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 /**
- * Dient dem Drucken des Meldungsspeichers. 
+ * Dient dem Drucken der Punkte/Begegnungen. 
  * @author jk
  *
  */

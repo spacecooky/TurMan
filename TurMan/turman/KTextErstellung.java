@@ -1,23 +1,74 @@
 ﻿package turman;
 
 import java.awt.Desktop;
+import java.awt.FontMetrics;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
 
 /**
- * Dient dem Drucken des Meldungsspeichers. 
+ * Dient dem Drucken der Punkte/Begegnungen. 
  * @author jk
  *
  */
 public class KTextErstellung{
 
-	public void tabelleAnzeigen(Vector<KTeilnehmer> tV, int runde){
+	public void tabelleAnzeigen(Vector<KTeilnehmer> tV, int runde, KOptionenFeld of){
 
 		File f = new File("tabelle.txt");
 		FileWriter fw;
 		try {
+			
+			String kopfPrim="";
+			//Kopfzeile Primär
+			if(of.pPunkte.isSelected()){
+				kopfPrim="Primär";
+			} else if(of.pRPI.isSelected()){
+				kopfPrim="Primär (RPI)";
+			} else if(of.pStrength.isSelected()){
+				kopfPrim="Primär (Strenght of Schedule)";
+			}
+			String kopfSek="";
+			//Kopfzeile Sekundär
+			if(of.sPunkte.isSelected()){
+				kopfSek="Sekundär";
+			} else if(of.sRPI.isSelected()){
+				kopfSek="Sekundär (RPI)";
+			} else if(of.sStrength.isSelected()){
+				kopfSek="Sekundär (Strenght of Schedule)";
+			} else if(of.sSOS.isSelected()){
+				kopfSek="Sekundär (SOS)";
+			} else if(of.sSOOS.isSelected()){
+				kopfSek="Sekundär (SOOS)";
+			} 
+			String kopfTer="";
+			//Kopfzeile Teriär
+			if(of.tPunkte.isSelected()){
+				kopfTer="Tertiär";
+			} else if(of.tRPI.isSelected()){
+				kopfTer="Tertiär (RPI)";
+			} else if(of.tStrength.isSelected()){
+				kopfTer="Tertiär (Strenght of Schedule)";
+			} else if(of.tSOS.isSelected()){
+				kopfTer="Tertiär (SOS)";
+			} else if(of.tSOOS.isSelected()){
+				kopfTer="Tertiär (SOOS)";
+			} 
+			
+			//Max Längenberechnungen
+			int nameWidth = 4;
+			int primWidth = kopfPrim.length();
+			int sekWidth = kopfSek.length();
+			int terWidth = kopfTer.length();
+			for (int i=0;i<tV.size();i++){
+				KTeilnehmer t=tV.get(i);
+				nameWidth=((t.vorname+" "+t.nachname).length()>nameWidth)?(t.vorname+" "+t.nachname).length():nameWidth;
+				primWidth=((""+t.erstwertung).length()>primWidth)?((""+t.erstwertung)).length():primWidth;
+				sekWidth=((""+t.zweitwertung).length()>sekWidth)?((""+t.zweitwertung)).length():sekWidth;
+				terWidth=((""+t.drittwertung).length()>terWidth)?((""+t.drittwertung)).length():terWidth;
+			}
+			
 			fw = new FileWriter(f);
 			////////////////////////////Überschrift ////////////////////////
 			fw.write("Tabelle Runde "+runde+"\r\n");
@@ -26,28 +77,25 @@ public class KTextErstellung{
 
 			String platz="Platz";
 			String name="Name";
-			String pri="Primär";
-			String sek="Sekundär";
-			String sos="SOS";
 
 			platz=laengeAnpassenVorne(platz, 6);
 			platz+="   ";
-			name = laengeAnpassenHinten(name, 50);
-			pri  = laengeAnpassenHinten(pri, 9);
-			sek  = laengeAnpassenHinten(sek, 9);
-			sos = laengeAnpassenHinten(sos, 9);
+			name = laengeAnpassenHinten(name, nameWidth+5);
+			kopfPrim  = laengeAnpassenHinten(kopfPrim, primWidth +5);
+			kopfSek  = laengeAnpassenHinten(kopfSek, sekWidth +5);
+			kopfTer = laengeAnpassenHinten(kopfTer, terWidth+5);
 
-			String nachricht=platz+name+pri+sek+sos;
+			String nachricht=platz+name+kopfPrim+(of.sKeine.isSelected()?"":kopfSek)+(of.tKeine.isSelected()?"":kopfTer);
 			fw.write(nachricht+"\r\n");
 
-			for (int i=0;i<tV.size();i++){
+			for (int i=tV.size()-1;i>=0;i--){
 				KTeilnehmer t=tV.get(i);
 				nachricht =laengeAnpassenVorne(Integer.toString(t.platz), 6);
 				nachricht+="   ";
-				nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, 50);
-				nachricht +=laengeAnpassenHinten(""+t.primaer,9);
-				nachricht +=laengeAnpassenHinten(""+t.sekundaer,9);
-				nachricht +=laengeAnpassenHinten(""+t.sos,9);
+				nachricht +=laengeAnpassenHinten(""+t.vorname+" "+t.nachname, nameWidth +5);
+				nachricht +=laengeAnpassenHinten(""+t.erstwertung,primWidth +5);
+				nachricht +=(of.sKeine.isSelected()?"":laengeAnpassenHinten(""+t.zweitwertung,sekWidth +5));
+				nachricht +=(of.tKeine.isSelected()?"":laengeAnpassenHinten(""+t.drittwertung,terWidth +5));
 				fw.write(nachricht+"\r\n");	
 			}
 			fw.close();
