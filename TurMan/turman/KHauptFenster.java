@@ -33,10 +33,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Freiere Festlegung der Primär-, Sekundär- und SOS-Punkte.
- * TODO Zusätzliche Punkte-Arten hinzufügen.
  * TODO Zusätzliche Turniermodi: Komplett zufällige Paarungen, KO-System
- * TODO Siegpunkte-Matrix für den Turnierpunkte-Siegpunkte-Modus
  * TODO Teamturniere:
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
@@ -50,7 +47,6 @@ import javax.swing.JTextField;
  * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
- * TODO Paarung tauschen (mit Warnung, ob es die Paarung bereits gab)
  * @author jk
  *
  */
@@ -64,10 +60,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		setSize(800,600);
-		setLocation(0, 500);
-		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		//setSize(800,600);
+		//setLocation(0, 500);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -86,18 +82,12 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
 		//Hauptbereich
 		tab.addTab("Matrix",null,sp);
-//		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
-//		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
-//		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
-//		tab.setBackground(Color.white);
-//		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
-//		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
-		tab.addTab("Punkte",null,punkteFensterVar.punktePanelTab);
+		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
 		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
-		punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
+		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		tab.setBackground(Color.white);
 		tab.addTab("Timer/Agenda",null,new JScrollPane(dynamischerTimerFeld));
-		punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
+		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		tab.setBackground(Color.white);
 		tab.addTab("Konfiguration",null,new JScrollPane(optionenFeldVar));
 		setContentPane(tab);
@@ -213,7 +203,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.23");
+	static String version=new String("V0.0.24");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -319,8 +309,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	//Fenster
 	KTeilnehmerFenster spielerFenster = new KTeilnehmerFenster(this);
-	//KPunkteFenster punkteFenster = new KPunkteFenster(this);
-	KPunkteFenster punkteFensterVar = new KPunkteFenster(this);
+	KPunkteFenster punkteFenster = new KPunkteFenster(this);
 	KEntfernenFenster entfernenFenster = new KEntfernenFenster(this);
 	KFreilosFenster freilosFenster = new KFreilosFenster(this);
 	KErweiternFenster erweiternFenster = new KErweiternFenster(this);
@@ -413,7 +402,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
 			//punkteFenster.init(null);
-			punkteFensterVar.init(null);
+			punkteFenster.init(null);
 		} else if(quelle == runde){
 			File f = new File(System.getProperty("user.dir")+"/autosaveRunde"+rundenZaehler+"Ende.sav");
 			KSpeicherverwaltung.speichern(this,f);
@@ -930,16 +919,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	public void updatePanels(){
 		validate();
-
-//		if(punkteFenster.isVisible()){
-//			punkteFenster.init(punkteFenster.getSize());
-//		} else{
-//			punkteFenster.updatePanel(punkteFenster.punktePanelTab);
-//		}
-		if(punkteFensterVar.isVisible()){
-			punkteFensterVar.init(punkteFensterVar.getSize());
+		if(punkteFenster.isVisible()){
+			punkteFenster.init(punkteFenster.getSize());
 		} else{
-			punkteFensterVar.updatePanel(punkteFensterVar.punktePanelTab);
+			punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		}
 
 		if(begegnungsFenster.isVisible()){

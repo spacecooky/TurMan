@@ -324,7 +324,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		Object src = arg0.getSource();
 		
 		if(src==pPunkte || src==pRPI || src==pStrength){
-			
+			hf.updatePanels();
 		}
 		else if(src==sPunkte || src==sRPI || src==sStrength || src==sSOS || src==sSOOS || src==sKeine){
 			if(src==sPunkte){
@@ -335,6 +335,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 				matrix.setEnabled(false);
 			}
 			if(src==sKeine){
+				System.out.println("sKeine");
 				bemalSek.setEnabled(false);
 				armeeSek.setEnabled(false);
 				if(bemalSek.isSelected()){
@@ -345,13 +346,21 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 					armeeSek.setSelected(false);
 					armeeNo.setSelected(true);
 				}
+
+				tKeine.doClick();
 			} else {
 				bemalSek.setEnabled(true);
 				armeeSek.setEnabled(true);
 			}
+			tPunkte.setEnabled(src!=sKeine);
+			tRPI.setEnabled(src!=sKeine);
+			tStrength.setEnabled(src!=sKeine);
+			tSOS.setEnabled(src!=sKeine);
+			tSOOS.setEnabled(src!=sKeine);
+			hf.updatePanels();
 		}
 		else if(src==tPunkte || src==tRPI || src==tStrength || src==tSOS || src==tSOOS || src==tKeine){
-			
+			hf.updatePanels();
 		}
 		else if(arg0.getSource()==matrix){
 			hf.matrix.init();
@@ -411,6 +420,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	public void addWertung(JPanel p, JRadioButton b, ButtonGroup bg){
 		p.add(b);
 		bg.add(b);
+		b.addActionListener(this);
 	}
 	
 }

@@ -196,6 +196,26 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 					if(((g.getFontMetrics(font).getHeight()+5)*hf.begegnungsVector.size()+50)<typPanel.getHeight()){
 						posVerschiebung=0;
 					}
+					
+					
+					//Max Längenberechnungen
+					FontMetrics fontMetrics = g.getFontMetrics();
+					int nameWidth = fontMetrics.stringWidth("Begegnung");
+					int primWidth = fontMetrics.stringWidth("Primär");
+					int sekWidth = fontMetrics.stringWidth("Sekundär");
+					int terWidth = fontMetrics.stringWidth("Tertiär");
+						for (int i=0;i<hf.begegnungsVector.size();i++){
+							KBegegnungen bg = hf.begegnungsVector.get(i);
+							if(bg.runde==hf.rundenZaehler){
+							KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
+							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
+							nameWidth=(fontMetrics.stringWidth(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname)>nameWidth)?(fontMetrics.stringWidth(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname)):nameWidth;
+							primWidth=(fontMetrics.stringWidth(bg.p1pri+" : "+bg.p2pri)>primWidth)?(fontMetrics.stringWidth(bg.p1pri+" : "+bg.p2pri)):primWidth;
+							sekWidth=(fontMetrics.stringWidth(bg.p1sek+" : "+bg.p2sek)>sekWidth)?(fontMetrics.stringWidth(bg.p1sek+" : "+bg.p2sek)):sekWidth;
+							terWidth=(fontMetrics.stringWidth(bg.p1ter+" : "+bg.p2ter)>terWidth)?(fontMetrics.stringWidth(bg.p1ter+" : "+bg.p2sek)):terWidth;
+						}
+					}
+					
 
 					for (int i=0;i<hf.begegnungsVector.size();i++){
 						KBegegnungen bg = hf.begegnungsVector.get(i);
@@ -204,8 +224,13 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1pri+" : "+bg.p2pri,900,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1sek+" : "+bg.p2sek,1050,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,230+nameWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							if(hf.optionenFeldVar.sPunkte.isSelected()){
+								g.drawString(bg.p1sek+" : "+bg.p2sek,260+nameWidth+primWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							}
+							if(hf.optionenFeldVar.tPunkte.isSelected()){
+								g.drawString(bg.p1ter+" : "+bg.p2ter,290+nameWidth+primWidth+sekWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							}
 						}
 					}
 
@@ -219,8 +244,13 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
 							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
 							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1pri+" : "+bg.p2pri,900,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1sek+" : "+bg.p2sek,1050,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,230+nameWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							if(hf.optionenFeldVar.sPunkte.isSelected()){
+								g.drawString(bg.p1sek+" : "+bg.p2sek,260+nameWidth+primWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							}
+							if(hf.optionenFeldVar.tPunkte.isSelected()){
+								g.drawString(bg.p1ter+" : "+bg.p2ter,290+nameWidth+primWidth+sekWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							}
 						}
 					}
 
@@ -229,8 +259,13 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 					g.setColor(Color.white);
 					g.drawString("Tisch",75,20);
 					g.drawString("Begegnung",200,20);
-					g.drawString("Primär",900,20);
-					g.drawString("Sekundär",1050,20);
+					g.drawString("Primär",230+nameWidth,20);
+					if(hf.optionenFeldVar.sPunkte.isSelected()){
+						g.drawString("Sekundär",260+nameWidth+primWidth,20);
+					}
+					if(hf.optionenFeldVar.tPunkte.isSelected()){
+						g.drawString("Tertär",290+nameWidth+primWidth+sekWidth,20);
+					}
 
 					if((newPosVerschiebung-startVal)<5 && (newPosVerschiebung-startVal)>-5){
 						posVerschiebung=(newPosVerschiebung-startVal);

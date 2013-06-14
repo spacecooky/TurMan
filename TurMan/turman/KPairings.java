@@ -304,7 +304,7 @@ public class KPairings {
 			hf.dialog.getErrorDialog(hf.dialog.errorUngerade);
 		}else{
 			//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
-			hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+			hf.sortierenVar(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 			hf.rundenZaehler++;
 			while(!KPairings.createPairings(hf,hf.mode)){
 				if(hf.mode==KPairings.SWISS){
@@ -347,7 +347,7 @@ public class KPairings {
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
 					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
-					hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+					hf.sortierenVar(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
 				
@@ -365,7 +365,7 @@ public class KPairings {
 					b2.setBackground(Color.green);
 					b2.begegnungsFensterButton.setBackground(Color.gray);
 					b2.begegnungsTabButton.setBackground(Color.gray);
-					hf.sortierenVar(hf.punkteFensterVar.ab.isSelected(),hf.punkteFensterVar.bm.isSelected(),hf.rundenZaehler);
+					hf.sortierenVar(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					//hf.sortieren(hf.punkteFenster.ab.isSelected(),hf.punkteFenster.bm.isSelected(),hf.rundenZaehler);
 					break;
 				}
