@@ -1,7 +1,6 @@
 ﻿package turman;
 
 import java.awt.Desktop;
-import java.awt.FontMetrics;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
