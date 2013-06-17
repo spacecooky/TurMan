@@ -149,7 +149,7 @@ public class KPDFErstellung {
 	}
 
 
-	public void begegnungenAnzeigen(Vector<KBegegnungen> bV,int runde){
+	public void begegnungenAnzeigen(Vector<KBegegnungen> bV,int runde, KOptionenFeld of){
 
 		//Document document = new Document(PageSize.A4, 55, 55, 40, 30);
 		Document document = new Document();
@@ -163,8 +163,15 @@ public class KPDFErstellung {
 			tabelle.setNumberDepth(0);
 			tabelle.add(Chunk.NEWLINE);
 
-			float[] widths2 = {0.1f, 0.7f, 0.1f, 0.1f};
-			PdfPTable table2 = new PdfPTable(widths2);
+			float[] widthsPST = {0.05f, 0.65f, 0.1f, 0.1f, 0.1f};
+			float[] widthsPS = {0.05f, 0.65f, 0.1f, 0.1f};
+			float[] widthsP = {0.05f, 0.65f, 0.1f};
+			PdfPTable table2 = new PdfPTable(widthsP);
+			if(of.tPunkte.isSelected()){
+				table2 = new PdfPTable(widthsPST);
+			}else if(of.sPunkte.isSelected()){
+				table2 = new PdfPTable(widthsPS);
+			}
 			tabelle.add(table2);
 			table2.setTotalWidth(document.getPageSize().width()-110);
 			table2.setLockedWidth(true);
@@ -173,12 +180,20 @@ public class KPDFErstellung {
 			PdfPCell cellHeader1 = new PdfPCell(new Phrase("Tisch",bold));
 			PdfPCell cellHeader2 = new PdfPCell(new Phrase("Begegnung",bold));
 			PdfPCell cellHeader4 = new PdfPCell(new Phrase("Primär",bold));
-			PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär",bold));
-
 			table2.addCell(cellHeader1);
 			table2.addCell(cellHeader2);
 			table2.addCell(cellHeader4);
-			table2.addCell(cellHeader5);
+			
+			if(of.sPunkte.isSelected()){
+				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär",bold));
+				table2.addCell(cellHeader5);
+			}
+			if(of.tPunkte.isSelected()){
+				PdfPCell cellHeader6 = new PdfPCell(new Phrase("Tertiär",bold));
+				table2.addCell(cellHeader6);
+			}
+
+			
 
 			table2.setHeaderRows(1);
 
@@ -187,7 +202,12 @@ public class KPDFErstellung {
 					table2.addCell(new PdfPCell(new Phrase(""+(bV.get(i).tisch+1),normal)));
 					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).t1.vorname+" "+bV.get(i).t1.nachname+" : "+bV.get(i).t2.vorname+" "+bV.get(i).t2.nachname,normal)));
 					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1pri+" : "+bV.get(i).p2pri,normal)));
-					table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1sek+" : "+bV.get(i).p2sek,normal)));
+					if(of.sPunkte.isSelected()){
+						table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1sek+" : "+bV.get(i).p2sek,normal)));
+					}
+					if(of.tPunkte.isSelected()){
+						table2.addCell(new PdfPCell(new Phrase(""+bV.get(i).p1ter+" : "+bV.get(i).p2ter,normal)));
+					}
 				}
 			}
 

@@ -245,9 +245,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 			hf.rundenAnzeige= comboTab.getSelectedIndex();
 			hf.updatePanels();
 		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
-			hf.pdf.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige);
+			hf.pdf.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){
-			hf.txt.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige);
+			hf.txt.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		}
 	}
 

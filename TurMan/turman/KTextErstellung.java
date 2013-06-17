@@ -114,39 +114,57 @@ public class KTextErstellung{
 
 
 
-	public void begegnungenAnzeigen(Vector<KBegegnungen> bV, int runde){
+	public void begegnungenAnzeigen(Vector<KBegegnungen> bV, int runde, KOptionenFeld of){
 
 		File f = new File("begegnung.txt");
 		FileWriter fw;
 		try {
 			fw = new FileWriter(f);
+			
+			int nameWidth = ("Begegnung").length();
+			int primWidth = ("Primär").length();
+			int sekWidth = ("Sekundär").length();
+			int terWidth = ("Tertiär").length();
+				for (int i=0;i<bV.size();i++){
+					KBegegnungen bg = bV.get(i);
+					if(bg.runde==runde){
+					KTeilnehmer tn1 = bg.t1;
+					KTeilnehmer tn2 = bg.t2;
+					nameWidth=(("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname).length()>nameWidth)?(("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname).length()):nameWidth;
+					primWidth=((bg.p1pri+" : "+bg.p2pri).length()>primWidth)?((bg.p1pri+" : "+bg.p2pri).length()):primWidth;
+					sekWidth=((bg.p1sek+" : "+bg.p2sek).length()>sekWidth)?((bg.p1sek+" : "+bg.p2sek).length()):sekWidth;
+					terWidth=((bg.p1ter+" : "+bg.p2ter).length()>terWidth)?((bg.p1ter+" : "+bg.p2ter).length()):terWidth;
+				}
+			}
+			
 			////////////////////////////Überschrift ////////////////////////
 			fw.write("Begegnungen Runde "+runde+"\r\n");
 			fw.write("\r\n");
 			String platz="Tisch";
-			String name="Begegnung";
+			String name="   "+"Begegnung";
 			String pri="Primär";
 			String sek="Sekundär";
+			String ter="Tertiär";
 
 			platz=laengeAnpassenVorne(platz, 6);
-			platz+="   ";
-			name = laengeAnpassenHinten(name, 70);
-			pri  = laengeAnpassenHinten(pri, 13);
-			sek  = laengeAnpassenHinten(sek, 13);
+			name = laengeAnpassenHinten(name, nameWidth+5);
+			pri  = laengeAnpassenHinten(pri, primWidth+5);
+			sek  = laengeAnpassenHinten(sek, sekWidth+5);
+			ter  = laengeAnpassenHinten(ter, terWidth+5);
 
-			String nachricht=platz+name+pri+sek;
+			String nachricht=platz+name+pri+(of.sPunkte.isSelected()?sek:"")+(of.tPunkte.isSelected()?ter:"");
 			fw.write(nachricht+"\r\n");
 
 			for (int i=0;i<bV.size();i++){
-
 				KBegegnungen bg = bV.get(i);
 				if(bg.runde==runde){
 					KTeilnehmer tn1 = bg.t1;
 					KTeilnehmer tn2 = bg.t2;
 					nachricht =laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6);
-					nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, 73);
-					nachricht +=laengeAnpassenHinten(""+bg.p1pri+" : "+bg.p2pri,13);
-					nachricht +=laengeAnpassenHinten(""+bg.p1sek+" : "+bg.p2sek,13);
+					nachricht +=laengeAnpassenHinten("   "+tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname, nameWidth+5);
+					nachricht +=laengeAnpassenHinten(""+bg.p1pri+" : "+bg.p2pri,primWidth+5);
+					nachricht +=of.sPunkte.isSelected()?laengeAnpassenHinten(""+bg.p1sek+" : "+bg.p2sek,sekWidth+5):"";
+					nachricht +=of.tPunkte.isSelected()?laengeAnpassenHinten(""+bg.p1ter+" : "+bg.p2ter,terWidth+5):"";
 					fw.write(nachricht+"\r\n");
 				}
 			}
