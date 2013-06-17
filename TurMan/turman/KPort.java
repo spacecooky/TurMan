@@ -23,7 +23,6 @@ public class KPort {
 			if(f!=null){
 				KSpeicherverwaltung.leeren(hf);
 				hf.gelöschteTeilnehmer=0;
-				hf.mode=KPairings.RANDOM;
 				//KPairings.team=true; //Haken muss manuell entfernt werden
 				hf.rundenZaehler=0;
 				hf.alleBegegnungenVector.clear();

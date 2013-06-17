@@ -178,9 +178,6 @@ public class KSpeicherverwaltung {
 				// TODO Fehlerdialog
 				System.err.println("rundenzähler nicht auslesbar");
 			}
-			if(hf.rundenZaehler>0){
-				hf.mode=KPairings.SWISS;
-			}
 
 			for(int i=0;i<hf.teilnehmerVector.size();i++){
 				if(hf.teilnehmerVector.get(i).deleted==true){
@@ -317,6 +314,12 @@ public class KSpeicherverwaltung {
 				fw.write("modus=ko\r\n");
 			}
 
+			if(hf.optionenFeldVar.r1ntr.isSelected()){
+				fw.write("runde1=ntr\r\n");
+			} else if(hf.optionenFeldVar.r1zufall.isSelected()){
+				fw.write("runde1=zufall\r\n");
+			}
+			
 			if(hf.optionenFeldVar.teams.isSelected()){
 				fw.write("teams="+hf.optionenFeldVar.teamsField.getText()+"\r\n");
 			}
@@ -546,7 +549,7 @@ public class KSpeicherverwaltung {
 						} else if(optval.equals("ter")){
 							hf.optionenFeldVar.armeeTer.setSelected(true);
 						} 
-					}else if(optname.equals("teams")){
+					} else if(optname.equals("teams")){
 						hf.optionenFeldVar.teams.setSelected(true);
 						hf.optionenFeldVar.teamsField.setText(optval);
 					} else if(optname.equals("orte")){
@@ -561,16 +564,20 @@ public class KSpeicherverwaltung {
 					} else if(optname.equals("tisch")){
 						hf.optionenFeldVar.tisch.setSelected(true);
 						hf.optionenFeldVar.tischField.setText(optval);
+					} else if(optname.equals("runde1")){
+						if(optval.equals("ntr")){
+							hf.optionenFeldVar.r1ntr.setSelected(true);
+						} else if(optval.equals("zufall")){
+							hf.optionenFeldVar.r1zufall.setSelected(true);
+						} 
 					}
 				}
 			}
-
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		ladenMatrix(hf);
 	}
 
@@ -593,7 +600,6 @@ public class KSpeicherverwaltung {
 	}
 
 	static void ladenMatrix(KHauptFenster hf){
-		hf.optionenFeldVar.clear();
 
 		String s ="";
 		int read;

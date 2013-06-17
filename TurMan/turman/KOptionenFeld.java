@@ -65,6 +65,10 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JTextField mirrorField = new JTextField("0");
 	JTextField tischField = new JTextField("0");
 	
+	JRadioButton r1ntr = new JRadioButton("NTR");
+	JRadioButton r1zufall = new JRadioButton("Zufall");
+	ButtonGroup r1Group = new ButtonGroup();
+	
 	//WertungsOptionen Erstwertung
 	JRadioButton pPunkte = new JRadioButton("Punkteeingabe (Primärpunkte)");
 	JRadioButton pRPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
@@ -165,33 +169,57 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new GridLayout(5,1));
+		/*p2.add(new JLabel("Ausnahmen:"));
 		p2.add(new JLabel("Ausnahmen:"));
 		p2.add(new JLabel("Ausnahmen:"));
 		p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));
+		p2.add(new JLabel("Ausnahmen:"));*/
+		p2.add(new JLabel());
+		p2.add(new JLabel());
+		p2.add(new JLabel());
+		p2.add(new JLabel());
+		p2.add(new JLabel());
 		
 		JPanel p3 = new JPanel();
 		p3.setLayout(new GridLayout(5,1));
-		p3.add(teamsField);
+		/*p3.add(teamsField);
 		p3.add(orteField);
 		p3.add(armeenField);
 		p3.add(mirrorField);
-		p3.add(tischField);
+		p3.add(tischField);*/
+		p3.add(new JLabel());
+		p3.add(new JLabel());
+		p3.add(new JLabel());
+		p3.add(new JLabel());
+		p3.add(new JLabel());
 		
 		
 		JPanel p9 = new JPanel();
 		p9.setLayout(new GridLayout(1,3));
+		p9.setBorder(BorderFactory.createTitledBorder("Paarungseinschränkungen"));
 		
 		p9.add(p1);
 		p9.add(p2);
 		p9.add(p3);
 		
+		JPanel p12 = new JPanel();
+		p12.setLayout(new GridLayout(2,3));
+		p12.setBorder(BorderFactory.createTitledBorder("Paarung in der ersten Runde"));
+		p12.add(r1zufall);
+		p12.add(new JLabel());
+		p12.add(new JLabel());
+		p12.add(r1ntr);
+		p12.add(new JLabel());
+		p12.add(new JLabel());
+		r1Group.add(r1ntr);
+		r1Group.add(r1zufall);
+		
 		JPanel p10 = new JPanel();
-		p10.setLayout(new GridLayout(40,1));
+		p10.setLayout(new GridLayout(50,1));
 		p10.add(new JLabel("a"));
 		p10.getComponent(0).setForeground(p10.getBackground());
 		
+		paarungsPanel.add(p12);
 		paarungsPanel.add(p9);
 		paarungsPanel.add(p10);
 		
@@ -388,6 +416,9 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		 armeenField.setText("0");
 		 mirrorField.setText("0");
 		 tischField.setText("0");
+		 
+		 r1zufall.setSelected(false);
+		 r1ntr.setSelected(false);
 		
 		 pPunkte.setSelected(false);
 		 pRPI.setSelected(false);

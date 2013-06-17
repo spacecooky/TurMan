@@ -295,7 +295,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	int runden=0;
 	int rundenZaehler=0; //Tatsächliche Runde
 	int rundenAnzeige=0; //Runde, die zur Betrachtung ausgewählt wurde
-	int mode = KPairings.RANDOM;
 	String TID="0";
 	Vector<KTeilnehmer> teilnehmerVector= new Vector<KTeilnehmer>();
 	Vector<String> teamVector= new Vector<String>();
@@ -381,7 +380,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 		} else if(quelle == teilnehmerButton){
 			KSpeicherverwaltung.leeren(this);
-			mode=KPairings.RANDOM;
 			rundenZaehler=0;
 			alleBegegnungenVector.clear();
 			for(int i=4;i<3+teilnehmer*3;i+=3){
@@ -669,7 +667,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			t=teilnehmerVector.get(i);
 
 			//Erstwertung
-			if(optionenFeldVar.pPunkte.isSelected()){
+			if(lokRunde==0 && optionenFeldVar.r1ntr.isSelected()){
+				t.erstwertung=t.ntr;
+			}else if(optionenFeldVar.pPunkte.isSelected()){
 				t.erstwertung=t.primaer;
 			}else if(optionenFeldVar.pRPI.isSelected()){
 				t.erstwertung=t.rpi;
@@ -678,7 +678,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 
 			//Zweitwertung	
-			if(optionenFeldVar.sPunkte.isSelected()){
+			if(lokRunde==0 && optionenFeldVar.r1ntr.isSelected()){
+				t.zweitwertung=0.0;
+			}else if(optionenFeldVar.sPunkte.isSelected()){
 				t.zweitwertung=t.sekundaer;
 			}else if(optionenFeldVar.sRPI.isSelected()){
 				t.zweitwertung=t.rpi;
@@ -693,7 +695,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}	
 
 			//Drittwertung	
-			if(optionenFeldVar.tPunkte.isSelected()){
+			if(lokRunde==0 && optionenFeldVar.r1ntr.isSelected()){
+				t.drittwertung=0.0;
+			}if(optionenFeldVar.tPunkte.isSelected()){
 				t.drittwertung=t.sekundaer;
 			}else if(optionenFeldVar.tRPI.isSelected()){
 				t.drittwertung=t.rpi;
