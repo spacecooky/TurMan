@@ -797,6 +797,18 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			}
 			sortierterVector.get(i).tabellenPosition=sortierterVector.size()-i;
 		}
+		
+		//Paarungsmodus = immer Zufall
+		if(optionenFeldVar.zufall.isSelected()){
+			platzgruppe=0;
+			platzGruppe.clear();
+			platzGruppe.add(new Vector<KTeilnehmer>());
+			for(int i=1;i<sortierterVector.size();i++){
+				KTeilnehmer t1=sortierterVector.get(i);
+				t1.platzGruppe=platzgruppe;
+				platzGruppe.get(platzgruppe).add(t1);
+			}
+		}
 	}
 	
 	public void calcOS_SOG(int lokRunde){//Punkte der Gegner minus die Spiele gegen den Spieler selbst

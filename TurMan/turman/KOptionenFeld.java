@@ -143,7 +143,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		modus.add(ko);
 		
 		schweizer.setSelected(true);
-		zufall.setEnabled(false);
+		//zufall.setEnabled(false);
 		ko.setEnabled(false);
 		
 		turnierPanel.add(p5);
