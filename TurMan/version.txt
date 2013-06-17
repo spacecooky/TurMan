@@ -1,4 +1,26 @@
-﻿Version 0.0.23
+﻿Version 0.0.25
+- Paaren in der ersten Runde nach NTR
+- Platzierungen/Paarungungen exportierbar nach TXT/PDF/Druck
+- Modus Zufall hinzugefügt.
+
+Version 0.0.24
+- Herausforderungsmenü überarbeitet:
+	Spieler, die bereits in einer Herausforderung sind, werden aus den Listen entfernt.
+	Wurde ein Spieler in der ersten Liste gewählt, werden unpassende Gegner aus der zweiten Liste entfernt.
+- Spieler entfernen:
+	Um Spieler nach der ersten Runde korrekt deaktivieren zu können, wurde ein bisschen an der internen Datenstruktur geschraubt.
+	Diese werden da beim Paaren nun tatsächlich nicht mehr beachtet, solange sie deaktiviert sind.
+	Paarungen können somit korrekt wiederholt oder zurückgesetzt werden.
+- Paarung tauschen:
+	Es ist nun möglich Spieler in Paarungen zu tauschen. Dabei wird angezeigt, gegen welche Regeln der Tausch verstoßen kann. 
+	Ein Tausch ist trotzdem möglich, es sei denn, die Spieler wurde bereits gegeneinander gespielt.
+- Wertungsmodi überarbeitet:
+	Es gibt eine Erst-, Zweit- und Drittwertung.
+	Diese können frei mit den Wertungen Punkteeingabe, RPI, Strength of Schedule, Sum of Opponents Scores(SOS), Sum of Opponents Opponents Scores(SOOS) gesetzt werden.
+	In der Erstwertung sind SOS und SOOS nicht möglich.
+	Punkte-, Begegnungsanzeigen und der Dynamische Timer passen sich an die gewählten Wertungen an und zeigen, welche Wertung benutzt wird. 
+
+Version 0.0.23
 - Anzeigefehler der Punkte korrigiert, der bei Herausforderungen nach der ersten Runde aufgetreten ist.
 - Punkte/Begegnungen in der dynamischen Timeranzeige laufen nicht durch, wenn es so wenige sind, dass kein Durchlaufen nötig ist.
 

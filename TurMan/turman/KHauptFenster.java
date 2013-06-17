@@ -33,7 +33,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * TODO Zusätzliche Turniermodi: Komplett zufällige Paarungen, KO-System
+ * TODO Zusätzliche Turniermodi:  KO-System
  * TODO Teamturniere:
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
@@ -45,9 +45,7 @@ import javax.swing.JTextField;
  * TODO Freilos-Spieler/Punkte über Konfiguration aktivieren? 
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Bessere Sichtbarkeit für Beamer.
- * TODO Druck/PDF/TXT für verschiedenen Wertungs-Modi
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
- * TODO Paarung nach NTR in der ersten Runde
  * @author jk
  *
  */
@@ -204,7 +202,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.24");
+	static String version=new String("V0.0.25");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();

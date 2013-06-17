@@ -1,7 +1,6 @@
 ﻿package turman;
 
 import java.awt.Color;
-import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -9,9 +8,6 @@ import javax.swing.JPanel;
 public class KPairings {
 
 	static boolean debug =false;
-
-
-	//TODO Paarungsalgorithmus ersetzen
 
 	/**
 	 * Berechnet die Paarungen je nach Turniertyp
