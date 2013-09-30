@@ -56,6 +56,8 @@ public class KSpeicherverwaltung {
 			}
 			fr.close();
 			//Splitten in Teilnehmerdaten und Begegnungsdaten
+			String sArr[]=s.split("\\|\\|");
+			System.out.println("sArr.size(): "+sArr.length);
 			String rundenzähler=s.split("\\|\\|")[0];
 			hf.TID=s.split("\\|\\|")[1];
 			String teilnehmerDaten=s.split("\\|\\|")[2];
