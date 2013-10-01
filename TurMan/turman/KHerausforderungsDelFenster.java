@@ -29,7 +29,7 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 	
 	KHauptFenster hf;
 	JPanel p = new JPanel();
-	JComboBox<String> combo1 = new JComboBox<String>();
+	JComboBox combo1 = new JComboBox();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Herausforderung entfernen");
 	
@@ -37,7 +37,7 @@ public class KHerausforderungsDelFenster extends JFrame implements ActionListene
 		p.removeAll();
 		setSize(600,80);
 		p.setLayout(new GridLayout(2,2));
-		combo1=new JComboBox<String>();
+		combo1=new JComboBox();
 		for(int i=0;i<hf.herausforderungsVector.size();i+=2){
 			String vn1 = hf.herausforderungsVector.get(i).vornameAlter.equals("")?hf.herausforderungsVector.get(i).vorname:hf.herausforderungsVector.get(i).vornameAlter;
 			String nn1 = hf.herausforderungsVector.get(i).nachnameAlter.equals("")?hf.herausforderungsVector.get(i).nachname:hf.herausforderungsVector.get(i).nachnameAlter;

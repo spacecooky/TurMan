@@ -33,8 +33,8 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 	
 	KHauptFenster hf;
 	JPanel p = new JPanel();
-	JComboBox<String> combo1 = new JComboBox<String>();
-	JComboBox<String> combo2 = new JComboBox<String>();
+	JComboBox combo1 = new JComboBox();
+	JComboBox combo2 = new JComboBox();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Herausfordern");
 	
@@ -42,9 +42,9 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 		p.removeAll();
 		setSize(400,100);
 		p.setLayout(new GridLayout(3,2));
-		combo1=new JComboBox<String>();
+		combo1=new JComboBox();
 		fillCombo1("");
-		combo2=new JComboBox<String>();
+		combo2=new JComboBox();
 		fillCombo2(combo1.getSelectedItem().toString());
 		combo1.addItemListener(this);
 		p.add(new JLabel("Spieler 1"));
@@ -164,7 +164,7 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 			System.out.println(arg0.getItem().toString());
 			//TODO gewähltes Element in der anderen Box abwählen
 			if(arg0.getSource()==combo1){
-				((DefaultComboBoxModel<String>)combo2.getModel()).removeAllElements();
+				((DefaultComboBoxModel)combo2.getModel()).removeAllElements();
 				fillCombo2(arg0.getItem().toString());
 			}
 		}

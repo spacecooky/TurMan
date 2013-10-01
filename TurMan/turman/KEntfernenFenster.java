@@ -31,7 +31,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 	
 	KHauptFenster hf;
 	JPanel p = new JPanel();
-	JComboBox<String> combo = new JComboBox<String>();
+	JComboBox combo = new JComboBox();
 	JButton cancel= new JButton("Abbrechen");
 	JButton ok= new JButton("Löschen");
 	JButton rok= new JButton("Wiederherstellen");
@@ -40,7 +40,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		p.removeAll();
 		setSize(400,100);
 		p.setLayout(new GridLayout(2,2));
-		combo=new JComboBox<String>();
+		combo=new JComboBox();
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
 			//if(hf.teilnehmerVector.get(i).deleted==false){
 				combo.addItem(hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname);
@@ -57,7 +57,7 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		p.removeAll();
 		setSize(400,100);
 		p.setLayout(new GridLayout(2,2));
-		combo=new JComboBox<String>();
+		combo=new JComboBox();
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
 			if(hf.teilnehmerVector.get(i).deleted==true){
 				combo.addItem(hf.teilnehmerVector.get(i).vorname+" "+hf.teilnehmerVector.get(i).nachname);

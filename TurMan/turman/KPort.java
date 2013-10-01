@@ -77,7 +77,7 @@ public class KPort {
 							}catch(NumberFormatException e){
 							}
 
-							int ntr = 0;
+							int ntr = 999999;
 							try{
 								ntr = Integer.parseInt(sBr[10]);
 							}catch(NumberFormatException e){

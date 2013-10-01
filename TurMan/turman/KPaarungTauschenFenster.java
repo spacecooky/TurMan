@@ -42,9 +42,9 @@ public class KPaarungTauschenFenster extends JFrame implements ActionListener, I
 	JLabel altLabel = new JLabel("Alte Paarungen",SwingConstants.CENTER);
 	JLabel neuLabel =new JLabel("Neue Paarungen",SwingConstants.CENTER);
 	JLabel fehlerLabel =new JLabel("Fehler",SwingConstants.CENTER);
-	JComboBox<String> comboPaarung1 = new JComboBox<String>();
-	JComboBox<String> comboPaarung2 = new JComboBox<String>();
-	JComboBox<String> comboPaarungNeu = new JComboBox<String>();
+	JComboBox comboPaarung1 = new JComboBox();
+	JComboBox comboPaarung2 = new JComboBox();
+	JComboBox comboPaarungNeu = new JComboBox();
 	JLabel labelPaarungNeu2 = new JLabel();
 	JTextArea errorPaarungNeu1 = new JTextArea();
 	JTextArea errorPaarungNeu2 = new JTextArea();
@@ -79,9 +79,9 @@ public class KPaarungTauschenFenster extends JFrame implements ActionListener, I
 		p.setBackground( Color.WHITE );
         p.setBorder( new MatteBorder(2, 2, 2, 2, Color.BLACK) );
 		
-		comboPaarung1=new JComboBox<String>();
+		comboPaarung1=new JComboBox();
 		fillCombo1("");
-		comboPaarung2=new JComboBox<String>();
+		comboPaarung2=new JComboBox();
 		fillCombo2(comboPaarung1.getSelectedItem().toString());
 		fillComboNeu();
 		fillLabel();
@@ -155,7 +155,7 @@ public class KPaarungTauschenFenster extends JFrame implements ActionListener, I
 	}
 	
 	public void fillComboNeu(){
-		((DefaultComboBoxModel<String>)comboPaarungNeu.getModel()).removeAllElements();
+		((DefaultComboBoxModel)comboPaarungNeu.getModel()).removeAllElements();
 		
 		String b1=((String)comboPaarung1.getSelectedItem()).split(":")[2];
 		int b1ID=Integer.parseInt(b1);
@@ -342,7 +342,7 @@ public void begegnungErstellen(KBegegnungen b){
 		
 		if(arg0.getStateChange()==1){
 			if(arg0.getSource()==comboPaarung1){
-				((DefaultComboBoxModel<String>)comboPaarung2.getModel()).removeAllElements();
+				((DefaultComboBoxModel)comboPaarung2.getModel()).removeAllElements();
 				fillCombo2(arg0.getItem().toString());
 				fillComboNeu();
 				fillLabel();

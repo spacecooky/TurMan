@@ -59,10 +59,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		//setSize(800,600);
-		//setLocation(0, 500);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		setSize(800,600);
+		setLocation(0, 500);
+		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
@@ -671,7 +671,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				t.erstwertung=t.primaer;
 			}else if(optionenFeldVar.pRPI.isSelected()){
 				t.erstwertung=t.rpi;
-			}else if(optionenFeldVar.sStrength.isSelected()){
+			}else if(optionenFeldVar.pStrength.isSelected()){
 				t.erstwertung=t.strengthOfSchedulde;
 			}
 
