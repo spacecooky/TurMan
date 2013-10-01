@@ -3,6 +3,7 @@ package turman;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -53,17 +54,17 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	
 	//PaarungsOptionen
 	
-	JCheckBox teams = new JCheckBox("Keine Mitglieder des selben Teams paaren");
-	JCheckBox orte = new JCheckBox("Keine Mitglieder des selben Ortes paaren");
-	JCheckBox armeen = new JCheckBox("Nicht mehrmals gegen die selbe Armee paaren");
-	JCheckBox mirror = new JCheckBox("Keine Mirrormatches");
-	JCheckBox tisch = new JCheckBox("Nicht mehrmals am selben Tisch spielen");
+	JLabel teams = new JLabel("Keine Mitglieder des selben Teams paaren");
+	JLabel orte = new JLabel("Keine Mitglieder des selben Ortes paaren");
+	JLabel armeen = new JLabel("Nicht mehrmals gegen die selbe Armee paaren");
+	JLabel mirror = new JLabel("Keine Mirrormatches");
+	JLabel tisch = new JLabel("Nicht mehrmals am selben Tisch spielen");
 	
-	JTextField teamsField = new JTextField("0");
-	JTextField orteField = new JTextField("0");
-	JTextField armeenField = new JTextField("0");
-	JTextField mirrorField = new JTextField("0");
-	JTextField tischField = new JTextField("0");
+	Vector<JCheckBox> teamsBoxes = new Vector<JCheckBox>();
+	Vector<JCheckBox> orteBoxes = new Vector<JCheckBox>();
+	Vector<JCheckBox> armeenBoxes = new Vector<JCheckBox>();
+	Vector<JCheckBox> mirrorBoxes = new Vector<JCheckBox>();
+	Vector<JCheckBox> tischBoxes = new Vector<JCheckBox>();
 	
 	JRadioButton r1ntr = new JRadioButton("NTR");
 	JRadioButton r1zufall = new JRadioButton("Zufall");
@@ -166,36 +167,35 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		p1.add(mirror);
 		p1.add(tisch);
 		
-		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new GridLayout(5,1));
-		/*p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));
-		p2.add(new JLabel("Ausnahmen:"));*/
-		p2.add(new JLabel());
-		p2.add(new JLabel());
-		p2.add(new JLabel());
-		p2.add(new JLabel());
-		p2.add(new JLabel());
+		p2.add(new JLabel("Runde:"));
+		p2.add(new JLabel("Runde:"));
+		p2.add(new JLabel("Runde:"));
+		p2.add(new JLabel("Runde:"));
+		p2.add(new JLabel("Runde:"));
+		
 		
 		JPanel p3 = new JPanel();
-		p3.setLayout(new GridLayout(5,1));
-		/*p3.add(teamsField);
-		p3.add(orteField);
-		p3.add(armeenField);
-		p3.add(mirrorField);
-		p3.add(tischField);*/
-		p3.add(new JLabel());
-		p3.add(new JLabel());
-		p3.add(new JLabel());
-		p3.add(new JLabel());
-		p3.add(new JLabel());
-		
+		p3.setLayout(new GridLayout(1,10));
+		for(int i=0;i<10;i++){
+			JPanel arrP = new JPanel();
+			arrP.setLayout(new GridLayout(5,1));
+			teamsBoxes.add(new JCheckBox(Integer.toString(i+1)));
+			orteBoxes.add(new JCheckBox(Integer.toString(i+1)));
+			armeenBoxes.add(new JCheckBox(Integer.toString(i+1)));
+			mirrorBoxes.add(new JCheckBox(Integer.toString(i+1)));
+			tischBoxes.add(new JCheckBox(Integer.toString(i+1)));
+			arrP.add(teamsBoxes.lastElement());
+			arrP.add(orteBoxes.lastElement());
+			arrP.add(armeenBoxes.lastElement());
+			arrP.add(mirrorBoxes.lastElement());
+			arrP.add(tischBoxes.lastElement());
+			p3.add(arrP);
+		}
 		
 		JPanel p9 = new JPanel();
-		p9.setLayout(new GridLayout(1,3));
+		p9.setLayout(new BoxLayout(p9, BoxLayout.X_AXIS));
 		p9.setBorder(BorderFactory.createTitledBorder("Paarungseinschränkungen"));
 		
 		p9.add(p1);
@@ -223,8 +223,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		paarungsPanel.add(p9);
 		paarungsPanel.add(p10);
 		
-		teams.setSelected(true);
-		tisch.setSelected(true);
+		teamsBoxes.get(0).setSelected(true);
+		tischBoxes.get(0).setSelected(true);
 		
 		//WertungsOptionen
 		wertungsPanel.setLayout(new BoxLayout(wertungsPanel, BoxLayout.Y_AXIS));
@@ -405,17 +405,13 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		 zufall.setSelected(false);
 		 ko.setSelected(false);
 		
-		 teams.setSelected(false);
-		 orte.setSelected(false);
-		 armeen.setSelected(false);
-		 mirror.setSelected(false);
-		 tisch.setSelected(false);
-		
-		 teamsField.setText("0");
-		 orteField.setText("0");
-		 armeenField.setText("0");
-		 mirrorField.setText("0");
-		 tischField.setText("0");
+		 for(int i=0;i<teamsBoxes.size();i++){
+			 teamsBoxes.get(i).setSelected(false);
+			 orteBoxes.get(i).setSelected(false);
+			 armeenBoxes.get(i).setSelected(false);
+			 mirrorBoxes.get(i).setSelected(false);
+			 tischBoxes.get(i).setSelected(false);
+		 }
 		 
 		 r1zufall.setSelected(false);
 		 r1ntr.setSelected(false);

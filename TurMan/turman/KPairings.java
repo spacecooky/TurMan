@@ -63,25 +63,25 @@ public class KPairings {
 					begegnungsPool.remove(b);
 					i=0;
 				}
-				if(hf.optionenFeldVar.armeen.isSelected()){
+				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler).isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.mirror.isSelected()){
+				if(hf.optionenFeldVar.mirrorBoxes.get(hf.rundenZaehler).isSelected()){
 					if(b.mirror()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.orte.isSelected()){
+				if(hf.optionenFeldVar.orteBoxes.get(hf.rundenZaehler).isSelected()){
 					if(b.ort()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.teams.isSelected()){
+				if(hf.optionenFeldVar.teamsBoxes.get(hf.rundenZaehler).isSelected()){
 					if(b.team()){
 						begegnungsPool.remove(b);
 						i=0;
@@ -243,17 +243,16 @@ public class KPairings {
 		}
 		
 		//Prüfung, falls gleiche Tische beachtet werden sollen
-		if(hf.optionenFeldVar.tisch.isSelected()){
-			//if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeld.tischField.getText())){
+		if(hf.optionenFeldVar.tischBoxes.get(hf.rundenZaehler).isSelected()){
 				
-			for(int i=0;i<((bgCount+1)*bgCount/2) && getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText());i++ ){
+			for(int i=0;i<((bgCount+1)*bgCount/2);i++ ){
 				System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
 				repairTischFehler(hf);
-			//}
+			
 			}
-			if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText())){
+			/*if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText())){
 				hf.dialog.getInfoDialog(hf.dialog.infoTische);
-			}
+			}*/
 			System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));
 			for(int i=0;i<hf.teilnehmerVector.size();i++ ){
 				String s="";

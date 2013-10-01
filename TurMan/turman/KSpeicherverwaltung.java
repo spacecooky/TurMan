@@ -322,21 +322,23 @@ public class KSpeicherverwaltung {
 				fw.write("runde1=zufall\r\n");
 			}
 			
-			if(hf.optionenFeldVar.teams.isSelected()){
-				fw.write("teams="+hf.optionenFeldVar.teamsField.getText()+"\r\n");
+			int teamsVal=0;
+			int orteVal=0;
+			int armeenVal=0;
+			int mirrorVal=0;
+			int tischVal=0;
+			for(int i=0;i<hf.optionenFeldVar.teamsBoxes.size();i++){
+				teamsVal+=(hf.optionenFeldVar.teamsBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+				orteVal+=(hf.optionenFeldVar.orteBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+				armeenVal+=(hf.optionenFeldVar.armeenBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+				mirrorVal+=(hf.optionenFeldVar.mirrorBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+				tischVal+=(hf.optionenFeldVar.tischBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
 			}
-			if(hf.optionenFeldVar.orte.isSelected()){
-				fw.write("orte="+hf.optionenFeldVar.orteField.getText()+"\r\n");
-			}
-			if(hf.optionenFeldVar.armeen.isSelected()){
-				fw.write("armeen="+hf.optionenFeldVar.armeenField.getText()+"\r\n");
-			}
-			if(hf.optionenFeldVar.mirror.isSelected()){
-				fw.write("mirror="+hf.optionenFeldVar.mirrorField.getText()+"\r\n");
-			}
-			if(hf.optionenFeldVar.tisch.isSelected()){
-				fw.write("tisch="+hf.optionenFeldVar.tischField.getText()+"\r\n");
-			}
+			fw.write("teams="+teamsVal+"\r\n");
+			fw.write("orte="+orteVal+"\r\n");
+			fw.write("armeen="+armeenVal+"\r\n");
+			fw.write("mirror="+mirrorVal+"\r\n");
+			fw.write("tisch="+tischVal+"\r\n");
 
 			if(hf.optionenFeldVar.pPunkte.isSelected()){
 				fw.write("erstwertung=Punkte\r\n");
@@ -551,21 +553,55 @@ public class KSpeicherverwaltung {
 						} else if(optval.equals("ter")){
 							hf.optionenFeldVar.armeeTer.setSelected(true);
 						} 
-					} else if(optname.equals("teams")){
-						hf.optionenFeldVar.teams.setSelected(true);
-						hf.optionenFeldVar.teamsField.setText(optval);
+					} 
+					
+					/*
+					
+					int orteVal=0;
+					int armeenVal=0;
+					int mirrorVal=0;
+					int tischVal=0;
+					for(int i=0;i<hf.optionenFeldVar.teamsBoxes.size();i++){
+						teamsVal+=(hf.optionenFeldVar.teamsBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+						orteVal+=(hf.optionenFeldVar.orteBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+						armeenVal+=(hf.optionenFeldVar.armeenBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+						mirrorVal+=(hf.optionenFeldVar.mirrorBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+						tischVal+=(hf.optionenFeldVar.tischBoxes.get(i).isSelected())?(Math.pow(2, i)):0;
+					}
+					fw.write("teams="+teamsVal+"\r\n");
+					fw.write("orte="+orteVal+"\r\n");
+					fw.write("armeen="+armeenVal+"\r\n");
+					fw.write("mirror="+mirrorVal+"\r\n");
+					fw.write("tisch="+tischVal+"\r\n");
+					*/
+					
+					else if(optname.equals("teams")){
+						System.out.println("boxes="+hf.optionenFeldVar.teamsBoxes.size());
+						int teamsVal=Integer.parseInt(optval);
+						System.out.println("teamsVal="+teamsVal);
+						for(int j=0;j<hf.optionenFeldVar.teamsBoxes.size();j++){
+							hf.optionenFeldVar.teamsBoxes.get(j).setSelected(((teamsVal & (int)Math.pow(2, j))==(int)Math.pow(2, j)));
+						}
 					} else if(optname.equals("orte")){
-						hf.optionenFeldVar.orte.setSelected(true);
-						hf.optionenFeldVar.orteField.setText(optval);
+						int orteVal=Integer.parseInt(optval);
+						for(int j=0;j<hf.optionenFeldVar.orteBoxes.size();j++){
+							hf.optionenFeldVar.orteBoxes.get(j).setSelected(((orteVal & (int)Math.pow(2, j))==(int)Math.pow(2, j)));
+						}
 					} else if(optname.equals("armeen")){
-						hf.optionenFeldVar.armeen.setSelected(true);
-						hf.optionenFeldVar.armeenField.setText(optval);
+						int armeenVal=Integer.parseInt(optval);
+						for(int j=0;j<hf.optionenFeldVar.armeenBoxes.size();j++){
+							hf.optionenFeldVar.armeenBoxes.get(j).setSelected(((armeenVal & (int)Math.pow(2, j))==(int)Math.pow(2, j)));
+						}
 					} else if(optname.equals("mirror")){
-						hf.optionenFeldVar.mirror.setSelected(true);
-						hf.optionenFeldVar.mirrorField.setText(optval);
+						int mirrorVal=Integer.parseInt(optval);
+						for(int j=0;j<hf.optionenFeldVar.mirrorBoxes.size();j++){
+							hf.optionenFeldVar.mirrorBoxes.get(j).setSelected(((mirrorVal & (int)Math.pow(2, j))==(int)Math.pow(2, j)));
+						}
 					} else if(optname.equals("tisch")){
-						hf.optionenFeldVar.tisch.setSelected(true);
-						hf.optionenFeldVar.tischField.setText(optval);
+						int tischVal=Integer.parseInt(optval);
+						for(int j=0;j<hf.optionenFeldVar.tischBoxes.size();j++){
+							hf.optionenFeldVar.tischBoxes.get(j).setSelected(((tischVal & (int)Math.pow(2, j))==(int)Math.pow(2, j)));
+						}
 					} else if(optname.equals("runde1")){
 						if(optval.equals("ntr")){
 							hf.optionenFeldVar.r1ntr.setSelected(true);

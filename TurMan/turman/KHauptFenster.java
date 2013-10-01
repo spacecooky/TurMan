@@ -46,6 +46,10 @@ import javax.swing.JTextField;
  * TODO Ordnerstruktur. Speicherstände, Konfigurationen, Schablonen in eigenen Ordnern. (Versionspakete)
  * TODO Bessere Sichtbarkeit für Beamer.
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
+ * TODO Freie Tischzuweisung
+ * TODO Größeren Tischpool anlegen, aus dem zufällig gewählt wird
+ * TODO Unterfenster bei mehreren Bildschirmen immer in dem Bildschirm öffnen, in dem sich das Hauptprogramm befindet
+ * TODO Bei Paarung tauschen und Paarungen ermitteln prüfen, ob die korrekte Runde für die Beschränkungen beachtet wird
  * @author jk
  *
  */
