@@ -38,7 +38,6 @@ import javax.swing.JTextField;
  * TODO Teamturniere Sortier-Algorithmus
  * TODO Teamturniere Einzelpaarungsfenster
  * TODO Multilingualität
- * TODO Zuweisung von Konfigurationsschablonen zu einzelnen Runden
  * TODO Speicherung von Agenda-Schablonen.
  * TODO Maximalhöhen der Zeilen in den verschiedenen Sichten.
  * TODO Freilos-Spieler: Punktwerte speichern.
@@ -48,8 +47,6 @@ import javax.swing.JTextField;
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
  * TODO Freie Tischzuweisung
  * TODO Größeren Tischpool anlegen, aus dem zufällig gewählt wird
- * TODO Unterfenster bei mehreren Bildschirmen immer in dem Bildschirm öffnen, in dem sich das Hauptprogramm befindet
- * TODO Bei Paarung tauschen und Paarungen ermitteln prüfen, ob die korrekte Runde für die Beschränkungen beachtet wird
  * @author jk
  *
  */
@@ -63,10 +60,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		setSize(800,600);
-		setLocation(0, 500);
-		//setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		//setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+		//setSize(800,600);
+		//setLocation(0, 500);
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
