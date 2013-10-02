@@ -63,25 +63,25 @@ public class KPairings {
 					begegnungsPool.remove(b);
 					i=0;
 				}
-				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler).isSelected()){
+				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler+1).isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.mirrorBoxes.get(hf.rundenZaehler).isSelected()){
+				if(hf.optionenFeldVar.mirrorBoxes.get(hf.rundenZaehler+1).isSelected()){
 					if(b.mirror()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.orteBoxes.get(hf.rundenZaehler).isSelected()){
+				if(hf.optionenFeldVar.orteBoxes.get(hf.rundenZaehler+1).isSelected()){
 					if(b.ort()){
 						begegnungsPool.remove(b);
 						i=0;
 					}
 				}
-				if(hf.optionenFeldVar.teamsBoxes.get(hf.rundenZaehler).isSelected()){
+				if(hf.optionenFeldVar.teamsBoxes.get(hf.rundenZaehler+1).isSelected()){
 					if(b.team()){
 						begegnungsPool.remove(b);
 						i=0;
@@ -243,7 +243,7 @@ public class KPairings {
 		}
 		
 		//Prüfung, falls gleiche Tische beachtet werden sollen
-		if(hf.optionenFeldVar.tischBoxes.get(hf.rundenZaehler).isSelected()){
+		if(hf.optionenFeldVar.tischBoxes.get(hf.rundenZaehler+1).isSelected()){
 				
 			for(int i=0;i<((bgCount+1)*bgCount/2);i++ ){
 				System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
