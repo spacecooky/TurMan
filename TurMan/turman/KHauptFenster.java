@@ -100,6 +100,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		gImport.addActionListener(this);
 		datei.add(gExport);
 		gExport.addActionListener(this);
+		datei.add(eloExport);
+		eloExport.addActionListener(this);
 		datei.add(oeffnen);
 		oeffnen.addActionListener(this);
 		datei.add(speichern);
@@ -203,7 +205,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.26");
+	static String version=new String("V0.0.27");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -222,6 +224,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem neu = new JMenuItem("Neues Turnier - Manuell");
 	JMenuItem gImport = new JMenuItem("Neues Turnier - GöPP Import");
 	JMenuItem gExport = new JMenuItem("GöPP Export");
+	JMenuItem eloExport = new JMenuItem("Elo Export");
 	JMenuItem oeffnen = new JMenuItem("Turnier Öffnen");
 	JMenuItem speichern = new JMenuItem("Turnier Speichern");
 	JMenuItem beenden = new JMenuItem("Beenden");
@@ -420,7 +423,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KPort.gImport(this);
 		} else if(quelle==gExport){
 			KPort.gExport(this);
-		} else if(quelle==entfernen){
+		} else if(quelle==eloExport){
+			KPort.eloExport(this);
+		}
+		else if(quelle==entfernen){
 			entfernenFenster.init();
 		} else if(quelle==wiederherstellen){
 			entfernenFenster.initRestore();
@@ -658,6 +664,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			calcOS_SOG(lokRunde);
 			calcOOS_SOG(lokRunde);
 			calcStrengthOfSchedule(lokRunde);
+			System.out.println("\n\n");
 		}
 
 		//Zuweisung der Wertungen
@@ -900,9 +907,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			for(int i=0;i<teilnehmer;i++){
 				t=teilnehmerVector.get(i);
 
-				t.strengthOfSchedulde = (double)t.primaer/3.0 + (double)t.sos_sog/6.0 + (double)t.sosos_sog/18.0;
+				t.strengthOfSchedulde = ((double)t.primaer/3.0) + ((double)t.sos_sog/6.0) + ((double)t.sosos_sog/18.0);
 
-				System.out.println("Strength of Schedule: "+t.strengthOfSchedulde+ " Primär: "+t.primaer+ " SOS: "+(t.sos)+ " SOSOS: "+(t.sosos));
+				System.out.println(teilnehmerVector.get(i).vorname+" "+teilnehmerVector.get(i).nachname+": Strength of Schedule: "+t.strengthOfSchedulde+ " Primär: "+t.primaer+ " SOS: "+(t.sos_sog)+ " SOSOS: "+(t.sosos_sog));
 			}
 		}
 

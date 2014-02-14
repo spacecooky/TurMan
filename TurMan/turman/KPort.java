@@ -134,6 +134,58 @@ public class KPort {
 			}
 		}
 	}
+	
+	static void eloExport(KHauptFenster hf){
+		JFileChooser fileChooser=new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
+			File f =new File(fileChooser.getSelectedFile().toString());
+			if(f!=null){
+				try {
+					//FileWriter fw = new FileWriter(f);
+					OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(f),"CP1252");
+					String date = datum();
+
+					
+					// Kommentarzeilen
+					fw.write("c Turniername-Platzhalter\r\n");
+					fw.write("c Datums-Platzhalter DD-MM-YYYY\r\n");
+					fw.write("c Teilnehmer: "+hf.teilnehmer+"\r\n");
+					fw.write("c Sieg ab Punkte-Ungleichheit\r\n");
+					fw.write("c \r\n");
+					//Spielerdaten
+					for(int i=hf.sortierterVector.size()-1;i>=0;i--){
+						KTeilnehmer tn = hf.sortierterVector.get(i);
+						//Hans Pete Fortmann : Orks und Goblins
+						fw.write(tn.vorname+" "+tn.nachname+" : "+tn.armee+"\r\n");
+					}
+					
+					//Ergebnisse
+					for(int runde=1;runde<=hf.rundenZaehler;runde++){
+						fw.write("#\r\n");
+						for(int i=hf.begegnungsVector.size()-1;i>=0;i--){
+							KBegegnungen b = hf.begegnungsVector.get(i);
+							if(b.runde==runde){
+								KTeilnehmer tn1=b.t1;
+								KTeilnehmer tn2=b.t2;
+								int sun = 0;
+								if(b.p1pri>b.p2pri){
+									sun = 1;
+								}else if(b.p1pri<b.p2pri){
+									sun = 2;
+								}
+								//Benjamin Breitbach : Stephan Heiser	 1
+								fw.write(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname+"\t"+sun+"\r\n");
+							}
+						}
+					}
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	/**
 	 * Gibt das aktuelle Datum im Format DD.MM.YYYY wieder. 
