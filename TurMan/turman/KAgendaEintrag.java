@@ -8,7 +8,8 @@ public class KAgendaEintrag {
 	public KAgendaEintrag(String name, int year,int month,int date,int hour,int minute){
 		this.name=name;
 		this.startzeit=Calendar.getInstance();
-		startzeit.set(year, month-1, date, hour, minute);
+		int second=0;
+		startzeit.set(year, month-1, date, hour, minute, second);
 
 	}
 	

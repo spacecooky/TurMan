@@ -75,9 +75,12 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 	}
 	
 	public void fillCombo2(String s){
+		System.out.println(s);
 		int p1ID=-1;
 		if(!s.equals("")){
-			String p1=s.split(" ")[2];
+			String strings[]=s.split(" ");
+			String p1=strings[strings.length-1];
+			//String p1=s.split(" ")[2];
 			p1=p1.split(":")[1];
 			p1ID=Integer.parseInt(p1);
 		}
@@ -114,11 +117,15 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 			setVisible(false);
 		} else if(arg0.getSource()==ok){
 			
-			String p1=combo1.getSelectedItem().toString().split(" ")[2];
+			String strings1[]=combo1.getSelectedItem().toString().split(" ");
+			String p1=strings1[strings1.length-1];
+			//String p1=combo1.getSelectedItem().toString().split(" ")[2];
 			p1=p1.split(":")[1];
 			int p1ID=Integer.parseInt(p1);
 			
-			String p2=combo2.getSelectedItem().toString().split(" ")[2];
+			String strings2[]=combo2.getSelectedItem().toString().split(" ");
+			String p2=strings2[strings2.length-1];
+			//String p2=combo2.getSelectedItem().toString().split(" ")[2];
 			p2=p2.split(":")[1];
 			int p2ID=Integer.parseInt(p2);
 			

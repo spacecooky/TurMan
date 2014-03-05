@@ -236,7 +236,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 				}
 				
 				try {
-					sleep(1000);
+					sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
