@@ -82,7 +82,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	 * @return true, wenn Teilnehmer 1 und 2 im selben Team sind
 	 */
 	public boolean team(){
-		return t1.team.equals(t2.team);
+		return !t1.team.equals("") && !t2.team.equals("") && t1.team.equals(t2.team);
 	}
 
 	/**

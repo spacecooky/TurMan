@@ -1,4 +1,15 @@
-﻿Version 0.0.25
+﻿Version 0.0.27
+- Elo-Export
+- Agenda berechnet Zeiten jetzt mit korrekten Sekundenwerten
+- Herausforderungen funktionieren korrekt mit Mehrfachnamen
+- Falls kein Team eingetragen ist, findet für den Spieler kein Teamvergleich statt.
+
+Version 0.0.26
+- Spieler ohne NTR-Rang bekommen den Rang 999999 zugewiesen
+- Wechsel zur Primärwertung Strength of Schedule zeigt jetzt korrekte Ergebnisse an
+- Paarungsoptionen für Teamschutz und Ähnliches können jetzt für mehrere (momentan 10) Runden gespeichert werden
+
+Version 0.0.25
 - Paaren in der ersten Runde nach NTR
 - Platzierungen/Paarungungen exportierbar nach TXT/PDF/Druck
 - Modus Zufall hinzugefügt.

@@ -43,7 +43,7 @@ public class KPairings {
 			for(int i=0;i<hf.herausforderungsVector.size();i++){
 				KTeilnehmer t1 = hf.herausforderungsVector.get(i);
 				tVector.remove(t1);
-				System.out.println("Herausforderungsspieler "+t1.vorname+" "+t1.nachname+" wird entfernt.");
+				//System.out.println("Herausforderungsspieler "+t1.vorname+" "+t1.nachname+" wird entfernt.");
 				
 				Vector<KBegegnungen> bt1= t1.getPossiblePairings(begegnungsPool);
 				Vector<KBegegnungen> bt12nd= t1.get2ndMemberIn(begegnungsPool);
@@ -56,14 +56,15 @@ public class KPairings {
 				}
 			}
 			
-			//Entfernen aller unerlaubten Paarungen
-			for(int i=0; i<begegnungsPool.size();i++){
+			//Entfernen aller unerlaubten Paarungen //alt
+			/*for(int i=0; i<begegnungsPool.size();i++){
 				KBegegnungen b = begegnungsPool.get(i);
 				if(b.deleted()){
 					begegnungsPool.remove(b);
-					i=0;
+					//i=0;
+					i-=2;
 				}
-				System.out.println("Rundenzähler"+hf.rundenZaehler);
+				System.out.println("Rundenzähler: "+hf.rundenZaehler+" Paarungs-ID:"+i);
 				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler-1).isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
@@ -88,12 +89,49 @@ public class KPairings {
 						i=0;
 					}
 				}
+			}*/
+			//Entfernen aller unerlaubten Paarungen
+			for(int i=begegnungsPool.size()-1; i>=0;i--){
+				KBegegnungen b = begegnungsPool.get(i);
+				if(b.deleted()){
+					begegnungsPool.remove(b);
+					System.out.println("Paarung entfernt, da Teilnehmer gelöscht");
+					//i=0;
+				}
+				System.out.println("Rundenzähler: "+hf.rundenZaehler+" Paarungs-ID:"+i);
+				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler-1).isSelected()){
+					if(b.armee()){
+						begegnungsPool.remove(b);
+						i=0;
+					}
+				}
+				if(hf.optionenFeldVar.mirrorBoxes.get(hf.rundenZaehler-1).isSelected()){
+					if(b.mirror()){
+						begegnungsPool.remove(b);
+						System.out.println("Paarung entfernt, da Mirrormatch");
+						//i=0;
+					}
+				}
+				if(hf.optionenFeldVar.orteBoxes.get(hf.rundenZaehler-1).isSelected()){
+					if(b.ort()){
+						begegnungsPool.remove(b);
+						System.out.println("Paarung entfernt, da gleicher Ort");
+						//i=0;
+					}
+				}
+				if(hf.optionenFeldVar.teamsBoxes.get(hf.rundenZaehler-1).isSelected()){
+					if(b.team()){
+						begegnungsPool.remove(b);
+						System.out.println("Paarung entfernt, da gleiches Team");
+						//i=0;
+					}
+				}
 			}
 			
 			//Test, ob ein Spieler keine möglichen Paarungen hat
 			for(int i=0;i < tVector.size();i++){
 				Vector<KBegegnungen> pB =tVector.get(i).getPossiblePairings(begegnungsPool);
-				System.out.println(tVector.get(i).vorname+" "+tVector.get(i).nachname+", mögliche Paarungen: "+pB.size());
+				//System.out.println(tVector.get(i).vorname+" "+tVector.get(i).nachname+", mögliche Paarungen: "+pB.size());
 				if(pB.size()==0){
 					return false;
 				}
@@ -110,7 +148,7 @@ public class KPairings {
 				KBegegnungen b = bVector.get(i);
 				KTeilnehmer tn1 = b.t1;
 				KTeilnehmer tn2 = b.t2;
-				System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname);
+				//System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname);
 				b.setEnabled(true);
 				b.setBackground(Color.orange);
 				b.runde=hf.rundenZaehler;
@@ -247,14 +285,14 @@ public class KPairings {
 		if(hf.optionenFeldVar.tischBoxes.get(hf.rundenZaehler-1).isSelected()){
 				
 			for(int i=0;i<((bgCount+1)*bgCount/2);i++ ){
-				System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
+				//System.out.println("Tischfehler vorhanden(Start): "+getTischFehlerSize(hf));
 				repairTischFehler(hf);
 			
 			}
 			/*if(getTischFehlerSize(hf)>Integer.parseInt(hf.optionenFeldVar.tischField.getText())){
 				hf.dialog.getInfoDialog(hf.dialog.infoTische);
 			}*/
-			System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));
+			//System.out.println("Tischfehler vorhanden(Ende): "+getTischFehlerSize(hf));
 			for(int i=0;i<hf.teilnehmerVector.size();i++ ){
 				String s="";
 				KTeilnehmer t = hf.teilnehmerVector.get(i);
@@ -359,19 +397,19 @@ public class KPairings {
 	 */
 	@SuppressWarnings("unchecked")
 	static Vector<KBegegnungen> swiss3(Vector<KTeilnehmer> tV,Vector<KBegegnungen> bV,Vector<KBegegnungen> Expool){
-		System.out.println("Übrige Teilnehmer: "+tV.size());
+		//System.out.println("Übrige Teilnehmer: "+tV.size());
 		if(tV.size()==0){
 			return bV;
 		}
 		
 		Vector<KBegegnungen> pB =tV.get(0).getPossiblePairings(Expool);
-		System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mögliche Paarungen: "+pB.size());
-		for(int i=0;i < pB.size();i++){
-			System.out.println(pB.get(i).t1.vorname+ " "+pB.get(i).t1.nachname+" : "+pB.get(i).t2.vorname+ " "+pB.get(i).t2.nachname);
-		}
-		System.out.println("Berechnete Begegnungen: "+bV.size());
-		System.out.println("Pool: "+Expool.size());
-		System.out.println();
+		//System.out.println(tV.get(0).vorname+" "+tV.get(0).nachname+", mögliche Paarungen: "+pB.size());
+//		for(int i=0;i < pB.size();i++){
+//			System.out.println(pB.get(i).t1.vorname+ " "+pB.get(i).t1.nachname+" : "+pB.get(i).t2.vorname+ " "+pB.get(i).t2.nachname);
+//		}
+		//System.out.println("Berechnete Begegnungen: "+bV.size());
+		//System.out.println("Pool: "+Expool.size());
+		//System.out.println();
 		
 		for(int i=0;i < pB.size();i++){
 			Vector<KBegegnungen> retVec= (Vector<KBegegnungen>)bV.clone();
