@@ -1,4 +1,11 @@
-﻿Version 0.0.27
+﻿Version 0.0.29
+-Anmeldefenster: Neuzeichnen bei Fensteränderungen angepasst
+-Korrektur PDF-Ausgabe für Begegnungen
+
+Version 0.0.28
+-Schnelleres Paaren bei ausgewählten Optionen
+
+Version 0.0.27
 - Elo-Export
 - Agenda berechnet Zeiten jetzt mit korrekten Sekundenwerten
 - Herausforderungen funktionieren korrekt mit Mehrfachnamen

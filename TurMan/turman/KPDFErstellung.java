@@ -151,7 +151,6 @@ public class KPDFErstellung {
 
 	public void begegnungenAnzeigen(Vector<KBegegnungen> bV,int runde, KOptionenFeld of){
 
-		//Document document = new Document(PageSize.A4, 55, 55, 40, 30);
 		Document document = new Document();
 		document.setMargins(55, 55, 20, 40);
 		document.setMarginMirroring(true);
@@ -163,9 +162,9 @@ public class KPDFErstellung {
 			tabelle.setNumberDepth(0);
 			tabelle.add(Chunk.NEWLINE);
 
-			float[] widthsPST = {0.05f, 0.65f, 0.1f, 0.1f, 0.1f};
-			float[] widthsPS = {0.05f, 0.65f, 0.1f, 0.1f};
-			float[] widthsP = {0.05f, 0.65f, 0.1f};
+			float[] widthsPST = {0.06f, 0.64f, 0.1f, 0.1f, 0.1f};
+			float[] widthsPS = {0.06f, 0.64f, 0.1f, 0.1f};
+			float[] widthsP = {0.06f, 0.64f, 0.1f};
 			PdfPTable table2 = new PdfPTable(widthsP);
 			if(of.tPunkte.isSelected()){
 				table2 = new PdfPTable(widthsPST);
@@ -222,10 +221,8 @@ public class KPDFErstellung {
 		}
 
 		try{
-
 			Desktop d = java.awt.Desktop.getDesktop();
 			d.open(new java.io.File("begegnung.pdf")); 
-
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}

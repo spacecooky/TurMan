@@ -205,7 +205,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.28");
+	static String version=new String("V0.0.29");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -400,6 +400,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 			KSpeicherverwaltung.ladenWrap(this);
 		} else if(quelle == anmeldung){
 			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
+			anmeldeFenster.initList();
 			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
 			//punkteFenster.init(null);
@@ -970,24 +971,28 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
+		System.out.println("Hauptfenster component hidden");
 		adaptPanel();
 		repaint();
 	}
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
+		System.out.println("Hauptfenster component moved");
 		adaptPanel();
 		repaint();
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
+		System.out.println("Hauptfenster component resized");
 		adaptPanel();
 		repaint();
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
+		System.out.println("Hauptfenster component shown");
 		adaptPanel();
 		repaint();
 	}

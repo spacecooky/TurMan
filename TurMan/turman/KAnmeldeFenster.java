@@ -39,6 +39,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		druckenButton.addActionListener(this);
 		endeButton.addActionListener(this);
 		addComponentListener(this);
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 
 	KHauptFenster hf=null;
@@ -49,22 +50,25 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		setContentPane(anmeldePanel);
 		if(d==null){
 			setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		} else{
+		} else {
 			setSize(d);
 		}
 		setVisible(true);
 		
 		init();
 	}
-
-	public void init(){
+	
+	public void initList(){
+		System.out.println("initList");
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		anmeldePanel.removeAll();
 		anmeldePanel.setLayout(new BorderLayout());
 		anmeldePanel.setBackground(Color.white);
 
-		JPanel body = new JPanel();
-		JPanel foot = new JPanel();
+		header= new JPanel();
+		body = new JPanel();
+		foot = new JPanel();
+		
 		body.setBackground(Color.white);
 		foot.setBackground(Color.white);
 
@@ -127,10 +131,9 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 
 		anmeldePanel.validate();
 		
-		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
 
-		System.out.println(vorname.getWidth());
+		System.out.println("vorname.getWidth(): "+vorname.getWidth());
 		header.add(createHeader("Anwesend",f,anwesend));
 		header.add(createHeader("Vorname",f,vorname));
 		header.add(createHeader("Nickname",f,nickname));
@@ -144,8 +147,18 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 
 		anmeldePanel.validate();
 	}
+	
+	
+	public void init(){
+		anmeldePanel.validate();
+		resizeHeaders();
+		anmeldePanel.validate();
+	}
 
 	JPanel anmeldePanel=new JPanel();
+	JPanel header= new JPanel();
+	JPanel body = new JPanel();
+	JPanel foot = new JPanel();
 	JButton abbrechenButton=new JButton("Abbrechen");
 	JButton druckenButton=new JButton("Drucken");
 	JButton endeButton= new JButton("Anmeldung abschließen");
@@ -193,6 +206,20 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 				sortieren("Ort");
 			} else if(((JButton)e.getSource()).getText().equals("Team")){
 				sortieren("Team");
+			}
+		}
+	}
+	
+	public void resizeHeaders(){
+		for(int i=0;i<header.getComponentCount();i++){
+			if(body.getComponent(i) instanceof JPanel){
+				JPanel p =(JPanel)body.getComponent(i);
+				if(header.getComponent(i) instanceof JButton){
+					JButton b=(JButton)header.getComponent(i);
+					b.setMaximumSize(new Dimension(p.getWidth(),35));
+					b.setMinimumSize(new Dimension(p.getWidth(),35));
+					b.setPreferredSize(new Dimension(p.getWidth(),35));
+				}
 			}
 		}
 	}
@@ -256,16 +283,19 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
+		System.out.println("component moved");
 		init(getSize());
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
+		System.out.println("component resized");
 		init(getSize());
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
+		System.out.println("component shown");
 		init(getSize());
 	}
 	
@@ -312,6 +342,6 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 			}
 		}
 		lastButton=name;
-		init(getSize());
+		initList();
 	}
 }
