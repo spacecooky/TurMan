@@ -349,8 +349,9 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	public void mouseEntered(MouseEvent arg0) {
 		if(getBackground().equals(Color.green) || getBackground().equals(Color.orange)){
 			colY=((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).getBackground();
+			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setOpaque(true);
 			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setBackground(Color.green);
-			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.green);
+			//((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.green);
 			colX=((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).getBackground();
 			((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).setBackground(Color.green);
 		}
@@ -360,7 +361,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	public void mouseExited(MouseEvent arg0) {
 		if(getBackground().equals(Color.green) || getBackground().equals(Color.orange)){
 			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setBackground(colY);
-			((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.black);
+			//((JLabel)((JPanel)khf.sp.getColumnHeader().getComponent(0)).getComponent(yPos)).setForeground(Color.black);
 			((JButton)((KTeilnehmerPanel)khf.HauptPanel.getComponent(xPos)).nameLabel).setBackground(colX);
 		}
 	}
