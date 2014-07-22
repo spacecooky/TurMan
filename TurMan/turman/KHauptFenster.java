@@ -205,7 +205,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.29");
+	static String version=new String("V0.0.30");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();

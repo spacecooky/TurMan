@@ -1,4 +1,13 @@
-﻿Version 0.0.29
+﻿Version 0.0.30
+-Neuberechnen der Panels nicht mehr nach componentMoved
+-Bemal-/Armeewertung in Rangliste nur wenn unter Optionen ausgewählt
+-Portierungs-Funktionen mit vorgegebener Dateiendung
+-Namensänderungen
+-Layoutänderungen
+-Druckfunktionen angepasst
+-Farbkorrekturen beim Fokus in der Matrix
+
+Version 0.0.29
 -Anmeldefenster: Neuzeichnen bei Fensteränderungen angepasst
 -Korrektur PDF-Ausgabe für Begegnungen
 
