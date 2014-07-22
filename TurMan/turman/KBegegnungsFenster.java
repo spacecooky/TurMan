@@ -32,6 +32,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 	public KBegegnungsFenster(KHauptFenster hf) {
 		super("Begegnung");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
 		druckenButton.addActionListener(this);
@@ -61,6 +63,17 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		
 	}
 
+	public void updateWrap(Dimension d){
+		updatePanel(begegnungsPanelTab);
+		setContentPane(begegnungsPanel);
+		if(d==null){
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else{
+			setSize(d);
+		}
+		updatePanel(begegnungsPanel);
+	}
+	
 	public void updatePanel(JPanel begegnungsPanel){
 		Font f = new Font("Dialog", Font.BOLD, 16);
 		
@@ -292,16 +305,18 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		init(getSize());
+		//init(getSize());
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		init(getSize());
+		updateWrap(getSize());
+		//init(getSize());
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
+		updateWrap(getSize());
 		init(getSize());
 	}
 }

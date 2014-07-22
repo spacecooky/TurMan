@@ -329,10 +329,20 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		bemalGroup.add(bemalTer);
 		bemalGroup.add(bemalNo);
 		
+		bemalPri.addActionListener(this);
+		bemalSek.addActionListener(this);
+		bemalTer.addActionListener(this);
+		bemalNo.addActionListener(this);
+		
 		armeeGroup.add(armeePri);
 		armeeGroup.add(armeeSek);
 		armeeGroup.add(armeeTer);
 		armeeGroup.add(armeeNo);
+		
+		bemalPri.addActionListener(this);
+		armeeSek.addActionListener(this);
+		armeeTer.addActionListener(this);
+		armeeNo.addActionListener(this);
 		
 		bemalNo.setSelected(true);
 		armeeNo.setSelected(true);
@@ -387,7 +397,9 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 			tSOOS.setEnabled(src!=sKeine);
 			hf.updatePanels();
 		}
-		else if(src==tPunkte || src==tRPI || src==tStrength || src==tSOS || src==tSOOS || src==tKeine){
+		else if(src==tPunkte || src==tRPI || src==tStrength || src==tSOS || src==tSOOS || src==tKeine 
+				|| src==bemalNo || src==bemalPri || src==bemalSek || src==bemalTer
+				|| src==armeeNo || src==armeePri || src==armeeSek || src==armeeTer){
 			hf.updatePanels();
 		}
 		else if(arg0.getSource()==matrix){

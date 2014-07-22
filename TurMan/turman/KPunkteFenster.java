@@ -35,6 +35,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 	public KPunkteFenster(KHauptFenster hf) {
 		super("Rangliste");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		this.hf=hf;
 		punkteSchliessenButton.addActionListener(this);
 		ab.addActionListener(this);
@@ -66,10 +68,25 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		setVisible(true);
 		updatePanel(punktePanel);
 	}
+	
+	public void updateWrap(Dimension d){
+		updatePanel(punktePanelTab);
+		setContentPane(punktePanel);
+		if(d==null){
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else{
+			setSize(d);
+		}
+		updatePanel(punktePanel);
+	}
 
 	public void updatePanel(JPanel punktePanel){
 		//hf.sortieren(ab.isSelected(),bm.isSelected());
 		Font f = new Font("Dialog", Font.BOLD, 16);
+		ab.setVisible(hf.optionenFeldVar.armeePri.isSelected() || hf.optionenFeldVar.armeeSek.isSelected() || hf.optionenFeldVar.armeeTer.isSelected());
+		bm.setVisible(hf.optionenFeldVar.bemalPri.isSelected() || hf.optionenFeldVar.bemalSek.isSelected() || hf.optionenFeldVar.bemalTer.isSelected());
+		abTab.setVisible(hf.optionenFeldVar.armeePri.isSelected() || hf.optionenFeldVar.armeeSek.isSelected() || hf.optionenFeldVar.armeeTer.isSelected());
+		bmTab.setVisible(hf.optionenFeldVar.bemalPri.isSelected() || hf.optionenFeldVar.bemalSek.isSelected() || hf.optionenFeldVar.bemalTer.isSelected());
 		hf.sortierenVar(ab.isSelected(),bm.isSelected(),hf.rundenAnzeige);
 		color=false;
 		punktePanel.removeAll();
@@ -443,17 +460,22 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		init(getSize());
+		//System.out.println("KPunktefenster - componentMoved");
+		//init(getSize());
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
-		init(getSize());
+		//System.out.println("KPunktefenster - componentResized");
+		//init(getSize());
+		updateWrap(getSize());
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		init(getSize());
+		//System.out.println("KPunktefenster - componentShown");
+		//init(getSize());
+		updateWrap(getSize());
 	}
 	
 }

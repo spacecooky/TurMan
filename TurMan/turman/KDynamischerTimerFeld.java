@@ -79,12 +79,16 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		//Dateiauswahl für das Logo
 		JPanel p4 = new JPanel();
 		p4.setBorder(BorderFactory.createTitledBorder("Logo"));
-		p4.setLayout(new GridLayout(1,5));
-		p4.add(logoAnzeigen);
-		p4.add(logoButton);
-		p4.add(new JLabel());
-		p4.add(logoLabel);
-		p4.add(new JLabel());
+		p4.setLayout(new GridLayout(1,1));
+		JPanel p44 = new JPanel();
+		p4.add(p44);
+		p44.setLayout(new BoxLayout(p44,BoxLayout.X_AXIS));
+		p44.add(logoAnzeigen);
+		p44.add(logoButton);
+		p44.add(new JLabel(" "));
+		p44.add(logoLabel);
+//		p4.add(new JLabel());
+//		p4.add(new JLabel());
 		logoAnzeigen.addActionListener(this);
 		logoButton.setEnabled(false);
 		logoButton.addActionListener(this);
@@ -153,12 +157,17 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		
 		JPanel p6 = new JPanel();
 		p6.setBorder(BorderFactory.createTitledBorder("Zusatzanzeige"));
-		p6.setLayout(new GridLayout(1,5));
-		p6.add(punkteBegegnungenAnzeigen);
-		p6.add(punkte);
-		p6.add(begegnungen);
-		p6.add(taktLabel);
-		p6.add(taktFeld);
+		p6.setLayout(new GridLayout(1,1));
+		JPanel p66 = new JPanel();
+		p66.setLayout(new BoxLayout(p66,BoxLayout.X_AXIS));
+		p6.add(p66);
+		p66.add(punkteBegegnungenAnzeigen);
+		p66.add(new JLabel("   "));
+		p66.add(punkte);
+		p66.add(begegnungen);
+		p66.add(new JLabel("   "));
+		p66.add(taktLabel);
+		p66.add(taktFeld);
 		
 		punkteBegegnungenGruppe.add(punkte);
 		punkteBegegnungenGruppe.add(begegnungen);

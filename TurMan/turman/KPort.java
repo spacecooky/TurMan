@@ -11,13 +11,17 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class KPort {
 
 	static void gImport(KHauptFenster hf){
 		JFileChooser fileChooser=new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-
+		FileFilter ff = new FileNameExtensionFilter("GöPP Importformat von T³ (.gip)", "gip");
+		fileChooser.addChoosableFileFilter(ff);
+		fileChooser.setFileFilter(ff);
 		if(fileChooser.showOpenDialog(hf)==JFileChooser.APPROVE_OPTION){
 			File f =new File(fileChooser.getSelectedFile().toString());
 			if(f!=null){
@@ -106,8 +110,15 @@ public class KPort {
 	static void gExport(KHauptFenster hf){
 		JFileChooser fileChooser=new JFileChooser();
 		fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		FileFilter ff = new FileNameExtensionFilter("GöPP Exportformat für T³ (.gep)", "gep");
+		fileChooser.addChoosableFileFilter(ff);
+		fileChooser.setFileFilter(ff);
 		if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
-			File f =new File(fileChooser.getSelectedFile().toString());
+			String s=fileChooser.getSelectedFile().toString();
+			if(!s.endsWith(".gep")){
+				s+=".gep";
+			}
+			File f =new File(s);
 			if(f!=null){
 				try {
 					//FileWriter fw = new FileWriter(f);

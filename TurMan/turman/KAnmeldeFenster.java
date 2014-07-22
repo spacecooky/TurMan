@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -38,6 +40,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		abbrechenButton.addActionListener(this);
 		druckenButton.addActionListener(this);
 		endeButton.addActionListener(this);
+		alle.addActionListener(this);
 		addComponentListener(this);
 		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
@@ -58,6 +61,20 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		init();
 	}
 	
+public void initWrap(Dimension d){
+
+		
+		setContentPane(anmeldePanel);
+		if(d==null){
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		} else {
+			setSize(d);
+		}
+		
+		//init();
+		initList();
+	}
+	
 	public void initList(){
 		System.out.println("initList");
 		Font f = new Font("Dialog", Font.BOLD, 16);
@@ -76,8 +93,10 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		JScrollPane sp = new JScrollPane(body);
 
 		foot.setLayout(new GridLayout(1, 8));
+		foot.add(alle);
+		foot.add(new JLabel(""));
 		foot.add(druckenButton);
-		for(int i=0;i<5;i++){
+		for(int i=0;i<3;i++){
 			foot.add(new JLabel(""));
 		}
 		foot.add(abbrechenButton);
@@ -161,7 +180,8 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 	JPanel foot = new JPanel();
 	JButton abbrechenButton=new JButton("Abbrechen");
 	JButton druckenButton=new JButton("Drucken");
-	JButton endeButton= new JButton("Anmeldung abschließen");
+	JButton endeButton= new JButton("Anmeldeverwaltung abschließen");
+	JCheckBox alle = new JCheckBox("Alle anmelden");
 	boolean color=false;
 
 	@Override
@@ -169,10 +189,10 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		if(e.getSource()==abbrechenButton){
 			setVisible(false);
 		} else if(e.getSource()==druckenButton){
-			/*PrinterJob pj = PrinterJob.getPrinterJob();
+			PrinterJob pj = PrinterJob.getPrinterJob();
 			KTextPrintable tp = new KTextPrintable();
 			tp.hf=hf;
-			tp.sicht=KTextPrintable.PUNKTE;
+			tp.sicht=KTextPrintable.ANMELDELISTE;
 			pj.setPrintable(tp);
 			//PageFormat pf = pj.pageDialog(pj.defaultPage());
 			if (pj.printDialog()) {
@@ -180,7 +200,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 				catch (PrinterException exc) {
 					System.out.println(exc);
 				}
-			}*/
+			}
 		} else if(e.getSource()==endeButton ){
 			for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
 				KTeilnehmer tn = hf.teilnehmerVector.get(i);
@@ -206,6 +226,22 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 				sortieren("Ort");
 			} else if(((JButton)e.getSource()).getText().equals("Team")){
 				sortieren("Team");
+			}
+		} else if(e.getSource()==alle){
+			if(alle.isSelected()){
+				for(int i=sortLocal.size()-1;i>=0;i--){
+					if(sortLocal.get(i).deleted==false){
+						KTeilnehmer tn=sortLocal.get(i);
+						tn.anwesend.setSelected(true);
+					} 
+				}
+			}else{
+				for(int i=sortLocal.size()-1;i>=0;i--){
+					if(sortLocal.get(i).deleted==false){
+						KTeilnehmer tn=sortLocal.get(i);
+						tn.anwesend.setSelected(false);
+					} 
+				}
 			}
 		}
 	}
@@ -283,20 +319,20 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		System.out.println("component moved");
-		init(getSize());
+		//System.out.println("component moved");
+		//initWrap(getSize());
 	}
 
 	@Override
 	public void componentResized(ComponentEvent e) {
 		System.out.println("component resized");
-		init(getSize());
+		initWrap(getSize());
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e) {
 		System.out.println("component shown");
-		init(getSize());
+		initWrap(getSize());
 	}
 	
 	Vector<KTeilnehmer> sortLocal = new Vector<KTeilnehmer>();

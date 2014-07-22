@@ -82,7 +82,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		HauptPanelTeam.setLayout(new BoxLayout(HauptPanelTeam,BoxLayout.Y_AXIS));
 		//Hauptbereich
 		tab.addTab("Matrix",null,sp);
-		tab.addTab("Punkte",null,punkteFenster.punktePanelTab);
+		tab.addTab("Rangliste",null,punkteFenster.punktePanelTab);
 		tab.addTab("Begegnungen",null,begegnungsFenster.begegnungsPanelTab);
 		punkteFenster.updatePanel(punkteFenster.punktePanelTab);
 		tab.setBackground(Color.white);
@@ -231,7 +231,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	JMenu turnier = new JMenu("Turnier");
 	JMenuItem anmeldung = new JMenuItem("Anmeldeverwaltung");
-	JMenuItem punkte = new JMenuItem("Punkte anzeigen");
+	JMenuItem punkte = new JMenuItem("Rangliste");
 	JMenuItem begegnungen = new JMenuItem("Begegnungen anzeigen");
 	JMenuItem zeit = new JMenuItem("Zeit starten");
 	JMenuItem agenda = new JMenuItem("Agenda");
@@ -978,9 +978,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	@Override
 	public void componentMoved(ComponentEvent e) {
-		System.out.println("Hauptfenster component moved");
-		adaptPanel();
-		repaint();
+//		System.out.println("Hauptfenster component moved");
+//		adaptPanel();
+//		repaint();
 	}
 
 	@Override
