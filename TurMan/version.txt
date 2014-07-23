@@ -1,4 +1,8 @@
-﻿Version 0.0.30
+﻿Version 0.0.31
+-Überarbeitung des dynamischen Timers
+-Agendafunktion beim dynamischen Timer hinzugefügt
+
+Version 0.0.30
 -Neuberechnen der Panels nicht mehr nach componentMoved
 -Bemal-/Armeewertung in Rangliste nur wenn unter Optionen ausgewählt
 -Portierungs-Funktionen mit vorgegebener Dateiendung

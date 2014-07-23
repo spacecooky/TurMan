@@ -443,6 +443,7 @@ public class TAgenda extends Thread implements ActionListener, MouseListener,Com
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[4], i, 4);
 				((DefaultTableModel)table.getModel()).setValueAt(sArr[5], i, 5);
 				((JTextArea)ablauf.getComponent(i)).setText(s);	
+				i++;
 				break;
 			}
 		}
