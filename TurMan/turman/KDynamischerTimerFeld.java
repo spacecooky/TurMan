@@ -5,6 +5,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -67,6 +71,7 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 	//Agendaberechnung
 	JButton add = new JButton("Neue Zeile anhängen");
 	JButton remove = new JButton("Aktuelle Zeile löschen");
+	JButton save = new JButton("Agenda speichern");
 	JTable table;
 	JScrollPane scrollPane;
 	JPanel ablauf= new JPanel();
@@ -106,7 +111,12 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		p51.add(agenda);
 		
 		p511.setLayout(new BoxLayout(p511, BoxLayout.Y_AXIS));
-		table=new JTable(new DefaultTableModel(hf.agendaEintraege,hf.agendaHeaders));
+		String [] agendaHeaders={"Ereignis","TT","MM","JJJJ","HH","MM"};
+		String [][] agendaEintraege={{"Anmeldung","13","07","2012","09","00"},
+				{"Infos","13","07","2012","09","45"},
+				{"Turnierrunde 1","13","07","2012","10","00"},
+				{"Mittagspause","13","07","2012","12","00"}};
+		table=new JTable(new DefaultTableModel(agendaEintraege,agendaHeaders));
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		JPanel hPanel= new JPanel();
@@ -114,23 +124,41 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		hPanel.setLayout(new GridLayout(1,1));
 		p511.add(hPanel);
 		p511.add(scrollPane);
-		p511.add(ablauf);
-		ablauf.setLayout(new BoxLayout(ablauf, BoxLayout.Y_AXIS));
+		/*p511.add(ablauf);
+		ablauf.setLayout(new BoxLayout(ablauf, BoxLayout.Y_AXIS));*/
 		aheader.setFont(new Font("Comic Sans Serif",1,18));
 		aheader.setHorizontalAlignment(JLabel.LEFT);
 		table.setFont(new Font("Comic Sans Serif",1,18));
-		JPanel aPanel= new JPanel();
-		aPanel.add(add);
-		aPanel.setLayout(new GridLayout(1,1));
-		p511.add(aPanel);
+		JPanel agendaActionPanel = new JPanel();
+		agendaActionPanel.setLayout(new GridLayout(1,5));
+		agendaActionPanel.add(add);
 		add.addActionListener(this);
-		JPanel rPanel= new JPanel();
-		rPanel.add(remove);
-		rPanel.setLayout(new GridLayout(1,1));
-		p511.add(rPanel);
+		agendaActionPanel.add(remove);
 		remove.addActionListener(this);
+		agendaActionPanel.add(new JLabel());
+		agendaActionPanel.add(remove);
+		agendaActionPanel.add(save);
+		save.addActionListener(this);
+		p511.add(agendaActionPanel);
+		
+//		JPanel aPanel= new JPanel();
+//		aPanel.add(add);
+//		aPanel.setLayout(new GridLayout(1,1));
+//		p511.add(aPanel);
+//		add.addActionListener(this);
+//		JPanel rPanel= new JPanel();
+//		rPanel.add(remove);
+//		rPanel.setLayout(new GridLayout(1,1));
+//		p511.add(rPanel);
+//		remove.addActionListener(this);
+//		JPanel sPanel= new JPanel();
+//		sPanel.add(save);
+//		sPanel.setLayout(new GridLayout(1,1));
+//		p511.add(sPanel);
+//		save.addActionListener(this);
 		
 		p51.add(p511);
+		agendaLaden();
 
 		//Timer
 		JPanel p52=new JPanel();
@@ -146,10 +174,10 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		timer.setSelected(true);
 		agenda.addActionListener(this);
 		timer.addActionListener(this);
-		agenda.setEnabled(false);
-		add.setEnabled(false);
-		remove.setEnabled(false);
-		aheader.setEnabled(false);
+		//agenda.setEnabled(false);
+		//add.setEnabled(false);
+		//remove.setEnabled(false);
+		//aheader.setEnabled(false);
 		
 		p5.add(p52);
 		p5.add(p51);
@@ -211,12 +239,22 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 				zusTyp=begegnungen.isSelected()?1:0;
 				zeit=Integer.parseInt(timerFeld.getText());
 				takt=Integer.parseInt(taktFeld.getText());
+				if(timer.isSelected()){
+					timerTyp=0;
+				}else{
+					timerTyp=1;
+				}
 				dynTimer=new TDynamischerTimer(hf, zeit, takt, timerTyp,zusTyp,punkteBegegnungenAnzeigen.isSelected(),imageName);
 			}else if(dynTimer.frame.isVisible()){
 				timerTyp=agenda.isSelected()?0:1;
 				zusTyp=begegnungen.isSelected()?1:0;
 				zeit=Integer.parseInt(timerFeld.getText());
 				takt=Integer.parseInt(taktFeld.getText());
+				if(timer.isSelected()){
+					timerTyp=0;
+				}else{
+					timerTyp=1;
+				}
 				dynTimer.setVars(zeit, takt, timerTyp,zusTyp,punkteBegegnungenAnzeigen.isSelected(),imageName);
 				dynTimer.frame.setVisible(true);
 			}
@@ -232,7 +270,9 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 			if(table.getSelectedRow()>-1){
 				((DefaultTableModel)table.getModel()).removeRow(table.getSelectedRow());
 			}
-		} else if(src==logoAnzeigen){
+		} else if(src==save){
+			agendaSpeichern();
+		}else if(src==logoAnzeigen){
 			logoButton.setEnabled(logoAnzeigen.isSelected());
 		} else if(src==logoButton){
 			JFileChooser fileChooser=new JFileChooser();
@@ -247,4 +287,68 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 			}
 		} 
 	}	
+	
+public void agendaLaden(){
+		
+		while(table.getModel().getRowCount()>0){
+			((DefaultTableModel)table.getModel()).removeRow(0);
+		}
+		
+		File f = new File("agenda");
+		FileReader fr;
+		int read=-1;
+		String s="";
+		try {
+			fr = new FileReader(f);
+
+			while(true){
+				read=fr.read();
+				if(read==-1){
+					break;
+				}else{
+					s+=(char)read;
+				}
+			}
+			fr.close();
+
+			//Splitten in Optionen
+			String[] optionen=s.split("\r\n");
+
+			for(int i=0;i<optionen.length;i++){
+				if(!optionen[i].equals("")){
+					String dates[]= optionen[i].split(";");
+					((DefaultTableModel)table.getModel()).addRow(dates);
+				}
+			}
+			//table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+			//table.getColumnModel().getColumn(0).setMinWidth(getWidth()/2);
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+public void agendaSpeichern(){
+	File f = new File("agenda");
+	FileWriter fw;
+	try {
+		fw = new FileWriter(f);
+		for(int i=0; i<table.getRowCount(); i++){
+		
+			fw.write((String)table.getModel().getValueAt(i, 0)+";");
+			fw.write((String)table.getModel().getValueAt(i, 1)+";");
+			fw.write((String)table.getModel().getValueAt(i, 2)+";");
+			fw.write((String)table.getModel().getValueAt(i, 3)+";");
+			fw.write((String)table.getModel().getValueAt(i, 4)+";");
+			fw.write((String)table.getModel().getValueAt(i, 5)+"\r\n");
+		}
+		fw.close();
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+}
+
 }
