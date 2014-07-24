@@ -124,6 +124,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		urkundenInfos.addActionListener(this);
 		turnier.add(urkundenErstellen);
 		urkundenErstellen.addActionListener(this);
+		turnier.add(urkundenParsehtml);
+		urkundenParsehtml.addActionListener(this);
 
 		menubar.add(turnierRunde);
 		turnierRunde.add(herausforderung);
@@ -205,7 +207,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.31");
+	static String version=new String("V0.0.32");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -237,6 +239,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem agenda = new JMenuItem("Agenda");
 	JMenuItem urkundenErstellen = new JMenuItem("Urkunden erstellen");
 	JMenuItem urkundenInfos = new JMenuItem("Urkunden-Einstellungen");
+	JMenuItem urkundenParsehtml = new JMenuItem("Urkunden-Export für ParseHtml");
 
 	JMenu turnierRunde = new JMenu("Turnierrunde");
 	JMenuItem herausforderung = new JMenuItem("Herausforderung");
@@ -297,6 +300,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	int runden=0;
 	int rundenZaehler=0; //Tatsächliche Runde
 	int rundenAnzeige=0; //Runde, die zur Betrachtung ausgewählt wurde
+	String turniername="Turniername";
 	String TID="0";
 	Vector<KTeilnehmer> teilnehmerVector= new Vector<KTeilnehmer>();
 	Vector<String> teamVector= new Vector<String>();
@@ -448,6 +452,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}else if(quelle==urkundenErstellen){
 			sortierenVar(true, true,rundenZaehler);
 			urkunde.urkundeErstellen(sortierterVector,urkundenFenster.zeile1Area.getText(),urkundenFenster.zeile2Area.getText());
+		}else if(quelle==urkundenParsehtml){
+			sortierenVar(true, true,rundenZaehler);
+			new KHtmlErstellung(this,sortierterVector,optionenFeldVar);
 		}else if(quelle==begegnungen){
 			begegnungsFenster.init(null);
 		}else if(quelle==extraPunkte){

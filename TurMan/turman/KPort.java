@@ -51,6 +51,7 @@ public class KPort {
 					//fr.close();
 					isr.close();
 					String[] sAr=s.split("\r\n");
+					hf.turniername=sAr[1];
 					hf.TID=sAr[2];
 					for(int i=0;i<sAr.length;i++){
 						if(sAr[i].endsWith("x")){

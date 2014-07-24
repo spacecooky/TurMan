@@ -95,10 +95,10 @@ public class KPairings {
 				KBegegnungen b = begegnungsPool.get(i);
 				if(b.deleted()){
 					begegnungsPool.remove(b);
-					System.out.println("Paarung entfernt, da Teilnehmer gelöscht");
+					//System.out.println("Paarung entfernt, da Teilnehmer gelöscht");
 					//i=0;
 				}
-				System.out.println("Rundenzähler: "+hf.rundenZaehler+" Paarungs-ID:"+i);
+				//System.out.println("Rundenzähler: "+hf.rundenZaehler+" Paarungs-ID:"+i);
 				if(hf.optionenFeldVar.armeenBoxes.get(hf.rundenZaehler-1).isSelected()){
 					if(b.armee()){
 						begegnungsPool.remove(b);
@@ -108,21 +108,21 @@ public class KPairings {
 				if(hf.optionenFeldVar.mirrorBoxes.get(hf.rundenZaehler-1).isSelected()){
 					if(b.mirror()){
 						begegnungsPool.remove(b);
-						System.out.println("Paarung entfernt, da Mirrormatch");
+						//System.out.println("Paarung entfernt, da Mirrormatch");
 						//i=0;
 					}
 				}
 				if(hf.optionenFeldVar.orteBoxes.get(hf.rundenZaehler-1).isSelected()){
 					if(b.ort()){
 						begegnungsPool.remove(b);
-						System.out.println("Paarung entfernt, da gleicher Ort");
+						//System.out.println("Paarung entfernt, da gleicher Ort");
 						//i=0;
 					}
 				}
 				if(hf.optionenFeldVar.teamsBoxes.get(hf.rundenZaehler-1).isSelected()){
 					if(b.team()){
 						begegnungsPool.remove(b);
-						System.out.println("Paarung entfernt, da gleiches Team");
+						//System.out.println("Paarung entfernt, da gleiches Team");
 						//i=0;
 					}
 				}

@@ -119,7 +119,7 @@ public class KSpeicherverwaltung {
 				hf.teilnehmerVector.lastElement().vornameAlter=vornameAlter;
 				hf.teilnehmerVector.lastElement().nachnameAlter=nachnameAlter;
 
-				if(sBr[12].contains("true")){
+				if(sBr[14].contains("true")){
 					hf.teilnehmerVector.lastElement().deleted=true;
 				}
 

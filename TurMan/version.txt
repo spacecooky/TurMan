@@ -1,4 +1,8 @@
-﻿Version 0.0.31
+﻿Version 0.0.32
+-minimalistische html-Datei für Urkundenerstellung in parseHtml
+-Nach der ersten Runde gelöschte Spieler werden nach Speichern nicht fälschlicherweise wiederhergestell.
+
+Version 0.0.31
 -Überarbeitung des dynamischen Timers
 -Agendafunktion beim dynamischen Timer hinzugefügt
 
