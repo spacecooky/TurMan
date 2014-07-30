@@ -6,15 +6,21 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 @SuppressWarnings("serial")
 public class KBegegnungen extends JButton implements ActionListener, MouseListener{
@@ -42,11 +48,59 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 		setPreferredSize(new Dimension(20,20));
 		setEnabled(false);
 		setBackground(Color.darkGray);
-
+		bestaetigung.setText("Bestätigung");
+		bestaetigung.registerKeyboardAction(bestaetigung.getActionForKeyStroke(
+											KeyStroke.getKeyStroke(KeyEvent.VK_SPACE,0,false)),
+											KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,false),
+											JComponent.WHEN_FOCUSED);
+		
+		bestaetigung.registerKeyboardAction(bestaetigung.getActionForKeyStroke(
+				KeyStroke.getKeyStroke(KeyEvent.VK_SPACE,0,true)),
+				KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0,true),
+				JComponent.WHEN_FOCUSED);
+		
 		this.xPos=xPos;
 		this.yPos=yPos;
 	}
 
+	private Action enter = new AbstractAction() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//if(bestaetigung.hasFocus()){
+				try{
+					p1pri=Integer.parseInt(khf.p1priField.getText());
+					p2pri=Integer.parseInt(khf.p2priField.getText());
+					if(khf.optionenFeldVar.sPunkte.isSelected()){
+						p1sek=Integer.parseInt(khf.p1sekField.getText());
+						p2sek=Integer.parseInt(khf.p2sekField.getText());
+					}
+					if(khf.optionenFeldVar.tPunkte.isSelected()){
+						p1ter=Integer.parseInt(khf.p1terField.getText());
+						p2ter=Integer.parseInt(khf.p2terField.getText());
+					}
+					setBackground(Color.green);
+					begegnungsFensterButton.setBackground(Color.gray);
+					begegnungsTabButton.setBackground(Color.gray);
+				}catch(NumberFormatException ex){}
+
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1pri=p2pri;
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2pri=p1pri;
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p1sek=p2sek;
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).p2sek=p1sek;
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).setBackground(Color.green);
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsFensterButton.setBackground(Color.gray);
+				((KBegegnungen)((JPanel)khf.HauptPanel.getComponent(yPos)).getComponent(xPos)).begegnungsTabButton.setBackground(Color.gray);
+				//khf.sortieren(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected(),khf.rundenZaehler);
+				khf.sortierenVar(khf.punkteFenster.ab.isSelected(),khf.punkteFenster.bm.isSelected(),khf.rundenZaehler);
+				khf.begegnungsFrame.removeAll();
+				khf.begegnungsPanel.removeAll();
+				khf.begegnungsFrame.dispose();
+				khf.updatePanels();
+			//}
+		}
+	};
+	
 	KTeilnehmer t1;
 	int p1pri=0;
 	int p1sek=0;
@@ -66,7 +120,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 
 	ButtonGroup SUN = new ButtonGroup();
 
-	JButton bestaetigung = new JButton("Bestätigung");
+	JButton bestaetigung = new JButton(enter);
 	JButton begegnungsFensterButton = new JButton("");
 	JButton begegnungsTabButton = new JButton("");
 	Color normalButtonColor;
@@ -165,7 +219,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 	public void actionPerformed(ActionEvent arg0) {
 		Object quelle = arg0.getSource();
 
-		if(quelle==bestaetigung){
+		/*if(quelle==bestaetigung){
 
 			try{
 				p1pri=Integer.parseInt(khf.p1priField.getText());
@@ -196,7 +250,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			khf.begegnungsPanel.removeAll();
 			khf.begegnungsFrame.dispose();
 			khf.updatePanels();
-		}else if(quelle== this || quelle==begegnungsFensterButton || quelle==begegnungsTabButton){
+		}else */if(quelle== this || quelle==begegnungsFensterButton || quelle==begegnungsTabButton){
 			try{
 				khf.begegnungsFrame.removeAll();
 				khf.begegnungsPanel.removeAll();
@@ -297,6 +351,7 @@ public class KBegegnungen extends JButton implements ActionListener, MouseListen
 			}
 			khf.unsichtbar.setSelected(true);
 			khf.begegnungsFrame.setVisible(true);
+			
 		}else if(quelle==khf.siegP1){
 			if(khf.optionenFeldVar.SUN20_10_1.isSelected()){
 				khf.p1priField.setText("20");

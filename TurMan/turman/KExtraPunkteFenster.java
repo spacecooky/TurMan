@@ -27,6 +27,8 @@ public class KExtraPunkteFenster extends JFrame implements ActionListener{
 
 	public KExtraPunkteFenster(KHauptFenster hf) {
 		super("Zus. Punkte");
+		setSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
 		this.hf=hf;
 		SchliessenButton.addActionListener(this);

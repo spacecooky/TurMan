@@ -44,6 +44,8 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		txtButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
+		combo.addActionListener(this);
+		comboTab.addActionListener(this);
 		addComponentListener(this);
 	}
 	
@@ -92,7 +94,7 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		head.setBorder(BorderFactory.createEtchedBorder());
 		head.add(new JLabel("Runde: "));
 		head.add(begegnungsPanel==this.begegnungsPanel?combo:comboTab);
-		head.add(begegnungsPanel==this.begegnungsPanel?anzeigenButton:anzeigenButtonTab);
+		//head.add(begegnungsPanel==this.begegnungsPanel?anzeigenButton:anzeigenButtonTab);
 		head.add(new JLabel(" Spieler: "+hf.sortierterVector.size()));
 		for(int i=0;i<14;i++){
 			JPanel p = new JPanel();
@@ -116,6 +118,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		begegnungsPanel.add(sp,BorderLayout.CENTER);
 		begegnungsPanel.add(foot,BorderLayout.SOUTH);
 		
+		combo.removeActionListener(this);
+		comboTab.removeActionListener(this);
+		
 		combo.removeAllItems();
 		comboTab.removeAllItems();
 		
@@ -123,6 +128,9 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 			combo.addItem(i);
 			comboTab.addItem(i);
 		}
+		
+		combo.addActionListener(this);
+		comboTab.addActionListener(this);
 		
 		combo.setSelectedItem(hf.rundenAnzeige);
 		comboTab.setSelectedItem(hf.rundenAnzeige);
@@ -251,12 +259,16 @@ public class KBegegnungsFenster extends JFrame implements ActionListener,Compone
 		            System.out.println(exc);
 		         }
 		     }
-		} else if(e.getSource()==anzeigenButton ){
-			hf.rundenAnzeige= combo.getSelectedIndex();
-			hf.updatePanels();
-		} else if(e.getSource()==anzeigenButtonTab){
-			hf.rundenAnzeige= comboTab.getSelectedIndex();
-			hf.updatePanels();
+		} else if(e.getSource()==anzeigenButton || e.getSource()==combo){
+			if(hf.rundenAnzeige !=combo.getSelectedIndex()){
+				hf.rundenAnzeige= combo.getSelectedIndex();
+				hf.updatePanels();
+			}
+		} else if(e.getSource()==anzeigenButtonTab || e.getSource()==comboTab){
+			if(hf.rundenAnzeige !=comboTab.getSelectedIndex()){
+				hf.rundenAnzeige= comboTab.getSelectedIndex();
+				hf.updatePanels();
+			}
 		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
 			hf.pdf.begegnungenAnzeigen(hf.begegnungsVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){

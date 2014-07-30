@@ -51,6 +51,8 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		txtButtonTab.addActionListener(this);
 		anzeigenButton.addActionListener(this);
 		anzeigenButtonTab.addActionListener(this);
+		combo.addActionListener(this);
+		comboTab.addActionListener(this);
 		addComponentListener(this);
 	}
 
@@ -108,7 +110,7 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		head.setBorder(BorderFactory.createEtchedBorder());
 		head.add(new JLabel("Runde: "));
 		head.add(punktePanel==this.punktePanel?combo:comboTab);
-		head.add(punktePanel==this.punktePanel?anzeigenButton:anzeigenButtonTab);
+		//head.add(punktePanel==this.punktePanel?anzeigenButton:anzeigenButtonTab);
 		head.add(new JLabel(" Spieler: "+hf.sortierterVector.size()));
 		for(int i=0;i<14;i++){
 			JPanel p = new JPanel();
@@ -132,7 +134,10 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 		punktePanel.add(head,BorderLayout.NORTH);
 		punktePanel.add(sp,BorderLayout.CENTER);
 		punktePanel.add(foot,BorderLayout.SOUTH);
-
+		
+		combo.removeActionListener(this);
+		comboTab.removeActionListener(this);
+		
 		combo.removeAllItems();
 		comboTab.removeAllItems();
 
@@ -141,6 +146,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			comboTab.addItem(i);
 		}
 
+		combo.addActionListener(this);
+		comboTab.addActionListener(this);
+		
 		combo.setSelectedItem(hf.rundenAnzeige);
 		comboTab.setSelectedItem(hf.rundenAnzeige);
 
@@ -267,9 +275,9 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 			header.add(createHeader("Sekundär (Strenght of Schedule)",f,zweitwertung));
 		} else if(hf.optionenFeldVar.sSOS.isSelected()){
 			header.add(createHeader("Sekundär (SOS)",f,zweitwertung));
-		} else if(hf.optionenFeldVar.sSOOS.isSelected()){
+		} /*else if(hf.optionenFeldVar.sSOOS.isSelected()){
 			header.add(createHeader("Sekundär (SOOS)",f,zweitwertung));
-		} else if(hf.optionenFeldVar.sKeine.isSelected()){
+		}*/ else if(hf.optionenFeldVar.sKeine.isSelected()){
 			
 		} 
 		
@@ -382,12 +390,16 @@ public class KPunkteFenster extends JFrame implements ActionListener,ComponentLi
 					System.out.println(exc);
 				}
 			}
-		} else if(e.getSource()==anzeigenButton ){
-			hf.rundenAnzeige= combo.getSelectedIndex();
-			hf.updatePanels();
-		} else if(e.getSource()==anzeigenButtonTab){
-			hf.rundenAnzeige= comboTab.getSelectedIndex();
-			hf.updatePanels();
+		} else if(e.getSource()==anzeigenButton || e.getSource()==combo){
+			if(hf.rundenAnzeige !=combo.getSelectedIndex()){
+				hf.rundenAnzeige= combo.getSelectedIndex();
+				hf.updatePanels();
+			}
+		} else if(e.getSource()==anzeigenButtonTab || e.getSource()==comboTab){
+			if(hf.rundenAnzeige !=comboTab.getSelectedIndex()){
+				hf.rundenAnzeige= comboTab.getSelectedIndex();
+				hf.updatePanels();
+			}
 		} else if(e.getSource()==pdfButton || e.getSource()==pdfButtonTab){
 			hf.pdf.tabelleAnzeigen(hf.sortierterVector, hf.rundenAnzeige,hf.optionenFeldVar);
 		} else if(e.getSource()==txtButton || e.getSource()==txtButtonTab){

@@ -90,10 +90,10 @@ public class KPDFErstellung {
 			} else if(of.sSOS.isSelected()){
 				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (SOS)",bold));
 				table2.addCell(cellHeader5);
-			} else if(of.sSOOS.isSelected()){
+			} /*else if(of.sSOOS.isSelected()){
 				PdfPCell cellHeader5 = new PdfPCell(new Phrase("Sekundär (SOOS)",bold));
 				table2.addCell(cellHeader5);
-			} 
+			} */
 				
 			//Kopfzeile Teriär
 			if(of.tPunkte.isSelected()){

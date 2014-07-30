@@ -356,9 +356,9 @@ public class KSpeicherverwaltung {
 				fw.write("zweitwertung=RPI\r\n");
 			} else if(hf.optionenFeldVar.sSOS.isSelected()){
 				fw.write("zweitwertung=SOS\r\n");
-			} else if(hf.optionenFeldVar.sSOOS.isSelected()){
+			} /*else if(hf.optionenFeldVar.sSOOS.isSelected()){
 				fw.write("zweitwertung=SOOS\r\n");
-			} else if(hf.optionenFeldVar.sKeine.isSelected()){
+			}*/ else if(hf.optionenFeldVar.sKeine.isSelected()){
 				fw.write("zweitwertung=Keine\r\n");
 			}
 
@@ -488,9 +488,9 @@ public class KSpeicherverwaltung {
 							hf.optionenFeldVar.sRPI.setSelected(true);
 						} else if(optval.equals("SOS")){
 							hf.optionenFeldVar.sSOS.setSelected(true);
-						} else if(optval.equals("SOOS")){
+						} /*else if(optval.equals("SOOS")){
 							hf.optionenFeldVar.sSOOS.setSelected(true);
-						} else if(optval.equals("Keine")){
+						}*/ else if(optval.equals("Keine")){
 							hf.optionenFeldVar.sKeine.setSelected(true);
 						}
 					} else if(optname.equals("drittwertung")){

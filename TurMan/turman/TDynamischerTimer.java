@@ -210,9 +210,9 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 						kopfSek="Sekundär (Strenght of Schedule)";
 					} else if(hf.optionenFeldVar.sSOS.isSelected()){
 						kopfSek="Sekundär (SOS)";
-					} else if(hf.optionenFeldVar.sSOOS.isSelected()){
+					} /*else if(hf.optionenFeldVar.sSOOS.isSelected()){
 						kopfSek="Sekundär (SOOS)";
-					} 
+					} */
 					String kopfTer="";
 					//Kopfzeile Teriär
 					if(hf.optionenFeldVar.tPunkte.isSelected()){
@@ -326,41 +326,43 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 						}
 					}
 
-
+					int showCnt=0;
 					for (int i=0;i<hf.begegnungsVector.size();i++){
 						KBegegnungen bg = hf.begegnungsVector.get(i);
 						if(bg.runde==hf.rundenZaehler){
 							KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
-							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),xOffset+75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,xOffset+200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1pri+" : "+bg.p2pri,xOffset+230+nameWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),xOffset+75,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
+							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,xOffset+200,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,xOffset+230+nameWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							if(hf.optionenFeldVar.sPunkte.isSelected()){
-								g.drawString(bg.p1sek+" : "+bg.p2sek,xOffset+260+nameWidth+primWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+								g.drawString(bg.p1sek+" : "+bg.p2sek,xOffset+260+nameWidth+primWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							}
 							if(hf.optionenFeldVar.tPunkte.isSelected()){
-								g.drawString(bg.p1ter+" : "+bg.p2ter,xOffset+290+nameWidth+primWidth+sekWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+								g.drawString(bg.p1ter+" : "+bg.p2ter,xOffset+290+nameWidth+primWidth+sekWidth,posVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							}
+							showCnt++;
 						}
 					}
 
 
-
+					showCnt=0;
 					int newPosVerschiebung=posVerschiebung+startVal2;
 					for (int i=0;i<hf.begegnungsVector.size();i++){
 						KBegegnungen bg = hf.begegnungsVector.get(i);
 						if(bg.runde==hf.rundenZaehler){
 							KTeilnehmer tn1 = hf.teilnehmerVector.get(bg.xPos);
 							KTeilnehmer tn2 = hf.teilnehmerVector.get(bg.yPos);
-							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),xOffset+75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,xOffset+200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
-							g.drawString(bg.p1pri+" : "+bg.p2pri,xOffset+230+nameWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+							g.drawString(laengeAnpassenVorne(Integer.toString(bg.tisch+1), 6),xOffset+75,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
+							g.drawString(tn1.vorname+" "+tn1.nachname +" : "+tn2.vorname+" "+tn2.nachname,xOffset+200,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
+							g.drawString(bg.p1pri+" : "+bg.p2pri,xOffset+230+nameWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							if(hf.optionenFeldVar.sPunkte.isSelected()){
-								g.drawString(bg.p1sek+" : "+bg.p2sek,xOffset+260+nameWidth+primWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+								g.drawString(bg.p1sek+" : "+bg.p2sek,xOffset+260+nameWidth+primWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							}
 							if(hf.optionenFeldVar.tPunkte.isSelected()){
-								g.drawString(bg.p1ter+" : "+bg.p2ter,xOffset+290+nameWidth+primWidth+sekWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*i+50);
+								g.drawString(bg.p1ter+" : "+bg.p2ter,xOffset+290+nameWidth+primWidth+sekWidth,newPosVerschiebung+(g.getFontMetrics(font).getHeight()+5)*showCnt+50);
 							}
+							showCnt++;
 						}
 					}
 

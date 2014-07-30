@@ -1,6 +1,15 @@
-﻿Version 0.0.32
+﻿Version 0.0.33 WIP
+-mitgelieferte auto.cfg angepasst (Zufall und Nicht der selbe Tisch 1-10)
+-Rangliste und Begegnungen aktualisieren sich nach Auswahl der Runde im Drop-Down-Menü. Entfernung des Anzeige-Button
+-Korrektur Leerzeilen Begegnungsanzeige im dynamischen Timer
+-Ladedialog des Timer-Logos mit vorgegebener Dateiendung von bekannten funktionierenden Bildtypen(JPEG und PNG)
+-Fenster Zusatzpunkte wird beim ersten Öffnen maximiert dargestellt
+-Ergebniseingabe kann auch mit Enter bestätigt werden.
+-SOOS aus Zweitwertung entfernt. SOOS in Drittwertung nur aktiv, falls SOS in Zweitwertung aktiv.
+
+Version 0.0.32
 -minimalistische html-Datei für Urkundenerstellung in parseHtml
--Nach der ersten Runde gelöschte Spieler werden nach Speichern nicht fälschlicherweise wiederhergestell.
+-Nach der ersten Runde gelöschte Spieler werden nach Speichern nicht fälschlicherweise wiederhergestellt.
 
 Version 0.0.31
 -Überarbeitung des dynamischen Timers

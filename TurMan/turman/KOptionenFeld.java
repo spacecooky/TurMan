@@ -77,7 +77,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	//WertungsOptionen Zweitwertung
 	JRadioButton sPunkte = new JRadioButton("Punkteeingabe (Sekundärpunkte)");
 	JRadioButton sSOS = new JRadioButton("SOS (Summe aller Gegnerpunkte)");
-	JRadioButton sSOOS = new JRadioButton("SOOS (Summe aller Gegnerpunkte aller Gegner)");
+	//JRadioButton sSOOS = new JRadioButton("SOOS (Summe aller Gegnerpunkte aller Gegner)");
 	JRadioButton sRPI = new JRadioButton("RPI (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
 	JRadioButton sStrength = new JRadioButton("Strength of Schedule (Kombination von Primärpunkten, SOS und SOOS anhand einer Formel)");
 	JRadioButton sKeine = new JRadioButton("Keine Zweitwertung");
@@ -248,7 +248,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		addWertung(p63, sRPI, zweitWertung);
 		addWertung(p63, sStrength, zweitWertung);
 		addWertung(p63, sSOS, zweitWertung);
-		addWertung(p63, sSOOS, zweitWertung);
+		//addWertung(p63, sSOOS, zweitWertung);
 		sKeine.setSelected(true);
 		
 		JPanel p64 = new JPanel();
@@ -364,7 +364,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		if(src==pPunkte || src==pRPI || src==pStrength){
 			hf.updatePanels();
 		}
-		else if(src==sPunkte || src==sRPI || src==sStrength || src==sSOS || src==sSOOS || src==sKeine){
+		else if(src==sPunkte || src==sRPI || src==sStrength || src==sSOS /*|| src==sSOOS*/ || src==sKeine){
 			if(src==sPunkte){
 				matrixBenutzen.setEnabled(true);
 				matrix.setEnabled(true);
@@ -394,7 +394,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 			tRPI.setEnabled(src!=sKeine);
 			tStrength.setEnabled(src!=sKeine);
 			tSOS.setEnabled(src!=sKeine);
-			tSOOS.setEnabled(src!=sKeine);
+			tSOOS.setEnabled(sSOS.isSelected());
 			hf.updatePanels();
 		}
 		else if(src==tPunkte || src==tRPI || src==tStrength || src==tSOS || src==tSOOS || src==tKeine 
@@ -436,7 +436,7 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		 sRPI.setSelected(false);
 		 sStrength.setSelected(false);
 		 sSOS.setSelected(false);
-		 sSOOS.setSelected(false);
+		 //sSOOS.setSelected(false);
 		 sKeine.setSelected(false);
 
 		 tPunkte.setSelected(false);

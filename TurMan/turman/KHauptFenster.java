@@ -1,9 +1,11 @@
 ﻿package turman;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +20,8 @@ import java.io.File;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -207,7 +211,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 
 	}
 
-	static String version=new String("V0.0.32");
+	static String version=new String("V0.0.33 WIP");
 
 	// Hauptbereich
 	JTabbedPane tab = new JTabbedPane();
@@ -647,7 +651,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		boolean strength= optionenFeldVar.pStrength.isSelected() || optionenFeldVar.sStrength.isSelected() || optionenFeldVar.tStrength.isSelected();
 		boolean rpi= optionenFeldVar.pRPI.isSelected() || optionenFeldVar.sRPI.isSelected() || optionenFeldVar.tRPI.isSelected();
 		boolean sos = optionenFeldVar.sSOS.isSelected() || optionenFeldVar.tSOS.isSelected();
-		boolean soos = optionenFeldVar.sSOOS.isSelected() || optionenFeldVar.tSOOS.isSelected();
+		boolean soos = /*optionenFeldVar.sSOOS.isSelected() ||*/ optionenFeldVar.tSOOS.isSelected();
 		
 		
 
@@ -702,9 +706,9 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				t.zweitwertung=t.strengthOfSchedulde;
 			}else if(optionenFeldVar.sSOS.isSelected()){
 				t.zweitwertung=t.sos;
-			}else if(optionenFeldVar.sSOOS.isSelected()){
+			}/*else if(optionenFeldVar.sSOOS.isSelected()){
 				t.zweitwertung=t.sosos;
-			}else if(optionenFeldVar.sKeine.isSelected()){
+			}*/else if(optionenFeldVar.sKeine.isSelected()){
 				t.zweitwertung=0.0;
 			}	
 
@@ -1038,6 +1042,23 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				tf.selectAll();
 			}
 		});
+		tf.addActionListener(enterListener);
 	}
+	
+	
+	
+	ActionListener enterListener = new ActionListener(){
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Command: "+e.getActionCommand());
+			try{
+				Robot robot = new Robot();
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+			}catch(AWTException ex){
+				ex.printStackTrace();
+			}
+		}
+	};
 }

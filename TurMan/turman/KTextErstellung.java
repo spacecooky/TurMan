@@ -38,9 +38,9 @@ public class KTextErstellung{
 				kopfSek="Sekundär (Strenght of Schedule)";
 			} else if(of.sSOS.isSelected()){
 				kopfSek="Sekundär (SOS)";
-			} else if(of.sSOOS.isSelected()){
+			} /*else if(of.sSOOS.isSelected()){
 				kopfSek="Sekundär (SOOS)";
-			} 
+			} */
 			String kopfTer="";
 			//Kopfzeile Teriär
 			if(of.tPunkte.isSelected()){

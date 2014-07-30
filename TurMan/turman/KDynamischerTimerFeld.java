@@ -23,6 +23,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class KDynamischerTimerFeld extends JPanel implements ActionListener{
@@ -364,8 +366,13 @@ public class KDynamischerTimerFeld extends JPanel implements ActionListener{
 		} else if(src==logoButton){
 			JFileChooser fileChooser=new JFileChooser();
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
+			FileFilter ff = new FileNameExtensionFilter("JPEG (.jpg;.jpeg;.jpe;.jtif)",new String[]{"jpg","jpeg","jpe","jtif"});
+			FileFilter ff2 = new FileNameExtensionFilter("PNG (.png)",new String[]{"png"});
+			fileChooser.addChoosableFileFilter(ff);
+			fileChooser.addChoosableFileFilter(ff2);
+			fileChooser.setFileFilter(ff2);
 
-			if(fileChooser.showSaveDialog(hf)==JFileChooser.APPROVE_OPTION){
+			if(fileChooser.showOpenDialog(hf)==JFileChooser.APPROVE_OPTION){
 				File f =new File(fileChooser.getSelectedFile().toString());
 				if(f !=null){
 					imageName=f.getAbsolutePath();

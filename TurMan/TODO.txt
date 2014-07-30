@@ -1,0 +1,32 @@
+﻿4.2)
+
+Was cool wäre, ist eine Sortierfunktion.
+Standardmäßig nach Rang eingestellt, aber zusätzlich möglich nach Vorname, Nachname und Tisch
+
+9) Was TurMan auch (noch) nicht kann, ist den Timer und die Anzeigen auf einem anderen Gerät anzeigen, als den Beamer als 2. Bildschirm zu haben.
+Textskroll steuert dies über die IP Adressen an wenn auf dem Rechner Textskroll ausgeführt wird. 
+
+heutige neue Punkte:
+
+b) Das Logo wird auf die gesamte Breite des Timers gestreckt.
+Kannst du bitte irgendwo angeben, welche Größe (in Pixel x Pixel) das .jpg (oder was er noch so nimmt) am besten haben sollte?!
+
+c) Die Agenda bereitet mir Kopfzerbrechen.
+Ich soll wirklich Tag Monat, Stunde und Minute angeben?
+Na jedenfalls, wenn ich das tue, habe ich in dem Beispiel mal 2 Minuten Puffer zwischen den beiden Programmpunkten gelassen, aber der Timer beginnt bei 12 Stunden an runter zu zählen?! (hä?)
+
+6) auf der Seite Konfiguration ist der Skrollbalken unnötig lang:
+
+Klicke auf die Grafik für eine größere Ansicht  Name: 24.jpg  Hits: 3  Größe: 46,0 KB  ID: 223141
+
+10) Speicherdialoge: Kannst du ALLE Speicherdialoge so einstellen, dass diese bei erneutem anwählen genau den Ordner ansteuern, in dem beim vorherigen Mal etwas abgespeichert wurde?
+z.B. speichere ich mir alle Spielstände zu beginn und spätestens am Ende einer Runde in einem separaten Ordner in meinem Turnierordner.
+z.Z. springt der Speicherdialog aber immer wieder in den Hauptordner wo die Turnierdateien von TurMan liegen.
+(Noch besser wäre es, wenn der Speicherdialog immer in der nächsten höheren Ordnerebene beginnen würde, als wo ich zuvor drin war.
+z.B. "Spielstände -> Spiel 1"
+Beim erneuten Aufruf springt er in "Spielstände" und ich kann von dort aus direkt in den Folgeordner "Spiel 2" anwählen, ohne mich erst noch aus "Spiel 1" eine Ebene hoch blättern zu müssen. Ist zwar alles nur eine Kleinigkeit, aber spart mir im Laufe des Turniers doch die ein oder andere Minute ...)
+
+12) Die Anzeige mit .0 bei den Ergebnissen stört mich.
+Falls damit Dezimalpunkte gemeint sein sollten, so sehe ich das eher als überflüssig an.
+Bau doch eine Option ein, wo man x-Nachkommastellen auswählen kann, wenn man will, aber für Anzeigen finde dieses .0 irritierend.
+Bitte irgendwie auf ganze Zahlen beschränken.
