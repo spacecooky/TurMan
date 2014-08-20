@@ -1,4 +1,4 @@
-﻿Version 0.0.33 WIP
+﻿Version 0.0.33
 -mitgelieferte auto.cfg angepasst (Zufall und Nicht der selbe Tisch 1-10)
 -Rangliste und Begegnungen aktualisieren sich nach Auswahl der Runde im Drop-Down-Menü. Entfernung des Anzeige-Button
 -Korrektur Leerzeilen Begegnungsanzeige im dynamischen Timer
