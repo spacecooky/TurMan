@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.Vector;
@@ -26,7 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 
-public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentListener{
+public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentListener, KeyListener{
 
 	/**
 	 * 
@@ -41,12 +43,31 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		druckenButton.addActionListener(this);
 		endeButton.addActionListener(this);
 		alle.addActionListener(this);
+		geloeschteVerstecken.addActionListener(this);
 		addComponentListener(this);
 		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 
 	KHauptFenster hf=null;
 	boolean anmeldesicht =true;
+	JPanel anmeldePanel=new JPanel();
+	JPanel header= new JPanel();
+	JPanel body = new JPanel();
+	JPanel foot = new JPanel();
+	JButton abbrechenButton=new JButton("Abbrechen");
+	JButton druckenButton=new JButton("Drucken");
+	JButton endeButton= new JButton("Anmeldeverwaltung abschließen");
+	JCheckBox alle = new JCheckBox("Alle anmelden");
+	boolean color=false;
+	JCheckBox geloeschteVerstecken = new JCheckBox("Gelöschte verstecken");
+	
+	JPanel anwesend;
+	JPanel vorname;
+	JPanel nickname;
+	JPanel nachname;
+	JPanel armee;
+	JPanel ort;
+	JPanel team;
 
 	public void init(Dimension d){
 
@@ -104,9 +125,10 @@ public void initWrap(Dimension d){
 			foot.add(abbrechenButton);
 			foot.add(endeButton);
 		}else{
+			foot.add(geloeschteVerstecken);
 			foot.add(new JLabel(""));
 			foot.add(druckenButton);
-			for(int i=0;i<6;i++){
+			for(int i=0;i<5;i++){
 				foot.add(new JLabel(""));
 			}
 		}
@@ -115,21 +137,20 @@ public void initWrap(Dimension d){
 		anmeldePanel.add(sp,BorderLayout.CENTER);
 		anmeldePanel.add(foot,BorderLayout.SOUTH);
 
-		JPanel anwesend;
 		if(anmeldesicht){
 			anwesend = createPanel(body,true);
 		}else{
 			anwesend = createPanel(body,false);
 		}
-		JPanel vorname = createPanel(body,true);
-		JPanel nickname = createPanel(body,true);
-		JPanel nachname = createPanel(body,true);
-		JPanel armee = createPanel(body,true);
-		JPanel ort = createPanel(body,true);
-		JPanel team = createPanel(body,true);
+		vorname = createPanel(body,true);
+		nickname = createPanel(body,true);
+		nachname = createPanel(body,true);
+		armee = createPanel(body,true);
+		ort = createPanel(body,true);
+		team = createPanel(body,true);
 
 		for(int i=sortLocal.size()-1;i>=0;i--){
-//			if(sortLocal.get(i).deleted==false){
+			if(sortLocal.get(i).deleted==false || !geloeschteVerstecken.isSelected()){
 				KTeilnehmer tn=sortLocal.get(i);
 				anwesend.add(tn.anwesend);
 				vorname.add(createField(tn.vorname, f));
@@ -138,7 +159,7 @@ public void initWrap(Dimension d){
 				armee.add(createField(tn.armee, f));
 				ort.add(createField(tn.ort, f));
 				team.add(createField(tn.team, f));
-//			} 
+			} 
 		}
 
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
@@ -191,15 +212,6 @@ public void initWrap(Dimension d){
 		anmeldePanel.validate();
 	}
 
-	JPanel anmeldePanel=new JPanel();
-	JPanel header= new JPanel();
-	JPanel body = new JPanel();
-	JPanel foot = new JPanel();
-	JButton abbrechenButton=new JButton("Abbrechen");
-	JButton druckenButton=new JButton("Drucken");
-	JButton endeButton= new JButton("Anmeldeverwaltung abschließen");
-	JCheckBox alle = new JCheckBox("Alle anmelden");
-	boolean color=false;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -262,6 +274,8 @@ public void initWrap(Dimension d){
 //					} 
 				}
 			}
+		}else if(e.getSource()==geloeschteVerstecken){
+			initList();
 		}
 	}
 	
@@ -308,6 +322,7 @@ public void initWrap(Dimension d){
 		JTextField l = new JTextField(s);
 		l.setBorder(BorderFactory.createEtchedBorder());
 		l.setFont(f);
+		l.addKeyListener(this);
 		return l;
 	}
 
@@ -400,4 +415,52 @@ public void initWrap(Dimension d){
 		lastButton=name;
 		initList();
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println("keyListener");
+		JPanel p = (JPanel)((JTextField)e.getSource()).getParent();
+		for(int i = 0; i < p.getComponentCount(); i++){
+			if(p.getComponent(i).equals(e.getSource())){
+				if(p.equals(vorname)){
+					System.out.println("vorname");
+					sortLocal.get(p.getComponentCount()-1-i).vorname = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).vorname);
+				}else if(p.equals(nickname)){
+					System.out.println("nickname");
+					sortLocal.get(p.getComponentCount()-1-i).nickname = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).nickname);
+				}else if(p.equals(nachname)){
+					System.out.println("nachname");
+					sortLocal.get(p.getComponentCount()-1-i).nachname = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).nachname);
+				}else if(p.equals(armee)){
+					System.out.println("armee");
+					sortLocal.get(p.getComponentCount()-1-i).armee = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).armee);
+				}else if(p.equals(ort)){
+					System.out.println("ort");
+					sortLocal.get(p.getComponentCount()-1-i).ort = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).ort);
+				}else if(p.equals(team)){
+					System.out.println("team");
+					sortLocal.get(p.getComponentCount()-1-i).team = ((JTextField)e.getSource()).getText();
+					System.out.println(sortLocal.get(p.getComponentCount()-1-i).team);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
