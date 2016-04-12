@@ -46,6 +46,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 	}
 
 	KHauptFenster hf=null;
+	boolean anmeldesicht =true;
 
 	public void init(Dimension d){
 
@@ -93,19 +94,33 @@ public void initWrap(Dimension d){
 		JScrollPane sp = new JScrollPane(body);
 
 		foot.setLayout(new GridLayout(1, 8));
-		foot.add(alle);
-		foot.add(new JLabel(""));
-		foot.add(druckenButton);
-		for(int i=0;i<3;i++){
+		if(anmeldesicht){
+			foot.add(alle);
 			foot.add(new JLabel(""));
+			foot.add(druckenButton);
+			for(int i=0;i<3;i++){
+				foot.add(new JLabel(""));
+			}
+			foot.add(abbrechenButton);
+			foot.add(endeButton);
+		}else{
+			foot.add(new JLabel(""));
+			foot.add(druckenButton);
+			for(int i=0;i<6;i++){
+				foot.add(new JLabel(""));
+			}
 		}
-		foot.add(abbrechenButton);
-		foot.add(endeButton);
+			
 
 		anmeldePanel.add(sp,BorderLayout.CENTER);
 		anmeldePanel.add(foot,BorderLayout.SOUTH);
 
-		JPanel anwesend = createPanel(body,true);
+		JPanel anwesend;
+		if(anmeldesicht){
+			anwesend = createPanel(body,true);
+		}else{
+			anwesend = createPanel(body,false);
+		}
 		JPanel vorname = createPanel(body,true);
 		JPanel nickname = createPanel(body,true);
 		JPanel nachname = createPanel(body,true);
@@ -114,7 +129,7 @@ public void initWrap(Dimension d){
 		JPanel team = createPanel(body,true);
 
 		for(int i=sortLocal.size()-1;i>=0;i--){
-			if(sortLocal.get(i).deleted==false){
+//			if(sortLocal.get(i).deleted==false){
 				KTeilnehmer tn=sortLocal.get(i);
 				anwesend.add(tn.anwesend);
 				vorname.add(createField(tn.vorname, f));
@@ -123,7 +138,7 @@ public void initWrap(Dimension d){
 				armee.add(createField(tn.armee, f));
 				ort.add(createField(tn.ort, f));
 				team.add(createField(tn.team, f));
-			} 
+//			} 
 		}
 
 		//Falls noch keine Teilnehmer eingetragen sind, wird die Anzeige aufgefüllt.
@@ -153,7 +168,9 @@ public void initWrap(Dimension d){
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
 
 		System.out.println("vorname.getWidth(): "+vorname.getWidth());
-		header.add(createHeader("Anwesend",f,anwesend));
+		if(anmeldesicht){
+			header.add(createHeader("Anwesend",f,anwesend));
+		}
 		header.add(createHeader("Vorname",f,vorname));
 		header.add(createHeader("Nickname",f,nickname));
 		header.add(createHeader("Nachname",f,nachname));
@@ -204,13 +221,15 @@ public void initWrap(Dimension d){
 		} else if(e.getSource()==endeButton ){
 			for(int i=hf.teilnehmerVector.size()-1;i>=0;i--){
 				KTeilnehmer tn = hf.teilnehmerVector.get(i);
-				if(!tn.anwesend.isSelected()){
-					hf.teilnehmerVector.remove(tn);
+				if(tn.deleted==tn.anwesend.isSelected()){
+					if(tn.anwesend.isSelected()){
+						hf.entfernenFenster.wiederherstellen(i);
+					}else{
+						hf.entfernenFenster.entfernen(i);
+					}
 				}
 			}
-			hf.HauptPanel.removeAll();
-			hf.fillPanels();
-			hf.fillTeamPanels();
+			hf.updatePanels();
 			setVisible(false);
 		} else if(e.getSource() instanceof JButton){
 			System.out.println(((JButton)e.getSource()).getText());
@@ -230,17 +249,17 @@ public void initWrap(Dimension d){
 		} else if(e.getSource()==alle){
 			if(alle.isSelected()){
 				for(int i=sortLocal.size()-1;i>=0;i--){
-					if(sortLocal.get(i).deleted==false){
+//					if(sortLocal.get(i).deleted==false){
 						KTeilnehmer tn=sortLocal.get(i);
 						tn.anwesend.setSelected(true);
-					} 
+//					} 
 				}
 			}else{
 				for(int i=sortLocal.size()-1;i>=0;i--){
-					if(sortLocal.get(i).deleted==false){
+//					if(sortLocal.get(i).deleted==false){
 						KTeilnehmer tn=sortLocal.get(i);
 						tn.anwesend.setSelected(false);
-					} 
+//					} 
 				}
 			}
 		}
@@ -304,7 +323,8 @@ public void initWrap(Dimension d){
 
 	public JPanel createPanel(JPanel punktePanel, boolean b){
 		JPanel p = new JPanel() ;
-		p.setLayout(new GridLayout(hf.teilnehmerVector.size(),1));
+//		p.setLayout(new GridLayout(hf.teilnehmerVector.size(),1));
+		p.setLayout(new GridLayout(sortLocal.size(),1));
 		if(b){
 			punktePanel.add(p);
 		}
@@ -345,9 +365,9 @@ public void initWrap(Dimension d){
 		if(lastButton.equals(name)){
 			dir=!dir;
 		}
-		for(int i=0;i<hf.sortierterVector.size();i++){
-			t=hf.sortierterVector.get(i);
-			if(t.deleted==false){
+		for(int i=0;i<hf.teilnehmerVector.size();i++){//for(int i=0;i<hf.sortierterVector.size();i++){
+			t=hf.teilnehmerVector.get(i);//t=hf.sortierterVector.get(i);
+//			if(t.deleted==false){
 				int j=0;
 				if(name=="Vorname"){
 					while(j<sortLocal.size()&&(dir==false?t.vorname.compareTo(sortLocal.get(j).vorname)>0:t.vorname.compareTo(sortLocal.get(j).vorname)<0)){
@@ -375,7 +395,7 @@ public void initWrap(Dimension d){
 					}
 				}
 				sortLocal.insertElementAt(t,j);	
-			}
+//			}
 		}
 		lastButton=name;
 		initList();

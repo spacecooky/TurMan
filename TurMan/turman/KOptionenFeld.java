@@ -52,6 +52,8 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 	JRadioButton ko = new JRadioButton("K.O.");
 	ButtonGroup modus = new ButtonGroup();
 	
+	JCheckBox geloeschteVerstecken = new JCheckBox("Gelöschte Spieler verstecken");
+	
 	//PaarungsOptionen
 	
 	JLabel teams = new JLabel("Keine Mitglieder des selben Teams paaren");
@@ -143,11 +145,20 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		modus.add(zufall);
 		modus.add(ko);
 		
+		turnierPanel.add(p5);
+		
+		JPanel p13 = new JPanel();
+		p13.setBorder(BorderFactory.createTitledBorder("Modus"));
+		p13.setLayout(new GridLayout(1,1));
+		p13.add(geloeschteVerstecken);
+		geloeschteVerstecken.addActionListener(this);
+		
+		turnierPanel.add(p13);
+		
 		schweizer.setSelected(true);
 		//zufall.setEnabled(false);
 		ko.setEnabled(false);
 		
-		turnierPanel.add(p5);
 		
 		JPanel p11 = new JPanel();
 		p11.setLayout(new GridLayout(40,1));
@@ -404,12 +415,12 @@ public class KOptionenFeld extends JTabbedPane implements ActionListener{
 		}
 		else if(arg0.getSource()==matrix){
 			hf.matrix.init();
+		}else if(src==geloeschteVerstecken){
+			hf.refillPanels();
 		}
-		
 	}
 	
 	public void clear(){
-		
 		 einzel.setSelected(false);
 		 team.setSelected(false);
 		

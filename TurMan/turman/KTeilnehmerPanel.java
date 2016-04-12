@@ -1,6 +1,7 @@
 ﻿package turman;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
@@ -15,7 +16,7 @@ public class KTeilnehmerPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 6596381980948989749L;
 	public KTeilnehmerPanel(String teilnehmer,int teilnehmerZahl,int nummer, KHauptFenster hf){
-		
+		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
 		
 		hf.teilnehmerVector.get(nummer).matrixButton.setText(teilnehmer);
@@ -38,11 +39,11 @@ public class KTeilnehmerPanel extends JPanel{
 				add(body);
 			}
 			else{
-			this.nummer=nummer;
-			this.hf=hf;
-			KBegegnungen b = new KBegegnungen(hf,hf.teilnehmerVector.get(nummer),hf.teilnehmerVector.get(i),nummer,i);
-			hf.alleBegegnungenVector.add(b);
-			add(b);
+				this.nummer=nummer;
+				this.hf=hf;
+				KBegegnungen b = new KBegegnungen(hf,hf.teilnehmerVector.get(nummer),hf.teilnehmerVector.get(i),nummer,i);
+				hf.alleBegegnungenVector.add(b);
+				add(b);
 			}
 		}
 		

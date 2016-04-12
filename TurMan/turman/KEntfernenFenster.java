@@ -75,14 +75,14 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		if(arg0.getSource()==cancel){
 			setVisible(false);
 		} else if(arg0.getSource()==ok){
-			if(hf.rundenZaehler==0){
-				hf.teilnehmerVector.remove(combo.getSelectedIndex());
-				hf.HauptPanel.removeAll();
-				hf.fillPanels();
-				hf.fillTeamPanels();
-			} else {
+//			if(hf.rundenZaehler==0){
+//				hf.teilnehmerVector.remove(combo.getSelectedIndex());
+//				hf.HauptPanel.removeAll();
+//				hf.fillPanels();
+//				hf.fillTeamPanels();
+//			} else {
 				entfernen(combo.getSelectedIndex());
-			}
+//			}
 			hf.updatePanels();
 			setVisible(false);
 		} else if(arg0.getSource()==rok){
@@ -97,20 +97,35 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 	}
 	
 	public void entfernen(int index){
-		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setForeground(Color.gray);
-		((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setForeground(Color.gray);
-		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setEnabled(false);
-		for(int i=0;i<hf.teilnehmerVector.size();i++){
-			if(((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i) instanceof KBegegnungen){
-				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.green) &&
-						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.orange)){
-					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).setBackground(Color.black);
+		if(hf.optionenFeldVar.geloeschteVerstecken.isSelected()){
+			((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setVisible(false);
+			((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).setVisible(false);
+			((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setVisible(false);
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				if(((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index) instanceof KBegegnungen){
+					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setVisible(false);
 				}
 			}
-			if(((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index) instanceof KBegegnungen){
-				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.green) &&
-						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.orange)){
-					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setBackground(Color.black);
+		}else{
+			((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setForeground(Color.gray);
+			((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setForeground(Color.gray);
+			((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setEnabled(false);
+			((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setVisible(true);
+			((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).setVisible(true);
+			((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setVisible(true);
+			for(int i=0;i<hf.teilnehmerVector.size();i++){
+				if(((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i) instanceof KBegegnungen){
+					if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.green) &&
+							!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.orange)){
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).setBackground(Color.black);
+					}
+				}
+				if(((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index) instanceof KBegegnungen){
+					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setVisible(true);
+					if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.green) &&
+							!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.orange)){
+						((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setBackground(Color.black);
+					}
 				}
 			}
 		}
@@ -122,16 +137,21 @@ public class KEntfernenFenster extends JFrame implements ActionListener{
 		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setForeground(Color.black);
 		((JLabel)((JPanel)hf.sp.getColumnHeader().getComponent(0)).getComponent(index)).setForeground(Color.black);
 		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setEnabled(true);
+		((JButton)((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).nameLabel).setVisible(true);
+		((KTeilnehmerPanel)hf.HauptPanel.getComponent(index)).setVisible(true);
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
 			if(((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i) instanceof KBegegnungen){
 				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.green) &&
-						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.orange)){
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).getBackground().equals(Color.orange) &&
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).t2.deleted){
 					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).setBackground(Color.darkGray);
 				}
 			}
 			if(((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index) instanceof KBegegnungen){
+				((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setVisible(true);
 				if(!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.green) &&
-						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.orange)){
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).getBackground().equals(Color.orange) &&
+						!((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(index)).getComponent(i)).t2.deleted){
 					((KBegegnungen)((JPanel)hf.HauptPanel.getComponent(i)).getComponent(index)).setBackground(Color.darkGray);
 				}
 			}

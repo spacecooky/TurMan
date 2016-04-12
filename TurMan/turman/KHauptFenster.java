@@ -51,6 +51,19 @@ import javax.swing.JTextField;
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
  * TODO Freie Tischzuweisung
  * TODO Größeren Tischpool anlegen, aus dem zufällig gewählt wird
+ * TODO Anmeldeverwaltung Druck der sortierten Liste
+ * TODO Anmeldeverwaltung Zweiseitiger Druck druckt nochmal den Inhalt der ersten Seite
+ * TODO Anmeldeverwaltung geänderte Daten übernehmen
+ * TODO Abgespeckte Version der Anmeldeverwaltung als Spielerliste nach der ersten Paarung
+ * TODO Suchfunktionenen in der Spielerliste (auf alle Spalten)
+ * TODO aktuelle Spielinformationen in der Spielerliste. Wo spielt er gerade. Gegen wen/was spielt er gerade 
+ * ("Wer hat in Runde X höher als 12 Punkte gewonnen?" naja, sowas halt.
+ * TODO ausdruckbarer Ergebniszettel mit Tischnummer
+ * TODO Suchfunktion (nach Tischnummern) auf Paarungsseite, die gleich die Ergebniseingabe öffnet
+ * TODO Option zum Ausblenden eingetragener Ergebnisse auf der Paarungsseite
+ * TODO Freie Eingabe der Wertungsnamen (statt Primär usw.)
+ * TODO Größenänderungsoptionen in Timer/Agenda
+ * 
  * @author jk
  *
  */
@@ -146,6 +159,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		rundeReset.addActionListener(this);
 
 		menubar.add(spieler);
+		spieler.add(spielerliste);
+		spielerliste.addActionListener(this);
 		spieler.add(entfernen);
 		entfernen.addActionListener(this);
 		spieler.add(wiederherstellen);
@@ -254,6 +269,7 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	JMenuItem rundeReset = new JMenuItem("Runde Zurücksetzen");
 
 	JMenu spieler = new JMenu("Spieler");
+	JMenuItem spielerliste = new JMenuItem("Spielerliste");
 	JMenuItem entfernen = new JMenuItem("Entfernen");
 	JMenuItem wiederherstellen = new JMenuItem("Wiederherstellen");
 	JMenuItem erweitern = new JMenuItem("Hinzufügen");
@@ -407,7 +423,17 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		}else if(quelle == oeffnen){
 			KSpeicherverwaltung.ladenWrap(this);
 		} else if(quelle == anmeldung){
-			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
+			anmeldeFenster.anmeldesicht=true;
+			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)teilnehmerVector.clone();
+//			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
+//			anmeldeFenster.sortLocal=sortierterVector;
+			anmeldeFenster.initList();
+			anmeldeFenster.init(null);
+		} else if(quelle == spielerliste){
+			anmeldeFenster.anmeldesicht=false;
+			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)teilnehmerVector.clone();
+//			anmeldeFenster.sortLocal=(Vector<KTeilnehmer>)sortierterVector.clone();
+//			anmeldeFenster.sortLocal=sortierterVector;
 			anmeldeFenster.initList();
 			anmeldeFenster.init(null);
 		} else if(quelle == punkte){
@@ -489,7 +515,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		if(restHeight<0){
 			restHeight=0;
 		}
-		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
+//		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
+		HauptPanel.setLayout(new BoxLayout(HauptPanel,BoxLayout.Y_AXIS));
 		JPanel header= new JPanel();
 		header.setLayout(new BoxLayout(header,BoxLayout.X_AXIS));
 
@@ -571,7 +598,6 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 				entfernenFenster.entfernen(i);
 			}
 		}
-
 	}
 
 	public void adaptPanel(){
@@ -580,7 +606,8 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 		if(restHeight<0){
 			restHeight=0;
 		}
-		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
+//		HauptPanel.setLayout(new GridLayout(teilnehmer+restHeight, 1,0,0));
+		HauptPanel.setLayout(new BoxLayout(HauptPanel,BoxLayout.PAGE_AXIS));
 		updatePanels();
 	}
 
