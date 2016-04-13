@@ -57,11 +57,11 @@ public class KHerausforderungsFenster extends JFrame implements ActionListener, 
 	}
 
 	public void fillCombo1(String s){
-		if(!s.equals("")){
-			String p1=s.split(" ")[2];
-			p1=p1.split(":")[1];
-			int p1ID=Integer.parseInt(p1);
-		}
+//		if(!s.equals("")){ //Auskommentiert, da es nutzlos aussieht.
+//			String p1=s.split(" ")[2];
+//			p1=p1.split(":")[1];
+//			int p1ID=Integer.parseInt(p1);
+//		}
 		for(int i=0;i<hf.teilnehmerVector.size();i++){
 			String vn = hf.teilnehmerVector.get(i).vornameAlter.equals("")?hf.teilnehmerVector.get(i).vorname:hf.teilnehmerVector.get(i).vornameAlter;
 			String nn = hf.teilnehmerVector.get(i).nachnameAlter.equals("")?hf.teilnehmerVector.get(i).nachname:hf.teilnehmerVector.get(i).nachnameAlter;

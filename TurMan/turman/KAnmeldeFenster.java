@@ -38,6 +38,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 	public KAnmeldeFenster(KHauptFenster hf) {
 		super("Anmeldeverwaltung");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
+		setSize(800,600);//TODO Entfernen
 		this.hf=hf;
 		abbrechenButton.addActionListener(this);
 		druckenButton.addActionListener(this);
@@ -45,7 +46,7 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		alle.addActionListener(this);
 		geloeschteVerstecken.addActionListener(this);
 		addComponentListener(this);
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+//		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );//TODO Hinzufügen
 	}
 
 	KHauptFenster hf=null;
@@ -74,7 +75,8 @@ public class KAnmeldeFenster extends JFrame implements ActionListener,ComponentL
 		
 		setContentPane(anmeldePanel);
 		if(d==null){
-			setSize(Toolkit.getDefaultToolkit().getScreenSize());
+			setSize(Toolkit.getDefaultToolkit().getScreenSize());//TODO Entfernen
+			setSize(800,600);
 		} else {
 			setSize(d);
 		}
@@ -424,27 +426,27 @@ public void initWrap(Dimension d){
 			if(p.getComponent(i).equals(e.getSource())){
 				if(p.equals(vorname)){
 					System.out.println("vorname");
-					sortLocal.get(p.getComponentCount()-1-i).vorname = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).vorname = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).vorname);
 				}else if(p.equals(nickname)){
 					System.out.println("nickname");
-					sortLocal.get(p.getComponentCount()-1-i).nickname = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).nickname = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).nickname);
 				}else if(p.equals(nachname)){
 					System.out.println("nachname");
-					sortLocal.get(p.getComponentCount()-1-i).nachname = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).nachname = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).nachname);
 				}else if(p.equals(armee)){
 					System.out.println("armee");
-					sortLocal.get(p.getComponentCount()-1-i).armee = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).armee = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).armee);
 				}else if(p.equals(ort)){
 					System.out.println("ort");
-					sortLocal.get(p.getComponentCount()-1-i).ort = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).ort = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).ort);
 				}else if(p.equals(team)){
 					System.out.println("team");
-					sortLocal.get(p.getComponentCount()-1-i).team = ((JTextField)e.getSource()).getText();
+					sortLocal.get(p.getComponentCount()-1-i).team = ((JTextField)e.getSource()).getText()+e.getKeyChar();
 					System.out.println(sortLocal.get(p.getComponentCount()-1-i).team);
 				}
 			}
@@ -453,13 +455,11 @@ public void initWrap(Dimension d){
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

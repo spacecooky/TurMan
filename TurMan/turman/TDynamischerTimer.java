@@ -136,6 +136,7 @@ public class TDynamischerTimer extends Thread implements MouseListener,Component
 		 */
 		private static final long serialVersionUID = 1L;
 
+		@SuppressWarnings("unused")
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
 			

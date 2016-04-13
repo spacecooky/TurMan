@@ -239,15 +239,22 @@ public class KTextPrintable implements Printable{
 
 			//////////////////////////// Überschrift ////////////////////////
 
-			KOptionenFeld of = hf.optionenFeldVar;
+//			KOptionenFeld of = hf.optionenFeldVar; //Momentan noch unbenutzt. Für die Spielersicht später vielleicht interssant
 
 			//Max Längenberechnungen
 			FontMetrics fontMetrics = g.getFontMetrics();
 			int nameWidth = fontMetrics.stringWidth(name);
 			int armyWidth = fontMetrics.stringWidth(armee);
 			int teamWidth = fontMetrics.stringWidth(team);
-			for (int i=0;i<hf.sortierterVector.size();i++){
-				KTeilnehmer t=hf.sortierterVector.get(i);
+//			for (int i=0;i<hf.sortierterVector.size();i++){ //Sortierung erfolgt ja im Anmeldefenster, nicht im HF
+//				KTeilnehmer t=hf.sortierterVector.get(i);
+//				String n =t.vorname+" \""+t.nickname+"\" "+t.nachname;
+//				nameWidth=(fontMetrics.stringWidth(n)>nameWidth)?(fontMetrics.stringWidth(n)):nameWidth;
+//				armyWidth=(fontMetrics.stringWidth(""+t.armee)>armyWidth)?(fontMetrics.stringWidth(""+t.armee)):armyWidth;
+//				teamWidth=(fontMetrics.stringWidth(""+t.team)>teamWidth)?(fontMetrics.stringWidth(""+t.team)):teamWidth;
+//			}
+			for (int i=hf.anmeldeFenster.sortLocal.size()-1;i>=0;i--){
+				KTeilnehmer t=hf.anmeldeFenster.sortLocal.get(i);
 				String n =t.vorname+" \""+t.nickname+"\" "+t.nachname;
 				nameWidth=(fontMetrics.stringWidth(n)>nameWidth)?(fontMetrics.stringWidth(n)):nameWidth;
 				armyWidth=(fontMetrics.stringWidth(""+t.armee)>armyWidth)?(fontMetrics.stringWidth(""+t.armee)):armyWidth;
@@ -269,9 +276,22 @@ public class KTextPrintable implements Printable{
 
 			g.setFont(font);
 
+//			for (int i=0;i<50;i++){
+//				if((hf.sortierterVector.size()-(i+1)-(pageIndex*50))>=0){
+//					KTeilnehmer t=hf.sortierterVector.get(i+pageIndex*50);
+//					String n =t.vorname+" \""+t.nickname+"\" "+t.nachname;
+//					g.drawRect(offsetAnwesend, (g.getFontMetrics(font).getHeight()+1)*i+50, (g.getFontMetrics(font).getHeight()-4), -(g.getFontMetrics(font).getHeight()-4));
+//					g.drawString(n,offsetName,(g.getFontMetrics(font).getHeight()+1)*i+50);
+//					g.drawString(""+t.armee,offsetArmee+nameWidth,(g.getFontMetrics(font).getHeight()+1)*i+50);
+//					g.drawString(""+t.team,offsetTeam+nameWidth+armyWidth,(g.getFontMetrics(font).getHeight()+1)*i+50);
+//					
+//				}else{
+//					//g.drawString(laengeAnpassenVorne(Integer.toString(i+1), 6),offsetAnwesend,(g.getFontMetrics(font).getHeight()+1)*i+50);
+//				}
+//			}
 			for (int i=0;i<50;i++){
-				if((hf.sortierterVector.size()-(i+1)-(pageIndex*50))>=0){
-					KTeilnehmer t=hf.sortierterVector.get(i);
+				if((hf.anmeldeFenster.sortLocal.size()-(i+1)-(pageIndex*50))>=0){
+					KTeilnehmer t=hf.anmeldeFenster.sortLocal.get(i+pageIndex*50);
 					String n =t.vorname+" \""+t.nickname+"\" "+t.nachname;
 					g.drawRect(offsetAnwesend, (g.getFontMetrics(font).getHeight()+1)*i+50, (g.getFontMetrics(font).getHeight()-4), -(g.getFontMetrics(font).getHeight()-4));
 					g.drawString(n,offsetName,(g.getFontMetrics(font).getHeight()+1)*i+50);

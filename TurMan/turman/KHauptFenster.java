@@ -20,8 +20,6 @@ import java.io.File;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -51,10 +49,8 @@ import javax.swing.JTextField;
  * TODO Herausforderungen jeder Runde merken, falls Paaren wiederholt wird
  * TODO Freie Tischzuweisung
  * TODO Größeren Tischpool anlegen, aus dem zufällig gewählt wird
- * TODO Anmeldeverwaltung Druck der sortierten Liste
- * TODO Anmeldeverwaltung Zweiseitiger Druck druckt nochmal den Inhalt der ersten Seite
- * TODO Anmeldeverwaltung geänderte Daten übernehmen
- * TODO Abgespeckte Version der Anmeldeverwaltung als Spielerliste nach der ersten Paarung
+ * TODO Anmeldeverwaltung Druck: Reihenfolge drehen
+ * TODO Anmeldeverwaltung Zweiseitiger Druck: Mehr Spieler pro Seite möglich
  * TODO Suchfunktionenen in der Spielerliste (auf alle Spalten)
  * TODO aktuelle Spielinformationen in der Spielerliste. Wo spielt er gerade. Gegen wen/was spielt er gerade 
  * ("Wer hat in Runde X höher als 12 Punkte gewonnen?" naja, sowas halt.
@@ -77,10 +73,10 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 	public KHauptFenster(){
 		super("TurMan "+version);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("tm.jpg"));
-		//setSize(800,600);
+		setSize(800,600);//TODO Entfernen
 		//setLocation(0, 500);
-		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );
+//		setSize(Toolkit.getDefaultToolkit().getScreenSize());//TODO Hinzufügen
+//		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );//TODO Hinzufügen
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){

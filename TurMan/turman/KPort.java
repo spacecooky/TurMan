@@ -156,6 +156,7 @@ public class KPort {
 				try {
 					//FileWriter fw = new FileWriter(f);
 					OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(f),"CP1252");
+					@SuppressWarnings("unused")
 					String date = datum();
 
 					

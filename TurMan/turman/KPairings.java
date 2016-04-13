@@ -146,16 +146,12 @@ public class KPairings {
 			for(int i=0;i<bVector.size();i++){
 
 				KBegegnungen b = bVector.get(i);
-				KTeilnehmer tn1 = b.t1;
-				KTeilnehmer tn2 = b.t2;
-				//System.out.println(tn1.vorname+" "+tn1.nachname+" : "+tn2.vorname+" "+tn2.nachname);
+				//System.out.println(b.t1.vorname+" "+b.t1.nachname+" : "+b.t2.vorname+" "+b.t2.nachname);
 				b.setEnabled(true);
 				b.setBackground(Color.orange);
 				b.runde=hf.rundenZaehler;
 				b.setText(""+hf.rundenZaehler);
 				hf.begegnungsVector.add(b);
-				//b.t2.paarungen.add(b.xPos);
-				//b.t1.paarungen.add(b.yPos);
 				b.t2.paarungen.put(hf.rundenZaehler,b.xPos);
 				b.t1.paarungen.put(hf.rundenZaehler,b.yPos);
 				for(int j=0;j<hf.alleBegegnungenVector.size();j++){
