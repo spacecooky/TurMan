@@ -33,6 +33,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * TODO Zusätzliche Turniermodi:  KO-System
@@ -78,6 +81,29 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 //		setSize(Toolkit.getDefaultToolkit().getScreenSize());//TODO Hinzufügen
 //		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );//TODO Hinzufügen
 
+		try {
+	        UIManager.setLookAndFeel("net.sourceforge.napkinlaf.NapkinLookAndFeel");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		
+//		try {
+//		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//		        if ("Napkin".equals(info.getName())) {
+//		            UIManager.setLookAndFeel(info.getClassName());
+//		            break;
+//		        }
+//		    }
+//		} catch (UnsupportedLookAndFeelException e) {
+//		    // handle exception
+//		} catch (ClassNotFoundException e) {
+//		    // handle exception
+//		} catch (InstantiationException e) {
+//		    // handle exception
+//		} catch (IllegalAccessException e) {
+//		    // handle exception
+//		}
+		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		WindowListener meinListener=new WindowAdapter(){
 			public void windowClosing(WindowEvent ereignis){
