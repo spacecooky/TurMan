@@ -79,21 +79,26 @@ public class KFreilosFenster extends JFrame implements ActionListener{
 			}
 			
 			try{
-			hf.freilosPrim=Integer.parseInt(prim.getText());
-			hf.freilosSek=Integer.parseInt(sek.getText());
-			KTeilnehmer t =new KTeilnehmer("Freilos","Freilos",hf);
-			t.armee="Freilos";
-			t.nickname="Freilos";
-			t.ort="Freilos";
-			hf.teilnehmerVector.add(t);
-			hf.HauptPanel.removeAll();
-			hf.fillPanels();
-			hf.fillTeamPanels();
-			hf.refillPanels();
-			hf.updatePanels();
-			setVisible(false);
+				hf.freilosPrim=Integer.parseInt(prim.getText());
+				if(sek.getText().equals("")){
+					hf.freilosSek=0;
+				} else {
+					hf.freilosSek=Integer.parseInt(sek.getText());
+				}
+				KTeilnehmer t =new KTeilnehmer("Freilos","Freilos",hf);
+				t.armee="Freilos";
+				t.nickname="Freilos";
+				t.ort="Freilos";
+				hf.teilnehmerVector.add(t);
+				hf.HauptPanel.removeAll();
+				hf.fillPanels();
+				hf.fillTeamPanels();
+				hf.refillPanels();
+				hf.updatePanels();
+				setVisible(false);
 			}catch (NumberFormatException e) {
 				// TODO: Fehlerdialog
+				e.printStackTrace();
 			}
 		}
 		

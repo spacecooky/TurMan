@@ -81,11 +81,11 @@ public class KHauptFenster extends JFrame implements ActionListener,ComponentLis
 //		setSize(Toolkit.getDefaultToolkit().getScreenSize());//TODO Hinzufügen
 //		setExtendedState( getExtendedState()|JFrame.MAXIMIZED_BOTH );//TODO Hinzufügen
 
-		try {
-	        UIManager.setLookAndFeel("net.sourceforge.napkinlaf.NapkinLookAndFeel");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+//		try {
+//	        UIManager.setLookAndFeel("net.sourceforge.napkinlaf.NapkinLookAndFeel");
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	    }
 		
 //		try {
 //		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
